@@ -7,6 +7,7 @@ var logger = require('morgan');
 const MongoClient = require('mongodb').MongoClient;
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
+const AuthUtils = require('./utils/auth');
 const session = require('express-session');
 const flash = require('connect-flash'); 
 
@@ -31,7 +32,7 @@ passport.use(new Strategy(
         return done(err);
       }
 
-      if(!user || (user.password != password)){
+      if(!user || (user.password != AuthUtils.hashPassword(password))){
         return done(null,false);
       }
 
@@ -40,6 +41,13 @@ passport.use(new Strategy(
   }
 ));
 
+passport.serializeUser((user, done)=> {
+  done(null,user._id);
+});
+
+passport.deserializeUser((id, done)=> {
+  done(null,{id});
+});
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -49,6 +57,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret  :  'session secret',
+  resave  : false,
+  saveUninitialized : false,
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+app.use((req, res, next)  => {
+  res.locals.loggedIn = req.isAuthenticated();
+  next();
+})
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
