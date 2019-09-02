@@ -19,8 +19,26 @@ MongoClient.connect('mongodb://localhost',(err,client) =>{
   if(err){
   throw err;
 }
-const db = client.db
+const db = client.db('user-profiles');
+const users = db.collection('users');
+app.locals.users = users;
 });
+
+passport.use(new Strategy(
+  (username, password, done) =>{
+    app.locals.users.findOne({ username }, (err, user)=>{
+      if(err){
+        return done(err);
+      }
+
+      if(!user || (user.password != password)){
+        return done(null,false);
+      }
+
+      return done(null, user);
+    })
+  }
+));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
