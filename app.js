@@ -4,10 +4,23 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+const MongoClient = require('mongodb').MongoClient;
+const passport = require('passport');
+const Strategy = require('passport-local').Strategy;
+const session = require('express-session');
+const flash = require('connect-flash'); 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
+
+MongoClient.connect('mongodb://localhost',(err,client) =>{
+  if(err){
+  throw err;
+}
+const db = client.db
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
