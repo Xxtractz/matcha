@@ -10,6 +10,7 @@ const Strategy = require('passport-local').Strategy;
 const AuthUtils = require('./utils/auth');
 const session = require('express-session');
 const flash = require('connect-flash'); 
+const hbs = require('hbs');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -50,7 +51,8 @@ passport.deserializeUser((id, done)=> {
 });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'hbs');
+hbs.registerPartials(path.join(__dirname, 'views/partials'));
 
 app.use(logger('dev'));
 app.use(express.json());
