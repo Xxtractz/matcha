@@ -2,7 +2,7 @@
   "name": "matcha",
   "version": "1.0.0",
   "description": "Dating web app like tinder",
-  "main": "index.js",
+  "main": "app/index.js",
   "dependencies": {
     "express": "^4.17.1",
     "nodemon": "^1.19.1"
