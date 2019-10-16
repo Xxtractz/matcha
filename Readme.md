@@ -1,12 +1,18 @@
-<h1>Matcha</h1>
-<hr>
-<p1>This is a dating site like project, which will mimic some functionalities like Tinder & other dating sites</p1>
-<h4>Technologies</h4>
-<code>Node Js</code>
-<code>Express FrameWork</code>
-<code>MDBootstrap</code>
-<code>MongoDB</code>
-<code>EJS Templating</code>
-<code>HTML5</code>
-<code>CSS3</code>
-<code>JavaScript</code>
+# Matcha
+This is a dating site like project, which will mimic some functionalities like Tinder & other dating sites
+
+## Technologies
+
+- [x] Node Js
+- [x] Express FrameWork
+- [x] MongoDB
+- [x] EJS Templating
+- [x] MDBootstrap
+- [x] HTML5
+- [x] CSS3
+- [x] JavaScript
+
+
+## AUTHOR
+
+> Musa Baloyi | Xxtractz
