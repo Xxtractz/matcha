@@ -1,5 +1,4 @@
 <h1>Matcha</h1>
-<br>
 <hr>
 <p1>This is a dating site like project, which will mimic some functionalities like Tinder & other dating sites</p1>
 <h4>Technologies</h4>
