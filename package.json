@@ -1,0 +1,29 @@
+{
+  "name": "matcha",
+  "version": "1.0.0",
+  "description": "Online Dating site",
+  "main": "app.js",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.0",
+    "mongodb": "^3.3.2",
+    "nodemon": "^1.19.4",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xxtractz/Matcha.git"
+  },
+  "author": "xxtractz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Xxtractz/Matcha/issues"
+  },
+  "homepage": "https://github.com/Xxtractz/Matcha#readme"
+}
