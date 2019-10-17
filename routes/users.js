@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 
 /* GET Register. */
 router.get('/register', function(req, res, next) {
-  res.render('register', {page:'register', menuId:'register'});
+  res.render('register', {page:'Register', menuId:'register'});
 });
 
 /* GET forgot page. */
