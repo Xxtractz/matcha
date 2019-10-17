@@ -9,12 +9,12 @@
 .register-form {
     width: 100%;
     max-width: 500px;
-    padding: 15px;
+    padding-bottom: 120px;
+    padding-top: 75px;
     margin: auto;
 }
 
 footer {
-    position: absolute;
     bottom: 0;
     width: 100%;
     background-color: #333;
