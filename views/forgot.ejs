@@ -4,55 +4,45 @@
  <% include layout/head %> 
 </head>
 <body>
-<% include layout/menu %>
 <div class="container-fluid bg-3 text-center ">    
     <div class="md-sm col-6 mx-auto pt-5">
         <!-- Default form login -->
-        <form class="text-center " action="#!">
+        <form class="text-center login-form " action="#!">
 
-            <p class="h4 mb-4">Sign in</p>
+            <h1 class="h1 mb-2">Password Reset</h1>
+            <p class="h6 mb-4">
+                <em>
+                    <strong>
+                        Enter your the email address that you used to register. We'll send you an email with your username and new password.
+                    </strong>
+                </em>
+            </p>
     
              <!-- Email -->
             <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
     
-            <!-- Password -->
-            <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
-    
-            <div class="d-flex justify-content-around">
-                <div>
-                   <!-- Remember me -->
-                   <div class="custom-control custom-checkbox">
-                       <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
-                      <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
-                    </div>
-                 </div>
-                <div>
-                    <!-- Forgot password -->
-                     <a href="">Forgot password?</a>
-                </div>
-             </div>
-    
-                <!-- Sign in button -->
-                <button class="btn btn-block my-4 blue lighten-2" type="submit">Sign in</button>
-    
-            <!-- Register -->
-            <p>Not a member?
-            <a href="">Register</a>
-            </p>
-    
-            <!-- Social login -->
-            <p>or sign in with:</p>
-    
-            <a href="#" class="mx-2" role="button"><i class="fab fa-facebook-f light-blue-text"></i></a>
-            <a href="#" class="mx-2" role="button"><i class="fab fa-twitter light-blue-text"></i></a>
-            <a href="#" class="mx-2" role="button"><i class="fab fa-linkedin-in light-blue-text"></i></a>
-            <a href="#" class="mx-2" role="button"><i class="fab fa-github light-blue-text"></i></a>
-    
+            <!-- Send Link button -->
+                <button class="btn btn-block my-4 blue lighten-2 mb-5" type="submit">Send</button>
+
+                <hr>
+            <div class="d-flex justify-content-around ">
+                <!-- Home -->
+                <p>
+                        <a href="/">Home</a>
+                </p>
+                <!-- Login -->
+                <p>
+                    <a href="/users">Login</a>
+                </p>
+                <!-- Register -->
+                <p>
+                    <a href="/users/register">Register</a>
+                </p>
+            </div>
         </form>
          <!-- Default form login -->
     </div>
 </div>
-<% include layout/footer %>
 </body>
 <% include layout/script %>
 </html>
