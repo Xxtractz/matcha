@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
- <% include layout/head %> 
+    <% include layout/head %>
 </head>
+
 <body>
-<div class="container-fluid bg-3 text-center ">    
-    <div class="md-sm col-12 mx-auto pt-5">
-        <!-- Default form login -->
-        <form class="text-center login-form" action="#!">
+    <div class="container-fluid bg-3 text-center ">
+        <div class="md-sm col-12 mx-auto pt-5">
+            <!-- Default form login -->
+            <form class="text-center login-form" action="#!">
 
-            <p class="h4 mb-4">Sign in</p>
-    
-             <!-- Email -->
-            <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
-    
-            <!-- Password -->
-            <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+                <p class="h4 mb-4">Sign in</p>
 
-    
-            <div class="d-flex justify-content-around">
-                <div>
-                   <!-- Remember me -->
-                   <div class="custom-control custom-checkbox">
-                       <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
-                      <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+                <!-- Email -->
+                <input type="email" id="defaultLoginFormEmail" class="form-control mb-4" placeholder="E-mail">
+
+                <!-- Password -->
+                <input type="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
+
+
+                <div class="d-flex justify-content-around">
+                    <div>
+                        <!-- Remember me -->
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
+                            <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
+                        </div>
                     </div>
-                 </div>
-                <div>
-                    <!-- Reset -->
-                    <small>
+                    <div>
+                        <!-- Reset -->
+                        <small>
                         <a href="/users/forgot">Forgot Password</a>
                     </small>
+                    </div>
                 </div>
-             </div>
-    
+
                 <!-- Sign in button -->
-            <button class="btn my-4 blue lighten-2" type="submit">Sign in</button>
-    
-            <!-- Register -->
-            <p>Not a member?
-            <a href="/users/register">Register</a>
-            </p>
-    
-        </form>
-         <!-- Default form login -->
+                <button class="btn my-4 blue lighten-2" type="submit">Sign in</button>
+
+                <!-- Register -->
+                <p>Not a member?
+                    <a href="/users/register">Register</a>
+                </p>
+
+            </form>
+            <!-- Default form login -->
+        </div>
     </div>
-</div>
 </body>
 <% include layout/script %>
+
 </html>
