@@ -28,6 +28,7 @@ router.post('/register', async(req, res) => {
         // Insert the new user if they do not exist yet
         user = new User({
             name: req.body.name,
+            lastname: req.body.name,
             email: req.body.email,
             password: req.body.password
         });
