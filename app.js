@@ -3,6 +3,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const Joi = require('joi');
+Joi.objectId = require('joi-objectid')(Joi);
 var mongoose = require("mongoose");
 
 var indexRouter = require('./routes/index');
@@ -29,8 +31,8 @@ app.use('/profile', profileRouter);
 app.use('/chat', chatRouter);
 
 // DB Connection 
-const db_link = process.env.MONGODB_URL
-mongoose.connect(`$(db_link)`)
+const db_link = "mongodb+srv://xxtractz:Password1@matcha-ifa9u.mongodb.net/matcha?retryWrites=true&w=majority";
+mongoose.connect(`${db_link}`, { useNewUrlParser: true })
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
 
