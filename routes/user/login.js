@@ -1,4 +1,4 @@
-const { User, validate } = require('../../models/user.model');
+const { User } = require('../../models/user.model');
 const Joi = require('joi');
 const _ = require("lodash");
 const bcrypt = require('bcrypt');
@@ -34,5 +34,14 @@ router.post('/login', async(req, res) => {
 
     res.send(true);
 });
+
+function validate(req) {
+    const schema = {
+        email: Joi.string().min(5).max(255).required().email(),
+        password: Joi.string().min(5).max(255).required()
+    };
+
+    return Joi.validate(req, schema);
+}
 
 module.exports = router;
