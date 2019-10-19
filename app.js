@@ -17,6 +17,10 @@ var chatRouter = require('./routes/chat');
 
 var app = express();
 
+// if (!config.get('PrivateKey')) {
+//     console.error('FATAL ERROR: PrivateKey is not defined.');
+//     process.exit(1);
+// }
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -37,7 +41,7 @@ app.use('/chat', chatRouter);
 
 // DB Connection 
 const db_link = "mongodb+srv://xxtractz:Password1@matcha-ifa9u.mongodb.net/matcha?retryWrites=true&w=majority";
-mongoose.connect(`${db_link}`, { useNewUrlParser: true })
+mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
 
