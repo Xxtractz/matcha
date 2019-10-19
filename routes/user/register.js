@@ -1,20 +1,15 @@
-const { User, validate } = require('../models/user.model');
+const { User, validate } = require('../../models/user.model');
 const _ = require("lodash");
 const bcrypt = require('bcrypt');
 var express = require('express');
 var router = express.Router();
 
-/* GET Login page. */
-router.get('/', function(req, res, next) {
-    res.render('login', { page: 'Login', menuId: 'login' });
-});
-
-/* GET Register. */
+/* GET Register. page */
 router.get('/register', function(req, res, next) {
     res.render('register', { page: 'Register', menuId: 'register' });
 });
 
-/* POST Register */
+/* POST Register credetials*/
 router.post('/register', async(req, res) => {
     // First Validate The Request
     const { error } = validate(req.body);
@@ -42,10 +37,5 @@ router.post('/register', async(req, res) => {
     }
 });
 
-
-/* GET forgot page. */
-router.get('/forgot', function(req, res, next) {
-    res.render('forgot', { page: 'Reset', menuId: 'forgot' });
-});
 
 module.exports = router;

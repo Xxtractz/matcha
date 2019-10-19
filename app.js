@@ -7,8 +7,11 @@ const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 var mongoose = require("mongoose");
 
+// Routers declare
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/user/login');
+var registerRouter = require('./routes/user/register');
+var forgotRouter = require('./routes/user/forgot');
 var profileRouter = require('./routes/profile');
 var chatRouter = require('./routes/chat');
 
@@ -26,7 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routers 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/user', loginRouter);
+app.use('/user', registerRouter);
+app.use('/user', forgotRouter);
 app.use('/profile', profileRouter);
 app.use('/chat', chatRouter);
 
