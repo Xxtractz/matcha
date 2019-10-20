@@ -8,7 +8,7 @@ var router = express.Router();
 
 /* GET Login page. */
 router.get('/login', function(req, res, next) {
-    res.render('login', { page: 'Login', menuId: 'login' });
+    res.render('user/login', { page: 'Login', menuId: 'login' });
 });
 
 /* POST Login credentials*/

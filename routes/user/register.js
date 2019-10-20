@@ -7,7 +7,7 @@ var router = express.Router();
 
 /* GET Register. page */
 router.get('/register', function(req, res, next) {
-    res.render('register', { page: 'Register', menuId: 'register' });
+    res.render('user/register', { page: 'Register', menuId: 'register' });
 });
 
 /* POST Register credetials*/

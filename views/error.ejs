@@ -1,4 +1,5 @@
 <div style="
+    font-family: SourceCodePro,Menlo,Monaco,Consolas,'Courier New',monospace;
     margin: auto;
     width: 50%;
     height: 50%;
@@ -6,14 +7,16 @@
     padding: 100px;
     text-align: center;">
     <h2 style="font-size: 86px;">
-        <%= error.status %>
+        &lt;
+        <%= error.status %> &gt;
     </h2>
     <h1 style="font-size: 48px;">
-        <%= message %>
+        &lt;/
+        <%= message %> &gt;
     </h1>
 
     <p style="font-size: 20px;
-    color: red;">Sorry you match is not on this page try going to <a href="/">Home</a> <br> <em><strong>before someone snatches your future partner!!!!!!!!</strong></em></p>
+    color: red;">Sorry your match is not on this page try going to <a href="/">Home</a> <br> <em><strong>before someone snatches your future partner!!!!!!!!</strong></em></p>
 
     <!-- <pre><%= error.stack %></pre> -->
 </div>
