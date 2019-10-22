@@ -13,7 +13,7 @@ router.get('/login', function(req, res, next) {
 
 /* POST Login credentials*/
 
-router.post('/login', async(req, res) => {
+router.post('/api/login', async(req, res) => {
     // First Validate The HTTP Request
     const { error } = validate(req.body);
     if (error) {
