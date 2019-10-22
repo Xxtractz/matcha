@@ -6,7 +6,8 @@ function sendlogin(data, url) {
         url: url,
         data: data,
         success: function(sas) {
-
+            console.log("success");
+            data = {};
         },
     });
 }
