@@ -7,6 +7,6 @@ $(document).ready(function() {
             password: $("#password").val()
         };
 
-        sendlogin(data, "http://localhost:3000/user/api/login");
+
     });
 });
