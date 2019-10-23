@@ -11,18 +11,24 @@ $("login.ejs").ready(function() {
             url: "http://localhost:3000/user/api/login",
             data: data,
             success: function(success) {
-                console.log("success");
+                $("#div1").html(result);
                 console.log(data);
-                console.log(sas);
+                console.log(success);
 
 
                 data = {};
                 console.log(data);
             },
             error: function(error) {
+                if (error.responseText == "") {
+
+                } else {
+
+                }
+                $("#div1").html(result);
+                $("#div1").html(result);
                 console.log(error.responseText);
             }
-
         });
 
     });
