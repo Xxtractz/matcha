@@ -21,13 +21,11 @@ $("login.ejs").ready(function() {
             },
             error: function(error) {
                 if (error.responseText == "") {
+                    $("#div1").html(result);
 
                 } else {
-
+                    $("#div1").html(result);
                 }
-                $("#div1").html(result);
-                $("#div1").html(result);
-                console.log(error.responseText);
             }
         });
 
