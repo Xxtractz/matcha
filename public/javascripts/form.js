@@ -16,11 +16,12 @@ $("login.ejs").ready(function() {
                 window.location.replace("http://localhost:3000/dashboard");
             },
             error: function(error) {
-                if (error.responseText == "") {
-                    $("#div1").html(error);
+                if (error.responseText == "Incorrect email.") {
+                    $("#email").after('<div class="invalid-feedback">Incorrect email.</div>');
 
-                } else {
-                    $("#div1").html(error);
+                } else if (error.responseText == "Incorrect password.") {
+                    $("#email").after('<div class="invalid-feedback">Incorrect password..</div>');
+
                 }
             }
         });
