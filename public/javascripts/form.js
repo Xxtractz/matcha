@@ -11,20 +11,16 @@ $("login.ejs").ready(function() {
             url: "http://localhost:3000/user/api/login",
             data: data,
             success: function(success) {
-                $("#div1").html(result);
-                console.log(data);
-                console.log(success);
-
-
+                localStorage.setItem("jwt", success)
                 data = {};
-                console.log(data);
+                window.location.replace("http://localhost:3000/dashboard");
             },
             error: function(error) {
                 if (error.responseText == "") {
-                    $("#div1").html(result);
+                    $("#div1").html(error);
 
                 } else {
-                    $("#div1").html(result);
+                    $("#div1").html(error);
                 }
             }
         });
