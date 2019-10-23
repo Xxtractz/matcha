@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include layout/head %>
+</head>
+
+<body>
+    <% include layout/menu %>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#myCarousel" data-slide-to="0" class=""></li>
+                <li data-target="#myCarousel" data-slide-to="1" class="active"></li>
+            </ol>
+            <div class="carousel-inner">
+                <div class="carousel-item">
+                    <img src="images/background.jpg" alt="">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"></rect></svg>
+                    <div class="container">
+                        <div class="carousel-caption text-left">
+                            <h1>Why Matcha</h1>
+                            <p>We offers an intelligent online dating approach. To make your search smoother, we suggest highly suitable matches a day, basing our suggestions on a matching process that takes your relationship preferences, education, location,
+                                and personality profile into account.</p>
+                            <p><a class="btn btn-outline-primary my-4 " href="/user/register" role="button">Register today</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item active">
+                    <img src="images/background1.jpg" alt="">
+                    <svg class="bd-placeholder-img" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" focusable="false" role="img"><rect width="100%" height="100%" fill="#777"></rect></svg>
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>Welcome to Matcha</h1>
+                            <p>We believe that real happiness starts with a truly like-minded match, which is why our passion is helping compatible singles connect. If you're serious about finding lasting love.</p>
+                            <p><a class="btn btn-outline-primary my-4 " href="/user/login" role="button">Login</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#myCarousel" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#myCarousel" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+        <div class="container-fluid">
+            <div class="section m-5 p-5">
+                <h2>Online Dating with Matcha</h2>
+                <div class="row">
+                    <div class="col-sm">
+                        <div class="card m-4 p-5">
+                            <!-- Card content -->
+                            <div class="card-body">
+                                <!-- Title -->
+                                <h4 class="card-title"><a>High Success Rate</a></h4>
+                                <!-- Text -->
+                                <p class="card-text">Thousands of singles find love through our dating sites each month. Register today to find that special someone on Matcha.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card m-4 p-5">
+                            <!-- Card content -->
+                            <div class="card-body">
+                                <!-- Title -->
+                                <h4 class="card-title"><a>Intelligent Match making</a></h4>
+                                <!-- Text -->
+                                <p class="card-text">We continuously fine-tune our matchmaking algorithm to deliver the most relevant and active singles based on your preferences.</p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm">
+                        <div class="card m-4 p-5">
+                            <!-- Card content -->
+                            <div class="card-body">
+                                <!-- Title -->
+                                <h4 class="card-title"><a>Meet Eligible Singles</a></h4>
+                                <!-- Text -->
+                                <p class="card-text">EliteSingles is only for those who want a serious relationship. Over 90% of our members are 30+ and hold an above-average education.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% include layout/footer %>
+</body>
+<% include layout/script %>
+
+</html>

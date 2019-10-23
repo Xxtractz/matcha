@@ -14,6 +14,7 @@ var registerRouter = require('./routes/user/register');
 var forgotRouter = require('./routes/user/forgot');
 var profileRouter = require('./routes/profile');
 var chatRouter = require('./routes/chat');
+var dashboardRouter = require('./routes/dashboard');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use('/user', registerRouter);
 app.use('/user', forgotRouter);
 app.use('/profile', profileRouter);
 app.use('/chat', chatRouter);
+app.use('/dashboard', dashboardRouter);
 
 // DB Connection 
 const db_link = "mongodb+srv://xxtractz:Password1@matcha-ifa9u.mongodb.net/matcha?retryWrites=true&w=majority";
