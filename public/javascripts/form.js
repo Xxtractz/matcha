@@ -16,7 +16,7 @@ $("login.ejs").ready(function() {
                 window.location.replace("http://localhost:3000/dashboard");
             },
             error: function(error) {
-                $(".login-form").addClass("was-validated");
+                // $(".login-form").addClass("was-validated");
                 if (error.responseText == "Incorrect email.") {
                     var txt = $('<div class="invalid-feedback"></div>').text("Incorrect email."); // Create text with jQuery
                     $("#email-form").after(txt); // Append new elements
