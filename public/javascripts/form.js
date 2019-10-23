@@ -16,14 +16,17 @@ $("login.ejs").ready(function() {
                 window.location.replace("http://localhost:3000/dashboard");
             },
             error: function(error) {
-                // $(".login-form").addClass("was-validated");
                 if (error.responseText == "Incorrect email.") {
-                    var txt = $('<div class="invalid-feedback"></div>').text("Incorrect email."); // Create text with jQuery
-                    $("#email-form").after(txt); // Append new elements
-                    //$("#email").after('<div class="invalid-feedback"></div>');
+                    $(".invalid-feedback").empty();
+                    $(".email-form").addClass("is-invalid");
+                    var txt = "Incorrect email.";
+                    $(".invalid-feedback").append(txt);
 
                 } else if (error.responseText == "Incorrect password.") {
-                    $("#email").after('<div class="invalid-feedback">Incorrect password..</div>');
+                    $(".invalid-feedback").empty();
+                    $(".password-form").addClass("is-invalid");
+                    var txt = "Incorrect password";
+                    $(".invalid-feedback").append(txt);
 
                 }
             }
