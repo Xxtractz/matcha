@@ -135,7 +135,7 @@ footer {
 .sidebar {
     margin: 0;
     padding: 0;
-    width: 200px;
+    width: 280px;
     background-color: #ffffff;
     position: fixed;
     height: 100%;
@@ -162,7 +162,7 @@ footer {
 }
 
 div.content {
-    margin-left: 200px;
+    margin-left: 300px;
     padding: 1px 16px;
     height: 1000px;
 }
