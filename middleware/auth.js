@@ -1,23 +1,29 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
 
 module.exports = function(req, res, next) {
     //get the token from the header if present
-    const token = req.headers["x-access-token"] || req.headers["authorization"];
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(' ')[1];
+
+
 
     //if no token found, return response (without going to the next middelware)
-    if (!token) {
-        return res.status(401).render('error');
+    if (token == null) {
+        return res.sendStatus(401);
     }
 
-    try {
-        //if can verify the token, set req.user and pass to next middleware
-        const decoded = jwt.verify(token, "Privatekey");
-        req.user = decoded;
+    jwt.verify(token, process.env.ACCESS_JWT, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
         next();
-    } catch (ex) {
-        //if invalid token
-        localStorage.clear();
-        sessionStorage.clear();
-        res.render('user/login');
-    }
+    });
+    //     req.user = decoded;
+
+    // } catch (ex) {
+    //     //if invalid token
+    //     localStorage.clear();
+    //     sessionStorage.clear();
+    //     res.render('user/login');
+    // }
 };
