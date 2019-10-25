@@ -11,7 +11,7 @@ $("login.ejs").ready(function() {
             url: "http://localhost:3000/user/api/login",
             data: data,
             success: function(success) {
-                localStorage.setItem("jwt", success)
+                sessionStorage.setItem("jwt", success)
                 data = {};
                 window.location.replace("http://localhost:3000/dashboard");
             },
