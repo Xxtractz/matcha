@@ -18,12 +18,4 @@ module.exports = function(req, res, next) {
         req.user = user;
         next();
     });
-    //     req.user = decoded;
-
-    // } catch (ex) {
-    //     //if invalid token
-    //     localStorage.clear();
-    //     sessionStorage.clear();
-    //     res.render('user/login');
-    // }
 };

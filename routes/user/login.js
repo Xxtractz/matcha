@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 const { User } = require('../../models/user.model');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
@@ -34,8 +32,8 @@ router.post('/api/login', async(req, res) => {
     if (!validPassword) {
         return res.status(400).send('Incorrect password.');
     }
-    const token = jwt.sign(user, process.env.ACCESS_JWT);
-    res.json({ token: token });
+    const token = jwt.sign({ _id: user._id }, 'PrivateKey');
+    res.send(token);
 });
 
 function validate(req) {

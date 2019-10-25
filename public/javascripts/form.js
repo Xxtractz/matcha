@@ -12,7 +12,6 @@ $("login.ejs").ready(function() {
             data: data,
             success: function(success) {
                 sessionStorage.setItem("jwt", success)
-                data = {};
                 window.location.replace("http://localhost:3000/dashboard");
             },
             error: function(error) {
