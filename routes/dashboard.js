@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const auth = require("../services/authguard")
+const auth = require("../middleware/authguard")
 
 /* GET home page. */
 router.get('/', auth, function(req, res, next) {
