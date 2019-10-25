@@ -1,3 +1,4 @@
+const config = require('config');
 const { User } = require('../../models/user.model');
 const Joi = require('joi');
 const jwt = require('jsonwebtoken');
@@ -32,7 +33,7 @@ router.post('/api/login', async(req, res) => {
     if (!validPassword) {
         return res.status(400).send('Incorrect password.');
     }
-    const token = jwt.sign({ _id: user._id }, 'PrivateKey');
+    const token = jwt.sign({ _id: user._id }, config.get('PrivateKey'));
     res.send(token);
 });
 
