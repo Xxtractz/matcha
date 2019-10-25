@@ -34,6 +34,7 @@ router.post('/api/login', async(req, res) => {
     }
     const token = jwt.sign({ _id: user._id }, 'PrivateKey');
     res.send(token);
+    res.header('jwt', token);
 });
 
 function validate(req) {
