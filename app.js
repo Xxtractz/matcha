@@ -3,12 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const Joi = require('joi');
-Joi.objectId = require('joi-objectid')(Joi);
 var mongoose = require("mongoose");
-const passport = require('passport');
-const session = require('express-session');
-
 
 // Routers declare
 var indexRouter = require('./routes/index');
@@ -20,9 +15,6 @@ var chatRouter = require('./routes/chat');
 var dashboardRouter = require('./routes/dashboard');
 
 var app = express();
-
-// Passport Config
-require('./config/passport')(passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -45,6 +37,7 @@ app.use('/dashboard', dashboardRouter);
 
 // DB Connection 
 const db_link = require('./config/keys').MongoUrl;
+//"mongodb+srv://xxtractz:Password1@matcha-ifa9u.mongodb.net/matcha?retryWrites=true&w=majority"
 mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));

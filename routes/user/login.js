@@ -1,5 +1,4 @@
 const { User } = require('../../models/user.model');
-const Joi = require('joi');
 const jwt = require('jsonwebtoken');
 const _ = require("lodash");
 const bcrypt = require('bcrypt');
@@ -35,14 +34,5 @@ router.post('/api/login', async(req, res) => {
     const token = jwt.sign({ _id: user._id }, 'PrivateKey');
     res.send(token);
 });
-
-function validate(req) {
-    const schema = {
-        email: Joi.string().min(5).max(255).required().email(),
-        password: Joi.string().min(5).max(255).required()
-    };
-
-    return Joi.validate(req, schema);
-}
 
 module.exports = router;
