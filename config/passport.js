@@ -1,3 +1,4 @@
+const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
@@ -6,7 +7,9 @@ const User = require('../models/user.model');
 
 module.exports = function(passport) {
     passport.use(
-        new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+        new LocalStrategy({
+            email: 'user[email]'
+        }, (email, password, done) => {
             // Match user
             User.findOne({
                 email: email

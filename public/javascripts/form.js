@@ -8,10 +8,11 @@ $("login.ejs").ready(function() {
 
         $.ajax({
             type: "POST",
-            url: "http://localhost:3000/user/api/login",
+            url: "http://localhost:3000/user/login",
             data: data,
             success: function(success) {
-                window.location.replace("http://localhost:3000/dashboard");
+                console.log("Logged in");
+
             },
             error: function(error) {
                 if (error.responseText == "Incorrect email.") {
