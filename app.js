@@ -1,5 +1,3 @@
-require('dotenv').config();
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -8,6 +6,7 @@ var logger = require('morgan');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 var mongoose = require("mongoose");
+
 
 // Routers declare
 var indexRouter = require('./routes/index');
@@ -40,8 +39,7 @@ app.use('/chat', chatRouter);
 app.use('/dashboard', dashboardRouter);
 
 // DB Connection 
-const db_link = process.env.MONGODB_URL;
-//"mongodb+srv://xxtractz:Password1@matcha-ifa9u.mongodb.net/matcha?retryWrites=true&w=majority"
+const db_link = require('./config/keys').MongoUrl;
 mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
