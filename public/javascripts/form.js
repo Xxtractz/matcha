@@ -17,7 +17,7 @@ $("login.ejs").ready(function() {
                 if (error.responseText == "Incorrect email.") {
                     $(".invalid-feedback").empty();
                     $(".email-form").addClass("is-invalid");
-                    var txt = "Incorrect email.";
+                    var txt = "Email is not registered.";
                     $(".invalid-feedback").append(txt);
 
                 } else if (error.responseText == "Incorrect password.") {

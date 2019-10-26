@@ -6,6 +6,8 @@ var logger = require('morgan');
 const Joi = require('joi');
 Joi.objectId = require('joi-objectid')(Joi);
 var mongoose = require("mongoose");
+const passport = require('passport');
+const session = require('express-session');
 
 
 // Routers declare
@@ -43,6 +45,21 @@ const db_link = require('./config/keys').MongoUrl;
 mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
+
+
+// Express session
+app.use(
+    session({
+        secret: 'secret',
+        resave: true,
+        saveUninitialized: true
+    })
+);
+
+
+// Passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
