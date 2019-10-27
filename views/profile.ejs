@@ -12,13 +12,14 @@
             <div class="container">
                 <h1>Edit Profile</h1>
                 <hr>
-                <div class="row">
+                <div class="row pt-3">
                     <!-- left column -->
                     <div class="col-md-3">
                         <div class="text-center">
+                            <h3>Profile info</h3>
+                            <hr>
                             <img src="/images/user.png" class="avatar img-circle" style="width: 120px;" alt="avatar">
-                            <br>
-                            <div class="input-group">
+                            <div class="input-group pt-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                                 </div>
@@ -31,7 +32,6 @@
                             <div class="alert alert-danger alert-dismissable">
                                 <a class="panel-close close" data-dismiss="alert">×</a> Image should be less than 5MB
                             </div>
-                            <h3>Profile info</h3>
                         </div>
                     </div>
 
@@ -39,9 +39,9 @@
                     <div class="col-md-9 personal-info">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label class="col-lg-3 control-label">First name:</label>
+                                <label class="col-lg-3 control-label">Bio</label>
                                 <div class="col-lg-8">
-                                    <input class="form-control" type="text" value="Musa">
+                                    <textarea placeholder="Describe yourself here..." name="bio" class="form-control" type="text"></textarea>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -80,12 +80,13 @@
                     </div>
                 </div>
                 <hr>
-                <div class="row">
+                <div class="row pt-3">
                     <br>
                     <div class="col-md-3">
                         <div class="text-center">
                             <h3>Account info</h3>
-                            <small>login information should be changed here!, Please note that you </small>
+                            <hr>
+                            <small>login information should be changed here!</small>
                             <div class="alert alert-warning alert-dismissable">
                                 <a class="panel-close close" data-dismiss="alert">×</a>
                                 <i class="fa fa-cog"></i> Should you decide to change password, your new password will be send to your email Address incase you forget it.
