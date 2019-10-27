@@ -1,18 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
- <% include layout/head %> 
+    <% include layout/head %>
 </head>
+
 <body>
-<% include layout/menu %>
-<div class="container-fluid bg-3 text-center">    
-    <h3><%= page %></h3><br>
-    <div class="row">
-        <div class="col-sm-4">
+    <% include layout/sidenav %>
+
+        <div class="content">
+            <% include layout/footer %>
         </div>
-    </div>
-</div>
-<% include layout/footer %>
 </body>
 <% include layout/script %>
+
 </html>
