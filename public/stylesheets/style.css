@@ -145,9 +145,9 @@ footer {
 
 .sidebar a {
     display: block;
-    color: black;
     padding: 16px;
     text-decoration: none;
+    width: 100%;
 }
 
 .sidebar a.active {
@@ -158,6 +158,11 @@ footer {
 .sidebar a:hover:not(.active) {
     background-color: #555;
     color: white;
+}
+
+.sidebar ul {
+    margin: 0 !important;
+    padding-inline-start: 0px !important;
 }
 
 div.content {
