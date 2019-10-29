@@ -28,12 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Routers 
 app.use('/', indexRouter);
-app.use('/user', loginRouter);
-app.use('/user', registerRouter);
-app.use('/user', forgotRouter);
-app.use('/profile', profileRouter);
-app.use('/chat', chatRouter);
-app.use('/dashboard', dashboardRouter);
 
 // DB Connection 
 const db_link = require('./config/keys').MongoUrl;
