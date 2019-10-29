@@ -58,4 +58,8 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
+// Run server on Port 4000
+const port = 4000;
+app.listen(port, () => console.log(`Server started on Port ${port}`));
+
 module.exports = app;
