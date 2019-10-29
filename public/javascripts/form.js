@@ -5,7 +5,6 @@ $("login.ejs").ready(function() {
             email: $("#email").val(),
             password: $("#password").val()
         };
-
         $.ajax({
             type: "POST",
             url: "http://localhost:3000/user/api/login",
