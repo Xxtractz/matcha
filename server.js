@@ -1,11 +1,20 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require("mongoose");
 
 var app = express();
+
+// Bodyparser middleware
+app.use(
+    bodyParser.urlencoded({
+      extended: false
+    })
+  );
+  app.use(bodyParser.json());
 
 app.use(logger('dev'));
 app.use(express.json());
