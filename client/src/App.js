@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {Component } from 'react';
 import './App.css';
+import Login from './user/login';
 
-function App() {
-    return ( 
-    <div className = "App" >
-        <h1 >hello </h1> 
-    </div>
-    );
+class App extends Component {
+    render(){
+        return (
+            <Router>
+                <Route/>
+            </Router>
+        )
+    }
 }
-export default App;
+
+default exports = App;

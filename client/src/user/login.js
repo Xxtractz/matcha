@@ -1,9 +1,10 @@
-import React from "react";
+import React, { Component } from 'react'
 import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
 
-const LoginPage = () => {
-  return (
-    <MDBContainer>
+export default class login extends Component {
+  render() {
+    return (
+      <MDBContainer>
       <MDBRow>
         <MDBCol md="6">
           <form>
@@ -33,7 +34,6 @@ const LoginPage = () => {
         </MDBCol>
       </MDBRow>
     </MDBContainer>
-  );
-};
-
-export default LoginPage;
+    )
+  }
+}
