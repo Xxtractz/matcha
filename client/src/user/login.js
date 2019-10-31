@@ -4,11 +4,13 @@ import {
         MDBInput, MDBBtn, MDBIcon 
       } from 'mdbreact';
 
-class login extends Component {
+class Login extends Component {
   render() {
     return (
-      <MDBContainer mx-auto>
+      <MDBContainer  className="center-block pt-5 mt-5">
       <MDBRow>
+      <MDBCol md="3">
+        </MDBCol>
         <MDBCol md="6" >
           <form>
             <p className="h5 text-center mb-4">Sign in</p>
@@ -37,10 +39,12 @@ class login extends Component {
             </div>
           </form>
         </MDBCol>
+        <MDBCol md="3">
+        </MDBCol>
       </MDBRow>
     </MDBContainer>
     )
   }
 }
 
-export default login;
+export default Login;
