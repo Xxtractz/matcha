@@ -1,10 +1,12 @@
-import React from "react";
+import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
 
-const RegisterPage = () => {
-  return (
-    <MDBContainer>
+class Register extends Component {
+  render(){return (
+    <MDBContainer className="center-block pt-5 mt-5">
       <MDBRow>
+        <MDBCol md="3">
+        </MDBCol>
         <MDBCol md="6">
           <form>
             <p className="h5 text-center mb-4">Sign up</p>
@@ -49,9 +51,12 @@ const RegisterPage = () => {
             </div>
           </form>
         </MDBCol>
+        <MDBCol md="3">
+        </MDBCol>
       </MDBRow>
     </MDBContainer>
-  );
-};
+  )
+}
+}
 
-export default RegisterPage;
+export default Register;
