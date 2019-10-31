@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBBtn } from 'mdbreact';
+import { 
+        MDBContainer, MDBRow, MDBCol, 
+        MDBInput, MDBBtn, MDBIcon 
+      } from 'mdbreact';
 
-export default class login extends Component {
+class login extends Component {
   render() {
     return (
-      <MDBContainer>
+      <MDBContainer mx-auto>
       <MDBRow>
-        <MDBCol md="6">
+        <MDBCol md="6" >
           <form>
             <p className="h5 text-center mb-4">Sign in</p>
             <div className="grey-text">
@@ -28,7 +31,9 @@ export default class login extends Component {
               />
             </div>
             <div className="text-center">
-              <MDBBtn>Login</MDBBtn>
+            <MDBBtn outline color="secondary">
+                Send <MDBIcon far icon="paper-plane" className="ml-1" />
+              </MDBBtn>
             </div>
           </form>
         </MDBCol>
@@ -37,3 +42,5 @@ export default class login extends Component {
     )
   }
 }
+
+export default login;
