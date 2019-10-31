@@ -2,8 +2,11 @@ const { User, validate } = require('../../models/user.model');
 const jwt = require('jsonwebtoken');
 const _ = require("lodash");
 const bcrypt = require('bcryptjs');
-var express = require('express');
-var router = express.Router();
+const cors = require('cors');
+const express = require('express');
+const router = express.Router();
+
+router.use(cors());
 
 /* POST Register credetials*/
 router.post('/api/register', async(req, res) => {
