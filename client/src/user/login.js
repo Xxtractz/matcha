@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { 
         MDBContainer, MDBRow, MDBCol, 
-        MDBInput, MDBBtn, MDBIcon 
+        MDBInput, MDBBtn
       } from 'mdbreact';
 
 class Login extends Component {
@@ -13,7 +13,11 @@ class Login extends Component {
         </MDBCol>
         <MDBCol md="6" >
           <form>
-            <p className="h5 text-center mb-4">Sign in</p>
+            <p className="h3 text-center mb-4">Sign in</p>
+            <div className="text-center">
+              <small> Please Enter you login details below</small>
+            </div>
+            <hr className="mb-5 ml-5 mr-5"></hr>
             <div className="grey-text">
               <MDBInput
                 label="Type your email"
@@ -34,7 +38,7 @@ class Login extends Component {
             </div>
             <div className="text-center">
             <MDBBtn outline color="secondary">
-                Send <MDBIcon far icon="paper-plane" className="ml-1" />
+                Send
               </MDBBtn>
             </div>
           </form>
