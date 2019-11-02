@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import {Router} from 'react-router-dom;'
+import {Route} from 'react-router-dom;'
 import PropTypes from 'prop-types';
 
 
-const PrivateRoute = () => {
-    return (
-        <div>
-            
-        </div>
-    );
+const PrivateRoute = ( {component : Component, ...rest}) => {
+    <Route {...rest} render={}
+    />
 };
 
 
-private-route.propTypes = {
+PrivateRoute.propTypes = {
     
 };
 
