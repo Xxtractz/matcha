@@ -14,7 +14,7 @@ toggleCollapse = () => {
 render() {
   return (
     <Router>
-      <Navbar bg="blue" expand="sm" style={{padding : 0.2 }} fixed="top">
+      <Navbar bg="blue" expand="sm"  fixed="top">
       <Navbar.Brand href="/">Matcha</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -39,5 +39,4 @@ render() {
     );
   }
 }
-
 export default NavbarPage;

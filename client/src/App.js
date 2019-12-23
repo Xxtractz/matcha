@@ -13,7 +13,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages'
 import Login from './pages/login';
 import Register from './pages/register';
-import NotFound from './pages/error';
+import NotFound from './pages/404';
+
+// Authguard
+import Auth from './middleware/auth';
+
+import {PrivateRoute} from './middleware/private-route';
 
 class App extends Component {
     render(){
@@ -21,7 +26,7 @@ class App extends Component {
             <div>
             <Router>
                 <Switch>
-                    <Route exact path="/" component={Home}/>
+                    <PrivateRoute exact path="/" component={Home} />
                     <Route exact path="/login" component={Login}/>
                     <Route exact path="/register" component={Register}/>
                     <Route exact path="/404" component={NotFound}/>
