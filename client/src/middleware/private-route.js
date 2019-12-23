@@ -8,7 +8,7 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route 
       {...rest} 
         render={props => {
-          if(Auth.loggedin == true){
+          if(Auth.loggedin === true){
             return <Component {...props}/>;
           }
           else{

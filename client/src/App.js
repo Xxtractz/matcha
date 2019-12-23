@@ -15,9 +15,7 @@ import Login from './pages/login';
 import Register from './pages/register';
 import NotFound from './pages/404';
 
-// Authguard
-import Auth from './middleware/auth';
-
+// APrivate Route 
 import {PrivateRoute} from './middleware/private-route';
 
 class App extends Component {

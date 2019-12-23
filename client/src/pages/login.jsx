@@ -1,10 +1,29 @@
-import React, { Component } from 'react'
+import React, {Component } from 'react';
 import { 
         MDBContainer, MDBRow, MDBCol, 
         MDBInput, MDBBtn
       } from 'mdbreact';
+// import Auth from "../middleware/auth";
 
 class Login extends Component {
+  state={
+    email: "",
+    password: ""
+  }
+  onChange = (e) => {
+    this.setState({
+      [e.target.name] : [e.target.value]
+    })
+  }
+
+  login(){
+    console.log(this.state);
+  }
+
+  keyPressed(){
+    this.login();
+  }
+
   render() {
     return (
       <MDBContainer  className="center-block pt-5 mt-5">
@@ -27,6 +46,9 @@ class Login extends Component {
                 validate
                 error="wrong"
                 success="right"
+                name="email"
+                value= {this.state.email}
+                onChange={e => this.onChange(e)}
               />
               <MDBInput
                 label="Type your password"
@@ -34,10 +56,13 @@ class Login extends Component {
                 group
                 type="password"
                 validate
+                name="password"
+                value={this.state.password}
+                onChange={e => this.onChange(e)}
               />
             </div>
             <div className="text-center">
-            <MDBBtn outline color="secondary">
+            <MDBBtn outline color="secondary" onClick={() => this.login()}>
                 Send
               </MDBBtn>
             </div>
