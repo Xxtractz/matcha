@@ -3,7 +3,7 @@ import {
         MDBContainer, MDBRow, MDBCol, 
         MDBInput, MDBBtn
       } from 'mdbreact';
-// import Auth from "../middleware/auth";
+import {login} from "../middleware/auth";
 
 class Login extends Component {
   state={
@@ -17,7 +17,8 @@ class Login extends Component {
   }
 
   login(){
-    
+    login(this.state);
+    window.location.reload();
   }
 
   render() {

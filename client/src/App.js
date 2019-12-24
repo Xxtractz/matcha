@@ -15,8 +15,9 @@ import Login from './pages/login';
 import Register from './pages/register';
 import NotFound from './pages/404';
 
-// APrivate Route 
-import {PrivateRoute} from './middleware/private-route';
+// Modified Route 
+import {PrivateRoute} from './middleware/private.route';
+import {PublicRoute} from './middleware/public.route'
 
 class App extends Component {
     render(){
@@ -25,8 +26,8 @@ class App extends Component {
             <Router>
                 <Switch>
                     <PrivateRoute exact path="/" component={Home} />
-                    <Route exact path="/login" component={Login}/>
-                    <Route exact path="/register" component={Register}/>
+                    <PublicRoute exact path="/login" component={Login}/>
+                    <PublicRoute exact path="/register" component={Register}/>
                     <Route exact path="/404" component={NotFound}/>
                     <Redirect to="/404" />
                 </Switch>
