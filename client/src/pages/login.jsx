@@ -17,11 +17,7 @@ class Login extends Component {
   }
 
   login(){
-    console.log(this.state);
-  }
-
-  keyPressed(){
-    this.login();
+    
   }
 
   render() {

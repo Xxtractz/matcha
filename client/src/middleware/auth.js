@@ -3,7 +3,7 @@ class Auth{
     this.loggedin = false;
   }
   
-  login(){
+  login(userdata){
     this.loggedin = true;
   }
 }
