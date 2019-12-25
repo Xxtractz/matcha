@@ -1,7 +1,8 @@
-// export const userName = () =>{
-//     var data = localStorage.getItem("user").toString();
-//     var dataObj = JSON.parse(data);
-//     console.log(dataObj);
-//   }
+var userdata = JSON.parse(localStorage.getItem("user"));
 
-reac 
+export const getUserName = () => {
+    return userdata.firstname.toString();
+  }
+export const getUserLastName = () => {
+    return userdata.lastname.toString();
+  }

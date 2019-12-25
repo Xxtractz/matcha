@@ -1,5 +1,3 @@
-import { json } from "body-parser";
-
 export const login = (data) => {
   localStorage.setItem("SessionUI", 'TestLogin');
   localStorage.setItem("user", '{"firstname":"Musa","lastname":"Baloyi"}')
