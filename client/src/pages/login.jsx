@@ -4,11 +4,13 @@ import {
         MDBInput, MDBBtn
       } from 'mdbreact';
 import {login} from "../middleware/auth";
+import {isEmpty, isEmail} from "../utils/validate"
 
 class Login extends Component {
   state={
     email: "",
-    password: ""
+    password: "",
+    err:[]
   }
   onChange = (e) => {
     this.setState({
@@ -16,9 +18,33 @@ class Login extends Component {
     })
   }
 
+  validInput(){
+    if(!isEmpty(this.state.email.toString()) && !isEmpty(this.state.password.toString())){
+      if(this.state.email.toString().match("musambaloyi@gmail.com")){
+        return true;
+      }
+      this.setState({err :"Email invalid"});
+    }
+    this.setState({err :"Email invalid Input"});
+    return false;
+  }
+
+  submitHandler = event => {
+    event.preventDefault();
+    this.login();
+  };
+
+  displayErr(){ 
+  }
+  
   login(){
-    login(this.state);
-    window.location.reload();
+    if(this.validInput()){
+      login(this.state);
+      // window.location.reload();
+    }
+    else{
+      return false;
+    }
   }
 
   render() {
@@ -28,38 +54,44 @@ class Login extends Component {
       <MDBCol md="3">
         </MDBCol>
         <MDBCol md="6" >
-          <form>
+          <form
+            onSubmit={this.submitHandler}
+          >
             <p className="h3 text-center mb-4">Sign in</p>
             <div className="text-center">
               <small> Please Enter you login details below</small>
             </div>
             <hr className="mb-5 ml-5 mr-5"></hr>
+            <div className="text-center" >
+              <p>{this.displayErr()}
+              {this.state.err}
+              </p></div>
             <div className="grey-text">
               <MDBInput
                 label="Type your email"
                 icon="envelope"
-                group
                 type="email"
-                validate
-                error="wrong"
-                success="right"
+                group
                 name="email"
                 value= {this.state.email}
                 onChange={e => this.onChange(e)}
+                required
+                validate
+                error="wrong"
+                success="right"
               />
               <MDBInput
                 label="Type your password"
                 icon="lock"
-                group
-                type="password"
-                validate
                 name="password"
+                type="password"
                 value={this.state.password}
                 onChange={e => this.onChange(e)}
+                required
               />
             </div>
             <div className="text-center">
-            <MDBBtn outline color="secondary" onClick={() => this.login()}>
+            <MDBBtn outline color="success" type="submit">
                 Send
               </MDBBtn>
             </div>

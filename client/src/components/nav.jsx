@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
-import {Nav, Navbar, Form, NavDropdown,FormControl,Button} from 'react-bootstrap';
+import {Nav, Navbar, NavDropdown} from 'react-bootstrap';
+import {MDBBtn} from "mdbreact";
+import {logout} from "../middleware/auth"
 
 class NavbarPage extends Component {
 state = {
@@ -9,6 +11,11 @@ state = {
 
 toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
+}
+
+logout(){
+  logout();
+  window.location.reload();
 }
 
 render() {
@@ -29,10 +36,8 @@ render() {
             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
           </NavDropdown>
         </Nav>
-        <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-success">Search</Button>
-        </Form>
+        
+          <MDBBtn outline color="red" onClick={()=>this.logout()}>Logout</MDBBtn>
       </Navbar.Collapse>
     </Navbar>
      </Router>
