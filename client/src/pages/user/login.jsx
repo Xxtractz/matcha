@@ -3,14 +3,17 @@ import {
         MDBContainer, MDBRow, MDBCol, 
         MDBInput, MDBBtn
       } from 'mdbreact';
-import {login} from "../middleware/auth";
-import {isEmpty, isEmail} from "../utils/validate"
+import {login} from "../../middleware/auth";
+import {isEmpty} from "../../utils/validate"
 
 class Login extends Component {
-  state={
-    email: "",
-    password: "",
-    err:[]
+  constructor(){
+    super();
+    this.state={
+      email: "",
+      password: "",
+      err:[]
+    }
   }
   onChange = (e) => {
     this.setState({
@@ -33,18 +36,13 @@ class Login extends Component {
     event.preventDefault();
     this.login();
   };
-
-  displayErr(){ 
-  }
   
   login(){
     if(this.validInput()){
       login(this.state);
-      // window.location.reload();
-    }
-    else{
-      return false;
-    }
+      window.location.reload();
+    }else
+    this.setState({err :"Invalid Details Entered"});
   }
 
   render() {
@@ -62,10 +60,14 @@ class Login extends Component {
               <small> Please Enter you login details below</small>
             </div>
             <hr className="mb-5 ml-5 mr-5"></hr>
-            <div className="text-center" >
-              <p>{this.displayErr()}
+            <div className="text-center">
               {this.state.err}
-              </p></div>
+            </div>
+            {/* <ul className="text-center" >
+              {this.state.err.map(item => (
+                <li>{item.value}</li>
+              ))}
+              </ul> */}
             <div className="grey-text">
               <MDBInput
                 label="Type your email"
@@ -92,6 +94,7 @@ class Login extends Component {
             </div>
             <div className="text-center">
             <MDBBtn outline color="success" type="submit">
+            {/* <MDBBtn outline color="success" type="submit" onClick={()=>this.login()}> */}
                 Send
               </MDBBtn>
             </div>

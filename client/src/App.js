@@ -11,8 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Pages
 import Home from './pages'
-import Login from './pages/login';
-import Register from './pages/register';
+import Login from './pages/user/login';
+import Register from './pages/user/register';
 import NotFound from './pages/404';
 
 // Modified Route 
