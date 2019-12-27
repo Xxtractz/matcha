@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 
+import Layout from "../../components/layout"
+
 class Account extends Component {
   render() {
     return (
-<div> textInComponent </div>
-      
+        <Layout>
+            <div> textInComponent </div>
+        </Layout>
     );
   }
 }

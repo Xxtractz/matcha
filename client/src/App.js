@@ -16,7 +16,6 @@ import Register from './pages/user/register';
 import Account from "./pages/user/account";
 import NotFound from './pages/404';
 
-import Layout from "./components/layout";
 // Modified Route 
 import {PrivateRoute} from './middleware/private.route';
 import {PublicRoute} from './middleware/public.route'
@@ -27,11 +26,8 @@ class App extends Component {
             <div>
                 <Router>
                     <Switch>
-                        <Layout>
-                            <PrivateRoute exact path="/" component={Home} />
-                            <PrivateRoute exact path="/user" component={Account} />
-                        </Layout>
-                        
+                        <PrivateRoute exact path="/" component={Home} />
+                        <PrivateRoute exact path="/user" component={Account} />
                         <PublicRoute exact path="/login" component={Login}/>
                         <PublicRoute exact path="/register" component={Register}/>
                         <Route exact path="/404" component={NotFound}/>

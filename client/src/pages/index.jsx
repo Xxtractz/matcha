@@ -1,16 +1,14 @@
 import React, { Component } from 'react';
 
 // Components
-import Nav from '../components/nav';
+import Layout from '../components/layout'
 class index extends Component {
     render() {
         return (
-            <div>
-                {/* <Nav></Nav>
-                <div className="content">
-                    
-                </div> */}
-            </div>
+            <Layout>
+                text
+            </Layout>
+
         )
     }
 }
