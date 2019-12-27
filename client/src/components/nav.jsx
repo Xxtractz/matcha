@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import {logout} from "../middleware/auth";
 import {getUserName, getUserLastName} from "../middleware/user";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-import { Button, Card, CardMedia, CardContent, Typography } from "@material-ui/core";
+import { Button, Card, CardMedia, CardContent, Typography, List, ListItem, ListItemText } from "@material-ui/core";
 
 
 class Nav extends Component {
@@ -53,12 +53,41 @@ render() {
                 </CardMedia>
                 <CardContent>
                   <Typography>
-                  {this.firstname} {this.lastname} 
+                    {this.firstname} {this.lastname} 
                   </Typography>
                 </CardContent>
               </Card>
             </div>
             <hr/>
+            <div className="col-12">
+              <List component="nav" >
+                <ListItem 
+                  button
+                  className="text-center"
+                >
+                  <ListItemText>
+                    Messages
+                  </ListItemText>
+                </ListItem>
+                <ListItem 
+                  button
+                  className="text-center"
+                  to="/user"
+                >
+                  <ListItemText>
+                    Account
+                  </ListItemText>
+                </ListItem>
+                <ListItem 
+                  button
+                  className="text-center"
+                >
+                  <ListItemText>
+                    Settings
+                  </ListItemText>
+                </ListItem>
+              </List>
+            </div>
           </div>
           <div className="navbarCustom navbar navbar-expand-lg navbar-dark" style={{background: "#004085"}}>
               <a className="navbar-brand " href="/">Matcha</a>
@@ -71,7 +100,7 @@ render() {
                     <Button className="pr-2 nav-link" onClick={() => this.logout()}>
                       <PowerSettingsNewIcon className="" /> 
                        <span className="p-1">Logout</span> 
-                      </Button>
+                    </Button>
                   </li>
                 </ul>
             </div>
