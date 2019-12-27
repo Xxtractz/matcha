@@ -1,6 +1,8 @@
 import React, {Component } from 'react';
 import {login} from "../../middleware/auth";
-import {isEmpty} from "../../utils/validate"
+import {isEmpty} from "../../utils/validate";
+import {Button, TextField, Card, CardActions} from '@material-ui/core';
+
 
 class Login extends Component {
   constructor(){
@@ -8,7 +10,10 @@ class Login extends Component {
     this.state={
       email: "",
       password: "",
-      err:[]
+      email_err:"",
+      email_err_helperText:"",
+      password_err:"",
+      password_err_helperText:"",
     }
   }
   onChange = (e) => {
@@ -22,16 +27,17 @@ class Login extends Component {
       if(this.state.email.toString().match("musambaloyi@gmail.com")){
         return true;
       }
-      this.setState({err :"Email invalid"});
+      this.setState({email_err: "error"});
+      this.setState({email_err_helperText: "Email error"});
     }
     this.setState({err :"Email invalid Input"});
     return false;
   }
 
-  submitHandler = event => {
-    event.preventDefault();
+  submitHandler = e =>{
+    e.preventDefault();
     this.login();
-  };
+  }
   
   login(){
     if(this.validInput()){
@@ -44,47 +50,61 @@ class Login extends Component {
   render() {
     return (
       <div>
-         <div  className="container center-block pt-5 mt-5">
+        <div  className="container">
           <div className="row">
-            <div className="md-col-3">
-              <div className="col">
-                <div className="md-col-6" >
-                  <form onSubmit={this.submitHandler}>
-                    <p className="h3 text-center mb-4">Sign in</p>
-                    <div className="text-center">
-                      <small> Please Enter you login details below</small>
-                    </div>
-                    <hr className="mb-5 ml-5 mr-5"></hr>
-                    <div className="text-center">
-                      {this.state.err}
-                    </div>
-                    <div className="grey-text">
-                      <input className="input" icon="envelope" type="email" name="email"
-                        value= {this.state.email}
-                        onChange={e => this.onChange(e)}
-                        required
-                        validate
-                        error="wrong"
-                        success="right"
+            <div className="col-6 mx-auto pt-5 mt-5" >
+              <Card className="card m-5 p-5 mx-auto col-10">
+                <form onSubmit={this.submitHandler}>
+                  <p className="h3 text-center mb-4">Sign in</p>
+                  <div className="text-center">
+                    <small> Please Enter you login details below</small>
+                  </div>
+                  <hr className="mb-2 ml-5 mr-5"></hr>
+                  <div className="grey-text">
+                    <div className="row">
+                      <div className="col-12 text-center">
+                        <TextField 
+                          className="col-12"
+                          type="email" 
+                          name="email"
+                          label="Email"
+                          helperText={this.state.email_err_helperText}
+                          error={this.state.email_err ? true : false}
+                          value= {this.state.email}
+                          onChange={e => this.onChange(e)}
+                          required
                         />
-                      <input
-                        label="Type your password"
-                        icon="lock"
-                        name="password"
-                        type="password"
-                        value={this.state.password}
-                        onChange={e => this.onChange(e)}
-                        required
-                      />
                     </div>
-                    <div className="text-center">
-                      <button className="btn" type="submit">
-                        Login
-                      </button>
+                  </div> 
+                    <div className="row">
+                      <div className="col-12 text-center">
+                        <TextField 
+                          className="col-12"
+                          name="password"
+                          type="password"
+                          label="Password"
+                          helperText={this.state.password_err_helperText}
+                          error={this.state.password_err ? true : false}
+                          value={this.state.password}
+                          onChange={e => this.onChange(e)}
+                          required
+                        />
+                      </div>
                     </div>
-                  </form>
-                </div>
-              </div>
+                  </div>
+                  <div className="text-center p-3">
+                    <Button variant="contained" type="submit" >
+                      Login
+                    </Button>
+                  </div>
+                </form>
+                <hr/>
+                <CardActions className="bg-gray">
+                  <Button variant="contained" size="small"  href="/register">
+                    Register
+                  </Button>
+                </CardActions>
+              </Card>
             </div>
           </div>
         </div>
