@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
-import {Navbar, Nav, NavItem, Button} from 'react-bootstrap';
-// import {MDBBtn} from "mdbreact";
 import {logout} from "../middleware/auth";
 import {getUserName, getUserLastName} from "../middleware/user";
 
-class NavbarPage extends Component {
+class Nav extends Component {
   constructor(){
     super();
     this.state = {
@@ -27,11 +25,32 @@ logout(){
 render() {
   return (
     <Router>
-                   <div>
-                     nav
-              </div>
+      <div>
+      <div className="sidebar">
+      </div>
+       {/* <MDBNavbar className="navbarCustom" color="default-color" dark expand="md">
+        <MDBNavbarBrand>
+          <strong className="white-text">
+            Matcha
+          </strong>
+        </MDBNavbarBrand>
+        <MDBNavbarToggler onClick={this.toggleCollapse} />
+        <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
+        <MDBNavbarNav right>
+            <MDBNavItem onClick={()=>this.logout()}>
+              <div className="waves-effect waves-light">
+                <MDBIcon icon="sign-out-alt" className="p-2 white-text " />
+                <strong className="white-text">
+                  Logout
+                </strong>
+              </div>             
+            </MDBNavItem>
+          </MDBNavbarNav>
+        </MDBCollapse>
+      </MDBNavbar>         */}
+      </div>
      </Router>
     );
   }
 }
-export default NavbarPage;
+export default Nav;
