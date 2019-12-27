@@ -17,6 +17,22 @@ toggleCollapse = () => {
   this.setState({ isOpen: !this.state.isOpen });
 }
 
+togglebutton(){
+  if(this.state.isOpen){
+    return "navbar-toggler collapsed";
+  }else{
+    return "navbar-toggler";
+  }
+}
+
+toggle(){
+  if(this.state.isOpen){
+    return "navbar-collapse collapse show";
+  }else{
+    return "navbar-collapse collapse";
+  }
+}
+
 logout(){
   logout();
   window.location.reload();
@@ -24,33 +40,31 @@ logout(){
 
 render() {
   return (
-    <Router>
-      <div>
-      <div className="sidebar">
-      </div>
-       {/* <MDBNavbar className="navbarCustom" color="default-color" dark expand="md">
-        <MDBNavbarBrand>
-          <strong className="white-text">
-            Matcha
-          </strong>
-        </MDBNavbarBrand>
-        <MDBNavbarToggler onClick={this.toggleCollapse} />
-        <MDBCollapse id="navbarCollapse3" isOpen={this.state.isOpen} navbar>
-        <MDBNavbarNav right>
-            <MDBNavItem onClick={()=>this.logout()}>
-              <div className="waves-effect waves-light">
-                <MDBIcon icon="sign-out-alt" className="p-2 white-text " />
-                <strong className="white-text">
-                  Logout
-                </strong>
-              </div>             
-            </MDBNavItem>
-          </MDBNavbarNav>
-        </MDBCollapse>
-      </MDBNavbar>         */}
-      </div>
-     </Router>
-    );
+      <Router>
+        <div>
+          <div className="sidebar">
+          </div>
+          <div className=" navbarCustom navbar navbar-expand-lg navbar-dark bg-dark">
+            <div className="container">
+              <a className="navbar-brand" href="/">Matcha</a>
+              <button className={this.togglebutton()} onClick={this.toggleCollapse} type="button" data-toggle="collapsed" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded={this.state.isOpen} aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
+              </button>
+              <div className={this.toggle()}>
+              < ul className="navbar-nav mr-auto">
+                  <li className="nav-item active">
+                    <a className="nav-link" href="/">Home <span className="sr-only">(current)</span></a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/">Link</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Router>
+    )
   }
 }
 export default Nav;
