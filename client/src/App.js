@@ -13,8 +13,10 @@ import './App.css';
 import Home from './pages'
 import Login from './pages/user/login';
 import Register from './pages/user/register';
+import Account from "./pages/user/account";
 import NotFound from './pages/404';
 
+import Layout from "./components/layout";
 // Modified Route 
 import {PrivateRoute} from './middleware/private.route';
 import {PublicRoute} from './middleware/public.route'
@@ -23,15 +25,19 @@ class App extends Component {
     render(){
         return (
             <div>
-            <Router>
-                <Switch>
-                    <PrivateRoute exact path="/" component={Home} />
-                    <PublicRoute exact path="/login" component={Login}/>
-                    <PublicRoute exact path="/register" component={Register}/>
-                    <Route exact path="/404" component={NotFound}/>
-                    <Redirect to="/404" />
-                </Switch>
-            </Router>
+                <Router>
+                    <Switch>
+                        <Layout>
+                            <PrivateRoute exact path="/" component={Home} />
+                            <PrivateRoute exact path="/user" component={Account} />
+                        </Layout>
+                        
+                        <PublicRoute exact path="/login" component={Login}/>
+                        <PublicRoute exact path="/register" component={Register}/>
+                        <Route exact path="/404" component={NotFound}/>
+                        <Redirect to="/404" />
+                    </Switch>
+                </Router>
             </div>
         )
     }
