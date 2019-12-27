@@ -7,11 +7,12 @@ body {
     margin: 0;
     padding: 0;
     width: 300px;
-    background-color: #f1f1f1;
+    background-color: #efefef87;
     position: fixed;
     height: 100%;
     overflow: auto;
     z-index: 1;
+    border-right: solid 0.2px #0c0c0c;
   }
   
   .navbarCustom{
