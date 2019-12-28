@@ -6,9 +6,9 @@ const Layout = props => ({
     return (
         <div>
             <Nav></Nav>
-                <div className="content">
-                    <main>{props.children}</main>
-                </div>
+              <div className="content">
+                  <main>{props.children}</main>
+              </div>
         </div>
     );
   }

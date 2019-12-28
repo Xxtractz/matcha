@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import {logout} from "../../middleware/auth";
 import {getUserName, getUserLastName} from "../../middleware/user";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
@@ -72,7 +72,7 @@ render() {
                 <ListItem 
                   button
                   className="text-center"
-                  to="/user"
+                  
                 >
                   <ListItemText>
                     Account

@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
 
-import Layout from "../../components/Layout/layout"
+import Layout from "../../components/Layout/layout";
+import Images from '../../components/Account/images';
+import Profile from '../../components/Account/profile';
+import AuthDetails from '../../components/Account/authdetails';
+import Settings from '../../components/Account/settings';
 
 class Account extends Component {
   render() {
     return (
         <Layout>
-            <div> textInComponent </div>
+            <Images></Images>
+            <Profile></Profile>
+            <AuthDetails></AuthDetails>
+            <Settings></Settings>
         </Layout>
     );
   }
