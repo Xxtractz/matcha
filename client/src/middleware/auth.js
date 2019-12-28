@@ -4,7 +4,7 @@ export const login = (data) => {
 }
 
 export const logout = () => {
-  localStorage.removeItem("SessionUI");
+  localStorage.clear();
 }
 
 export const register = (data) =>{

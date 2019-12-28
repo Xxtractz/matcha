@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router } from 'react-router-dom';
-import {logout} from "../middleware/auth";
-import {getUserName, getUserLastName} from "../middleware/user";
+import {logout} from "../../middleware/auth";
+import {getUserName, getUserLastName} from "../../middleware/user";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import { Button, Card, CardMedia, CardContent, Typography, List, ListItem, ListItemText } from "@material-ui/core";
 
