@@ -10,7 +10,7 @@ class Nav extends Component {
   constructor(){
     super();
     this.state = {
-      isOpen: false
+      isOpen: false,
     };
     this.firstname = getUserName();
     this.lastname = getUserLastName();
