@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Link} from 'react-router-dom';
+import { BrowserRouter as Router} from 'react-router-dom';
 import {logout} from "../../middleware/auth";
 import {getUserName, getUserLastName} from "../../middleware/user";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
@@ -61,28 +61,20 @@ render() {
             <hr/>
             <div className="col-12">
               <List component="nav" >
-                <ListItem 
-                  button
-                  className="text-center"
-                >
-                  <ListItemText>
-                  <Link to="/Message">Messages</Link>
-                    
-                  </ListItemText>
-                </ListItem>
-                <ListItem button className="text-center">
-                  <ListItemText>
-                    Account
-                  </ListItemText>
-                </ListItem>
-                <ListItem 
-                  button
-                  className="text-center"
-                >
-                  <ListItemText>
-                    Settings
-                  </ListItemText>
-                </ListItem>
+              <a className="text-decoration-none text-dark" href="/"> 
+                  <ListItem button className="text-center">
+                    <ListItemText>
+                      Home
+                    </ListItemText>
+                  </ListItem>
+                </a>
+                <a className="text-decoration-none text-dark" href="/user"> 
+                  <ListItem button className="text-center">
+                    <ListItemText>
+                      Account
+                    </ListItemText>
+                  </ListItem>
+                </a>
               </List>
             </div>
           </div>
