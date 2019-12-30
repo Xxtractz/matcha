@@ -22,9 +22,9 @@ toggleCollapse = () => {
 
 togglebutton(){
   if(this.state.isOpen){
-    return "navbar-toggler collapsed";
+    return "navbar-toggler float-right collapsed";
   }else{
-    return "navbar-toggler";
+    return "navbar-toggler float-right";
   }
 }
 
@@ -32,7 +32,7 @@ toggle(){
   if(this.state.isOpen){
     return "navbar-collapse collapse show";
   }else{
-    return "navbar-collapse collapse";
+    return "navbar-collapse collapse ";
   }
 }
 
@@ -45,11 +45,12 @@ render() {
   return (
       <Router>
         <div>
+          {/* Start Of Side Bar */}
           <div className="sidebar">
             <div className="col-12 mt-5">
-              <Card className="mt-5 text-center" style={{background:"#fff0"}}>
-                <CardMedia className="col-md-10 mx-auto m-3">
-                  <img className="rounded-circle img-fluid" src="https://cdn.business2community.com/wp-content/uploads/2017/08/blank-profile-picture-973460_640.png" alt=""/>
+              <Card className="mt-5 text-center" style={{background:"#b54e80d1"}}>
+                <CardMedia className="">
+                  <img className="img-fluid" src="src/assets/images/profile.png" alt="profile"/>
                 </CardMedia>
                 <CardContent>
                   <Typography>
@@ -78,6 +79,9 @@ render() {
               </List>
             </div>
           </div>
+          {/* End of SideBar 
+          *Nav Starts here
+          */}
           <div className="navbarCustom navbar navbar-expand-lg navbar-dark" style={{background: "#004085"}}>
               <a className="navbar-brand " href="/">Matcha</a>
               <button className={this.togglebutton()} onClick={this.toggleCollapse} type="button" data-toggle="collapsed" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded={this.state.isOpen} aria-label="Toggle navigation">
@@ -94,6 +98,7 @@ render() {
                 </ul>
             </div>
           </div>
+          {/* Nav ends Here */}
         </div>
       </Router>
     )

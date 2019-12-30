@@ -16,7 +16,8 @@ body {
   }
   
   .navbarCustom{
-    margin-left: 300px;
+    /* margin-left: 300px; */
+    display: none !important;
   }
 
   .content {
@@ -49,8 +50,11 @@ body {
       display: none;
     }
     /* .sidebar a {float: left;} */
-    .content {margin-left: 0;}
+    .content {
+      
+      margin-left: 0;}
     .navbarCustom{
+        display: inherit !important;
         margin-left: 0px;
       }
   }
