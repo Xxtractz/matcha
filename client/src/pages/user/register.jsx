@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import axios from 'axios';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
 
 class Register extends Component {
@@ -8,6 +9,7 @@ class Register extends Component {
     this.state={
       fname:"",
       lname:"",
+      username:"",
       age:"",
       email: "",
       password: "",
@@ -17,6 +19,38 @@ class Register extends Component {
       password_err_helperText:"",
     }
   }
+
+  
+  submitHandler = e =>{
+    e.preventDefault();
+    const user = {
+      fname: this.state.fname,
+      lname: this.state.lname,
+      username: this.state.username,
+      age: this.state.age,
+      email: this.state.email,
+      password: this.state.password,
+    };
+
+    axios.post(`http://localhost:3000/api/register`, { user })
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      })
+  }
+
+  // register(){
+  //   axios.post('http://localhost:3000/api/register', {
+  //     firstName: 'Fred',
+  //     lastName: 'Flintstone'
+  //   })
+  //   .then(function (response) {
+  //     console.log(response);
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //   });
+  // }
 
   getLimitMax(){
     var date = new Date();
@@ -30,6 +64,12 @@ class Register extends Component {
     return  (date.getFullYear())+"-"+(date.getMonth())+"-"+(date.getDate());
   }
 
+  onChange = (e) => {
+    this.setState({
+      [e.target.name] : [e.target.value]
+    })
+  }
+
   render(){
     return (
       <div>
@@ -38,7 +78,7 @@ class Register extends Component {
             <div className="col-7 mx-auto pt-5 mt-5" >
               <Card className="card m-5 p-5 mx-auto col-10">
                 {/* <form onSubmit={this.submitHandler}> */}
-                <form >
+                <form onSubmit={this.submitHandler}>
                   <p className="h3 text-center mb-4">Register</p>
                   <div className="text-center">
                     <small> Please Enter your Registration details below</small>
@@ -54,8 +94,8 @@ class Register extends Component {
                           label="First Name"
                           // helperText={this.state.email_err_helperText}
                           // error={this.state.email_err ? true : false}
-                          // value= {this.state.email}
-                          // onChange={e => this.onChange(e)}
+                          value= {this.state.name}
+                          onChange={e => this.onChange(e)}
                           required
                         />
                       </div>
