@@ -1,15 +1,19 @@
-const { User, validate } = require('../../models/user.model');
 const jwt = require('jsonwebtoken');
 const _ = require("lodash");
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
-const express = require('express');
 const router = express.Router();
+const router = require('express').Router();
+const bcrypt = require('bcrypt-nodejs');
+const tokenGen = require('uuid-token-generator');
+const dotenv = require('dotenv').config();
+const Users = require('../models/users');
+const commonFunction = require('./commonFunctions');
 
 router.use(cors());
 
 //sign up post
-router.post('api/register', function(req, res){
+router.post('/api/register', function(req, res){
   
     if (req.body.fname && req.body.lname && req.body.username && req.body.email && req.body.password && req.body.age){
       Users.findOne({'username': req.body.username}, function(err, user){
