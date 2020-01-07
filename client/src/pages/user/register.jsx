@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
+import {signInUrl} from '../../middleware/link';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
 
 class Register extends Component {
@@ -27,15 +28,17 @@ class Register extends Component {
       fname: this.state.fname,
       lname: this.state.lname,
       username: this.state.username,
-      age: this.state.age,
+      age: '18',
       email: this.state.email,
       password: this.state.password,
     };
 
-    axios.post(`http://localhost:3000/api/register`, { user })
+    axios.post(signInUrl, { user })
       .then(res => {
         console.log(res);
-        console.log(res.data);
+        console.log(res.status);
+        console.log(res.statusText);
+        console.log(res.config);
       })
   }
 
@@ -94,7 +97,7 @@ class Register extends Component {
                           label="First Name"
                           // helperText={this.state.email_err_helperText}
                           // error={this.state.email_err ? true : false}
-                          value= {this.state.name}
+                          value= {this.state.fname}
                           onChange={e => this.onChange(e)}
                           required
                         />
@@ -107,8 +110,8 @@ class Register extends Component {
                           label="Last Name"
                           // helperText={this.state.email_err_helperText}
                           // error={this.state.email_err ? true : false}
-                          // value= {this.state.email}
-                          // onChange={e => this.onChange(e)}
+                          value= {this.state.lname}
+                          onChange={e => this.onChange(e)}
                           required
                         />
                       </div>
@@ -127,6 +130,7 @@ class Register extends Component {
                             max: this.getLimitMax(),
                             min: this.getLimitMin()
                           }}
+                          onChange={e => this.onChange(e)}
                           required
                         />
                       </div>
@@ -140,8 +144,8 @@ class Register extends Component {
                           label="Email"
                           // helperText={this.state.email_err_helperText}
                           // error={this.state.email_err ? true : false}
-                          // value= {this.state.email}
-                          // onChange={e => this.onChange(e)}
+                          value= {this.state.email}
+                          onChange={e => this.onChange(e)}
                           required
                         />
                       </div>
@@ -155,8 +159,8 @@ class Register extends Component {
                           label="Password"
                           // helperText={this.state.password_err_helperText}
                           // error={this.state.password_err ? true : false}
-                          // value={this.state.password}
-                          // onChange={e => this.onChange(e)}
+                          value={this.state.password}
+                          onChange={e => this.onChange(e)}
                           required
                         />
                       </div>
