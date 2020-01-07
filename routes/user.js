@@ -68,7 +68,7 @@ router.post('/register', function(req, res){
 //user logging in
 router.post('/login', async (req, res) => {
   try {
-      CommonFunction.logout(req.body.username);
+      commonFunction.logout(req.body.username);
       await Users.findOne({$or:[{username: req.body.username}, {email: req.body.username}]}, (err, user) => {
           if (err)
           {
