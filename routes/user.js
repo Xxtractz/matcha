@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const _ = require("lodash");
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
