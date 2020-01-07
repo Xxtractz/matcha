@@ -7,6 +7,7 @@ const tokenGen = require('uuid-token-generator');
 const dotenv = require('dotenv').config();
 const Users = require('../models/users');
 const boom = require('boom');
+const Auth = require('../models/auth');
 const commonFunction = require('./commonFunctions');
 
 router.use(cors());
