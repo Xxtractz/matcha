@@ -1,3 +1,3 @@
 module.exports = {
-    MongoUrl: "mongodb+srv://xxtractz:Password1@matcha-ifa9u.mongodb.net/matcha?retryWrites=true&w=majority"
+    MongoUrl: "mongodb+srv://hyper:thabisoPassword@matchacluster-e6mcr.mongodb.net/test?retryWrites=true"
 }
