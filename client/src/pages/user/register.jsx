@@ -25,21 +25,21 @@ class Register extends Component {
   submitHandler = e =>{
     e.preventDefault();
     const user = {
-      fname: this.state.fname,
-      lname: this.state.lname,
-      username: this.state.username,
-      age: '18',
-      email: this.state.email,
-      password: this.state.password,
+      "fname": this.state.fname.toString(),
+      "lname": this.state.lname.toString(),
+      "username": "Musa",
+      "age": '18',
+      "email": this.state.email.toString(),
+      "password": this.state.password.toString(),
     };
 
-    axios.post(signInUrl, { user })
-      .then(res => {
-        console.log(res);
-        console.log(res.status);
-        console.log(res.statusText);
-        console.log(res.config);
-      })
+    axios.post(signInUrl,user )
+    .then(response => { 
+      console.log(response)
+    })
+    .catch(error => {
+        console.log(error.response)
+    });
   }
 
   // register(){
