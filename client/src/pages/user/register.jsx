@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import axios from 'axios';
-import {signInUrl} from '../../utils/link';
+import {register} from '../../middleware/auth';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
 
 class Register extends Component {
@@ -32,28 +31,17 @@ class Register extends Component {
       "email": this.state.email.toString(),
       "password": this.state.password.toString(),
     };
-
-    axios.post(signInUrl,user )
-    .then(response => { 
-      console.log(response)
-    })
-    .catch(error => {
-        console.log(error.response)
-    });
+    this.register(user);
   }
 
-  // register(){
-  //   axios.post('http://localhost:3000/api/register', {
-  //     firstName: 'Fred',
-  //     lastName: 'Flintstone'
-  //   })
-  //   .then(function (response) {
-  //     console.log(response);
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //   });
-  // }
+  register(userData){
+    if(this.validInput()){
+      register(userData)
+      window.location.reload();
+    }else
+    this.setState({err :"Invalid Details Entered"});
+    
+  }
 
   getLimitMax(){
     var date = new Date();
