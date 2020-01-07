@@ -1,12 +1,13 @@
 const jwt = require('jsonwebtoken');
 const _ = require("lodash");
-//const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const cors = require('cors');
 const router = require('express').Router();
 const bcrypt = require('bcrypt-nodejs');
 const tokenGen = require('uuid-token-generator');
 const dotenv = require('dotenv').config();
 const Users = require('../models/users');
+const boom = require('boom');
 const commonFunction = require('./commonFunctions');
 
 router.use(cors());
@@ -45,7 +46,7 @@ router.post('/register', function(req, res){
                           console.log(err);
                       }else{
                           commonFunction.sendEmail(req.body.email, "Verify your account",
-                          '<a href="http://localhost:3000/verify?token='+ tkn + '">Click Here</a>');
+                          '<a href="http://localhost:4000/verify?token='+ tkn + '">Click Here</a>');
                          res.status(200).send(doc);
                       }
                   });
@@ -64,27 +65,65 @@ router.post('/register', function(req, res){
     }
 });
 
-router.post('/api/login', async(req, res) => {
-    // First Validate The HTTP Request
-    // const { error } = validate(req.body);
-    // if (error) {
-    //     return res.status(400).send(error.details[0].message);
-    // }
-
-    //  Now find the user by their email address
-    let user = await User.findOne({ email: req.body.email });
-    if (!user) {
-        return res.status(400).send('Incorrect email.');
-    }
-
-    // Then validate the Credentials in MongoDB match
-    // those provided in the request
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) {
-        return res.status(400).send('Incorrect password.');
-    }
-    const token = jwt.sign({ _id: user._id }, 'PrivateKey');
-    res.send(token);
+//user logging in
+router.post('/api/login', async (req, res) => {
+  try {
+      CommonFunctions.logout(req.body.username);
+      await Users.findOne({$or:[{username: req.body.username}, {email: req.body.email}]}, (err, user) => {
+          if (err)
+          {
+              console.log(err);
+              res.status(500).send({"User": "Internal error can not get the user"});
+          } else if (!user) {
+              res.status(204).send({"User": "No matches found"});
+          } else {
+            if(user.active == 0) {
+              res.status(400).send({"User":"The user was never verified"})
+            } else {
+              if (req.body.Password === user.Password)
+              {
+                      loggedUser = {
+                          _id: user._id,
+                          username: req.body.username,
+                          fame: user.firstName,
+                          lname: user.lastName,
+                          email: user.email,
+                          age: user.age,
+                          gender: user.gender,
+                          genderPreference: user.genderPreference,
+                          LP: user.LP,
+                          NO: user.NO,
+                          LW: user.LW,
+                          SE: user.SE,
+                          MV: user.MV,
+                          RD: user.RD,
+                          bio: user.Bio,
+                          active:user.active,
+                          date: user.date
+                      }
+                      const token = jwt.sign(loggedUser, process.env.SECRETS, { expiresIn: process.env.TOKENLIFE})
+                      const refreshToken = jwt.sign(loggedUser, process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE})
+                      const response = {
+                          "username": req.body.username,
+                          "Token": token,
+                          "RefreshToken": refreshToken,
+                      }
+                      const auth = new Auth(response);
+                      auth.save();
+                      const resp = {
+                          "Token": token,
+                          "RefreshToken": refreshToken
+                      }
+                      res.status(200).send(resp);
+              } else {
+                  res.status(400).send({"User": "Bad credentials"})
+              }
+          }
+        }
+      });
+  } catch (err) {
+      throw boom.boomify(err);
+  }
 });
 
 

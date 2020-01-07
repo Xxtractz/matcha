@@ -68,3 +68,17 @@ exports.sendEmail = (email, subject, message) => {
         console.log("Message %s was sent %s", info.messageId, info.response);
       });
 }
+
+exports.logout = (username) => {
+  try {
+      Auth.findOneAndDelete({username: username}, (err, doc) => {
+          if (err) {
+              boom.boomify(err);
+          } else {
+              console.log("Deleted token and logged the user out");
+          }
+      });
+  } catch (err) {
+      boom.boomify(err);
+  }
+}
