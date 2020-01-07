@@ -80,7 +80,7 @@ router.post('/login', async (req, res) => {
             if(user.active == 0) {
               res.status(400).send({"User":"The user was never verified"})
             } else {
-              bcrypt.compare('somePassword', hash, function(err, res) {
+              bcrypt.compare('somePassword', user.password, function(err, res) {
                 if(res) {
                   loggedUser = {
                     _id: user._id,
