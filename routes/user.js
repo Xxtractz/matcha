@@ -12,7 +12,7 @@ const commonFunction = require('./commonFunctions');
 router.use(cors());
 
 //sign up post
-router.post('/api/register', function(req, res){
+router.post('/register', function(req, res){
   
     if (req.body.fname && req.body.lname && req.body.username && req.body.email && req.body.password && req.body.age){
       Users.findOne({'username': req.body.username}, function(err, user){
