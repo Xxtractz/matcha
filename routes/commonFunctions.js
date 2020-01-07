@@ -1,5 +1,6 @@
 const nodeMailer = require('nodemailer');
 const dotenv = require('dotenv').config();
+const boom = require('boom');
 
 exports.checkSignedIn  = (req, res, next) => {
     console.log(req.session.user);
