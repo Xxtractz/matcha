@@ -1,4 +1,3 @@
-const jwt = require('jsonwebtoken');
 const _ = require("lodash");
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
@@ -66,10 +65,10 @@ router.post('/register', function(req, res){
 });
 
 //user logging in
-router.post('/api/login', async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
       CommonFunctions.logout(req.body.username);
-      await Users.findOne({$or:[{username: req.body.username}, {email: req.body.email}]}, (err, user) => {
+      await Users.findOne({$or:[{username: req.body.username}, {email: req.body.username}]}, (err, user) => {
           if (err)
           {
               console.log(err);
@@ -80,44 +79,45 @@ router.post('/api/login', async (req, res) => {
             if(user.active == 0) {
               res.status(400).send({"User":"The user was never verified"})
             } else {
-              if (req.body.Password === user.Password)
-              {
-                      loggedUser = {
-                          _id: user._id,
-                          username: req.body.username,
-                          fame: user.firstName,
-                          lname: user.lastName,
-                          email: user.email,
-                          age: user.age,
-                          gender: user.gender,
-                          genderPreference: user.genderPreference,
-                          LP: user.LP,
-                          NO: user.NO,
-                          LW: user.LW,
-                          SE: user.SE,
-                          MV: user.MV,
-                          RD: user.RD,
-                          bio: user.Bio,
-                          active:user.active,
-                          date: user.date
-                      }
-                      const token = jwt.sign(loggedUser, process.env.SECRETS, { expiresIn: process.env.TOKENLIFE})
-                      const refreshToken = jwt.sign(loggedUser, process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE})
-                      const response = {
-                          "username": req.body.username,
-                          "Token": token,
-                          "RefreshToken": refreshToken,
-                      }
-                      const auth = new Auth(response);
-                      auth.save();
-                      const resp = {
-                          "Token": token,
-                          "RefreshToken": refreshToken
-                      }
-                      res.status(200).send(resp);
-              } else {
+              bcrypt.compare('somePassword', hash, function(err, res) {
+                if(res) {
+                  loggedUser = {
+                    _id: user._id,
+                    username: req.body.username,
+                    fame: user.firstName,
+                    lname: user.lastName,
+                    email: user.email,
+                    age: user.age,
+                    gender: user.gender,
+                    genderPreference: user.genderPreference,
+                    LP: user.LP,
+                    NO: user.NO,
+                    LW: user.LW,
+                    SE: user.SE,
+                    MV: user.MV,
+                    RD: user.RD,
+                    bio: user.Bio,
+                    active:user.active,
+                    date: user.date
+                }
+                const token = jwt.sign(loggedUser, process.env.SECRETS, { expiresIn: process.env.TOKENLIFE})
+                const refreshToken = jwt.sign(loggedUser, process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE})
+                const response = {
+                    "username": req.body.username,
+                    "Token": token,
+                    "RefreshToken": refreshToken,
+                }
+                const auth = new Auth(response);
+                auth.save();
+                const resp = {
+                    "Token": token,
+                    "RefreshToken": refreshToken
+                }
+                res.status(200).send(resp);
+                } else {
                   res.status(400).send({"User": "Bad credentials"})
-              }
+                } 
+              });
           }
         }
       });
