@@ -35,11 +35,13 @@ class Register extends Component {
   }
 
   register(userData){
-    if(this.validInput()){
-      register(userData)
-      window.location.reload();
-    }else
-    this.setState({err :"Invalid Details Entered"});
+    // if(this.validInput()){
+      if(register(userData)){
+        window.alert("Registration Succesful");
+        window.location.replace("/login");
+      }
+    // }else
+    // this.setState({err :"Invalid Details Entered"});
     
   }
 

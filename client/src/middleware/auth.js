@@ -1,5 +1,5 @@
 const axios = require('axios');
-const signInUrl = require('../utils/link').signInUrl;
+const _Url = require('../utils/link');
 
 export const login = (data) => {
   localStorage.setItem("SessionUI", 'TestLogin');
@@ -11,14 +11,15 @@ export const logout = () => {
 }
 
 export const register = (_userdata) =>{
-  axios.post(signInUrl,_userdata )
+  axios.post(_Url.signInUrl,_userdata )
     .then(response => { 
-      console.log(response)
+      console.log(response);
+      return true;
     })
     .catch(error => {
-        console.log(error.response)
+        console.log(error.response.data);
+        return false;
     });
-  
 }
 
 export const isloggedIn = () =>{

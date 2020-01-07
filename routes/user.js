@@ -101,7 +101,8 @@ router.post('/login', async (req, res) => {
                     active:user.active,
                     date: user.date
                 }
-                const token = jwt.sign(loggedUser, process.env.SECRETS, { expiresIn: process.env.TOKENLIFE})
+                // const token = jwt.sign(loggedUser, process.env.SECRETS, { expiresIn: process.env.TOKENLIFE})
+                const token = jwt.sign(loggedUser, process.env.SECRETS)
                 const refreshToken = jwt.sign(loggedUser, process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE})
                 const response = {
                     "username": req.body.username,
