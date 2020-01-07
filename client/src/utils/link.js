@@ -1,0 +1,1 @@
+export const signInUrl = "http://localhost:4000/api/register";
