@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import axios from 'axios';
-import {signInUrl} from '../../middleware/link';
+import {signInUrl} from '../../utils/link';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
 
 class Register extends Component {

@@ -8,6 +8,7 @@ const cors = require('cors');
 const mongoose = require("mongoose");
 const port = process.env.PORT || 4000;
 const app = express();
+var usersRoutes = require('./routes/user');
 
 
 // Bodyparser middleware
@@ -31,6 +32,12 @@ const db_link = require('./config/keys').MongoUrl;
 mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
+
+app.use('/api', usersRoutes);
+
+app.get('/',(req,res) => {
+    res.send("hello world");
+})
 
 // Run server on Port 4000
 app.listen(port, () => console.log(`Server started on Port ${port}`));
