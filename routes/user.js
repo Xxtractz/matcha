@@ -8,6 +8,7 @@ const dotenv = require('dotenv').config();
 const Users = require('../models/users');
 const boom = require('boom');
 const Auth = require('../models/auth');
+const Verification = require('../models/verification');
 const commonFunction = require('./commonFunctions');
 
 router.use(cors());
@@ -128,5 +129,57 @@ router.post('/login', async (req, res) => {
   }
 });
 
+//check if token exists
+router.post('/token/check', async (req, res) => {
+  await Auth.findOne({username: req.body.username}, (err, doc) => {
+      if (err){
+          res.status(500).send({"User":"Encountered a problem while checking in collection"});
+      } else if (doc) {
+          if (doc.token === req.body.token)
+          {
+              res.status(200).send({"User":"Token is valid and belongs to the user"});
+          } else {
+              res.status(400).send({"User":"Invalid token"});
+          }
+      } else {
+          res.status(204).send({"User":"The token is not set for the user"});
+      }
+  });
+});
+
+//when the user clicks on the forgot password they post the email to this api
+router.post('/forgot', async (req, res) => {
+  try {
+     await Users.findOne({email:req.body.email}, (err, doc) => {
+          if (err)
+          {
+              console.log(err);
+              res.send({"User":"Internal server error can not update the user."});
+          } else if (!doc) {
+              res.status(400).send({"User":"The email you entered does not exist."});
+          } else {
+              let verification = {
+                  username: doc.username,
+                  email: doc.email
+              };
+              const token = jwt.sign(verification, process.env.SECRETS);
+              verification.token = token;
+              const ver = new Verification(verification);
+              ver.save();
+
+              let html = "<h1>Reset Password</h1> <br> <p>To reset your password please click <b><a href='http://localhost:3001/verification/"+token+"'>here</a></b>.</p>";
+              let result = CommonFunctions.sendEmail(html, req.body.email, "Reset Password");
+              if(result === 1)
+              {
+                  res.status(200).send({"User":"Check your email for instructions to reset password"});
+              } else {
+                  res.status(400).send("Failed to send the email");
+              } 
+          }
+      }); 
+  } catch (err) {
+      throw boom.boomify(err);
+  }
+});
 
 module.exports = router;
