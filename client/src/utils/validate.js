@@ -40,7 +40,7 @@ export const validateAge = (year,month,day) =>{
 
 export const isYearValid = (year) =>{
     if(year !== "" ){
-       return (year >= 1940 && year <= new Date().getFullYear) ? true : false;
+       return (year >= 1940 && (year <= (new Date().getFullYear()) - 18)) ? true : false;
     }else{
         return false;
     }
