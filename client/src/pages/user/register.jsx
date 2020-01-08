@@ -41,18 +41,6 @@ class Register extends Component {
       }
   }
 
-  getLimitMaxYear(){
-    var date = new Date();
-    date.setFullYear( date.getFullYear() - 18 );
-    return  date.getFullYear();
-  }
-
-  getLimitMinYear(){
-    var date = new Date();
-    date.setFullYear( date.getFullYear() - 80 );
-    return  date.getFullYear();
-  }
-
   onChange = (e) => {
     this.setState({
       [e.target.name] : [e.target.value]
@@ -103,53 +91,35 @@ class Register extends Component {
                       </div>
                     </div> 
                     <div className="row mb-3">
-                      <div className="col-12 text-center">
+                      <div className="col text-center">
                         <TextField
                           id="date_yy"
                           label="YYYY"
-                          type="number"
+                          name="year"
+                          type="text"
                           className="col-8"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          inputProps={{
-                            max: this.getLimitMaxYear(),
-                            min: this.getLimitMinYear()
-                          }}
                           onChange={e => this.onChange(e)}
                           required
                         />
                       </div>
-                      <div className="col-12 text-center">
+                      <div className="col text-center">
                         <TextField
                           id="date_month"
                           label="MM"
-                          type="number"
+                          name="month"
+                          type="text"
                           className="col-8"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          inputProps={{
-                            max: 1,
-                            min: 12
-                          }}
                           onChange={e => this.onChange(e)}
                           required
                         />
                       </div>
-                      <div className="col-12 text-center">
+                      <div className="col text-center">
                         <TextField
                           id="date_day"
                           label="DD"
-                          type="number"
+                          name="day"
+                          type="text"
                           className="col-8"
-                          InputLabelProps={{
-                            shrink: true,
-                          }}
-                          inputProps={{
-                            max: 1,
-                            min: 31
-                          }}
                           onChange={e => this.onChange(e)}
                           required
                         />
