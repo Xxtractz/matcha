@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {register} from '../../middleware/auth';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
-import {isYearValid, isDayValid, isMonthValid, isEmpty} from '../../utils/validate';
+import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar} from '../../utils/validate';
 
 class Register extends Component {
 
@@ -9,7 +9,11 @@ class Register extends Component {
     super();
     this.state={
       fname:"",
+      fname_err:"",
+      fname_err_helperText:"",
       lname:"",
+      lname_err:"",
+      lname_err_helperText:"",
       username:"",
       username_err:"",
       username_err_helperText:"",
@@ -35,10 +39,17 @@ class Register extends Component {
     }
   }
 
+  // Onchange Event... Assigns values to the state on Constructor
+  onChange = (e) => {
+    this.validateAfterInput(e)
+    this.setState({
+      [e.target.name] : [e.target.value]
+    })
+  }
   
+  // Handles submit , Stops the normal submit fuctionality,assigns values to new object
   submitHandler = e =>{
     e.preventDefault();
-
     if(this.isvalidated()){
       const user = {
         "fname": this.state.fname.toString(),
@@ -52,12 +63,19 @@ class Register extends Component {
     }
   }
 
+  register(userData){
+      if(register(userData)){
+        window.alert("Registration Succesful");
+        window.location.replace("/login");
+      }
+  }
+//  Validation before posting to backend 
   isvalidated(){
     if(isEmpty(this.state.fname_err) && isEmpty(this.state.lname_err) &&
         isEmpty(this.state.username_err) && isEmpty(this.state.year_err) &&
         isEmpty(this.state.month_err) && isEmpty(this.state.day_err) &&
         isEmpty(this.state.email_err) && isEmpty(this.state.password_err) &&
-        isEmpty(this.state.confirmPassword_err) && isEmpty(this.state.age_err)){
+        isEmpty(this.state.confirmPassword_err) && !isEmpty(this.state.age_err)){
       return true;
     }
     else{ 
@@ -65,14 +83,18 @@ class Register extends Component {
     }
   }
 
-  register(userData){
-      if(register(userData)){
-        window.alert("Registration Succesful");
-        window.location.replace("/login");
-      }
-  }
-
+//  Validation After input and displaying of errors
   validateAfterInput(e){
+    if(e.target.name === "fname"){
+      if(!isChar(e.target.value)){
+        this.setState({fname_err: "error"});
+        this.setState({fname_err_helperText: "Invalid Name"});
+      }
+      else{
+        this.setState({fname_err: ""});
+        this.setState({fname_err_helperText: ""});
+      }
+    }
     if(e.target.name === "year"){
       if(!isYearValid(e.target.value)){
         this.setState({year_err: "error"});
@@ -105,14 +127,30 @@ class Register extends Component {
     }
   }
 
-  onChange = (e) => {
-    this.validateAfterInput(e)
-    this.setState({
-      [e.target.name] : [e.target.value]
-    })
-  }
-
 // Components for form 
+  inputSection(){
+    return(
+      <div className="grey-text">
+        {/* Fname and  lastName Row */}
+        {this.nameSection()}
+
+        {/* Age / Date of Birth  */}
+        {this.ageSection()}
+
+        {/* Username */}
+        {this.usernameSection()}
+
+        {/* Email */}
+        {this.emailSection()}
+
+        {/* Password */}
+        {this.passwordSection()}
+
+        {/* Confirm Password  */}
+        {this.confirmPasswordSection()}
+      </div>
+    )
+  }
 
   nameSection(){
   return(
@@ -136,8 +174,8 @@ class Register extends Component {
           type="text" 
           name="lname"
           label="Last Name"
-          // helperText={this.state.email_err_helperText}
-          // error={this.state.email_err ? true : false}
+          helperText={this.state.lname_err_helperText}
+          error={this.state.lname_err ? true : false}
           value= {this.state.lname}
           onChange={e => this.onChange(e)}
           required
@@ -145,46 +183,6 @@ class Register extends Component {
       </div>
     </div> 
   )
-  }
-
-  usernameSection(){
-    return(
-      <div className="row mb-3">
-        <div className="col-12 text-center">
-          <TextField 
-            className="col-12"
-            type="text" 
-            name="username"
-            label="Username"
-            // helperText={this.state.email_err_helperText}
-            // error={this.state.email_err ? true : false}
-            value= {this.state.username}
-            onChange={e => this.onChange(e)}
-            required
-          />
-        </div>
-      </div> 
-    )
-  }
-
-  emailSection(){
-    return(
-      <div className="row mb-3">
-        <div className="col-12 text-center">
-          <TextField 
-            className="col-12"
-            type="email" 
-            name="email"
-            label="Email"
-            // helperText={this.state.email_err_helperText}
-            // error={this.state.email_err ? true : false}
-            value= {this.state.email}
-            onChange={e => this.onChange(e)}
-            required
-          />
-        </div>
-      </div> 
-    )
   }
 
   ageSection(){
@@ -242,6 +240,46 @@ class Register extends Component {
     )
   }
 
+  usernameSection(){
+    return(
+      <div className="row mb-3">
+        <div className="col-12 text-center">
+          <TextField 
+            className="col-12"
+            type="text" 
+            name="username"
+            label="Username"
+            // helperText={this.state.email_err_helperText}
+            // error={this.state.email_err ? true : false}
+            value= {this.state.username}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+      </div> 
+    )
+  }
+
+  emailSection(){
+    return(
+      <div className="row mb-3">
+        <div className="col-12 text-center">
+          <TextField 
+            className="col-12"
+            type="email" 
+            name="email"
+            label="Email"
+            // helperText={this.state.email_err_helperText}
+            // error={this.state.email_err ? true : false}
+            value= {this.state.email}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+      </div> 
+    )
+  }
+
   passwordSection(){
     return(
       <div className="row mb-3">
@@ -255,6 +293,26 @@ class Register extends Component {
             // error={this.state.password_err ? true : false}
             value={this.state.password}
             onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+      </div>
+    )
+  }
+
+  confirmPasswordSection(){
+    return(
+      <div className="row mb-3">
+        <div className="col-12 text-center">
+          <TextField 
+            className="col-12"
+            name="password"
+            type="password"
+            label="Confirm Password"
+            // helperText={this.state.password_err_helperText}
+            // error={this.state.password_err ? true : false}
+            // value={this.state.password}
+            // onChange={e => this.onChange(e)}
             required
           />
         </div>
@@ -283,41 +341,7 @@ class Register extends Component {
                   <hr className="mb-2 ml-5 mr-5"></hr>
 
                   {/* Input Box Start */}
-                  <div className="grey-text">
-
-                    {/* Fname and  lastName Row */}
-                    {this.nameSection()}
-
-                    {/* Age / Date of Birth  */}
-                    {this.ageSection()}
-
-                    {/* Username */}
-                    {this.usernameSection()}
-
-                    {/* Email */}
-                    {this.emailSection()}
-
-                    {/* Password */}
-                    {this.passwordSection()}
-
-                    {/* Confirm Password  */}
-                    <div className="row mb-3">
-                      <div className="col-12 text-center">
-                        <TextField 
-                          className="col-12"
-                          name="password"
-                          type="password"
-                          label="Confirm Password"
-                          // helperText={this.state.password_err_helperText}
-                          // error={this.state.password_err ? true : false}
-                          // value={this.state.password}
-                          // onChange={e => this.onChange(e)}
-                          required
-                        />
-                      </div>
-                    </div>
-
-                  </div>
+                  {this.inputSection()}
                   {/* Input Box End */}
 
                   {/* Button */}

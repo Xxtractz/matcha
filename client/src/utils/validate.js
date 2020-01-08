@@ -11,6 +11,12 @@ export const isEmpty = (str) =>{
     return false;
 }
 
+export const isChar = (str) =>{
+    if(/^[a-zA-Z]+$/.test(str) )
+        return true;
+    return false;
+}
+
 export const validateAge = (year,month,day) =>{
     // if(dateString !=""){
     //     var today = new Date();
