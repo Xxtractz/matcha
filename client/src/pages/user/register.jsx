@@ -55,6 +55,7 @@ class Register extends Component {
         "fname": this.state.fname.toString(),
         "lname": this.state.lname.toString(),
         "username": "Musa",
+        "dob": this.state.day+"/"+this.state.month+"/"+this.state.year,
         "age": '18',
         "email": this.state.email.toString(),
         "password": this.state.password.toString(),
