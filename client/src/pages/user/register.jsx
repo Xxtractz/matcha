@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {register} from '../../middleware/auth';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
-import {isYearValid} from '../../utils/validate';
+import {isYearValid, isDayValid, isMonthValid, isEmpty} from '../../utils/validate';
 
 class Register extends Component {
 
@@ -27,7 +27,11 @@ class Register extends Component {
       email_err_helperText:"",
       password: "",
       password_err:"",
-      password_err_helperText:""
+      password_err_helperText:"",
+      confirmPassword: "",
+      confirmPassword_err:"",
+      confirmPassword_err_helperText:"",
+      age_err:""
     }
   }
 
@@ -49,13 +53,18 @@ class Register extends Component {
   }
 
   isvalidated(){
-    if(isYearValid(this.state.year)){
+    if(isEmpty(this.state.fname_err) && isEmpty(this.state.lname_err) &&
+        isEmpty(this.state.username_err) && isEmpty(this.state.year_err) &&
+        isEmpty(this.state.month_err) && isEmpty(this.state.day_err) &&
+        isEmpty(this.state.email_err) && isEmpty(this.state.password_err) &&
+        isEmpty(this.state.confirmPassword_err) && isEmpty(this.state.age_err)){
       return true;
     }
     else{ 
       return false;
     }
   }
+
   register(userData){
       if(register(userData)){
         window.alert("Registration Succesful");
@@ -63,17 +72,41 @@ class Register extends Component {
       }
   }
 
-  onChange = (e) => {
+  validateAfterInput(e){
     if(e.target.name === "year"){
-        if(!isYearValid(e.target.value)){
-          this.setState({year_err: "error"});
-          this.setState({year_err_helperText: "Year error"});
-        }
-        else{
-          this.setState({year_err: ""});
-          this.setState({year_err_helperText: ""});
-        }
+      if(!isYearValid(e.target.value)){
+        this.setState({year_err: "error"});
+        this.setState({year_err_helperText: "Invalid Year"});
+      }
+      else{
+        this.setState({year_err: ""});
+        this.setState({year_err_helperText: ""});
+      }
     }
+    if(e.target.name === "month"){
+      if(!isMonthValid(e.target.value)){
+        this.setState({month_err: "error"});
+        this.setState({month_err_helperText: "Invalid Month"});
+      }
+      else{
+        this.setState({month_err: ""});
+        this.setState({month_err_helperText: ""});
+      }
+    }
+    if(e.target.name === "day"){
+      if(!isDayValid(e.target.value)){
+        this.setState({day_err: "error"});
+        this.setState({day_err_helperText: "Invalid Day"});
+      }
+      else{
+        this.setState({day_err: ""});
+        this.setState({day_err_helperText: ""});
+      }
+    }
+  }
+
+  onChange = (e) => {
+    this.validateAfterInput(e)
     this.setState({
       [e.target.name] : [e.target.value]
     })
@@ -155,6 +188,8 @@ class Register extends Component {
                           name="month"
                           type="text"
                           className="col-8"
+                          helperText={this.state.month_err_helperText}
+                          error={this.state.month_err ? true : false}
                           value= {this.state.month}
                           onChange={e => this.onChange(e)}
                           required
@@ -167,11 +202,14 @@ class Register extends Component {
                           name="day"
                           type="text"
                           className="col-8"
+                          helperText={this.state.day_err_helperText}
+                          error={this.state.day_err ? true : false}
                           value= {this.state.day}
                           onChange={e => this.onChange(e)}
                           required
                         />
                       </div>
+                      <span className="col-12 mt-3 color-red " color="red">You are under Age</span>
                     </div>
 
                     {/* Username */}
