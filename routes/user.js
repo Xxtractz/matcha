@@ -129,6 +129,25 @@ router.post('/login', async (req, res) => {
   }
 });
 
+//check if token exists
+router.post('/token/check', async (req, res) => {
+  await Auth.findOne({username: req.body.username}, (err, doc) => {
+      if (err){
+          res.status(500).send({"User":"Encountered a problem while checking in collection"});
+      } else if (doc) {
+          if (doc.token === req.body.token)
+          {
+              res.status(200).send({"User":"Token is valid and belongs to the user"});
+          } else {
+              res.status(400).send({"User":"Invalid token"});
+          }
+      } else {
+          res.status(204).send({"User":"The token is not set for the user"});
+      }
+  });
+});
+
+//when the user clicks on the forgot password they post the email to this api
 router.post('/forgot', async (req, res) => {
   try {
      await Users.findOne({email:req.body.email}, (err, doc) => {
