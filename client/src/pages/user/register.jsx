@@ -31,7 +31,7 @@ class Register extends Component {
       confirmPassword: "",
       confirmPassword_err:"",
       confirmPassword_err_helperText:"",
-      age_err:""
+      age_err:"none"
     }
   }
 
@@ -112,6 +112,195 @@ class Register extends Component {
     })
   }
 
+// Components for form 
+  formSectionRow(row_className,colSection){
+    return(
+      <div className={row_className}>
+        {colSection}
+      </div>
+    )
+  }
+
+  formSectionCol(col_className,TextFieldSection)
+  {
+    return(
+      <div className={col_className}>
+        {TextFieldSection}
+      </div>
+    )
+  }
+
+  formsectionTextField( 
+    TextField_className,TextField_type,
+    TextField_name,TextField_lable,TextField_helperText,
+    TextField_error,TextField_value,TextField_onChange,TextField_required ){
+    return(
+          <TextField
+            className={TextField_className}
+            type={TextField_type}
+            name={TextField_name}
+            label={TextField_lable}
+            helperText={TextField_helperText}
+            error={TextField_error}
+            value= {TextField_value}
+            onChange={TextField_onChange}
+            required={TextField_required}
+          >
+
+          </TextField>
+    )
+  }
+
+  nameSection(){
+  return this.formSectionRow("row mb-3",
+        [
+          this.formSectionCol("col-6 text-center",),
+          this.formSectionCol("col-6 text-center")]);
+    // <div className="row mb-3">
+    //   <div className="col-6 text-center">
+    //     <TextField 
+    //       className="col-12"
+    //       type="text" 
+    //       name="fname"
+    //       label="First Name"
+    //       helperText={this.state.fname_err_helperText}
+    //       error={this.state.fname_err ? true : false}
+    //       value= {this.state.fname}
+    //       onChange={e => this.onChange(e)}
+    //       required
+    //     />
+    //   </div>
+    //   <div className="col-6 text-center">
+    //     <TextField 
+    //       className="col-12"
+    //       type="text" 
+    //       name="lname"
+    //       label="Last Name"
+    //       // helperText={this.state.email_err_helperText}
+    //       // error={this.state.email_err ? true : false}
+    //       value= {this.state.lname}
+    //       onChange={e => this.onChange(e)}
+    //       required
+    //     />
+    //   </div>
+    // </div> 
+  }
+
+  usernameSection(){
+    return(
+      <div className="row mb-3">
+        <div className="col-12 text-center">
+          <TextField 
+            className="col-12"
+            type="text" 
+            name="username"
+            label="Username"
+            // helperText={this.state.email_err_helperText}
+            // error={this.state.email_err ? true : false}
+            value= {this.state.username}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+      </div> 
+    )
+  }
+
+  emailSection(){
+    return(
+      <div className="row mb-3">
+        <div className="col-12 text-center">
+          <TextField 
+            className="col-12"
+            type="email" 
+            name="email"
+            label="Email"
+            // helperText={this.state.email_err_helperText}
+            // error={this.state.email_err ? true : false}
+            value= {this.state.email}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+      </div> 
+    )
+  }
+
+  ageSection(){
+    return(
+      <div className="row mb-3">
+        <div className="col text-center">
+          <TextField
+            id="date_yy"
+            label="YYYY"
+            name="year"
+            type="text"
+            className="col-8"
+            helperText={this.state.year_err_helperText}
+            error={this.state.year_err ? true : false}
+            value= {this.state.year}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+        <div className="col text-center">
+          <TextField
+            id="date_month"
+            label="MM"
+            name="month"
+            type="text"
+            className="col-8"
+            helperText={this.state.month_err_helperText}
+            error={this.state.month_err ? true : false}
+            value= {this.state.month}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+        <div className="col text-center">
+          <TextField
+            id="date_day"
+            label="DD"
+            name="day"
+            type="text"
+            className="col-8"
+            helperText={this.state.day_err_helperText}
+            error={this.state.day_err ? true : false}
+            value= {this.state.day}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+        <div  
+          className="col-12 mt-3 text-center " 
+          style={{color:"#ff0000",
+          display:this.state.age_err}} >
+        <small>You are under Age</small>
+        </div>
+      </div>
+    )
+  }
+
+  passwordSection(){
+    return(
+      <div className="row mb-3">
+        <div className="col-12 text-center">
+          <TextField 
+            className="col-12"
+            name="password"
+            type="password"
+            label="Password"
+            // helperText={this.state.password_err_helperText}
+            // error={this.state.password_err ? true : false}
+            value={this.state.password}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+      </div>
+    )
+  }
+
   render(){
     return (
       <div>
@@ -136,132 +325,19 @@ class Register extends Component {
                   <div className="grey-text">
 
                     {/* Fname and  lastName Row */}
-                    <div className="row mb-3">
-                      <div className="col-6 text-center">
-                        <TextField 
-                          className="col-12"
-                          type="text" 
-                          name="fname"
-                          label="First Name"
-                          helperText={this.state.fname_err_helperText}
-                          error={this.state.fname_err ? true : false}
-                          value= {this.state.fname}
-                          onChange={e => this.onChange(e)}
-                          required
-                        />
-                      </div>
-                      <div className="col-6 text-center">
-                        <TextField 
-                          className="col-12"
-                          type="text" 
-                          name="lname"
-                          label="Last Name"
-                          // helperText={this.state.email_err_helperText}
-                          // error={this.state.email_err ? true : false}
-                          value= {this.state.lname}
-                          onChange={e => this.onChange(e)}
-                          required
-                        />
-                      </div>
-                    </div> 
+                    {this.nameSection()}
 
                     {/* Age / Date of Birth  */}
-                    <div className="row mb-3">
-                      <div className="col text-center">
-                        <TextField
-                          id="date_yy"
-                          label="YYYY"
-                          name="year"
-                          type="text"
-                          className="col-8"
-                          helperText={this.state.year_err_helperText}
-                          error={this.state.year_err ? true : false}
-                          value= {this.state.year}
-                          onChange={e => this.onChange(e)}
-                          required
-                        />
-                      </div>
-                      <div className="col text-center">
-                        <TextField
-                          id="date_month"
-                          label="MM"
-                          name="month"
-                          type="text"
-                          className="col-8"
-                          helperText={this.state.month_err_helperText}
-                          error={this.state.month_err ? true : false}
-                          value= {this.state.month}
-                          onChange={e => this.onChange(e)}
-                          required
-                        />
-                      </div>
-                      <div className="col text-center">
-                        <TextField
-                          id="date_day"
-                          label="DD"
-                          name="day"
-                          type="text"
-                          className="col-8"
-                          helperText={this.state.day_err_helperText}
-                          error={this.state.day_err ? true : false}
-                          value= {this.state.day}
-                          onChange={e => this.onChange(e)}
-                          required
-                        />
-                      </div>
-                      <span className="col-12 mt-3 color-red " color="red">You are under Age</span>
-                    </div>
+                    {this.ageSection()}
 
                     {/* Username */}
-                    <div className="row mb-3">
-                      <div className="col-12 text-center">
-                        <TextField 
-                          className="col-12"
-                          type="text" 
-                          name="username"
-                          label="Username"
-                          // helperText={this.state.email_err_helperText}
-                          // error={this.state.email_err ? true : false}
-                          value= {this.state.username}
-                          onChange={e => this.onChange(e)}
-                          required
-                        />
-                      </div>
-                    </div> 
+                    {this.usernameSection()}
 
                     {/* Email */}
-                    <div className="row mb-3">
-                      <div className="col-12 text-center">
-                        <TextField 
-                          className="col-12"
-                          type="email" 
-                          name="email"
-                          label="Email"
-                          // helperText={this.state.email_err_helperText}
-                          // error={this.state.email_err ? true : false}
-                          value= {this.state.email}
-                          onChange={e => this.onChange(e)}
-                          required
-                        />
-                      </div>
-                    </div> 
+                    {this.emailSection()}
 
                     {/* Password */}
-                    <div className="row mb-3">
-                      <div className="col-12 text-center">
-                        <TextField 
-                          className="col-12"
-                          name="password"
-                          type="password"
-                          label="Password"
-                          // helperText={this.state.password_err_helperText}
-                          // error={this.state.password_err ? true : false}
-                          value={this.state.password}
-                          onChange={e => this.onChange(e)}
-                          required
-                        />
-                      </div>
-                    </div>
+                    {this.passwordSection()}
 
                     {/* Confirm Password  */}
                     <div className="row mb-3">
