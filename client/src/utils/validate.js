@@ -18,35 +18,27 @@ export const isChar = (str) =>{
 }
 
 export const validateAge = (year,month,day) =>{
-    // if(dateString !=""){
-    //     var today = new Date();
-    //     var birthDate = new Date(dateString);
-    //     var age = today.getFullYear() - birthDate.getFullYear();
-    //     var m = today.getMonth() - birthDate.getMonth();
-    //     var da = today.getDate() - birthDate.getDate();
-    //     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    //       age--;
-    //     }
-    //     if(m<0){
-    //       m +=12;
-    //     }
-    //     if(da<0){
-    //       da +=30;
-    //     }
-    //     if (age >= 1 && age <= 99) {
-    //       return true;
-    //     }else {
-    //       return false;
-    //     }
-      
-    //   }else {
-    //     return false;
-    //   }
+    const max_year = new Date().getFullYear() - 70 ;
+    const min_year = new Date().getFullYear() - 18 ;
+    const _month = new Date().getMonth() + 1;
+    const _day = new Date().getDay();
+
+
+    const dateofbirthDate = new Date(year + "-"+month+"-"+day);
+    const mindate = new Date( min_year+ '-'+_month+'-'+_day);
+    const maxdate = new Date(max_year+ '-'+_month+'-'+_day);
+
+
+    if(dateofbirthDate <= mindate && dateofbirthDate >= maxdate){
+        return true;
+    }
+    else
+        return false; 
 }
 
 export const isYearValid = (year) =>{
     if(year !== "" ){
-       return (year >= 1940 && (year <= (new Date().getFullYear()) - 18)) ? true : false;
+       return ((year >= (new Date().getFullYear()) - 70) && (year <= (new Date().getFullYear()) - 18)) ? true : false;
     }else{
         return false;
     }

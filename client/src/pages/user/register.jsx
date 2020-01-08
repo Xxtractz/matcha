@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {register} from '../../middleware/auth';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
-import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar} from '../../utils/validate';
+import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge} from '../../utils/validate';
 
 class Register extends Component {
 
@@ -84,16 +84,36 @@ class Register extends Component {
     }
   }
 
+  isAgeValid(){
+    if(validateAge(this.state.year,this.state.month,this.state.day)){
+      return true;
+    }
+    else{
+      return false;
+    }
+
+  }
+
 //  Validation After input and displaying of errors
   validateAfterInput(e){
     if(e.target.name === "fname"){
       if(!isChar(e.target.value)){
         this.setState({fname_err: "error"});
-        this.setState({fname_err_helperText: "Invalid Name"});
+        this.setState({fname_err_helperText: "Invalid"});
       }
       else{
         this.setState({fname_err: ""});
         this.setState({fname_err_helperText: ""});
+      }
+    }
+    if(e.target.name === "lname"){
+      if(!isChar(e.target.value)){
+        this.setState({lname_err: "error"});
+        this.setState({lname_err_helperText: "Invalid"});
+      }
+      else{
+        this.setState({lname_err: ""});
+        this.setState({lname_err_helperText: ""});
       }
     }
     if(e.target.name === "year"){
@@ -124,6 +144,14 @@ class Register extends Component {
       else{
         this.setState({day_err: ""});
         this.setState({day_err_helperText: ""});
+      }
+    }
+    if(isYearValid(this.state.year) && isMonthValid(this.state.month) && isDayValid(this.state.day) ){
+      if(this.isAgeValid()){
+        this.setState({age_err: "none"});
+      }
+      else{
+        this.setState({age_err: ""});
       }
     }
   }
@@ -201,6 +229,7 @@ class Register extends Component {
             value= {this.state.year}
             onChange={e => this.onChange(e)}
             required
+            autoComplete="year"
           />
         </div>
         <div className="col text-center">
@@ -215,6 +244,7 @@ class Register extends Component {
             value= {this.state.month}
             onChange={e => this.onChange(e)}
             required
+            autoComplete="month"
           />
         </div>
         <div className="col text-center">
@@ -229,13 +259,14 @@ class Register extends Component {
             value= {this.state.day}
             onChange={e => this.onChange(e)}
             required
+            autoComplete="day"
           />
         </div>
         <div  
           className="col-12 mt-3 text-center " 
           style={{color:"#ff0000",
           display:this.state.age_err}} >
-        <small>You are under Age</small>
+        <small>Only users between 18 and 70 </small>
         </div>
       </div>
     )
@@ -250,11 +281,12 @@ class Register extends Component {
             type="text" 
             name="username"
             label="Username"
-            // helperText={this.state.email_err_helperText}
-            // error={this.state.email_err ? true : false}
+            helperText={this.state.username_err_helperText}
+            error={this.state.username_err ? true : false}
             value= {this.state.username}
             onChange={e => this.onChange(e)}
             required
+            autoComplete="username"
           />
         </div>
       </div> 
@@ -270,11 +302,12 @@ class Register extends Component {
             type="email" 
             name="email"
             label="Email"
-            // helperText={this.state.email_err_helperText}
-            // error={this.state.email_err ? true : false}
+            helperText={this.state.email_err_helperText}
+            error={this.state.email_err ? true : false}
             value= {this.state.email}
             onChange={e => this.onChange(e)}
             required
+            autoComplete="email"
           />
         </div>
       </div> 
@@ -290,11 +323,12 @@ class Register extends Component {
             name="password"
             type="password"
             label="Password"
-            // helperText={this.state.password_err_helperText}
-            // error={this.state.password_err ? true : false}
+            helperText={this.state.password_err_helperText}
+            error={this.state.password_err ? true : false}
             value={this.state.password}
             onChange={e => this.onChange(e)}
             required
+            autoComplete="new-password"
           />
         </div>
       </div>
@@ -307,14 +341,15 @@ class Register extends Component {
         <div className="col-12 text-center">
           <TextField 
             className="col-12"
-            name="password"
+            name="confirmPassword"
             type="password"
             label="Confirm Password"
-            // helperText={this.state.password_err_helperText}
-            // error={this.state.password_err ? true : false}
-            // value={this.state.password}
-            // onChange={e => this.onChange(e)}
+            helperText={this.state.confirmPassword_err_helperText}
+            error={this.state.confirmPassword_err ? true : false}
+            value={this.state.confirmPassword}
+            onChange={e => this.onChange(e)}
             required
+            autoComplete="new-password"
           />
         </div>
       </div>
