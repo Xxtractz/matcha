@@ -113,77 +113,38 @@ class Register extends Component {
   }
 
 // Components for form 
-  formSectionRow(row_className,colSection){
-    return(
-      <div className={row_className}>
-        {colSection}
-      </div>
-    )
-  }
-
-  formSectionCol(col_className,TextFieldSection)
-  {
-    return(
-      <div className={col_className}>
-        {TextFieldSection}
-      </div>
-    )
-  }
-
-  formsectionTextField( 
-    TextField_className,TextField_type,
-    TextField_name,TextField_lable,TextField_helperText,
-    TextField_error,TextField_value,TextField_onChange,TextField_required ){
-    return(
-          <TextField
-            className={TextField_className}
-            type={TextField_type}
-            name={TextField_name}
-            label={TextField_lable}
-            helperText={TextField_helperText}
-            error={TextField_error}
-            value= {TextField_value}
-            onChange={TextField_onChange}
-            required={TextField_required}
-          >
-
-          </TextField>
-    )
-  }
 
   nameSection(){
-  return this.formSectionRow("row mb-3",
-        [
-          this.formSectionCol("col-6 text-center",),
-          this.formSectionCol("col-6 text-center")]);
-    // <div className="row mb-3">
-    //   <div className="col-6 text-center">
-    //     <TextField 
-    //       className="col-12"
-    //       type="text" 
-    //       name="fname"
-    //       label="First Name"
-    //       helperText={this.state.fname_err_helperText}
-    //       error={this.state.fname_err ? true : false}
-    //       value= {this.state.fname}
-    //       onChange={e => this.onChange(e)}
-    //       required
-    //     />
-    //   </div>
-    //   <div className="col-6 text-center">
-    //     <TextField 
-    //       className="col-12"
-    //       type="text" 
-    //       name="lname"
-    //       label="Last Name"
-    //       // helperText={this.state.email_err_helperText}
-    //       // error={this.state.email_err ? true : false}
-    //       value= {this.state.lname}
-    //       onChange={e => this.onChange(e)}
-    //       required
-    //     />
-    //   </div>
-    // </div> 
+  return(
+    <div className="row mb-3">
+      <div className="col-6 text-center">
+        <TextField 
+          className="col-12"
+          type="text" 
+          name="fname"
+          label="First Name"
+          helperText={this.state.fname_err_helperText}
+          error={this.state.fname_err ? true : false}
+          value= {this.state.fname}
+          onChange={e => this.onChange(e)}
+          required
+        />
+      </div>
+      <div className="col-6 text-center">
+        <TextField 
+          className="col-12"
+          type="text" 
+          name="lname"
+          label="Last Name"
+          // helperText={this.state.email_err_helperText}
+          // error={this.state.email_err ? true : false}
+          value= {this.state.lname}
+          onChange={e => this.onChange(e)}
+          required
+        />
+      </div>
+    </div> 
+  )
   }
 
   usernameSection(){
