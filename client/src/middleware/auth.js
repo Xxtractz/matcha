@@ -1,4 +1,4 @@
-const axios = require('axios');
+const axios = require('axios').default;
 const _Url = require('../utils/link');
 
 export const login = (data) => {
