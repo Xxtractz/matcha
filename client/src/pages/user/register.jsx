@@ -64,6 +64,16 @@ class Register extends Component {
   }
 
   onChange = (e) => {
+    if(e.target.name === "year"){
+        if(!isYearValid(e.target.value)){
+          this.setState({year_err: "error"});
+          this.setState({year_err_helperText: "Year error"});
+        }
+        else{
+          this.setState({year_err: ""});
+          this.setState({year_err_helperText: ""});
+        }
+    }
     this.setState({
       [e.target.name] : [e.target.value]
     })
@@ -131,6 +141,8 @@ class Register extends Component {
                           name="year"
                           type="text"
                           className="col-8"
+                          helperText={this.state.year_err_helperText}
+                          error={this.state.year_err ? true : false}
                           value= {this.state.year}
                           onChange={e => this.onChange(e)}
                           required
@@ -229,16 +241,20 @@ class Register extends Component {
                         />
                       </div>
                     </div>
-                    
+
                   </div>
                   {/* Input Box End */}
 
+                  {/* Button */}
                   <div className="text-center p-3 mt-4">
                     <Button variant="contained" type="submit" >
                       Register
                     </Button>
                   </div>
+
                 </form>
+                {/* Form Ends */}
+
                 <hr/>
                 <CardActions className="bg-gray">
                   <ButtonBase variant="text" size="small"  href="/login">
