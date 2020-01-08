@@ -182,4 +182,24 @@ router.post('/forgot', async (req, res) => {
   }
 });
 
+//changing the password of the user
+router.post('/change/password', async (req, res) => {
+  try {
+      await Users.findByIdAndUpdate({username:req.body.username}, {password: req.body.password}, (err, doc) => {
+          if (err)
+          {
+              console.log(err);
+              res.status(500).send({"User":"Something wrong happened"});
+          } else if (doc)
+          {
+              res.status(200).send(doc);
+          } else {
+              res.status(400).send({"User":"The user does not exist"});
+          }
+      });
+  } catch (err) {
+      boom.boomify(err);
+  }
+});
+
 module.exports = router;
