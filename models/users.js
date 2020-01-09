@@ -26,6 +26,7 @@ var userSchema = new Schema({
     active: {type:String},
     date: {type:Date, default:Date.now()},
     age: {type:Number},
+    dob: {type:String},
     interets: []
 });
 
