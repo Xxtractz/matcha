@@ -16,8 +16,7 @@ export const register = (_userdata) =>{
       }
     })
     .catch(error => {
-      console.log(error.response.data);
-      window.alert(error.response.data);
+      window.alert(error.response.data.User);
     } );
 }
 
