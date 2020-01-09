@@ -252,6 +252,7 @@ class Register extends Component {
             error={this.state.year_err ? true : false}
             value= {this.state.year}
             onChange={e => this.onChange(e)}
+            inputProps={{ maxLength: 4 }}
             required
             autoComplete="year"
           />
@@ -267,6 +268,7 @@ class Register extends Component {
             error={this.state.month_err ? true : false}
             value= {this.state.month}
             onChange={e => this.onChange(e)}
+            inputProps={{ maxLength: 2 }}
             required
             autoComplete="month"
           />
@@ -282,6 +284,7 @@ class Register extends Component {
             error={this.state.day_err ? true : false}
             value= {this.state.day}
             onChange={e => this.onChange(e)}
+            inputProps={{ maxLength: 2 }}
             required
             autoComplete="day"
           />

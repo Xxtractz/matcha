@@ -2,8 +2,6 @@ const axios = require('axios').default;
 const _Url = require('../utils/link');
 
 export const login = (data) => {
-  localStorage.setItem("SessionUI", 'TestLogin');
-  localStorage.setItem("user", '{"firstname":"Musa","lastname":"Baloyi"}')
 }
 
 export const logout = () => {
@@ -13,11 +11,13 @@ export const logout = () => {
 export const register = (_userdata) =>{
   axios.post(_Url.signInUrl,_userdata )
     .then(response => { 
+      console.log("Before True");
       console.log(response);
       return true;
     })
     .catch(error => {
         console.log(error.response.data);
+        console.log("Before false");
         return false;
     });
 }
