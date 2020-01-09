@@ -38,6 +38,7 @@ class Register extends Component {
       age_err:"none"
     }
     this.ageValid = 0;
+    this.error="";
   }
 
   // Onchange Event... Assigns values to the state on Constructor
@@ -61,17 +62,9 @@ class Register extends Component {
         "email": this.state.email.toString(),
         "password": this.state.password.toString(),
       };
-      this.register(user);
+      register(user);
     }
   }
-
-  register(userData){
-      if(register(userData)){
-        window.alert("Registration Succesful");
-        window.location.replace("/login");
-      }
-  }
-
 
 //  Validation before posting to backend 
   isvalidated(){
@@ -400,8 +393,9 @@ class Register extends Component {
                     <small> Please Enter your Registration details below</small>
                   </div>
                   {/* Header Text End */}
-
+                  
                   <hr className="mb-2 ml-5 mr-5"></hr>
+                  {this.error.toString()}
 
                   {/* Input Box Start */}
                   {this.inputSection()}
