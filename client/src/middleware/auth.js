@@ -9,14 +9,19 @@ export const logout = () => {
 }
 
 export const register = (_userdata) =>{
-  axios.post(_Url.signInUrl,_userdata )
-    .then(response => { 
+  return axios.post(_Url.signInUrl,_userdata )
+    .then(response => {
       if(response){
-        window.location.replace("/login?id=ok");
+        return {status : "true"};
       }
     })
     .catch(error => {
-      window.alert(error.response.data.User);
+      if (error) {
+        return {
+          status:"false",
+          message:error.response.data.User
+        }
+      }
     } );
 }
 

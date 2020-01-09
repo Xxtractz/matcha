@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {register} from '../../middleware/auth';
+import Alert from '@material-ui/lab/Alert';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
 import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge,getAge, isEqual, isPassword} from '../../utils/validate';
 
@@ -41,6 +42,8 @@ class Register extends Component {
     this.error="";
   }
 
+  
+  // use history.push('/some/path') here
   // Onchange Event... Assigns values to the state on Constructor
   onChange = (e) => {
     this.validateAfterInput(e)
@@ -62,8 +65,29 @@ class Register extends Component {
         "email": this.state.email.toString(),
         "password": this.state.password.toString(),
       };
-      register(user);
+      this.register(user);
     }
+  }
+
+  register(userData){
+    register(userData)
+    .then(res => {
+      if(res.status === "true"){
+        window.location.replace("/login?id=afterReg");
+      }else if(res.status === "true"){
+
+      }
+    });
+  
+    // this.searchInputTimeout ? clearTimeout(this.searchInputTimeout) : null;
+
+    // console.log(searchForPlaces(this.state.searchInputValue));
+    // this.searchInputTimeout = setTimeout(() => {
+    //   searchForPlaces(this.state.searchInputValue)
+    //     .then(searchForPlacesResponse => {
+    //       this.setState({ searchForPlacesResponse });
+    //     });
+    // }, 400);
   }
 
 //  Validation before posting to backend 
@@ -382,7 +406,7 @@ class Register extends Component {
         <div  className="container">
           <div className="row">
             <div className="col-md-8 mx-auto pt-5 mt-5" >
-              <Card className="card m-5 p-5 mx-auto col-10">
+              <Card className="card m-5 p-5 mx-auto col-10" variant="outlined">
 
                 {/* Form Starts */}
                 <form onSubmit={this.submitHandler}>
@@ -393,7 +417,14 @@ class Register extends Component {
                     <small> Please Enter your Registration details below</small>
                   </div>
                   {/* Header Text End */}
-                  
+
+                  {/* Error Section */}
+                  <div className="m-2 ml-5 mr-5">
+                    <Alert variant="outlined" severity="error">
+                      This is an error alert — check it out!
+                    </Alert>
+                  </div>
+                
                   <hr className="mb-2 ml-5 mr-5"></hr>
                   {this.error.toString()}
 
