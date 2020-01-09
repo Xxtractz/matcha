@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {register} from '../../middleware/auth';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
-import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge} from '../../utils/validate';
+import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge,getAge} from '../../utils/validate';
 
 class Register extends Component {
 
@@ -37,6 +37,7 @@ class Register extends Component {
       confirmPassword_err_helperText:"",
       age_err:"none"
     }
+    this.ageValid = 0;
   }
 
   // Onchange Event... Assigns values to the state on Constructor
@@ -54,9 +55,9 @@ class Register extends Component {
       const user = {
         "fname": this.state.fname.toString(),
         "lname": this.state.lname.toString(),
-        "username": "Musa",
+        "username": this.state.username.toString(),
         "dob": this.state.day+"/"+this.state.month+"/"+this.state.year,
-        "age": '18',
+        "age": getAge(this.state.year+"-"+this.state.month+"-"+this.state.day).toString(),
         "email": this.state.email.toString(),
         "password": this.state.password.toString(),
       };
@@ -70,6 +71,8 @@ class Register extends Component {
         window.location.replace("/login");
       }
   }
+
+
 //  Validation before posting to backend 
   isvalidated(){
     if(isEmpty(this.state.fname_err) && isEmpty(this.state.lname_err) &&
@@ -146,8 +149,9 @@ class Register extends Component {
         this.setState({day_err_helperText: ""});
       }
     }
-    if(isYearValid(this.state.year) && isMonthValid(this.state.month) && isDayValid(this.state.day) ){
+    if(isYearValid(this.state.year) && isMonthValid(this.state.month) && isDayValid(this.state.day) && this.ageValid === 0){
       if(this.isAgeValid()){
+        this.ageValid = 1;
         this.setState({age_err: "none"});
       }
       else{

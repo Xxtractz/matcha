@@ -1,3 +1,4 @@
+
 export const isEmail = (email) =>{
     if (email.match("@")) {
         return true;
@@ -15,6 +16,17 @@ export const isChar = (str) =>{
     if(/^[a-zA-Z]+$/.test(str) )
         return true;
     return false;
+}
+
+export const getAge = (dateString) =>{
+    const today = new Date();
+    const birthDate = new Date(dateString);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    const m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age--;
+    }
+    return age;
 }
 
 export const validateAge = (year,month,day) =>{
