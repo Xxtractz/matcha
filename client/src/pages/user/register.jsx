@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import {register} from '../../middleware/auth';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
-import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge,getAge} from '../../utils/validate';
+import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge,getAge, isEqual, isPassword} from '../../utils/validate';
 
 class Register extends Component {
 
@@ -147,6 +147,26 @@ class Register extends Component {
       else{
         this.setState({day_err: ""});
         this.setState({day_err_helperText: ""});
+      }
+    }
+    if(e.target.name === "password"){
+      if(!isPassword(e.target.value)){
+        this.setState({password_err: "error"});
+        this.setState({password_err_helperText: "Passwords Isn't Secured"});
+      }
+      else{
+        this.setState({password_err: ""});
+        this.setState({password_err_helperText: ""});
+      }
+    }
+    if(e.target.name === "confirmPassword"){
+      if(!isEqual(e.target.value, this.state.password.toString())){
+        this.setState({confirmPassword_err: "error"});
+        this.setState({confirmPassword_err_helperText: "Passwords Don't Match"});
+      }
+      else{
+        this.setState({confirmPassword_err: ""});
+        this.setState({confirmPassword_err_helperText: ""});
       }
     }
     if(isYearValid(this.state.year) && isMonthValid(this.state.month) && isDayValid(this.state.day) && this.ageValid === 0){
