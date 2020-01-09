@@ -36,10 +36,10 @@ class Register extends Component {
       confirmPassword: "",
       confirmPassword_err:"",
       confirmPassword_err_helperText:"",
-      age_err:"none"
+      age_err:"none",
+      error:""
     }
     this.ageValid = 0;
-    this.error="";
   }
 
   
@@ -75,19 +75,9 @@ class Register extends Component {
       if(res.status === "true"){
         window.location.replace("/login?id=afterReg");
       }else if(res.status === "false"){
-        this.setState(this.error = res.message);
+        this.setState({error:  res.message});
       }
     });
-  
-    // this.searchInputTimeout ? clearTimeout(this.searchInputTimeout) : null;
-
-    // console.log(searchForPlaces(this.state.searchInputValue));
-    // this.searchInputTimeout = setTimeout(() => {
-    //   searchForPlaces(this.state.searchInputValue)
-    //     .then(searchForPlacesResponse => {
-    //       this.setState({ searchForPlacesResponse });
-    //     });
-    // }, 400);
   }
 
 //  Validation before posting to backend 
@@ -195,6 +185,7 @@ class Register extends Component {
         this.setState({age_err: ""});
       }
     }
+    this.setState({error: ""});
   }
 
 // Components for form 
@@ -401,7 +392,7 @@ class Register extends Component {
   }
 
   displayErr(){
-    if(this.error === "" ){
+    if(this.state.error.toString() === "" ){
       return(
         <div></div>
         )
@@ -409,7 +400,7 @@ class Register extends Component {
       return(
         <div className="m-2 ml-5 mr-5">
           <Alert variant="outlined" severity="error">
-            {this.error}</Alert>
+            {this.state.error.toString()}</Alert>
        </div>)
     }
     
@@ -437,7 +428,6 @@ class Register extends Component {
                   
                 
                   <hr className="mb-2 ml-5 mr-5"></hr>
-                  {this.error.toString()}
 
                   {/* Input Box Start */}
                   {this.inputSection()}
