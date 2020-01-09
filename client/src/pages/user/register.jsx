@@ -74,8 +74,8 @@ class Register extends Component {
     .then(res => {
       if(res.status === "true"){
         window.location.replace("/login?id=afterReg");
-      }else if(res.status === "true"){
-
+      }else if(res.status === "false"){
+        this.setState(this.error = res.message);
       }
     });
   
@@ -400,6 +400,20 @@ class Register extends Component {
     )
   }
 
+  displayErr(){
+    if(this.error === "" ){
+      return(
+        <div></div>
+        )
+    }else{
+      return(
+        <div className="m-2 ml-5 mr-5">
+          <Alert variant="outlined" severity="error">
+            {this.error}</Alert>
+       </div>)
+    }
+    
+  }
   render(){
     return (
       <div>
@@ -419,11 +433,8 @@ class Register extends Component {
                   {/* Header Text End */}
 
                   {/* Error Section */}
-                  <div className="m-2 ml-5 mr-5">
-                    <Alert variant="outlined" severity="error">
-                      This is an error alert — check it out!
-                    </Alert>
-                  </div>
+                  {this.displayErr()}
+                  
                 
                   <hr className="mb-2 ml-5 mr-5"></hr>
                   {this.error.toString()}
