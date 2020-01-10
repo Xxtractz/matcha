@@ -1,6 +1,6 @@
 import React, {Component } from 'react';
 import {login} from "../../middleware/auth";
-import {isEmpty} from "../../utils/validate";
+//import {isEmpty} from "../../utils/validate";
 import {Button, TextField, Card, CardActions} from '@material-ui/core';
 import { Alert } from '@material-ui/lab';
 import IconButton from '@material-ui/core/IconButton';
@@ -23,7 +23,7 @@ class Login extends Component {
   }
 
 
- displayVerify(){
+  displayVerify(){
     return(
       <Collapse in={this.state.isopen}>
         <Alert
@@ -40,11 +40,12 @@ class Login extends Component {
             </IconButton>
           }
         >
-          Registration Was Successful, <strong>Verification link</strong> has been sent via Email.<strong>Verify Account before Loggin</strong> 
+          Registration Was Successful,Verification link has been sent via Email.<strong>Verify Account before Loggin</strong> 
         </Alert>
       </Collapse>
     )
   }
+
   onChange = (e) => {
     this.setState({
       [e.target.name] : [e.target.value]
@@ -52,15 +53,6 @@ class Login extends Component {
   }
 
   validInput(){
-    if(!isEmpty(this.state.email.toString()) && !isEmpty(this.state.password.toString())){
-      if(this.state.email.toString().match("musambaloyi@gmail.com")){
-        return true;
-      }
-      this.setState({email_err: "error"});
-      this.setState({email_err_helperText: "Email error"});
-    }
-    this.setState({err :"Email invalid Input"});
-    return false;
   }
 
   submitHandler = e =>{
@@ -77,9 +69,30 @@ class Login extends Component {
   }
 
   // Form Sections
+  usernameSection(){
+    return( 
+    <div className="row">
+      <div className="col-12 text-center">
+        <TextField 
+          className="col-12"
+          type="text" 
+          name="username"
+          label="Username"
+          helperText={this.state.username_err_helperText}
+          error={this.state.username_err ? true : false}
+          value= {this.state.username}
+          onChange={e => this.onChange(e)}
+          required
+          autoComplete="username"
+        />
+      </div>
+    </div>
+   )
+  }
+
   passwordSection(){
     return(
-      <div className="row mb-3">
+      <div className="row">
         <div className="col-12 text-center">
           <TextField 
             className="col-12"
@@ -91,7 +104,7 @@ class Login extends Component {
             value={this.state.password}
             onChange={e => this.onChange(e)}
             required
-            autoComplete="new-password"
+            autoComplete="current-password"
           />
         </div>
       </div>
@@ -103,8 +116,8 @@ class Login extends Component {
         <div  className="container">
           {(window.location.hash === "#regSuccess")? this.displayVerify():""}
           <div className="row">
-            <div className="col-6 mx-auto pt-5 mt-5" >
-              <Card className="card m-5 p-5 mx-auto col-10">
+            <div className="col-md-6 mx-auto pt-5 mt-5" >
+              <Card className="card m-5 p-5 mx-auto col-10" variant="outlined">
                 <form onSubmit={this.submitHandler}>
                   <p className="h3 text-center mb-4">Sign in</p>
                   <div className="text-center">
@@ -112,38 +125,13 @@ class Login extends Component {
                   </div>
                   <hr className="mb-2 ml-5 mr-5"></hr>
                   <div className="grey-text">
-                    <div className="row">
-                      <div className="col-12 text-center">
-                        <TextField 
-                          className="col-12"
-                          type="email" 
-                          name="email"
-                          label="Email"
-                          helperText={this.state.username_err_helperText}
-                          error={this.state.username_err ? true : false}
-                          value= {this.state.username}
-                          onChange={e => this.onChange(e)}
-                          required
-                          autoComplete="username"
-                        />
-                    </div>
-                  </div> 
-                    <div className="row">
-                      <div className="col-12 text-center">
-                        <TextField 
-                          className="col-12"
-                          name="password"
-                          type="password"
-                          label="Password"
-                          helperText={this.state.password_err_helperText}
-                          error={this.state.password_err ? true : false}
-                          value={this.state.password}
-                          onChange={e => this.onChange(e)}
-                          required
-                          autoComplete="current-password"
-                        />
-                      </div>
-                    </div>
+
+                    {/* Username Section */}
+                    {this.usernameSection()}
+
+                    {/* Password Section */}
+                    {this.passwordSection()}
+
                   </div>
                   <div className="text-center p-3">
                     <Button variant="contained" type="submit" >
