@@ -73,7 +73,7 @@ class Register extends Component {
     register(userData)
     .then(res => {
       if(res.status === "true"){
-        window.location.replace("/login?id=afterReg");
+        window.location.replace("/login#regSuccess");
       }else if(res.status === "false"){
         this.setState({error:  res.message});
       }
