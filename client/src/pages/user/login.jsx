@@ -84,7 +84,7 @@ class Login extends Component {
           console.log("Server is Offline")
         }
       }).catch(err =>{
-        console.log(err);
+        console.log("Timeout");
       });
     }else
     this.setState({err :"Invalid Details Entered"});

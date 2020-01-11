@@ -14,12 +14,12 @@ export const login = async (_Logindata) => {
       }
     })
     .catch(error => {
-      if (error) {
+      if (error.response.status) {
         return error.response.status;
-        // return {
-        //   status:"false",
-        //   message:error.response.data.User
-        // }
+      }
+      else
+      {
+        return "TimeOut";
       }
     } );
 }
