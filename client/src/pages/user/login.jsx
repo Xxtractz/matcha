@@ -53,17 +53,39 @@ class Login extends Component {
   }
 
   validInput(){
+    return true;
   }
 
   submitHandler = e =>{
     e.preventDefault();
-    this.login();
+
+    const user = {
+      "username": this.state.username.toString(),
+      "password": this.state.password.toString(),
+    };
+    this.login(user);
   }
   
-  login(){
+  login(loginUserData){
     if(this.validInput()){
-      login(this.state);
-      window.location.reload();
+      login(loginUserData).then(res => {
+        if (res) {
+          if(res === 204){
+            console.log("Username Doesn't Exist")
+          }
+          else if(res === 400){
+            console.log("Password is invali")
+          }
+          else{
+            console.log(res);
+            
+          } 
+        }else{
+          console.log("Server is Offline")
+        }
+      }).catch(err =>{
+        console.log(err);
+      });
     }else
     this.setState({err :"Invalid Details Entered"});
   }

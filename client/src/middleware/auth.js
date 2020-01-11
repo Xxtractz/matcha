@@ -2,18 +2,24 @@ const axios = require('axios').default;
 const _Url = require('../utils/link');
 
 export const login = async (_Logindata) => {
-  return axios.post(_Url.LogInUrl,_Logindata )
+  return axios.post(_Url.LogInUrl,_Logindata,{timeout : 1000})
     .then(response => {
       if(response){
-        return {status : "true"};
+        if (response.status ===204) {
+          return response.status;
+        } else {
+          return response;
+        }
+        
       }
     })
     .catch(error => {
       if (error) {
-        return {
-          status:"false",
-          message:error.response.data.User
-        }
+        return error.response.status;
+        // return {
+        //   status:"false",
+        //   message:error.response.data.User
+        // }
       }
     } );
 }
