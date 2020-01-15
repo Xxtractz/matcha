@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Paper, Card, CardMedia, CardActions, CardActionArea } from "@material-ui/core";
+import {Paper} from "@material-ui/core";
+
 
 class UserProfile extends Component {
   render() {
