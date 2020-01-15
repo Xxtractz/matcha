@@ -10,15 +10,15 @@ import './App.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Pages
-import Home from './pages'
-import Login from './pages/user/login';
-import Register from './pages/user/register';
-import Account from "./pages/user/account";
-import NotFound from './pages/404';
+import Home from './components'
+import Login from './components/user/login';
+import Register from './components/user/register';
+import Account from "./components/user/account";
+import NotFound from './components/404';
 
 // Modified Route 
-import {PrivateRoute} from './middleware/private.route';
-import {PublicRoute} from './middleware/public.route'
+import {PrivateRoute} from './actions/private.route';
+import {PublicRoute} from './actions/public.route'
 
 class App extends Component {
     render(){

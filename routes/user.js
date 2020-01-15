@@ -87,8 +87,8 @@ router.post('/login', async (req, res) => {
                   loggedUser = {
                     _id: user._id,
                     username: req.body.username,
-                    fame: user.firstName,
-                    lname: user.lastName,
+                    fname: user.firstname,
+                    lname: user.lastname,
                     email: user.email,
                     age: user.age,
                     gender: user.gender,

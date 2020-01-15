@@ -15,9 +15,9 @@ export const login = async (_Logindata) => {
         if (response.status ===204) {
           return response.status;
         } else {
-          console.log('====================================');
-          console.log(response);
-          console.log('====================================');
+          // console.log('====================================');
+          // console.log(response);
+          // console.log('====================================');
           handleLogin(response.data.Token,response.data.RefreshToken);
           return response.status;
         }
