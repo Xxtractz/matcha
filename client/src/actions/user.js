@@ -13,9 +13,7 @@ const data = jwt.decode(Token,'matchSecrets');
 
 export const getUserName = () => {
   return data.fname;
-    // return userdata.firstname.toString();
   }
 export const getUserLastName = () => {
   return data.lname;
-    // return userdata.lastname.toString();
   }

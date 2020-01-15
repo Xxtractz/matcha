@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import {register} from '../../actions/auth';
+import {register} from '../actions/auth';
 import Alert from '@material-ui/lab/Alert';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
-import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge,getAge, isEqual, isPassword} from '../../utils/validate';
+import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge,getAge, isEqual, isPassword} from '../utils/validate';
 
 class Register extends Component {
 

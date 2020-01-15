@@ -48,7 +48,7 @@ render() {
           {/* Start Of Side Bar */}
           <div className="sidebar">
             <div className="col-12 mt-5">
-              <Card className="mt-5 text-center" style={{background:"#b54e80d1"}}>
+              <Card className="mt-5 text-center bg_primary">
                 <CardMedia className="">
                   <img className="img-fluid" src="src/assets/images/profile.png" alt="profile"/>
                 </CardMedia>
@@ -77,12 +77,23 @@ render() {
                   </ListItem>
                 </a>
               </List>
+              <hr/>
+              <List component="nav" >
+                  <ListItem button className="text-center">
+                    <ListItemText>
+                      <Button className="pr-2 nav-link" onClick={() => this.logout()}>
+                        <PowerSettingsNewIcon className="" /> 
+                        <span className="p-1">Logout</span> 
+                      </Button>
+                    </ListItemText>
+                  </ListItem>
+              </List>
             </div>
           </div>
           {/* End of SideBar 
           *Nav Starts here
           */}
-          <div className="navbarCustom navbar navbar-expand-lg navbar-dark fixed-top" style={{background: "#004085"}}>
+          <div className="navbarCustom navbar navbar-expand-lg navbar-dark fixed-top bg_secondary" >
               <a className="navbar-brand " href="/">Matcha</a>
               <button className={this.togglebutton()} onClick={this.toggleCollapse} type="button" data-toggle="collapsed" data-target="#navbarsExample07" aria-controls="navbarsExample07" aria-expanded={this.state.isOpen} aria-label="Toggle navigation">
                 <span className="navbar-toggler-icon"></span>

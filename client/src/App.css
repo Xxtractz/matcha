@@ -1,14 +1,28 @@
+html{
+  height: 100% !important;
+}
+
 body {
     margin: 0;
-    min-height: 920px !important;
+    min-height: 100% !important;
     font-family: "Lato", sans-serif;
+    background: linear-gradient(to bottom, #ff567f 0%, #ff8454 100%) !important;
   }
   
+
+  .bg_primary{
+    background: #ff567f !important;
+  }
+
+  .bg_secondary{
+    background: #2ab3ff !important;
+  }
+
   .sidebar {
     margin: 0;
     padding: 0;
     width: 300px;
-    background-color: #efefef87;
+    background-color: #ededed;
     position: fixed;
     height: 100%;
     overflow: auto;

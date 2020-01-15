@@ -11,9 +11,9 @@ import './App.css';
 
 // Pages
 import Home from './components'
-import Login from './components/user/login';
-import Register from './components/user/register';
-import Account from "./components/user/account";
+import Login from './components/login';
+import Register from './components/register';
+import Account from "./components/account";
 import NotFound from './components/404';
 
 // Modified Route 
