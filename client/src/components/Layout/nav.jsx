@@ -3,7 +3,7 @@ import { BrowserRouter as Router} from 'react-router-dom';
 import {logout} from "../../actions/auth";
 import {getUserName, getUserLastName} from "../../actions/user";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
-import { Button, Card, CardMedia, CardContent, Typography, List, ListItem, ListItemText } from "@material-ui/core";
+import { Button, Card, CardMedia, CardContent, Typography, List, ListItem, ListItemText, Divider } from "@material-ui/core";
 
 
 class Nav extends Component {
@@ -47,7 +47,7 @@ render() {
         <div>
           {/* Start Of Side Bar */}
           <div className="sidebar">
-            <div className="col-12 mt-5">
+            <div className="col-12 mt-5 ">
               <Card className="mt-5 text-center bg_primary">
                 <CardMedia className="">
                   <img className="img-fluid" src="src/assets/images/profile.png" alt="profile"/>
@@ -76,15 +76,11 @@ render() {
                     </ListItemText>
                   </ListItem>
                 </a>
-              </List>
-              <hr/>
-              <List component="nav" >
-                  <ListItem button className="text-center">
+                <Divider light></Divider>
+                  <ListItem button className="text-center" onClick={() => this.logout()} >
                     <ListItemText>
-                      <Button className="pr-2 nav-link" onClick={() => this.logout()}>
                         <PowerSettingsNewIcon className="" /> 
                         <span className="p-1">Logout</span> 
-                      </Button>
                     </ListItemText>
                   </ListItem>
               </List>

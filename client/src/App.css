@@ -9,13 +9,20 @@ body {
     background: linear-gradient(to bottom, #ff567f 0%, #ff8454 100%) !important;
   }
   
-
   .bg_primary{
     background: #ff567f !important;
   }
 
   .bg_secondary{
     background: #2ab3ff !important;
+  }
+
+  .bg_success{
+    background: #44ebc5 !important;
+  }
+
+  .bg_danger{
+    background: #ff506e !important;
   }
 
   .sidebar {
@@ -38,9 +45,12 @@ body {
   .content {
     margin-left: 300px;
     padding: 16px;
-    height: auto;
+    height: 70% !important;
   }
 
+  .profile_img_Card{
+    height: 140px !important;
+  }
   @media screen and (max-width: 900px) {
     .sidebar {
         width: 200px;
