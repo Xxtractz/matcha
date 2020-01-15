@@ -1,5 +1,5 @@
 html{
-  height: 100% !important;
+  min-height: 100% !important;
 }
 
 body {
@@ -49,8 +49,13 @@ body {
   }
 
   .profile_img_Card{
-    height: 140px !important;
+    height: 220px !important;
+    contain: size !important;
   }
+
+  .MuiCardMedia-root {
+    background-size: contain !important;
+}
   @media screen and (max-width: 900px) {
     .sidebar {
         width: 200px;
