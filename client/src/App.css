@@ -6,9 +6,22 @@ body {
     margin: 0;
     min-height: 100% !important;
     font-family: "Lato", sans-serif;
-    background: linear-gradient(to bottom, #ff567f 0%, #ff8454 100%) !important;
+    background: #eeeeee !important;
+    /* */
   }
   
+  .bg_gradient{
+    background: linear-gradient(to bottom, #ff567f 0%, #ff8454 100%) !important; 
+    color: white !important;
+  }
+
+  .bg_gradient_dark{
+    background: linear-gradient(to bottom, #ff00cc, #333399);
+  }
+  .bg_gray{
+    background: #f7f9fc !important;
+  }
+
   .bg_primary{
     background: #ff567f !important;
   }
@@ -29,7 +42,8 @@ body {
     margin: 0;
     padding: 0;
     width: 300px;
-    background-color: #ededed;
+    background: linear-gradient(to top, #ff00cc, #333399) !important;
+    color: white !important;
     position: fixed;
     height: 100%;
     overflow: auto;

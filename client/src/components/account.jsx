@@ -11,8 +11,15 @@ class Account extends Component {
     return (
         <Layout>
             <Images></Images>
-            <Profile></Profile>
-            <AuthDetails></AuthDetails>
+            <div className="row ">
+              <div className="col-md">
+                <Profile></Profile>
+              </div>
+              <div className="col-md">
+                <AuthDetails></AuthDetails>
+              </div>
+            </div>
+            
             <Settings></Settings>
         </Layout>
     );
