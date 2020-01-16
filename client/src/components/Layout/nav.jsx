@@ -62,15 +62,15 @@ render() {
             <hr/>
             <div className="col-12">
               <List component="nav" >
-                <a className="text-decoration-none text-dark" href="/"> 
+                <a className="text-decoration-none text-white" href="/"> 
                   <ListItem button className="text-center">
                     <ListItemText>
                       Home
                     </ListItemText>
                   </ListItem>
                 </a>
-                <a className="text-decoration-none text-dark" href="/user"> 
-                  <ListItem button className="text-center">
+                <a className="text-decoration-none text-white" href="/user"> 
+                  <ListItem button className="text-center ">
                     <ListItemText>
                       Account
                     </ListItemText>
