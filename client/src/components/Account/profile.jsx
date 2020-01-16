@@ -84,42 +84,28 @@ class UserProfile extends Component {
     return (
       <Paper className="container p-2 mt-4 col-12" variant="outlined">
         <Paper className="col-12 mt-2 p-1 text-center bg_gradient" variant="elevation">
-            <h1>Profile</h1>
-            <small> Details about you </small>
-          </Paper>
-          <div className="row">
-            <div className="col-md-6 mx-auto pt-5 mt-5" >
-              <Card className="card m-5 p-5 mx-auto col-10 " variant="outlined">
-                <form onSubmit={this.submitHandler}>
-                  <p className="h3 text-center mb-4">Sign in</p>
-                  <div className="text-center">
-                    <small> Please Enter you login details below</small>
-                  </div>
-                  <hr className="mb-2 ml-5 mr-5"></hr>
-                  <div className="grey-text">
+          <h1>Profile</h1>
+          <small> Details about you </small>
+        </Paper>
+        <div className="p-2 mt-4 col-8 mx-auto">
+          <form onSubmit={this.submitHandler}>
+            
+            <div className="grey-text">
 
-                    {/* Username Section */}
-                    {this.usernameSection()}
+              {/* Username Section */}
+              {this.usernameSection()}
 
-                    {/* Password Section */}
-                    {this.passwordSection()}
+              {/* Password Section */}
+              {this.passwordSection()}
 
-                  </div>
-                  <div className="text-center p-3">
-                    <Button variant="contained" type="submit" >
-                      Login
-                    </Button>
-                  </div>
-                </form>
-                <hr/>
-                <CardActions className="bg-gray">
-                  <Button variant="contained" size="small"  href="/register">
-                    Register
-                  </Button>
-                </CardActions>
-              </Card>
             </div>
+            <div className="text-center p-3">
+              <Button variant="contained" type="submit" >
+                Update
+              </Button>
             </div>
+          </form>
+        </div>
       </Paper>
     );
   }
