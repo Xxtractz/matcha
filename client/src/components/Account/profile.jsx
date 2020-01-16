@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Paper} from "@material-ui/core";
-import {Button, TextField, Card, CardActions} from '@material-ui/core';
+import {Button, TextField} from '@material-ui/core';
+import {getUserName, getUserLastName} from '../../actions/user';
 
 
 class UserProfile extends Component {
@@ -38,6 +39,39 @@ class UserProfile extends Component {
 
   
   // Form Sections
+  nameSection(){
+    return(
+      <div className="row mb-3">
+        <div className="col-6 text-center">
+          <TextField 
+            className="col-12"
+            type="text" 
+            name="fname"
+            placeholder={getUserName()}
+            helperText={this.state.fname_err_helperText}
+            error={this.state.fname_err ? true : false}
+            value= {this.state.fname}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+        <div className="col-6 text-center">
+          <TextField 
+            className="col-12"
+            type="text" 
+            name="lname"
+            placeholder={getUserLastName()}
+            helperText={this.state.lname_err_helperText}
+            error={this.state.lname_err ? true : false}
+            value= {this.state.lname}
+            onChange={e => this.onChange(e)}
+            required
+          />
+        </div>
+      </div> 
+    )
+  }
+
   usernameSection(){
     return( 
     <div className="row">
@@ -45,7 +79,7 @@ class UserProfile extends Component {
         <TextField 
           className="col-12"
           type="text" 
-          name="username"
+          name=""
           label="Username"
           helperText={this.state.username_err_helperText}
           error={this.state.username_err ? true : false}
@@ -57,27 +91,6 @@ class UserProfile extends Component {
       </div>
     </div>
    )
-  }
-
-  passwordSection(){
-    return(
-      <div className="row">
-        <div className="col-12 text-center">
-          <TextField 
-            className="col-12"
-            name="password"
-            type="password"
-            label="Password"
-            helperText={this.state.password_err_helperText}
-            error={this.state.password_err ? true : false}
-            value={this.state.password}
-            onChange={e => this.onChange(e)}
-            required
-            autoComplete="current-password"
-          />
-        </div>
-      </div>
-    )
   }
 
   render() {
@@ -92,11 +105,11 @@ class UserProfile extends Component {
             
             <div className="grey-text">
 
+              {/* name Section */}
+              {this.nameSection()}
+
               {/* Username Section */}
               {this.usernameSection()}
-
-              {/* Password Section */}
-              {this.passwordSection()}
 
             </div>
             <div className="text-center p-3">
