@@ -48,7 +48,7 @@ render() {
           {/* Start Of Side Bar */}
           <div className="sidebar">
             <div className="col-12 mt-5 ">
-              <Card className="mt-5 text-center bg_primary">
+              <Card className="mt-5 text-center bg_transparent_white">
                 <CardMedia className="">
                   <img className="img-fluid" src="src/assets/images/profile.png" alt="profile"/>
                 </CardMedia>

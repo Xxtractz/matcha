@@ -139,7 +139,7 @@ class Login extends Component {
           {(window.location.hash === "#regSuccess")? this.displayVerify():""}
           <div className="row">
             <div className="col-md-6 mx-auto pt-5 mt-5" >
-              <Card className="card m-5 p-5 mx-auto col-10" variant="outlined">
+              <Card className="card m-5 p-5 mx-auto col-10 " variant="outlined">
                 <form onSubmit={this.submitHandler}>
                   <p className="h3 text-center mb-4">Sign in</p>
                   <div className="text-center">

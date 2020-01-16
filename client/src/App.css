@@ -18,6 +18,11 @@ body {
   .bg_gradient_dark{
     background: linear-gradient(to bottom, #ff00cc, #333399);
   }
+
+  .bg_transparent_white{
+      background: #ff567f00 !important;
+      color: white !important;
+  }
   .bg_gray{
     background: #f7f9fc !important;
   }
