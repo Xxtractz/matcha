@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import {Paper, Card, CardMedia, CardActions, CardActionArea } from "@material-ui/core";
+import {Paper } from "@material-ui/core";
+// import {Paper, Card, CardMedia, CardActions, CardActionArea } from "@material-ui/core";
 
 class images extends Component {
   render() {
@@ -10,69 +11,21 @@ class images extends Component {
             <small> All your images on your profile, These can be seen by whoever views your profile</small>
           </Paper>
           <div className="row">
-          <Card className="col-md-2 p-2 m-3">
-            <CardActionArea>
-              <CardMedia
-                className="profile_img_Card"
-                image="src/assets/images/profile.png"
-                title="Contemplative Reptile"
-              />
-              <CardActions>
-              </CardActions>
-            </CardActionArea>
-          </Card>
-
-          <Card className="col-md-2 p-2 m-3">
-            <CardActionArea>
-              <CardMedia
-                className="profile_img_Card"
-                image="src/assets/images/profile.png"
-                title="Contemplative Reptile"
-              />
-              <CardActions>
-              </CardActions>
-            </CardActionArea>
-          </Card>
-
-
-          <Card className="col-md-2 p-2 m-3">
-            <CardActionArea>
-              <CardMedia
-                className="profile_img_Card"
-                image="src/assets/images/profile.png"
-                title="Contemplative Reptile"
-              />
-              <CardActions>
-              </CardActions>
-            </CardActionArea>
-          </Card>
-
-
-
-          <Card className="col-md-2 p-2 m-3">
-            <CardActionArea>
-              <CardMedia
-                className="profile_img_Card"
-                image="src/assets/images/profile.png"
-                title="Contemplative Reptile"
-              />
-              <CardActions>
-              </CardActions>
-            </CardActionArea>
-          </Card>
-
-
-          <Card className="col-md-2 p-2 m-3">
-            <CardActionArea>
-              <CardMedia
-                className="profile_img_Card"
-                image="src/assets/images/profile.png"
-                title="Contemplative Reptile"
-              />
-              <CardActions>
-              </CardActions>
-            </CardActionArea>
-          </Card>
+            <div className="col-md-2 p-2 m-3">
+              <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
+            </div>
+            <div className="col-md-2 p-2 m-3">
+              <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
+            </div>
+            <div className="col-md-2 p-2 m-3">
+              <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
+            </div>
+            <div className="col-md-2 p-2 m-3">
+              <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
+            </div>
+            <div className="col-md-2 p-2 m-3">
+              <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
+            </div>
           </div>
         </Paper>
     );
