@@ -9,15 +9,12 @@ function handleLogin(token,rtoken) {
 }
 
 export const login = async (_Logindata) => {
-  return axios.post(_Url.LogInUrl,_Logindata,{timeout : 3000})
+  return axios.post(_Url.LogInUrl,_Logindata,{timeout : 31000})
     .then(response => {
       if(response){
         if (response.status ===204) {
           return response.status;
         } else {
-          // console.log('====================================');
-          // console.log(response);
-          // console.log('====================================');
           handleLogin(response.data.Token,response.data.RefreshToken);
           return response.status;
         }
