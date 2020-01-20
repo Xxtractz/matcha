@@ -1,7 +1,24 @@
 import React, { Component } from 'react';
 
 import {Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography} from '@material-ui/core';
-import Swipeable from "react-swipy";
+
+const appStyles = {
+  height: "100%",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  minHeight: "100vh",
+  fontFamily: "sans-serif",
+  overflow: "hidden"
+};
+
+const wrapperStyles = { position: "relative", width: "250px", height: "250px" };
+const actionsStyles = {
+  display: "flex",
+  justifyContent: "space-between",
+  marginTop: 12
+};
 
 class Profiles extends Component {
   state = {
@@ -13,19 +30,7 @@ class Profiles extends Component {
 
   display(user){
     return(
-      <div>
-        <Swipeable
-                buttons={({ right, left }) => (
-                    
-                  <div><Button onClick={() => {
-                    console.log("left");
-                     left()}} >Reject</Button>
-                  <Button onClick={() => {
-                    console.log("right");
-                     right()}}>Accept</Button></div>
-                )}
-                onAfterSwipe={this.remove}
-              >
+      <div >
               <Card className="">
         <img className="img-fluid" src="src/assets/images/profile.png" alt="profile"/>
                   <CardContent>
@@ -45,7 +50,6 @@ class Profiles extends Component {
                   </Button>
                 </CardActions>
                 </Card>
-              </Swipeable>
       </div>  
     )
   }
