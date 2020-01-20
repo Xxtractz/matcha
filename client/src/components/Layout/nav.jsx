@@ -69,6 +69,13 @@ render() {
                     </ListItemText>
                   </ListItem>
                 </a>
+                <a className="text-decoration-none text-white" href="/chat"> 
+                  <ListItem button className="text-center ">
+                    <ListItemText>
+                      Message
+                    </ListItemText>
+                  </ListItem>
+                </a>
                 <a className="text-decoration-none text-white" href="/user"> 
                   <ListItem button className="text-center ">
                     <ListItemText>
@@ -96,6 +103,21 @@ render() {
               </button>
               <div className={this.toggle()}>
               < ul className="navbar-nav ml-auto">
+                <li className="nav-item active">
+                    <Button className="pr-2 nav-link" >
+                       <span className="p-1">Home</span> 
+                    </Button>
+                  </li>
+                  <li className="nav-item active">
+                    <Button className="pr-2 nav-link" >
+                       <span className="p-1">Message</span> 
+                    </Button>
+                  </li>
+                  <li className="nav-item active">
+                    <Button className="pr-2 nav-link">
+                       <span className="p-1">Account</span> 
+                    </Button>
+                  </li>
                   <li className="nav-item active">
                     <Button className="pr-2 nav-link" onClick={() => this.logout()}>
                       <PowerSettingsNewIcon className="" /> 

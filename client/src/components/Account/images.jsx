@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Paper } from "@material-ui/core";
-// import {Paper, Card, CardMedia, CardActions, CardActionArea } from "@material-ui/core";
 
 class images extends Component {
   render() {

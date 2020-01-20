@@ -173,7 +173,7 @@ class Login extends Component {
         </div>
       </div>
     )
-  }
+    }
 }
 
 export default Login;
