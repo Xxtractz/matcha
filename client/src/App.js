@@ -19,6 +19,7 @@ import NotFound from './components/404';
 // Modified Route 
 import {PrivateRoute} from './actions/private.route';
 import {PublicRoute} from './actions/public.route'
+import Messages from './components/chat';
 
 class App extends Component {
     render(){
@@ -28,6 +29,7 @@ class App extends Component {
                     <Switch>
                         <PrivateRoute exact path="/" component={Home} />
                         <PrivateRoute exact path="/user" component={Account} />
+                        <PrivateRoute exact path="/chat" component={Messages} />
                         <PublicRoute exact path="/login" component={Login}/>
                         <PublicRoute exact path="/register" component={Register}/>
                         <Route exact path="/404" component={NotFound}/>
