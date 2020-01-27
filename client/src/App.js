@@ -10,16 +10,17 @@ import './App.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Pages
-import Home from './components'
-import Login from './components/login';
-import Register from './components/register';
-import Account from "./components/account";
-import NotFound from './components/404';
+import Home from './components/Home/index'
+import Login from './components/Login/login';
+import Register from './components/Registration/register';
+import Account from "./components/Account/account";
+import NotFound from './components/Error/404';
+import Messages from './components/Message/chat';
 
 // Modified Route 
 import {PrivateRoute} from './actions/private.route';
 import {PublicRoute} from './actions/public.route'
-import Messages from './components/chat';
+
 
 class App extends Component {
     render(){

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Paper} from "@material-ui/core";
 import {Button, TextField} from '@material-ui/core';
-import {getUserName, getUserLastName} from '../../actions/user';
+import {getUserName, getUserLastName} from '../../../actions/user';
 
 
 class UserProfile extends Component {

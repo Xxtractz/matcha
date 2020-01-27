@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Paper} from "@material-ui/core";
 import {Button, TextField} from '@material-ui/core';
-import {getUserName, getUserLastName} from '../../actions/user';
+import {getUserName, getUserLastName} from '../../../actions/user';
 
 class AuthDetails extends Component {
 
@@ -38,22 +38,9 @@ class AuthDetails extends Component {
 
   
   // Form Sections
-  nameSection(){
+  emailSection(){
     return(
       <div className="row mb-3">
-        <div className="col-6 text-center">
-          <TextField 
-            className="col-12"
-            type="text" 
-            name="fname"
-            placeholder={getUserName()}
-            helperText={this.state.fname_err_helperText}
-            error={this.state.fname_err ? true : false}
-            value= {this.state.fname}
-            onChange={e => this.onChange(e)}
-            required
-          />
-        </div>
         <div className="col-6 text-center">
           <TextField 
             className="col-12"
@@ -96,16 +83,16 @@ class AuthDetails extends Component {
     return (
       <Paper className="container p-2 mt-4 col-12" variant="outlined">
         <Paper className="col-12 mt-2 p-1 text-center bg_gradient" variant="outlined">
-          <h1>Login</h1>
-          <small>Login Information </small>
+          <h1>Account Settings</h1>
+          <small>Account Information </small>
         </Paper>
         <div className="p-2 mt-4 col-8 mx-auto">
           <form onSubmit={this.submitHandler}>
             
             <div className="grey-text">
 
-              {/* name Section */}
-              {this.nameSection()}
+              {/* email Section */}
+              {this.emailSection()}
 
               {/* Username Section */}
               {this.usernameSection()}
