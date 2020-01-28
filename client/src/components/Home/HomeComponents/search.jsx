@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-// import Radio from '@material-ui/core/Radio';
-// import RadioGroup from '@material-ui/core/RadioGroup';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import FormControl from '@material-ui/core/FormControl';
-// import FormLabel from '@material-ui/core/FormLabel';
-// import Typography from '@material-ui/core/Typography';
-// import Slider from '@material-ui/core/Slider';
-import {Paper,Radio,RadioGroup,FormControlLabel,FormControl,FormLabel,Typography,Slider} from '@material-ui/core';
+import {Paper,Radio,RadioGroup,FormControlLabel,FormControl,FormLabel,Typography,Slider, Button} from '@material-ui/core';
 
 class Search  extends Component {
   constructor(){
@@ -14,23 +7,30 @@ class Search  extends Component {
     this.state={
       genderValue:"",
       ageMin: 18,
-      ageMax: 70
+      ageMax: 70,
+      locationDistance: 0
     }
   }
 
+  handleSearch = () => {
+    console.log("Handle Search");
+  }
+
   handleChangeAge = (event,newValue) => {
-          this.setState({"ageMin": newValue[0],
-            "ageMax": newValue[1]  },() =>{
-      console.log(newValue)
-    })
-      // this.setState({"ageMin": newValue[0],"ageMax": newValue[1]  });
+    this.setState({"ageMin": newValue[0],"ageMax": newValue[1]  });
   };
+
   handleChangeGender = event => {
     this.setState({[event.target.name]: event.target.value});
-    // this.setState({[event.target.name]: event.target.value  },() =>{
-    //   console.log(this.state.genderValue)
-    // })
   };
+
+  handleChangeLocation = (event, number) => {
+    this.setState({"locationDistance": number});
+  };
+
+  valuetext = (value) =>{
+    return value;
+  }
 
   genderSection = () => {
     return(
@@ -59,9 +59,6 @@ class Search  extends Component {
       </FormControl>
     )
   }
-  valuetext = (value) =>{
-    return value;
-  }
   
   locationSection = () =>{
     const marks = [
@@ -83,13 +80,13 @@ class Search  extends Component {
       },
     ];
     return(
-        <FormControl>
+        <FormControl component="fieldset">
           <FormLabel>Location</FormLabel>
           <div style={{width: 170}}>
             <Slider
             max={170}
-            value={this.state.ageMax}
-            // onChange={this.handleChangeAge}
+            value={this.state.locationDistance}
+            onChange={this.handleChangeLocation}
             valueLabelDisplay="auto"
             aria-labelledby="range-slider"
             getAriaValueText={() => this.valuetext()}
@@ -97,8 +94,7 @@ class Search  extends Component {
             />
           </div>
         </FormControl>
-     
-    )
+         )
   }
 
   ageSection = () =>{
@@ -122,7 +118,7 @@ class Search  extends Component {
     ];
     
     return(
-      <FormControl>
+      <FormControl component="fieldset">
         <FormLabel>Age Range</FormLabel>
         <div style={{width: 150}}
           >
@@ -140,10 +136,12 @@ class Search  extends Component {
       </FormControl>
     )
   }
+
   render() {
     return (
       <div className="container mt-5 mb-4" style={{marginTop:"10px"}}>
         <Paper className="text-center pt-3 pl-3 pr-3" variant="outlined" square>
+          <div className="header text-center"> <h3>Filter Search</h3><hr/></div>
           <div className="row">
             <div className="col text-center">
               {this.ageSection()}
@@ -154,6 +152,9 @@ class Search  extends Component {
             <div className="col">
               {this.locationSection()}
             </div>
+            <div className="col">
+              <Button className="primary" onClick={this.handleSearch}>Search</Button>
+            </div>
           </div>
           
         </Paper>
@@ -163,4 +164,3 @@ class Search  extends Component {
 }
 
 export default Search;
- 

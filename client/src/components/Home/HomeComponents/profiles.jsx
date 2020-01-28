@@ -1,28 +1,6 @@
 import React, { Component } from 'react';
-import './swipe.scss';
-import './tinder'
 
-// import {Card, CardActionArea, CardActions, CardContent, CardMedia, Button, Typography} from '@material-ui/core';
-
-// const appStyles = {
-//   height: "100%",
-//   display: "flex",
-//   justifyContent: "center",
-//   alignItems: "center",
-//   width: "100%",
-//   minHeight: "100vh",
-//   fontFamily: "sans-serif",
-//   overflow: "hidden"
-// };
-
-// const wrapperStyles = { position: "relative", width: "250px", height: "250px" };
-// const actionsStyles = {
-//   display: "flex",
-//   justifyContent: "space-between",
-//   marginTop: 12
-// };
-
-
+import {Card} from '@material-ui/core';
 
 class Profiles extends Component {
   state = {
@@ -87,28 +65,19 @@ class Profiles extends Component {
 
   display(user){
     return(
-      <div >
-          <div id="app">
-            <div id="people"></div>
-            <div id="control">
-              <div class="button no">
-                <button href="#s" class="trigger"> </button>
-              </div>
-              <div class="button info">
-                <button href="#s" class="trigger"> </button>
-              </div>
-              <div class="button yes">
-                <button href="#s" class="trigger"> </button>
-              </div>
-            </div>
-        </div>
-      </div>  
+      <Card variant="outlined" style={{height: "520px",
+        width: "320px"}}>
+          <img className="card-img" src="src/assets/images/profile.png" alt=""/>
+          <p>{user.name}</p>
+          <p>{user.age}</p>
+      </Card>  
     )
   }
 
   handleResponse(type) {
     console.log(type);
   }
+
   displayEmpty(){
     return(
       <div>
