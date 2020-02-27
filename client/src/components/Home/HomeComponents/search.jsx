@@ -141,7 +141,8 @@ class Search  extends Component {
     return (
       <div className="container mt-5 mb-4" style={{marginTop:"10px"}}>
         <Paper className="text-center pt-3 pl-3 pr-3" variant="outlined" square>
-          <div className="header text-center"> <h3>Filter Search</h3><hr/></div>
+          <div className="header text-center"> <h3>Filter Search</h3> <Button className="primary  " onClick={this.handleSearch}>Click here to Search/Filter</Button></div>
+          <hr/>
           <div className="row">
             <div className="col text-center">
               {this.ageSection()}
@@ -152,9 +153,7 @@ class Search  extends Component {
             <div className="col">
               {this.locationSection()}
             </div>
-            <div className="col">
-              <Button className="primary" onClick={this.handleSearch}>Search</Button>
-            </div>
+              
           </div>
           
         </Paper>

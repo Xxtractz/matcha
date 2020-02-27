@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import {Card} from '@material-ui/core';
+import {Card,Button} from '@material-ui/core';
 
 class Profiles extends Component {
   state = {
@@ -91,7 +91,13 @@ class Profiles extends Component {
       <div className="container mb-4">
           <div className=" row">
             <div className="col-md-4 m-4 mx-auto">
-              {this.state.cards.length > 0 ? this.display(this.state.cards[0]):this.displayEmpty()}          
+              {this.state.cards.length > 0 ? this.display(this.state.cards[0]):this.displayEmpty()}
+
+              <div className="row ">
+                <div className="col-md"><Button>Like</Button></div>
+                <div className="col-md"><Button>info</Button></div>
+                <div className="col-md"><Button>Dislike</Button></div>
+              </div>
             </div>
           </div>
       </div>
