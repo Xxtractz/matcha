@@ -60,8 +60,17 @@ class Profiles extends Component {
     }]
   };
 
-  remove = () =>
-    this.setState(({ cards }) => ({ cards: cards.slice(1, cards.length) }));
+  like = () =>{
+    console.log(this.state.cards[0].name + " Was Liked");
+    this.remove();
+  }
+
+  dislike = () =>{
+    console.log(this.state.cards[0].name + " Was disLiked");
+    this.remove();
+  }
+  remove = () =>{
+    this.setState(({ cards }) => ({ cards: cards.slice(1, cards.length) }));}
 
   display(user){
     return(
@@ -94,9 +103,9 @@ class Profiles extends Component {
               {this.state.cards.length > 0 ? this.display(this.state.cards[0]):this.displayEmpty()}
 
               <div className="row ">
-                <div className="col-md"><Button>Like</Button></div>
+                <div className="col-md"><Button onClick={() => {this.like()}}>Like</Button></div>
                 <div className="col-md"><Button>info</Button></div>
-                <div className="col-md"><Button>Dislike</Button></div>
+                <div className="col-md"><Button onClick={() => {this.dislike()}}>Dislike</Button></div>
               </div>
             </div>
           </div>
