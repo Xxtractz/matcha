@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const Ussers = require('../models/users');
+const Users = require('../models/users');
 const commonFunction = require('./commonFunctions');
 
 //get matches by location only
