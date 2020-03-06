@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Paper} from "@material-ui/core";
 import {Button, TextField} from '@material-ui/core';
-import {getUserName, getUserLastName} from '../../../actions/user';
+import {getUserFirstName, getUserLastName} from '../../../actions/user';
 
 
 class UserProfile extends Component {
@@ -47,7 +47,7 @@ class UserProfile extends Component {
             className="col-12"
             type="text" 
             name="fname"
-            placeholder={getUserName()}
+            placeholder={getUserFirstName()}
             helperText={this.state.fname_err_helperText}
             error={this.state.fname_err ? true : false}
             value= {this.state.fname}

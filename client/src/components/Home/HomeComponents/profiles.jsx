@@ -77,6 +77,7 @@ class Profiles extends Component {
     console.log(this.state.cards[0].name + " Was disLiked");
     this.remove();
   }
+  
   remove = () =>{
     this.setState(({ cards }) => ({ cards: cards.slice(1, cards.length) }));}
 

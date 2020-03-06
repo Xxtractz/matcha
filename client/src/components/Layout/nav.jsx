@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router} from 'react-router-dom';
 import {logout} from "../../actions/auth";
-import {getUserName, getUserLastName} from "../../actions/user";
+import {getUserFirstName, getUserLastName, getUsername} from "../../actions/user";
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import { Button, Card, CardMedia, CardContent, Typography, List, ListItem, ListItemText, Divider } from "@material-ui/core";
 
@@ -12,7 +12,7 @@ class Nav extends Component {
     this.state = {
       isOpen: false,
     };
-    this.firstname = getUserName();
+    this.firstname = getUserFirstName();
     this.lastname = getUserLastName();
   }
 
@@ -50,7 +50,8 @@ render() {
             <div className="col-12 mt-5 ">
               <Card className="mt-5 text-center bg_transparent_white ">
                 <CardMedia className="">
-                  <img className="card-img" src="src/assets/images/profile.png" alt="profile"/>
+                {/* C:\Users\user\Desktop\Matcha\client\src\assets\images\users\wt90uj */}
+                  <img className="card-img" src={"src/assets/images/users/"+getUsername()+"/img_1.jpg"} alt="profile"/>
                 </CardMedia>
                 <CardContent>
                   <Typography>
