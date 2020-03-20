@@ -148,6 +148,30 @@ router.post('/token/check', async (req, res) => {
   });
 });
 
+//verify the user that has just registered
+router.post('/userVerify', async (req, res) => {
+  await Verification.findOne({username: req.body.username}, (err, doc) => {
+      if (err){
+          res.status(500).send({"User":"Encountered a problem while checking in collection"});
+      } else if (doc) {
+          if (doc.token === req.body.token)
+          {
+            Verification.findOneAndDelete({username: req.body.username}, (err, doc) => {
+              if (err)
+              {
+                res.status(400).send({"User": "The token could not be deleted"});
+              }
+            });
+              res.status(200).send({"User":"Token is valid and belongs to the user"});
+          } else {
+              res.status(400).send({"User":"Invalid token"});
+          }
+      } else {
+          res.status(204).send({"User":"The token is not set for the user"});
+      }
+  });
+});
+
 //when the user clicks on the forgot password they post the email to this api
 router.post('/forgot', async (req, res) => {
   try {
