@@ -48,7 +48,7 @@ router.post('/register', function(req, res){
                           console.log(err);
                       }else{
                           commonFunction.sendEmail(req.body.email, "Verify your account",
-                          '<a href="http://localhost:4000/verify?token='+ tkn + '">Click Here</a>');
+                          '<p> Please <a href="http://localhost:4000/verify?token='+tkn +'"> Click Here </a> to verify.</p>');
                          res.status(200).send(doc);
                       }
                   });
@@ -87,8 +87,8 @@ router.post('/login', async (req, res) => {
                   loggedUser = {
                     _id: user._id,
                     username: req.body.username,
-                    fame: user.firstName,
-                    lname: user.lastName,
+                    fname: user.firstname,
+                    lname: user.lastname,
                     email: user.email,
                     age: user.age,
                     gender: user.gender,

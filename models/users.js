@@ -21,7 +21,9 @@ var userSchema = new Schema({
     date: {type:Date, default:Date.now()},
     age: {type:Number},
     dob: {type:String},
-    interets: []
+    interets: [],
+    likes:[],
+    dislikes:[]
 });
 
 userSchema.pre('save', function(next){

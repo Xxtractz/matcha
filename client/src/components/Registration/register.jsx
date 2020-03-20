@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import {register} from '../../middleware/auth';
+import {register} from '../../actions/auth';
+import Alert from '@material-ui/lab/Alert';
 import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
-import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge,getAge} from '../../utils/validate';
+import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge,getAge, isEqual, isPassword} from '../../utils/validate';
 
 class Register extends Component {
 
@@ -35,11 +36,14 @@ class Register extends Component {
       confirmPassword: "",
       confirmPassword_err:"",
       confirmPassword_err_helperText:"",
-      age_err:"none"
+      age_err:"none",
+      error:""
     }
     this.ageValid = 0;
   }
 
+  
+  // use history.push('/some/path') here
   // Onchange Event... Assigns values to the state on Constructor
   onChange = (e) => {
     this.validateAfterInput(e)
@@ -66,12 +70,15 @@ class Register extends Component {
   }
 
   register(userData){
-      if(register(userData)){
-        window.alert("Registration Succesful");
-        window.location.replace("/login");
+    register(userData)
+    .then(res => {
+      if(res.status === "true"){
+        window.location.replace("/login#regSuccess");
+      }else if(res.status === "false"){
+        this.setState({error:  res.message});
       }
+    });
   }
-
 
 //  Validation before posting to backend 
   isvalidated(){
@@ -149,6 +156,26 @@ class Register extends Component {
         this.setState({day_err_helperText: ""});
       }
     }
+    if(e.target.name === "password"){
+      if(!isPassword(e.target.value)){
+        this.setState({password_err: "error"});
+        this.setState({password_err_helperText: "Passwords Isn't Secured"});
+      }
+      else{
+        this.setState({password_err: ""});
+        this.setState({password_err_helperText: ""});
+      }
+    }
+    if(e.target.name === "confirmPassword"){
+      if(!isEqual(e.target.value, this.state.password.toString())){
+        this.setState({confirmPassword_err: "error"});
+        this.setState({confirmPassword_err_helperText: "Passwords Don't Match"});
+      }
+      else{
+        this.setState({confirmPassword_err: ""});
+        this.setState({confirmPassword_err_helperText: ""});
+      }
+    }
     if(isYearValid(this.state.year) && isMonthValid(this.state.month) && isDayValid(this.state.day) && this.ageValid === 0){
       if(this.isAgeValid()){
         this.ageValid = 1;
@@ -158,6 +185,7 @@ class Register extends Component {
         this.setState({age_err: ""});
       }
     }
+    this.setState({error: ""});
   }
 
 // Components for form 
@@ -232,6 +260,7 @@ class Register extends Component {
             error={this.state.year_err ? true : false}
             value= {this.state.year}
             onChange={e => this.onChange(e)}
+            inputProps={{ maxLength: 4 }}
             required
             autoComplete="year"
           />
@@ -247,6 +276,7 @@ class Register extends Component {
             error={this.state.month_err ? true : false}
             value= {this.state.month}
             onChange={e => this.onChange(e)}
+            inputProps={{ maxLength: 2 }}
             required
             autoComplete="month"
           />
@@ -262,6 +292,7 @@ class Register extends Component {
             error={this.state.day_err ? true : false}
             value= {this.state.day}
             onChange={e => this.onChange(e)}
+            inputProps={{ maxLength: 2 }}
             required
             autoComplete="day"
           />
@@ -360,13 +391,27 @@ class Register extends Component {
     )
   }
 
+  displayErr(){
+    if(this.state.error.toString() === "" ){
+      return(
+        <div></div>
+        )
+    }else{
+      return(
+        <div className="m-2 ml-5 mr-5">
+          <Alert variant="outlined" severity="error">
+            {this.state.error.toString()}</Alert>
+       </div>)
+    }
+    
+  }
   render(){
     return (
       <div>
         <div  className="container">
           <div className="row">
             <div className="col-md-8 mx-auto pt-5 mt-5" >
-              <Card className="card m-5 p-5 mx-auto col-10">
+              <Card className="card m-5 p-5 mx-auto col-10" variant="outlined">
 
                 {/* Form Starts */}
                 <form onSubmit={this.submitHandler}>
@@ -378,6 +423,10 @@ class Register extends Component {
                   </div>
                   {/* Header Text End */}
 
+                  {/* Error Section */}
+                  {this.displayErr()}
+                  
+                
                   <hr className="mb-2 ml-5 mr-5"></hr>
 
                   {/* Input Box Start */}

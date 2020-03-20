@@ -1,14 +1,54 @@
+html{
+  min-height: 100% !important;
+}
+
 body {
     margin: 0;
-    min-height: 920px !important;
+    min-height: 100% !important;
     font-family: "Lato", sans-serif;
+    background: #eeeeee !important;
+    /* */
   }
   
+  .bg_gradient{
+    background: linear-gradient(to bottom, #ff567f 0%, #ff8454 100%) !important; 
+    color: white !important;
+  }
+
+  .bg_gradient_dark{
+    background: linear-gradient(to bottom, #ff00cc, #333399);
+  }
+
+  .bg_transparent_white{
+      background: #ff567f00 !important;
+      color: white !important;
+  }
+  .bg_gray{
+    background: #f7f9fc !important;
+  }
+
+  .bg_primary{
+    background: #ff567f !important;
+  }
+
+  .bg_secondary{
+    background: #2ab3ff !important;
+  }
+
+  .bg_success{
+    background: #44ebc5 !important;
+  }
+
+  .bg_danger{
+    background: #ff506e !important;
+  }
+
   .sidebar {
     margin: 0;
     padding: 0;
     width: 300px;
-    background-color: #efefef87;
+    background: linear-gradient(to top, #ff00cc, #333399) !important;
+    color: white !important;
     position: fixed;
     height: 100%;
     overflow: auto;
@@ -24,9 +64,17 @@ body {
   .content {
     margin-left: 300px;
     padding: 16px;
-    height: auto;
+    height: 70% !important;
   }
 
+  .profile_img_Card{
+    height: 220px !important;
+    contain: size !important;
+  }
+
+  .MuiCardMedia-root {
+    background-size: contain !important;
+}
   @media screen and (max-width: 900px) {
     .sidebar {
         width: 200px;
@@ -58,4 +106,10 @@ body {
         display: inherit !important;
         margin-left: 0px;
       }
+  }
+
+  .fourOhfour{
+    padding: 20% 10% 10% 10% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
   }

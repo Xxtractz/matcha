@@ -18,6 +18,13 @@ export const isChar = (str) =>{
     return false;
 }
 
+export const isPassword = (str) =>{
+    var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})");
+    if(strongRegex.test(str) )
+        return true;
+    return false;
+}
+
 export const getAge = (dateString) =>{
     const today = new Date();
     const birthDate = new Date(dateString);
@@ -47,7 +54,6 @@ export const validateAge = (year,month,day) =>{
     else
         return false; 
 }
-
 export const isYearValid = (year) =>{
     if(year !== "" ){
        return ((year >= (new Date().getFullYear()) - 70) && (year <= (new Date().getFullYear()) - 18)) ? true : false;
@@ -72,22 +78,6 @@ export const isDayValid = (day) =>{
     }
 }
 
-// export const isEmail = (email) =>{
-//     return true;
-// }
-
-// export const isEmail = (email) =>{
-//     return true;
-// }
-
-// export const isEmail = (email) =>{
-//     return true;
-// }
-
-// export const isEmail = (email) =>{
-//     return true;
-// }
-
-// export const isEmail = (email) =>{
-//     return true;
-// }
+export const isEqual = (Str1,Str2) =>{
+    return (Str1 === Str2) ? true: false;
+}

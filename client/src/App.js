@@ -10,15 +10,17 @@ import './App.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 
 // Pages
-import Home from './pages'
-import Login from './pages/user/login';
-import Register from './pages/user/register';
-import Account from "./pages/user/account";
-import NotFound from './pages/404';
+import Home from './components/Home/index'
+import Login from './components/Login/login';
+import Register from './components/Registration/register';
+import Account from "./components/Account/account";
+import NotFound from './components/Error/404';
+import Messages from './components/Message/chat';
 
 // Modified Route 
-import {PrivateRoute} from './middleware/private.route';
-import {PublicRoute} from './middleware/public.route'
+import {PrivateRoute} from './actions/private.route';
+import {PublicRoute} from './actions/public.route'
+
 
 class App extends Component {
     render(){
@@ -28,6 +30,7 @@ class App extends Component {
                     <Switch>
                         <PrivateRoute exact path="/" component={Home} />
                         <PrivateRoute exact path="/user" component={Account} />
+                        <PrivateRoute exact path="/chat" component={Messages} />
                         <PublicRoute exact path="/login" component={Login}/>
                         <PublicRoute exact path="/register" component={Register}/>
                         <Route exact path="/404" component={NotFound}/>

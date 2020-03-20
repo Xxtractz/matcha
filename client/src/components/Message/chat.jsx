@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import Layout from '../Layout/layout';
 
 class Messages extends Component {
   render() {
     return (
-      <div> textInComponent </div>
+      <Layout>
+            Chat side
+        </Layout>
     );
   }
 }
