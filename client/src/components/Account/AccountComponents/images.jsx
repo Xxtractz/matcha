@@ -5,7 +5,8 @@ import {getUsername} from "../../../actions/user";
 class images extends Component {
 
   renderImage = ()=>{
-    let src =  "src/assets/images/"+getUsername()+"/img_1."+"jpg";
+    let src =  "src/assets/images/users/"+getUsername()+"/img_1.jpg";
+    FileReader .
     return(
       <div className="col-md p-2 m-3">
               <img className="img-fluid" src={src} alt=""/>
@@ -20,7 +21,7 @@ class images extends Component {
             <small> All your images on your profile, These can be seen by whoever views your profile</small>
           </Paper>
           <div className="row">
-            {this.renderImage}
+            {this.renderImage()}
             {/* <div className="col-md-2 p-2 m-3">
               <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
             </div>
