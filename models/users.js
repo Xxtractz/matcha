@@ -8,7 +8,6 @@ var userSchema = new Schema({
     firstname: {type: String, required: true},
     lastname: {type: String, required: true},
     email: {type:String, required: true},
-    age:{type:String, required: true},
     gender:{type:String, default: "Other"},
     genderPreference:{type:String, default: "Both"},
     bio:{type: String, default: ""},
