@@ -96,7 +96,7 @@ class UserProfile extends Component {
   render() {
     return (
       <Paper className="container p-2 mt-4 col-12" variant="outlined">
-        <Paper className="col-12 mt-2 p-1 text-center bg_gradient" variant="elevation">
+        <Paper className="col-12 mt-2 p-1 text-center" variant="outlined">
           <h1>Profile</h1>
           <small> Details about you </small>
         </Paper>
