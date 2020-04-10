@@ -38,22 +38,27 @@ mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true
     .catch(err => console.error('Something went wrong', err));
 
 app.get('/verify/:id', async (req, res) => {
-    const data = jwt.verify(req.params.id, process.env.SECRETS);
-    const username = data.username;
-
-    await Users.findOneAndUpdate({username: username}, {status: "1"}, (err, doc) => {
-        if (err)
-        {
-            console.log(err);
-            res.status(500).send("Internal server error");
-        } else if (doc){
+    try {
+        const data = jwt.verify(req.params.id, process.env.SECRETS);
+        const username = data.username;
+        await Users.findOneAndUpdate({username: username}, {status: "1"}, (err, doc) => {
+            if (err)
+            {
+                console.log(err);
+                res.status(500).send("Internal server error");
+            } else if (doc){
+            
+                res.status(200).send({"Verify":"Successfully verified the user."});
+            }
+            else {
+                res.status(400).send({"Verify":"Try resending the verification link again"});
+            }
+        });
         
-            res.status(200).send({"Verify":"Successfully verified the user."});
-        }
-        else {
-            res.status(400).send({"Verify":"Try resending the verification link again"});
-        }
-    });
+    } catch (error) {
+        res.status(400).send({"Verify": "Invalid token."})
+    }
+   
 });
 
 app.post('/verifyAgain', async (req, res) => {
@@ -78,6 +83,31 @@ app.post('/verifyAgain', async (req, res) => {
             res.status(200).send({"Verify":"Successfully verified the user."});
         } else {
             res.status(400).send({"Verify":"The username or email does not exists"});
+        }
+    });
+});
+
+app.post('/verification', async (req, res) => {
+    const data = jwt.verify(req.params.id, config.secret);
+    const username = data.username;
+    console.log(empID);
+    await Users.findOneAndUpdate({username: username},{$set:{Password: "123456"}},{new: true}, (err, doc) => {
+        if (err)
+        {
+            console.log(err);
+            res.status(500).send("Internal server error");
+        } else if (doc){
+            let html = `<h1>Password was reset</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b><br><b>Password: 123456</b><br> </p>`;
+            let result = CommonFunctions.sendEmail(html, doc.Email, "Successfully Reset Password");
+            if(result === 1)
+            {
+                res.redirect('http://localhost:4200/login-form');
+            } else {
+                res.status(400).send("Failed to send the email");
+            } 
+        }
+        else {
+            res.status(400).send("Try resending the reset link again");
         }
     });
 });
