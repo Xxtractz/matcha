@@ -110,7 +110,7 @@ app.post('/verification', async (req, res) => {
         });
     });
 
-    await Users.findOneAndUpdate({$or:[{username: req.body.username}, {email:req.body.email}]},{$set:{Password: hashPass}},{new: true}, (err, doc) => {
+    await Users.findOneAndUpdate({$or:[{username: req.body.username}, {email:req.body.username}]},{$set:{Password: hashPass}},{new: true}, (err, doc) => {
         if (err)
         {
             boom.boomify(err);
