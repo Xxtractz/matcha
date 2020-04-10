@@ -79,28 +79,29 @@ router.post('/login', async (req, res) => {
               res.status(204).send({"User": "No matches found"});
           } else {
             if(user.status === "0") {
-              res.status(400).send({"User":"The user was never verified"})
+              res.status(400).send({"User":"The user was never verified", "Token": user.token})
             } else {
               bcrypt.compare(req.body.password, user.password, function(err, response) {
                 if(response) {
                   loggedUser = {
                     _id: user._id,
-                    username: req.body.username,
-                    fname: user.firstname,
-                    lname: user.lastname,
+                    username: user.username,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
                     email: user.email,
+                    gender:user.gender,
+                    genderPreference:user.genderPreference,
+                    bio:user.bio,
+                    status: user.status,
+                    profileImage: user.profileImage,
+                    images:user.images,
+                    active: user.active,
+                    date: user.date,
                     age: user.age,
-                    gender: user.gender,
-                    genderPreference: user.genderPreference,
-                    LP: user.LP,
-                    NO: user.NO,
-                    LW: user.LW,
-                    SE: user.SE,
-                    MV: user.MV,
-                    RD: user.RD,
-                    bio: user.Bio,
-                    active:user.active,
-                    date: user.date
+                    dob: user.dob,
+                    interets: user.interests,
+                    likes: user.likes,
+                    dislikes: user.dislikes
                 }
                 // const token = jwt.sign(loggedUser, process.env.SECRETS, { expiresIn: process.env.TOKENLIFE})
                 const token = jwt.sign(loggedUser, process.env.SECRETS)
