@@ -78,7 +78,7 @@ router.post('/login', async (req, res) => {
           } else if (!user) {
               res.status(204).send({"User": "No matches found"});
           } else {
-            if(user.status == 0) {
+            if(user.status === "0") {
               res.status(400).send({"User":"The user was never verified"})
             } else {
               bcrypt.compare(req.body.password, user.password, function(err, response) {
