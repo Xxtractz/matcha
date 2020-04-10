@@ -40,7 +40,7 @@ router.post('/register', function(req, res){
                   status: '0',
                   password: req.body.password
                 };
-                const token = jwt.sign(loggedUser, process.env.SECRETS);
+                const token = jwt.sign(user, process.env.SECRETS);
                 user.token = token;
                   Users.create(user, function(err, doc){
                       if(err){
