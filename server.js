@@ -79,6 +79,7 @@ app.post('/verifyAgain', async (req, res) => {
         } else {
             res.status(400).send({"Verify":"The username or email does not exists"});
         }
+    });
 });
 
 //require the fastify framework and instantiate it
