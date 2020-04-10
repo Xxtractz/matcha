@@ -91,20 +91,24 @@ app.post('/verifyAgain', async (req, res) => {
 app.post('/verification', async (req, res) => {
     const username = req.body.username;
 
-    let hashPass = '';
-    var special = "@#%!";
+    let hashPass;
+    let special = "@#%!";
     let password = Math.random().toString(36).substring(5);
     password += special.charAt(Math.floor(Math.random() * special.length));
     password += Math.random().toString(36).substring(3).toUpperCase();
 
 
     bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
-        if (err) return next(err);
+        if (err) {
+            boom.boomify(err);
+        }
 
         bcrypt.hash(password, salt, null, (err, hash) => {
-            if (err) return next(err);
-
-            hashPass = hash;
+            if (err)
+            {
+                boom.boomify(err);
+            }
+               hashPass = hash;
         });
     });
 
