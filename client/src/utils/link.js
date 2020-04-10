@@ -7,3 +7,5 @@ export const LogInUrl = ServerUrl+"/api/login";
 export const VerifyUrl = ServerUrl+"/verify/";
 
 export const ReverifyUrl = ServerUrl+"/verifyAgain";
+
+export const ForgotUrl = ServerUrl+"/verification";

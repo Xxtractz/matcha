@@ -16,6 +16,7 @@ import Register from './components/Registration/register';
 import Account from "./components/Account/account";
 import NotFound from './components/Error/404';
 import Messages from './components/Message/chat';
+import Forgot from './components/Forgot/forgot';
 import verifyUser from './components/Registration/verify';
 
 // Modified Route 
@@ -35,6 +36,7 @@ class App extends Component {
                         <PublicRoute exact path="/login" component={Login}/>
                         <PublicRoute exact path="/register" component={Register}/>
                         <PublicRoute exact path="/verify" component={verifyUser}/>
+                        <PublicRoute exact path="/forgot" component={Forgot}/>
                         <Route exact path="/404" component={NotFound}/>
                         <Redirect to="/404" />
                     </Switch>

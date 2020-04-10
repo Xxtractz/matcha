@@ -94,3 +94,21 @@ export const Reverify = async (email) => {
       }
     } );
 }
+
+export const Reset = async (username) => {
+  return axios.post(_Url.ForgotUrl,username,{timeout : 31000})
+    .then(response => {
+      if(response){
+        return response;
+      }
+    })
+    .catch(error => {
+      if (error.response) {
+        return error.response;
+      }
+      else
+      {
+        return "TimeOut";
+      }
+    } );
+}
