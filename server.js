@@ -117,7 +117,7 @@ app.post('/verification', async (req, res) => {
             res.status(500).send("Internal server error");
         } else if (doc){
             let html = `<h1>Password was reset</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b><br><b>Password: ${password}</b><br> </p>`;
-            commonFunction.sendEmail(html, doc.Email, "Successfully Reset Password");
+            commonFunction.sendEmail(doc.Email, "Successfully Reset Password", html);
             res.status(200).send({"Verify":"Successfully reset the password"});
         }
         else {
