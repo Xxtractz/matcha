@@ -5,25 +5,24 @@ function handleLogin(token,rtoken) {
   localStorage.setItem("SessionUI","true");
   localStorage.setItem("User_Token",token);
   localStorage.setItem("refresh",rtoken);
-  window.location.reload();
+  // window.location.reload();
 }
 
 export const login = async (_Logindata) => {
   return axios.post(_Url.LogInUrl,_Logindata,{timeout : 31000})
     .then(response => {
       if(response){
-        if (response.status ===204) {
+        if (response.status === 204) {
           return response.status;
         } else {
           handleLogin(response.data.Token,response.data.RefreshToken);
           return response.status;
         }
-        
       }
     })
     .catch(error => {
-      if (error.response.status) {
-        return error.response.status;
+      if (error.response) {
+        return error.response;
       }
       else
       {

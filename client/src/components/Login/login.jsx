@@ -18,10 +18,35 @@ class Login extends Component {
       password: "",
       password_err:"",
       password_err_helperText:"",
-      isopen:true
+      isopen:true,
+      errorResponse:false,
+      verifyErrorMsg:"",
+      verifyToken:""
     }
   }
 
+  displayVerifyError(){
+    return(
+      <Collapse in={this.state.isopen}>
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="danger"
+              size="small"
+              onClick={ () => {
+                this.setState({isopen :false})
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          <strong>{this.state.verifyErrorMsg}</strong> <a href={"http://localhost:4000/verify/"+this.state.verifyToken} >Click here to verify</a> 
+        </Alert>
+      </Collapse>
+    )
+  }
 
   displayVerify(){
     return(
@@ -73,8 +98,12 @@ class Login extends Component {
           if(res === 204){
             console.log("Username Doesn't Exist")
           }
-          else if(res === 400){
-            console.log("Password is invali")
+          else if(res.status === 400){
+            console.log(res);
+            
+            this.setState({ errorResponse : true});
+            this.setState({ verifyErrorMsg : res.data.User.toString()});
+            this.setState({ verifyToken : res.data.Token.toString()});
           }
           else{
             console.log(res);
@@ -137,6 +166,7 @@ class Login extends Component {
       <div>
         <div  className="container">
           {(window.location.hash === "#regSuccess")? this.displayVerify():""}
+          {this.state.errorResponse ? this.displayVerifyError():""}
           <div className="row">
             <div className="col-md-6 mx-auto pt-5 mt-5" >
               <Card className="card m-5 p-5 mx-auto col-10 " variant="outlined">
