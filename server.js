@@ -48,7 +48,7 @@ app.get('/verify/:id', async (req, res) => {
             res.status(500).send("Internal server error");
         } else if (doc){
         
-            res.status(200).send("Verify":"Successfully verified the user.");
+            res.status(200).send({"Verify":"Successfully verified the user."});
         }
         else {
             res.status(400).send({"Verify":"Try resending the verification link again"});
@@ -75,7 +75,7 @@ app.post('/verifyAgain', async (req, res) => {
             user.token = token; 
             commonFunction.sendEmail(req.body.email, "Verify your account",
             '<p> Please <a href="http://localhost:4000/verify/'+token +'"> Click Here </a> to verify.</p>');
-            res.status(200).send(doc);
+            res.status(200).send({"Verify":"Successfully verified the user."});
         } else {
             res.status(400).send({"Verify":"The username or email does not exists"});
         }
