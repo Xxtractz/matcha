@@ -74,7 +74,7 @@ app.post('/verifyAgain', async (req, res) => {
             const token = jwt.sign(user, process.env.SECRETS);
             user.token = token; 
             commonFunction.sendEmail(req.body.email, "Verify your account",
-            '<p> Please <a href="http://localhost:4000/verify/'+token +'"> Click Here </a> to verify.</p>');
+            '<p> Please <a href="http://localhost:3001/verify?token='+token +'"> Click Here </a> to verify.</p>');
             res.status(200).send({"Verify":"Successfully verified the user."});
         } else {
             res.status(400).send({"Verify":"The username or email does not exists"});

@@ -47,7 +47,7 @@ router.post('/register', function(req, res){
                           console.log(err);
                       }else{
                           commonFunction.sendEmail(req.body.email, "Verify your account",
-                          '<p> Please <a href="http://localhost:4000/verify/'+token +'"> Click Here </a> to verify.</p>');
+                          '<p> Please <a href="http://localhost:3001/verify?token='+token +'"> Click Here </a> to verify.</p>');
                          res.status(200).send(doc);
                       }
                   });

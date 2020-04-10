@@ -57,3 +57,21 @@ export const isloggedIn = () =>{
     return true;
   }else return false;
 }
+
+export const verify = (token) => {
+  return axios.get(_Url.VerifyUrl + token)
+  .then(response => {
+    if(response){
+        return response.status;
+    }
+  })
+  .catch(error => {
+    if (error.response) {
+      return error.response;
+    }
+    else
+    {
+      return "TimeOut";
+    }
+  } );
+}

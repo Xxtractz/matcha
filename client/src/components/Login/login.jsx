@@ -42,7 +42,7 @@ class Login extends Component {
             </IconButton>
           }
         >
-          <strong>{this.state.verifyErrorMsg}</strong> <a href={"http://localhost:4000/verify/"+this.state.verifyToken} >Click here to verify</a> 
+          <strong>{this.state.verifyErrorMsg}</strong> <a href={"http://localhost:3001/verify/"+this.state.verifyToken} >Click here to verify</a> 
         </Alert>
       </Collapse>
     )
@@ -99,8 +99,6 @@ class Login extends Component {
             console.log("Username Doesn't Exist")
           }
           else if(res.status === 400){
-            console.log(res);
-            
             this.setState({ errorResponse : true});
             this.setState({ verifyErrorMsg : res.data.User.toString()});
             this.setState({ verifyToken : res.data.Token.toString()});
