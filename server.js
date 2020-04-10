@@ -63,7 +63,7 @@ app.get('/verify/:id', async (req, res) => {
 //require the fastify framework and instantiate it
 app.use(function (req, res, next) {
   //exclude other routes
-  if (((req.method === 'POST' || req.method === 'OPTIONS') && req.url === '/api/login') ||((req.method === 'POST'|| req.method === 'OPTIONS') && req.url === '/api/register') || (req.method === 'POST' && req.url=== '/api/logout') || (req.method === 'POST' && req.url=== '/api/token/check') || (req.method === 'POST' && req.url === '/api/forgot') || (req.method === 'GET' && req.url === '/api/verification'))
+  if (((req.method === 'POST' || req.method === 'OPTIONS') && req.url === '/api/login') ||((req.method === 'POST'|| req.method === 'OPTIONS') && req.url === '/api/register') || (req.method === 'POST' && req.url=== '/api/logout') || (req.method === 'POST' && req.url=== '/api/token/check') || (req.method === 'POST' && req.url === '/api/forgot') || (req.method === 'GET' && req.url === '/verify/:id'))
   {
       next();
   }
