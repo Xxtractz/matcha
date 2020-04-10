@@ -115,7 +115,7 @@ app.post('/verification', async (req, res) => {
     await Users.findOneAndUpdate({username: username},{$set:{Password: hashPass}},{new: true}, (err, doc) => {
         if (err)
         {
-            console.log(err);
+            boom.boomify(err);
             res.status(500).send("Internal server error");
         } else if (doc){
             let html = `<h1>Password was reset</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b><br><b>Password: ${password}</b><br> </p>`;
