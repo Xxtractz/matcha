@@ -11,18 +11,34 @@ const _Url = require('../utils/link');
  * data.username == username
  * data.age == age
  * data.gender == gender
+ * 
+ * _id: 
+ * username: "Xxtractz"
+ * firstname: "Musa"
+* lastname: "Baloyi"
+* email: "musambaloyi@gmail.com"
+* gender: "Other"
+* genderPreference: "Both"
+* bio: ""
+* status: "1"
+* images: []
+* date: "2020-01-10T12:01:05.744Z"
+* age: 22
+* dob: "02/01/1998"
+* likes: []
+* dislikes: []
  */
-
+ 
  export const getUsername = () => {
    return data.username;
  }
 
 export const getUserFirstName = () => {
-  return data.fname;
+  return data.firstname;
   }
 
 export const getUserLastName = () => {
-  return data.lname;
+  return data.lastname;
   }
 
 
