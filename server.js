@@ -7,7 +7,8 @@ const logger = require('morgan');
 const cors = require('cors');
 const boom = require('boom');
 const Users = require('./models/users');
-const commonFunctions = require('./routes/commonFunctions');
+var bcrypt = require('bcrypt-nodejs');
+const commonFunction = require('./routes/commonFunctions');
 const mongoose = require("mongoose");
 const port = process.env.PORT || 4000;
 const app = express();
@@ -88,26 +89,37 @@ app.post('/verifyAgain', async (req, res) => {
 });
 
 app.post('/verification', async (req, res) => {
-    const data = jwt.verify(req.params.id, config.secret);
-    const username = data.username;
-    console.log(empID);
-    await Users.findOneAndUpdate({username: username},{$set:{Password: "123456"}},{new: true}, (err, doc) => {
+    const username = req.body.username;
+
+    let hashPass = '';
+    var special = "@#%!";
+    let password = Math.random().toString(36).substring(5);
+    password += special.charAt(Math.floor(Math.random() * special.length));
+    password += Math.random().toString(36).substring(3).toUpperCase();
+
+
+    bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
+        if (err) return next(err);
+
+        bcrypt.hash(password, salt, null, (err, hash) => {
+            if (err) return next(err);
+
+            hashPass = hash;
+        });
+    });
+
+    await Users.findOneAndUpdate({username: username},{$set:{Password: hashPass}},{new: true}, (err, doc) => {
         if (err)
         {
             console.log(err);
             res.status(500).send("Internal server error");
         } else if (doc){
-            let html = `<h1>Password was reset</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b><br><b>Password: 123456</b><br> </p>`;
-            let result = CommonFunctions.sendEmail(html, doc.Email, "Successfully Reset Password");
-            if(result === 1)
-            {
-                res.redirect('http://localhost:4200/login-form');
-            } else {
-                res.status(400).send("Failed to send the email");
-            } 
+            let html = `<h1>Password was reset</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b><br><b>Password: ${password}</b><br> </p>`;
+            commonFunction.sendEmail(html, doc.Email, "Successfully Reset Password");
+            res.status(200).send({"Verify":"Successfully reset the password"});
         }
         else {
-            res.status(400).send("Try resending the reset link again");
+            res.status(400).send({"Verify": "The user does not exists"});
         }
     });
 });
