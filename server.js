@@ -7,7 +7,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const boom = require('boom');
 const Users = require('./models/users');
-const CommonFunctions = require('./routes/commonFunctions');
+const commonFunctions = require('./routes/commonFunctions');
 const mongoose = require("mongoose");
 const port = process.env.PORT || 4000;
 const app = express();
@@ -47,19 +47,38 @@ app.get('/verify/:id', async (req, res) => {
             console.log(err);
             res.status(500).send("Internal server error");
         } else if (doc){
-            let html = `<h1>User verified</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b> </p>`;
-            let result = CommonFunctions.sendEmail(html, doc.email, "Successfully Verified Account");
-            if(result === 1)
-            {
-                res.status(200).redirect('http://localhost:3001/login');
-            } else {
-                res.status(400).send({"Verify":"Failed to send the email"});
-            } 
+        
+            res.status(200).send("Verify":"Successfully verified the user.");
         }
         else {
             res.status(400).send({"Verify":"Try resending the verification link again"});
         }
     });
+});
+
+app.post('/verifyAgain', async (req, res) => {
+    await Users.findOne({'email': req.body.email}, function(err, user1){
+        if(err){
+            console.log(err);
+            res.status(500).send({"User": "Could not connect to the database"});
+        } else if (user1) {
+            console.log(user1);
+            let user = {
+            firstname: user1.firstname,
+            lastname: user1.lastname,
+            dob: user1.dob,
+            age: user1.age,
+            username: user1.username,
+            email: user1.email,
+            };
+            const token = jwt.sign(user, process.env.SECRETS);
+            user.token = token; 
+            commonFunction.sendEmail(req.body.email, "Verify your account",
+            '<p> Please <a href="http://localhost:4000/verify/'+token +'"> Click Here </a> to verify.</p>');
+            res.status(200).send(doc);
+        } else {
+            res.status(400).send({"Verify":"The username or email does not exists"});
+        }
 });
 
 //require the fastify framework and instantiate it
