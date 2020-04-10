@@ -89,8 +89,6 @@ app.post('/verifyAgain', async (req, res) => {
 });
 
 app.post('/verification', async (req, res) => {
-    const username = req.body.username;
-
     let hashPass;
     let special = "@#%!";
     let password = Math.random().toString(36).substring(5);
@@ -112,7 +110,7 @@ app.post('/verification', async (req, res) => {
         });
     });
 
-    await Users.findOneAndUpdate({username: username},{$set:{Password: hashPass}},{new: true}, (err, doc) => {
+    await Users.findOneAndUpdate({$or:[{username: req.body.username}, {email:req.body.email}]},{$set:{Password: hashPass}},{new: true}, (err, doc) => {
         if (err)
         {
             boom.boomify(err);

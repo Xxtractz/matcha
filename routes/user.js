@@ -37,8 +37,7 @@ router.post('/register', function(req, res){
                   age: req.body.age,
                   username: req.body.username,
                   email: req.body.email,
-                  status: '0',
-                  password: req.body.password
+                  status: '0'
                 };
                 const token = jwt.sign(user, process.env.SECRETS);
                 user.token = token;
