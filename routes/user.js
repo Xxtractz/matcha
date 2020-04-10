@@ -30,8 +30,6 @@ router.post('/register', function(req, res){
               }else {
                 console.log(user1);
                 if (!user1){
-                  const tokgen = new tokenGen(256, tokenGen.BASE62);
-                  let tkn = tokgen.generate();
                   let user = {
                   firstname: req.body.fname,
                   lastname: req.body.lname,
@@ -39,16 +37,17 @@ router.post('/register', function(req, res){
                   age: req.body.age,
                   username: req.body.username,
                   email: req.body.email,
-                  token: tkn,
                   status: '0',
                   password: req.body.password
                 };
+                const token = jwt.sign(loggedUser, process.env.SECRETS);
+                user.token = token;
                   Users.create(user, function(err, doc){
                       if(err){
                           console.log(err);
                       }else{
                           commonFunction.sendEmail(req.body.email, "Verify your account",
-                          '<p> Please <a href="http://localhost:4000/verify?token='+tkn +'"> Click Here </a> to verify.</p>');
+                          '<p> Please <a href="http://localhost:4000/verify/'+token +'"> Click Here </a> to verify.</p>');
                          res.status(200).send(doc);
                       }
                   });

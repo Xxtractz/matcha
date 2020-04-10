@@ -35,6 +35,31 @@ mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
 
+app.get('/verify/:id', async (req, res) => {
+    const data = jwt.verify(req.params.id, process.env.SECRETS);
+    const username = data.username;
+
+    await Users.findOneAndUpdate({username: username}, {status: "1"}, (err, doc) => {
+        if (err)
+        {
+            console.log(err);
+            res.status(500).send("Internal server error");
+        } else if (doc){
+            let html = `<h1>User verified</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b> </p>`;
+            let result = CommonFunctions.sendEmail(html, doc.email, "Successfully Verified Account");
+            if(result === 1)
+            {
+                res.status(200).redirect('http://localhost:3001/login');
+            } else {
+                res.status(400).send({"Verify":"Failed to send the email"});
+            } 
+        }
+        else {
+            res.status(400).send({"Verify":"Try resending the verification link again"});
+        }
+    });
+});
+
 //require the fastify framework and instantiate it
 app.use(function (req, res, next) {
   //exclude other routes
