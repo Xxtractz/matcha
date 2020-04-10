@@ -62,7 +62,7 @@ export const verify = (token) => {
   return axios.get(_Url.VerifyUrl + token)
   .then(response => {
     if(response){
-        return response.status;
+        return response;
     }
   })
   .catch(error => {
@@ -74,4 +74,23 @@ export const verify = (token) => {
       return "TimeOut";
     }
   } );
+}
+
+
+export const Reverify = async (email) => {
+  return axios.post(_Url.ReverifyUrl,email,{timeout : 31000})
+    .then(response => {
+      if(response){
+        return response;
+      }
+    })
+    .catch(error => {
+      if (error.response) {
+        return error.response;
+      }
+      else
+      {
+        return "TimeOut";
+      }
+    } );
 }

@@ -42,7 +42,7 @@ class Login extends Component {
             </IconButton>
           }
         >
-          <strong>{this.state.verifyErrorMsg}</strong> <a href={"http://localhost:3001/verify/"+this.state.verifyToken} >Click here to verify</a> 
+          <strong>{this.state.verifyErrorMsg}</strong> <a href={"http://localhost:3001/verify?token="+this.state.verifyToken} >Click here to verify</a> 
         </Alert>
       </Collapse>
     )
@@ -102,6 +102,9 @@ class Login extends Component {
             this.setState({ errorResponse : true});
             this.setState({ verifyErrorMsg : res.data.User.toString()});
             this.setState({ verifyToken : res.data.Token.toString()});
+          }
+          if(res === 200){
+            window.location.reload();
           }
           else{
             console.log(res);
