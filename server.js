@@ -32,7 +32,7 @@ app.use('/', usersRoutes);//users information capturing routes
 
 // DB Connection 
 const db_link = require('./config/keys').MongoUrl;
-mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
 
