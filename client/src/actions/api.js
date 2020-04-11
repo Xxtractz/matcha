@@ -8,7 +8,18 @@ function handleLogin(token, rtoken) {
   // window.location.reload();
 }
 
-// const headers;
+const token = () => {
+  return localStorage.getItem("User_Token");
+}
+
+function getHeader(){
+   const headers = {
+     'Content-Type':  'application/json',
+     Authorization: `Bearer ${token()}`
+   }
+ return headers;
+}
+
 
 export const login = async (_Logindata) => {
   return axios
