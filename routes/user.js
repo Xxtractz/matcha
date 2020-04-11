@@ -297,6 +297,7 @@ router.post('/verification', async (req, res) => {
 
 //user logging out
 router.post('/logout', async (req, res) => {
+    console.log(req.body);
   await Auth.findOneAndDelete({username: req.body.username}, (err, doc) => {
        if (err)
        {
