@@ -8,15 +8,15 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     <Route
       {...rest}
       render={(props) => {
-        if (!isloggedIn) {
+        if (isloggedIn) {
+          return <Component {...props} />;
+        } else {
           return (
             <Redirect
               to={{ pathname: "/login", state: { from: props.location } }}
             />
           );
         }
-
-        return <Component {...props} />;
       }}
     />
   );

@@ -30,9 +30,11 @@ export const login = async (_Logindata) => {
     });
 };
 
-export const logout = () => {
-  
-  localStorage.clear();
+export const logout = (username) => {
+  axios.post(_Url.LogOutUrl, username).then((res)=>{
+    localStorage.clear();
+  window.location.replace('/login');
+  });
 };
 
 export const register = async (_userdata) => {

@@ -51,8 +51,7 @@ class Nav extends Component {
   }
 
   logout() {
-    logout();
-    window.location.reload();
+    logout(getUsername());
   }
 
   homeMenu() {
