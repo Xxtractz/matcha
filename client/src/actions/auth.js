@@ -58,22 +58,21 @@ export const isloggedIn = () =>{
   }else return false;
 }
 
-export const verify = (token) => {
-  return axios.get(_Url.VerifyUrl + token)
-  .then(response => {
-    if(response){
-        return response;
+export const verify = async (token) => {
+  try {
+    const response = await axios.get(_Url.VerifyUrl + token);
+    if (response) {
+      return response;
     }
-  })
-  .catch(error => {
+  }
+  catch (error) {
     if (error.response) {
       return error.response;
     }
-    else
-    {
+    else {
       return "TimeOut";
     }
-  } );
+  }
 }
 
 

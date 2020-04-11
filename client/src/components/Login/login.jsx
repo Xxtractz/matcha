@@ -28,11 +28,12 @@ class Login extends Component {
   displayVerifyError(){
     return(
       <Collapse in={this.state.isopen}>
-        <Alert
+        <Alert 
+          variant="outlined"
+          severity="error"
           action={
             <IconButton
               aria-label="close"
-              color="danger"
               size="small"
               onClick={ () => {
                 this.setState({isopen :false})
