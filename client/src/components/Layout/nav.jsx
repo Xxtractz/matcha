@@ -51,7 +51,10 @@ class Nav extends Component {
   }
 
   logout() {
-    logout(getUsername());
+    const user = {
+    username: getUsername()
+    }
+    logout(user);
   }
 
   homeMenu() {
