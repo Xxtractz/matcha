@@ -11,7 +11,7 @@ class verifyUser extends Component {
   constructor() {
     super();
     this.state = {
-      isopen:true,
+      isopen: true,
       invalidToken: false,
       displayform: false,
       email: "",
@@ -45,10 +45,10 @@ class verifyUser extends Component {
     Reverify(email)
       .then((res) => {
         if (res) {
-          if (res === 204) {
+          if (res.status === 204) {
             console.log("Username Doesn't Exist");
           }
-          if (res === 200) {
+          if (res.status === 200) {
             window.location.replace("/login");
           } else {
             console.log(res);
@@ -108,7 +108,8 @@ class verifyUser extends Component {
           }
         >
           <strong>
-            The current Token is invalid, Request for a new verification Token Below
+            The current Token is invalid, Request for a new verification Token
+            Below
           </strong>
         </Alert>
       </Collapse>

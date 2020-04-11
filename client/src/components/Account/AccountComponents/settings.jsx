@@ -9,13 +9,13 @@ class Settings extends Component {
     this.state = {};
   }
 
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: [e.target.value]
+      [e.target.name]: [e.target.value],
     });
   };
 
@@ -30,10 +30,7 @@ class Settings extends Component {
   render() {
     return (
       <Paper className="container p-2 mt-4 col-12">
-        <Paper
-          className="col-12 mt-2 p-1 text-center "
-          variant="outlined"
-        >
+        <Paper className="col-12 mt-2 p-1 text-center " variant="outlined">
           <h1>Setting</h1>
           <small>Account Seetings </small>
         </Paper>

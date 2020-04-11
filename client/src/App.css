@@ -1,122 +1,122 @@
-html{
+html {
   min-height: 100% !important;
 }
 
 body {
-    margin: 0;
-    min-height: 100% !important;
-    /* font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace; */
-    font-family:  'Lucida Console', 'Lucida Sans Typewriter', monaco, 'Bitstream Vera Sans Mono', monospace;
-    background: #eeeeee !important;
-    /* */
-  }
-  
-  .bg_gradient{
-    background : linear-gradient(to bottom, #b3b3b3 0%, #acacac 100%) !important;
-    color: white !important;
-  }
+  margin: 0;
+  min-height: 100% !important;
+  /* font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace; */
+  font-family: "Lucida Console", "Lucida Sans Typewriter", monaco,
+    "Bitstream Vera Sans Mono", monospace;
+  background: #eeeeee !important;
+  /* */
+}
 
-  .bg_gradient_dark{
-    background: linear-gradient(to bottom, #ff00cc, #333399);
-  }
+.bg_gradient {
+  background: linear-gradient(to bottom, #b3b3b3 0%, #acacac 100%) !important;
+  color: white !important;
+}
 
-  .bg_transparent_white{
-      background: #ff567f00 !important;
-      color: white !important;
-  }
-  .bg_gray{
-    background: #f7f9fc !important;
-  }
+.bg_gradient_dark {
+  background: linear-gradient(to bottom, #ff00cc, #333399);
+}
 
-  .bg_primary{
-    background: #ff567f !important;
-  }
+.bg_transparent_white {
+  background: #ff567f00 !important;
+  color: white !important;
+}
+.bg_gray {
+  background: #f7f9fc !important;
+}
 
-  .bg_secondary{
-    background: #2ab3ff !important;
-  }
+.bg_primary {
+  background: #ff567f !important;
+}
 
-  .bg_success{
-    background: #44ebc5 !important;
-  }
+.bg_secondary {
+  background: #2ab3ff !important;
+}
 
-  .bg_danger{
-    background: #ff506e !important;
-  }
+.bg_success {
+  background: #44ebc5 !important;
+}
 
+.bg_danger {
+  background: #ff506e !important;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  background: linear-gradient(to top, #ff00cc, #333399) !important;
+  color: white !important;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  z-index: 1;
+  border-right: solid 0.2px #0c0c0c;
+}
+
+.navbarCustom {
+  /* margin-left: 300px; */
+  display: none !important;
+}
+
+.content {
+  margin-left: 300px;
+  padding: 16px;
+  height: 70% !important;
+}
+
+.profile_img_Card {
+  height: 220px !important;
+  contain: size !important;
+}
+
+.MuiCardMedia-root {
+  background-size: contain !important;
+}
+@media screen and (max-width: 900px) {
   .sidebar {
-    margin: 0;
-    padding: 0;
-    width: 300px;
-    background: linear-gradient(to top, #ff00cc, #333399) !important;
-    color: white !important;
-    position: fixed;
-    height: 100%;
-    overflow: auto;
-    z-index: 1;
-    border-right: solid 0.2px #0c0c0c;
+    width: 200px;
+    /* width: 100%;
+      height: auto;
+      position: relative; */
+    /* display: none; */
   }
-  
-  .navbarCustom{
-    /* margin-left: 300px; */
-    display: none !important;
-  }
-
   .content {
-    margin-left: 300px;
-    padding: 16px;
-    height: 70% !important;
+    margin-left: 200px;
   }
-
-  .profile_img_Card{
-    height: 220px !important;
-    contain: size !important;
+  .navbarCustom {
+    margin-left: 200px;
   }
-
-  .MuiCardMedia-root {
-    background-size: contain !important;
 }
-  @media screen and (max-width: 900px) {
-    .sidebar {
-        width: 200px;
-      /* width: 100%;
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    /* width: 100%;
       height: auto;
       position: relative; */
-      /* display: none; */
-    }
-    .content{
-        margin-left: 200px;
-    }
-    .navbarCustom{
-        margin-left: 200px;
-      }
+    display: none;
+  }
+  /* .sidebar a {float: left;} */
+  .content {
+    margin-left: 0;
+  }
+  .navbarCustom {
+    display: inherit !important;
+    margin-left: 0px;
+  }
 }
-  
-  @media screen and (max-width: 700px) {
-    .sidebar {
-      /* width: 100%;
-      height: auto;
-      position: relative; */
-      display: none;
-    }
-    /* .sidebar a {float: left;} */
-    .content {
-      
-      margin-left: 0;}
-    .navbarCustom{
-        display: inherit !important;
-        margin-left: 0px;
-      }
-  }
 
-  .fourOhfour{
-    padding: 20% 10% 10% 10% !important;
-    min-width: 100% !important;
-    min-height: 100% !important;
-  }
+.fourOhfour {
+  padding: 20% 10% 10% 10% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+}
 
-
-  /* Profile Card  */
+/* Profile Card  */
 /* .profile_card{
   width: 100%;
   min-height: 460px;

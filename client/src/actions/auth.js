@@ -1,62 +1,62 @@
-const axios = require('axios').default;
-const _Url = require('../utils/link');
+const axios = require("axios").default;
+const _Url = require("../utils/link");
 
-function handleLogin(token,rtoken) {
-  localStorage.setItem("SessionUI","true");
-  localStorage.setItem("User_Token",token);
-  localStorage.setItem("refresh",rtoken);
+function handleLogin(token, rtoken) {
+  localStorage.setItem("SessionUI", "true");
+  localStorage.setItem("User_Token", token);
+  localStorage.setItem("refresh", rtoken);
   // window.location.reload();
 }
 
 export const login = async (_Logindata) => {
-  return axios.post(_Url.LogInUrl,_Logindata,{timeout : 31000})
-    .then(response => {
-      if(response){
+  return axios
+    .post(_Url.LogInUrl, _Logindata, { timeout: 31000 })
+    .then((response) => {
+      if (response) {
         if (response.status === 204) {
           return response.status;
         } else {
-          handleLogin(response.data.Token,response.data.RefreshToken);
+          handleLogin(response.data.Token, response.data.RefreshToken);
           return response.status;
         }
       }
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         return error.response;
-      }
-      else
-      {
+      } else {
         return "TimeOut";
       }
-    } );
-}
+    });
+};
 
 export const logout = () => {
   localStorage.clear();
-}
+};
 
-export const register = async (_userdata) =>{
-  return axios.post(_Url.signInUrl,_userdata )
-    .then(response => {
-      if(response){
-        return {status : "true"};
+export const register = async (_userdata) => {
+  return axios
+    .post(_Url.signInUrl, _userdata)
+    .then((response) => {
+      if (response) {
+        return { status: "true" };
       }
     })
-    .catch(error => {
+    .catch((error) => {
       if (error) {
         return {
-          status:"false",
-          message:error.response.data.User
-        }
+          status: "false",
+          message: error.response.data.User,
+        };
       }
-    } );
-}
+    });
+};
 
-export const isloggedIn = () =>{
-  if(localStorage.getItem("SessionUI")){
+export const isloggedIn = () => {
+  if (localStorage.getItem("SessionUI")) {
     return true;
-  }else return false;
-}
+  } else return false;
+};
 
 export const verify = async (token) => {
   try {
@@ -64,50 +64,45 @@ export const verify = async (token) => {
     if (response) {
       return response;
     }
-  }
-  catch (error) {
+  } catch (error) {
     if (error.response) {
       return error.response;
-    }
-    else {
+    } else {
       return "TimeOut";
     }
   }
-}
-
+};
 
 export const Reverify = async (email) => {
-  return axios.post(_Url.ReverifyUrl,email,{timeout : 31000})
-    .then(response => {
-      if(response){
+  return axios
+    .post(_Url.ReverifyUrl, email, { timeout: 31000 })
+    .then((response) => {
+      if (response) {
         return response;
       }
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         return error.response;
-      }
-      else
-      {
+      } else {
         return "TimeOut";
       }
-    } );
-}
+    });
+};
 
 export const Reset = async (username) => {
-  return axios.post(_Url.ForgotUrl,username,{timeout : 31000})
-    .then(response => {
-      if(response){
+  return axios
+    .post(_Url.ForgotUrl, username, { timeout: 31000 })
+    .then((response) => {
+      if (response) {
         return response;
       }
     })
-    .catch(error => {
+    .catch((error) => {
       if (error.response) {
         return error.response;
-      }
-      else
-      {
+      } else {
         return "TimeOut";
       }
-    } );
-}
+    });
+};
