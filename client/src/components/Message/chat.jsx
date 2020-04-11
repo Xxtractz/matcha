@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Layout from "../Layout/layout";
 import { getUserStatus } from "../../actions/user";
-import { Redirect } from "react-router-dom";
 
 class Messages extends Component {
   display() {

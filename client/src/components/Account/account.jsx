@@ -1,5 +1,8 @@
 import React, { Component } from "react";
-
+import { Alert } from "@material-ui/lab";
+import IconButton from "@material-ui/core/IconButton";
+import Collapse from "@material-ui/core/Collapse";
+import CloseIcon from "@material-ui/icons/Close";
 import Layout from "../Layout/layout";
 import Images from "./AccountComponents/images";
 import Profile from "./AccountComponents/profile";
@@ -10,14 +13,17 @@ class Account extends Component {
 
   constructor(){
     super();
-    
+    this.state = {
+      isopen:true,
+
+    };
   }
 
   displayVerifyError() {
     return (
       <Collapse in={this.state.isopen}>
         <Alert
-          variant="outlined"
+          variant="filled"
           severity="error"
           action={
             <IconButton
@@ -32,8 +38,7 @@ class Account extends Component {
           }
         >
           <strong>
-            The current Token is invalid, Request for a new verification Token
-            Below
+            Profile incomplete
           </strong>
         </Alert>
       </Collapse>
@@ -44,7 +49,7 @@ class Account extends Component {
   render() {
     return (
       <Layout>
-        {this.state.invalidToken === true ? this.displayVerifyError() : ""}
+        {window.location.hash ==="#incomplete" ? this.displayVerifyError() : ""}
         <Images></Images>
         <Profile></Profile>
         <div className="row ">

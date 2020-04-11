@@ -5,6 +5,7 @@ import {
   getUserFirstName,
   getUserLastName,
   getUsername,
+  getUserStatus,
 } from "../../actions/user";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import {
@@ -54,6 +55,36 @@ class Nav extends Component {
     window.location.reload();
   }
 
+  homeMenu() {
+    return (
+      <a className="text-decoration-none text-white" href="/">
+        <ListItem button className="text-center">
+          <ListItemText>Home</ListItemText>
+        </ListItem>
+      </a>
+    );
+  }
+
+  messageMenu() {
+    return (
+      <a className="text-decoration-none text-white" href="/chat">
+        <ListItem button className="text-center ">
+          <ListItemText>Message</ListItemText>
+        </ListItem>
+      </a>
+    );
+  }
+
+  accountMenu() {
+    return (
+      <a className="text-decoration-none text-white" href="/user">
+        <ListItem button className="text-center ">
+          <ListItemText>Account</ListItemText>
+        </ListItem>
+      </a>
+    );
+  }
+
   render() {
     return (
       <Router>
@@ -82,21 +113,12 @@ class Nav extends Component {
             <hr />
             <div className="col-12">
               <List component="nav">
-                <a className="text-decoration-none text-white" href="/">
-                  <ListItem button className="text-center">
-                    <ListItemText>Home</ListItemText>
-                  </ListItem>
-                </a>
-                <a className="text-decoration-none text-white" href="/chat">
-                  <ListItem button className="text-center ">
-                    <ListItemText>Message</ListItemText>
-                  </ListItem>
-                </a>
-                <a className="text-decoration-none text-white" href="/user">
-                  <ListItem button className="text-center ">
-                    <ListItemText>Account</ListItemText>
-                  </ListItem>
-                </a>
+                {getUserStatus() === "2" ? this.homeMenu() : ""}
+
+                {getUserStatus() === "2" ? this.messageMenu() : ""}
+
+                {this.accountMenu()}
+
                 <Divider light></Divider>
                 <ListItem
                   button
