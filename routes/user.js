@@ -15,7 +15,6 @@ router.use(cors());
 
 //sign up post
 router.post('/register', function(req, res){
-  
     if (req.body.fname && req.body.lname && req.body.username && req.body.email && req.body.password && req.body.age){
       Users.findOne({'username': req.body.username}, function(err, user){
         if (err)
@@ -36,6 +35,7 @@ router.post('/register', function(req, res){
                   dob: req.body.dob,
                   age: req.body.age,
                   username: req.body.username,
+                  password: req.body.password,
                   email: req.body.email,
                   status: '0'
                 };
@@ -102,7 +102,6 @@ router.post('/login', async (req, res) => {
                     likes: user.likes,
                     dislikes: user.dislikes
                 }
-                // const token = jwt.sign(loggedUser, process.env.SECRETS, { expiresIn: process.env.TOKENLIFE})
                 const token = jwt.sign(loggedUser, process.env.SECRETS)
                 const refreshToken = jwt.sign(loggedUser, process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE})
                 const response = {
@@ -129,6 +128,65 @@ router.post('/login', async (req, res) => {
   }
 });
 
+//update an existing user information
+router.put('/update/:id', async (req, res) => {
+  try {
+      const id = req.params.id;
+      const user = req.body;
+      const {...updateData } = user;
+
+      await Users.findByIdAndUpdate(id, updateData, {new: true}, (err, update) => {
+          if (err)
+          {
+              console.log(err);
+              res.send({"User":"Internal server error can not update the user"});
+          } else if (!update) {
+              res.status(400).send({"User":"Unable to update check your id"});
+          } else {
+                  res.status(200).send({"User":update, "Message": "Successfully Updated"});
+          }
+      });
+  } catch (err) {
+      throw boom.boomify(err);
+  }
+});
+
+//changing the password of the user
+router.post('/change/password', async (req, res) => {
+  try {
+        let password = req.body.password;
+        let hashPass = null;
+
+        bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
+          if (err) {
+              boom.boomify(err);
+          }
+
+          bcrypt.hash(password, salt, null, (err, hash) => {
+              if (err)
+              {
+                  boom.boomify(err);
+              }
+                hashPass = hash;
+          });
+      });
+      await Users.findByIdAndUpdate({username:req.body.username}, {password: hashPass}, (err, doc) => {
+          if (err)
+          {
+              console.log(err);
+              res.status(500).send({"User":"Something wrong happened"});
+          } else if (doc)
+          {
+              res.status(200).send({"User":"User Password Succesfully updated"});
+          } else {
+              res.status(400).send({"User":"The user does not exist"});
+          }
+      });
+  } catch (err) {
+      boom.boomify(err);
+  }
+});
+
 //check if token exists
 router.post('/token/check', async (req, res) => {
   await Auth.findOne({username: req.body.username}, (err, doc) => {
@@ -147,83 +205,109 @@ router.post('/token/check', async (req, res) => {
   });
 });
 
-//verify the user that has just registered
-router.post('/userVerify', async (req, res) => {
-  await Verification.findOne({username: req.body.username}, (err, doc) => {
-      if (err){
-          res.status(500).send({"User":"Encountered a problem while checking in collection"});
-      } else if (doc) {
-          if (doc.token === req.body.token)
+//verify the user after registration
+app.get('/verify/:id', async (req, res) => {
+  try {
+      const data = jwt.verify(req.params.id, process.env.SECRETS);
+      const username = data.username;
+      await Users.findOneAndUpdate({username: username}, {status: "1"}, (err, doc) => {
+          if (err)
           {
-            Verification.findOneAndDelete({username: req.body.username}, (err, doc) => {
-              if (err)
-              {
-                res.status(400).send({"User": "The token could not be deleted"});
-              }
-            });
-              res.status(200).send({"User":"Token is valid and belongs to the user"});
-          } else {
-              res.status(400).send({"User":"Invalid token"});
+              console.log(err);
+              res.status(500).send("Internal server error");
+          } else if (doc){
+          
+              res.status(200).send({"Verify":"Successfully verified the user."});
           }
+          else {
+              res.status(400).send({"Verify":"Try resending the verification link again"});
+          }
+      });
+      
+  } catch (error) {
+      res.status(400).send({"Verify": "Invalid token."})
+  }
+ 
+});
+
+//verification for invalid token and getting new token 
+app.post('/verifyAgain', async (req, res) => {
+  await Users.findOne({'email': req.body.email}, function(err, user1){
+      if(err){
+          console.log(err);
+          res.status(500).send({"User": "Could not connect to the database"});
+      } else if (user1) {
+          console.log(user1);
+          let user = {
+          firstname: user1.firstname,
+          lastname: user1.lastname,
+          dob: user1.dob,
+          age: user1.age,
+          username: user1.username,
+          email: user1.email,
+          };
+          const token = jwt.sign(user, process.env.SECRETS);
+          user.token = token; 
+          commonFunction.sendEmail(req.body.email, "Verify your account",
+          '<p> Please <a href="http://localhost:3001/verify?token='+token +'"> Click Here </a> to verify.</p>');
+          res.status(200).send({"Verify":"Successfully verified the user."});
       } else {
-          res.status(204).send({"User":"The token is not set for the user"});
+          res.status(400).send({"Verify":"The username or email does not exists"});
       }
   });
 });
 
-//when the user clicks on the forgot password they post the email to this api
-router.post('/forgot', async (req, res) => {
-  try {
-     await Users.findOne({email:req.body.email}, (err, doc) => {
+//verification for forgot password
+app.post('/verification', async (req, res) => {
+  let hashPass;
+  let special = "@#%!";
+  let password = Math.random().toString(36).substring(5);
+  password += special.charAt(Math.floor(Math.random() * special.length));
+  password += Math.random().toString(36).substring(3).toUpperCase();
+
+
+  bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
+      if (err) {
+          boom.boomify(err);
+      }
+
+      bcrypt.hash(password, salt, null, (err, hash) => {
           if (err)
           {
-              console.log(err);
-              res.send({"User":"Internal server error can not update the user."});
-          } else if (!doc) {
-              res.status(400).send({"User":"The email you entered does not exist."});
-          } else {
-              let verification = {
-                  username: doc.username,
-                  email: doc.email
-              };
-              const token = jwt.sign(verification, process.env.SECRETS);
-              verification.token = token;
-              const ver = new Verification(verification);
-              ver.save();
-
-              let html = "<h1>Reset Password</h1> <br> <p>To reset your password please click <b><a href='http://localhost:3001/verification/"+token+"'>here</a></b>.</p>";
-              let result = CommonFunctions.sendEmail(html, req.body.email, "Reset Password");
-              if(result === 1)
-              {
-                  res.status(200).send({"User":"Check your email for instructions to reset password"});
-              } else {
-                  res.status(400).send("Failed to send the email");
-              } 
+              boom.boomify(err);
           }
-      }); 
-  } catch (err) {
-      throw boom.boomify(err);
-  }
-});
-
-//changing the password of the user
-router.post('/change/password', async (req, res) => {
-  try {
-      await Users.findByIdAndUpdate({username:req.body.username}, {password: req.body.password}, (err, doc) => {
-          if (err)
-          {
-              console.log(err);
-              res.status(500).send({"User":"Something wrong happened"});
-          } else if (doc)
-          {
-              res.status(200).send(doc);
-          } else {
-              res.status(400).send({"User":"The user does not exist"});
-          }
+             hashPass = hash;
       });
-  } catch (err) {
-      boom.boomify(err);
-  }
+  });
+
+  await Users.findOneAndUpdate({$or:[{username: req.body.username}, {email:req.body.username}]},{$set:{Password: hashPass}},{new: true}, (err, doc) => {
+      if (err)
+      {
+          boom.boomify(err);
+          res.status(500).send("Internal server error");
+      } else if (doc){
+          let html = `<h1>Password was reset</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b><br><b>Password: ${password}</b><br> </p>`;
+          commonFunction.sendEmail(doc.email, "Successfully Reset Password", html);
+          res.status(200).send({"Verify":"Successfully reset the password"});
+      }
+      else {
+          res.status(400).send({"Verify": "The user does not exists"});
+      }
+  });
 });
+
+//user logging out
+router.post('/logout', async (req, res) => {
+  await Auth.findOneAndRemove({username: req.body.username}, (err, doc) => {
+       if (err)
+       {
+           console.log(err);
+           res.status(500).send("Internal server error");
+       } else {
+           res.status(200).send({"User": "User successfully logged out"});
+       }
+   });
+});
+
 
 module.exports = router;

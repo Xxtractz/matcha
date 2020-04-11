@@ -7,8 +7,6 @@ const logger = require('morgan');
 const cors = require('cors');
 const boom = require('boom');
 const Users = require('./models/users');
-var bcrypt = require('bcrypt-nodejs');
-const commonFunction = require('./routes/commonFunctions');
 const mongoose = require("mongoose");
 const port = process.env.PORT || 4000;
 const app = express();
@@ -30,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'client')));
 
 //adding routes 
-app.use('/api', usersRoutes);//users information capturing routes
+app.use('/', usersRoutes);//users information capturing routes
 
 // DB Connection 
 const db_link = require('./config/keys').MongoUrl;
@@ -38,98 +36,10 @@ mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true
     .then(() => console.log('Now connected to MongoDB!'))
     .catch(err => console.error('Something went wrong', err));
 
-app.get('/verify/:id', async (req, res) => {
-    try {
-        const data = jwt.verify(req.params.id, process.env.SECRETS);
-        const username = data.username;
-        await Users.findOneAndUpdate({username: username}, {status: "1"}, (err, doc) => {
-            if (err)
-            {
-                console.log(err);
-                res.status(500).send("Internal server error");
-            } else if (doc){
-            
-                res.status(200).send({"Verify":"Successfully verified the user."});
-            }
-            else {
-                res.status(400).send({"Verify":"Try resending the verification link again"});
-            }
-        });
-        
-    } catch (error) {
-        res.status(400).send({"Verify": "Invalid token."})
-    }
-   
-});
-
-app.post('/verifyAgain', async (req, res) => {
-    await Users.findOne({'email': req.body.email}, function(err, user1){
-        if(err){
-            console.log(err);
-            res.status(500).send({"User": "Could not connect to the database"});
-        } else if (user1) {
-            console.log(user1);
-            let user = {
-            firstname: user1.firstname,
-            lastname: user1.lastname,
-            dob: user1.dob,
-            age: user1.age,
-            username: user1.username,
-            email: user1.email,
-            };
-            const token = jwt.sign(user, process.env.SECRETS);
-            user.token = token; 
-            commonFunction.sendEmail(req.body.email, "Verify your account",
-            '<p> Please <a href="http://localhost:3001/verify?token='+token +'"> Click Here </a> to verify.</p>');
-            res.status(200).send({"Verify":"Successfully verified the user."});
-        } else {
-            res.status(400).send({"Verify":"The username or email does not exists"});
-        }
-    });
-});
-
-app.post('/verification', async (req, res) => {
-    let hashPass;
-    let special = "@#%!";
-    let password = Math.random().toString(36).substring(5);
-    password += special.charAt(Math.floor(Math.random() * special.length));
-    password += Math.random().toString(36).substring(3).toUpperCase();
-
-
-    bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
-        if (err) {
-            boom.boomify(err);
-        }
-
-        bcrypt.hash(password, salt, null, (err, hash) => {
-            if (err)
-            {
-                boom.boomify(err);
-            }
-               hashPass = hash;
-        });
-    });
-
-    await Users.findOneAndUpdate({$or:[{username: req.body.username}, {email:req.body.username}]},{$set:{Password: hashPass}},{new: true}, (err, doc) => {
-        if (err)
-        {
-            boom.boomify(err);
-            res.status(500).send("Internal server error");
-        } else if (doc){
-            let html = `<h1>Password was reset</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b><br><b>Password: ${password}</b><br> </p>`;
-            commonFunction.sendEmail(doc.email, "Successfully Reset Password", html);
-            res.status(200).send({"Verify":"Successfully reset the password"});
-        }
-        else {
-            res.status(400).send({"Verify": "The user does not exists"});
-        }
-    });
-});
-
 //require the fastify framework and instantiate it
 app.use(function (req, res, next) {
   //exclude other routes
-  if (((req.method === 'POST' || req.method === 'OPTIONS') && req.url === '/api/login') ||((req.method === 'POST'|| req.method === 'OPTIONS') && req.url === '/api/register') || (req.method === 'POST' && req.url=== '/api/logout') || (req.method === 'POST' && req.url=== '/api/token/check') || (req.method === 'POST' && req.url === '/api/forgot') || (req.method === 'GET' && req.url === '/verify/:id'))
+  if ((req.method === 'POST' && req.url=== '/logout'))
   {
       next();
   }
