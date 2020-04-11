@@ -8,7 +8,6 @@ const dotenv = require('dotenv').config();
 const Users = require('../models/users');
 const boom = require('boom');
 const Auth = require('../models/auth');
-const Verification = require('../models/verification');
 const commonFunction = require('./commonFunctions');
 
 router.use(cors());

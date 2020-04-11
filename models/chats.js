@@ -8,4 +8,4 @@ const Chat = new mongoose.Schema({
     RefreshToken: {type: String, default: null}
 }, {collection: "chats"});
 
-module.exports = mongoose.model('Auth', Auth);
+module.exports = mongoose.model('Chats', Chat);
