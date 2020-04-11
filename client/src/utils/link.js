@@ -4,6 +4,8 @@ export const signInUrl = ServerUrl+"/register";
 
 export const LogInUrl = ServerUrl+"/login";
 
+export const LogOutUrl = ServerUrl+"/logout";
+
 export const VerifyUrl = ServerUrl+"/verify/";
 
 export const ReverifyUrl = ServerUrl+"/verifyAgain";
