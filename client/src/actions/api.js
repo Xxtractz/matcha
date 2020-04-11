@@ -8,6 +8,8 @@ function handleLogin(token, rtoken) {
   // window.location.reload();
 }
 
+// const headers;
+
 export const login = async (_Logindata) => {
   return axios
     .post(_Url.LogInUrl, _Logindata, { timeout: 31000 })

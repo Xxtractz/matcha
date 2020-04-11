@@ -153,30 +153,25 @@ class Nav extends Component {
             </button>
             <div className={this.toggle()}>
               <ul className="navbar-nav ml-auto">
-                <li className="nav-item active">
-                  <Button className="pr-2 nav-link">
-                    <span className="p-1">Home</span>
-                  </Button>
-                </li>
-                <li className="nav-item active">
-                  <Button className="pr-2 nav-link">
-                    <span className="p-1">Message</span>
-                  </Button>
-                </li>
-                <li className="nav-item active">
-                  <Button className="pr-2 nav-link">
-                    <span className="p-1">Account</span>
-                  </Button>
-                </li>
-                <li className="nav-item active">
-                  <Button
-                    className="pr-2 nav-link"
-                    onClick={() => this.logout()}
-                  >
+              <List component="nav">
+                {getUserStatus() === "2" ? this.homeMenu() : ""}
+
+                {getUserStatus() === "2" ? this.messageMenu() : ""}
+
+                {this.accountMenu()}
+
+                <Divider light></Divider>
+                <ListItem
+                  button
+                  className="text-center"
+                  onClick={() => this.logout()}
+                >
+                  <ListItemText>
                     <PowerSettingsNewIcon className="" />
                     <span className="p-1">Logout</span>
-                  </Button>
-                </li>
+                  </ListItemText>
+                </ListItem>
+              </List>
               </ul>
             </div>
           </div>
