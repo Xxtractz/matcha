@@ -13,7 +13,7 @@ const commonFunction = require('./commonFunctions');
 
 router.use(cors());
 
-//sign up post
+//register the user
 router.post('/register', function(req, res){
     if (req.body.fname && req.body.lname && req.body.username && req.body.email && req.body.password && req.body.age){
       Users.findOne({'username': req.body.username}, function(err, user){
@@ -206,7 +206,7 @@ router.post('/token/check', async (req, res) => {
 });
 
 //verify the user after registration
-app.get('/verify/:id', async (req, res) => {
+router.get('/verify/:id', async (req, res) => {
   try {
       const data = jwt.verify(req.params.id, process.env.SECRETS);
       const username = data.username;
@@ -231,7 +231,7 @@ app.get('/verify/:id', async (req, res) => {
 });
 
 //verification for invalid token and getting new token 
-app.post('/verifyAgain', async (req, res) => {
+router.post('/verifyAgain', async (req, res) => {
   await Users.findOne({'email': req.body.email}, function(err, user1){
       if(err){
           console.log(err);
@@ -258,7 +258,7 @@ app.post('/verifyAgain', async (req, res) => {
 });
 
 //verification for forgot password
-app.post('/verification', async (req, res) => {
+router.post('/verification', async (req, res) => {
   let hashPass;
   let special = "@#%!";
   let password = Math.random().toString(36).substring(5);
