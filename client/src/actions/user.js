@@ -4,30 +4,9 @@ const data = jwt.decode(Token, "matchSecrets");
 const axios = require("axios").default;
 const _Url = require("../utils/link");
 
-/**
- * data.fname == firstname
- * data.lname == last name
- * data.email == email
- * data.username == username
- * data.age == age
- * data.gender == gender
- *
- * _id:
- * username: "Xxtractz"
- * firstname: "Musa"
- * lastname: "Baloyi"
- * email: "musambaloyi@gmail.com"
- * gender: "Other"
- * genderPreference: "Both"
- * bio: ""
- * status: "1"
- * images: []
- * date: "2020-01-10T12:01:05.744Z"
- * age: 22
- * dob: "02/01/1998"
- * likes: []
- * dislikes: []
- */
+export const getUserid = () =>{
+  return data._id;
+}
 
 export const getUsername = () => {
   return data.username;
@@ -40,6 +19,30 @@ export const getUserFirstName = () => {
 export const getUserLastName = () => {
   return data.lastname;
 };
+
+export const getUserGender = () =>{
+  return data.gender;
+}
+
+export const getUserEmail = () =>{
+  return data.email;
+}
+
+export const getUserGenderPreference = () =>{
+  return data.genderPreference;
+}
+
+export const getUserBio = () =>{
+  return data.bio;
+}
+
+export const getUserAge = () =>{
+  return data.age;
+}
+
+export const getUserImages = () =>{
+  return data.images;
+}
 
 export const suggestedUsers = async (profile) => {
   return axios.get(_Url.LogInUrl);

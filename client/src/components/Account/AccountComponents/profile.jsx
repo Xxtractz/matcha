@@ -1,7 +1,11 @@
 import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
 import { Button, TextField } from "@material-ui/core";
-import { getUserFirstName, getUserLastName } from "../../../actions/user";
+import {
+  getUserFirstName,
+  getUserLastName,
+  getUsername,
+} from "../../../actions/user";
 
 class UserProfile extends Component {
   constructor() {
@@ -67,27 +71,6 @@ class UserProfile extends Component {
     );
   }
 
-  usernameSection() {
-    return (
-      <div className="row">
-        <div className="col-12 text-center">
-          <TextField
-            className="col-12"
-            type="text"
-            name=""
-            label="Username"
-            helperText={this.state.username_err_helperText}
-            error={this.state.username_err ? true : false}
-            value={this.state.username}
-            onChange={(e) => this.onChange(e)}
-            required
-            autoComplete="username"
-          />
-        </div>
-      </div>
-    );
-  }
-
   render() {
     return (
       <Paper className="container p-2 mt-4 col-12" variant="outlined">
@@ -96,13 +79,16 @@ class UserProfile extends Component {
           <small> Details about you </small>
         </Paper>
         <div className="p-2 mt-4 col-8 mx-auto">
+          <h5>
+            Hi,{getUsername()}{" "}
+            <small>
+              <code>(to change username see Account settings)</code>{" "}
+            </small>
+          </h5>
           <form onSubmit={this.submitHandler}>
             <div className="grey-text">
               {/* name Section */}
               {this.nameSection()}
-
-              {/* Username Section */}
-              {this.usernameSection()}
             </div>
             <div className="text-center p-3">
               <Button variant="contained" type="submit">
