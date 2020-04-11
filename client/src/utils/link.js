@@ -1,8 +1,8 @@
 const ServerUrl ="http://localhost:4000"; 
 
-export const signInUrl = ServerUrl+"/api/register";
+export const signInUrl = ServerUrl+"/register";
 
-export const LogInUrl = ServerUrl+"/api/login";
+export const LogInUrl = ServerUrl+"/login";
 
 export const VerifyUrl = ServerUrl+"/verify/";
 

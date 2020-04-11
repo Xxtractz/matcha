@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import { logout } from "../../actions/auth";
+import { logout } from "../../actions/api";
 import {
   getUserFirstName,
   getUserLastName,

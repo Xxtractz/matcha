@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { login } from "../../actions/auth";
+import { login } from "../../actions/api";
 //import {isEmpty} from "../../utils/validate";
 import { Button, TextField, Card, CardActions } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { register } from "../../actions/auth";
+import { register } from "../../actions/api";
 import Alert from "@material-ui/lab/Alert";
 import {
   Button,

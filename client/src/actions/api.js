@@ -31,6 +31,7 @@ export const login = async (_Logindata) => {
 };
 
 export const logout = () => {
+  
   localStorage.clear();
 };
 

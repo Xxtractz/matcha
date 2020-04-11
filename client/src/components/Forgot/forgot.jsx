@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button, TextField, Card, CardActions } from "@material-ui/core";
-import { Reset } from "../../actions/auth";
+import { Reset } from "../../actions/api";
 
 class Forgot extends Component {
   constructor() {
