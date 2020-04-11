@@ -1,15 +1,15 @@
-import React from 'react';
-import Nav from './nav';
+import React from "react";
+import Nav from "./nav";
 
 class Layout extends React.Component {
   render() {
     return (
-        <div>
-            <Nav></Nav>
-              <div className="content">
-                <main>{this.props.children}</main>
-              </div>
+      <div>
+        <Nav></Nav>
+        <div className="content">
+          <main>{this.props.children}</main>
         </div>
+      </div>
     );
   }
 }

@@ -1,196 +1,214 @@
 import React, { Component } from "react";
-import {register} from '../../actions/auth';
-import Alert from '@material-ui/lab/Alert';
-import {Button, TextField, Card, CardActions, ButtonBase} from '@material-ui/core';
-import {isYearValid, isDayValid, isMonthValid, isEmpty, isChar, validateAge,getAge, isEqual, isPassword} from '../../utils/validate';
+import { register } from "../../actions/api";
+import Alert from "@material-ui/lab/Alert";
+import {
+  Button,
+  TextField,
+  Card,
+  CardActions,
+  ButtonBase,
+} from "@material-ui/core";
+import {
+  isYearValid,
+  isDayValid,
+  isMonthValid,
+  isEmpty,
+  isChar,
+  validateAge,
+  getAge,
+  isEqual,
+  isPassword,
+} from "../../utils/validate";
 
 class Register extends Component {
-
-  constructor(){
+  constructor() {
     super();
-    this.state={
-      fname:"",
-      fname_err:"",
-      fname_err_helperText:"",
-      lname:"",
-      lname_err:"",
-      lname_err_helperText:"",
-      username:"",
-      username_err:"",
-      username_err_helperText:"",
-      year:"",
-      year_err:"",
-      year_err_helperText:"",
-      month:"",
-      month_err:"",
-      month_err_helperText:"",
-      day:"",
-      day_err:"",
-      day_err_helperText:"",
+    this.state = {
+      fname: "",
+      fname_err: "",
+      fname_err_helperText: "",
+      lname: "",
+      lname_err: "",
+      lname_err_helperText: "",
+      username: "",
+      username_err: "",
+      username_err_helperText: "",
+      year: "",
+      year_err: "",
+      year_err_helperText: "",
+      month: "",
+      month_err: "",
+      month_err_helperText: "",
+      day: "",
+      day_err: "",
+      day_err_helperText: "",
       email: "",
-      email_err:"",
-      email_err_helperText:"",
+      email_err: "",
+      email_err_helperText: "",
       password: "",
-      password_err:"",
-      password_err_helperText:"",
+      password_err: "",
+      password_err_helperText: "",
       confirmPassword: "",
-      confirmPassword_err:"",
-      confirmPassword_err_helperText:"",
-      age_err:"none",
-      error:""
-    }
+      confirmPassword_err: "",
+      confirmPassword_err_helperText: "",
+      age_err: "none",
+      error: "",
+    };
     this.ageValid = 0;
   }
 
-  
   // use history.push('/some/path') here
   // Onchange Event... Assigns values to the state on Constructor
   onChange = (e) => {
-    this.validateAfterInput(e)
+    this.validateAfterInput(e);
     this.setState({
-      [e.target.name] : [e.target.value]
-    })
-  }
-  
+      [e.target.name]: [e.target.value],
+    });
+  };
+
   // Handles submit , Stops the normal submit fuctionality,assigns values to new object
-  submitHandler = e =>{
+  submitHandler = (e) => {
     e.preventDefault();
-    if(this.isvalidated()){
+    if (this.isvalidated()) {
       const user = {
-        "fname": this.state.fname.toString(),
-        "lname": this.state.lname.toString(),
-        "username": this.state.username.toString(),
-        "dob": this.state.day+"/"+this.state.month+"/"+this.state.year,
-        "age": getAge(this.state.year+"-"+this.state.month+"-"+this.state.day).toString(),
-        "email": this.state.email.toString(),
-        "password": this.state.password.toString(),
+        fname: this.state.fname.toString(),
+        lname: this.state.lname.toString(),
+        username: this.state.username.toString(),
+        dob: this.state.day + "/" + this.state.month + "/" + this.state.year,
+        age: getAge(
+          this.state.year + "-" + this.state.month + "-" + this.state.day
+        ).toString(),
+        email: this.state.email.toString(),
+        password: this.state.password.toString(),
       };
       this.register(user);
     }
-  }
+  };
 
-  register(userData){
-    register(userData)
-    .then(res => {
-      if(res.status === "true"){
+  register(userData) {
+    register(userData).then((res) => {
+      if (res.status === "true") {
         window.location.replace("/login#regSuccess");
-      }else if(res.status === "false"){
-        this.setState({error:  res.message});
+      } else if (res.status === "false") {
+        this.setState({ error: res.message });
       }
     });
   }
 
-//  Validation before posting to backend 
-  isvalidated(){
-    if(isEmpty(this.state.fname_err) && isEmpty(this.state.lname_err) &&
-        isEmpty(this.state.username_err) && isEmpty(this.state.year_err) &&
-        isEmpty(this.state.month_err) && isEmpty(this.state.day_err) &&
-        isEmpty(this.state.email_err) && isEmpty(this.state.password_err) &&
-        isEmpty(this.state.confirmPassword_err) && !isEmpty(this.state.age_err)){
+  //  Validation before posting to backend
+  isvalidated() {
+    if (
+      isEmpty(this.state.fname_err) &&
+      isEmpty(this.state.lname_err) &&
+      isEmpty(this.state.username_err) &&
+      isEmpty(this.state.year_err) &&
+      isEmpty(this.state.month_err) &&
+      isEmpty(this.state.day_err) &&
+      isEmpty(this.state.email_err) &&
+      isEmpty(this.state.password_err) &&
+      isEmpty(this.state.confirmPassword_err) &&
+      !isEmpty(this.state.age_err)
+    ) {
       return true;
-    }
-    else{ 
+    } else {
       return false;
     }
   }
 
-  isAgeValid(){
-    if(validateAge(this.state.year,this.state.month,this.state.day)){
+  isAgeValid() {
+    if (validateAge(this.state.year, this.state.month, this.state.day)) {
       return true;
-    }
-    else{
+    } else {
       return false;
     }
-
   }
 
-//  Validation After input and displaying of errors
-  validateAfterInput(e){
-    if(e.target.name === "fname"){
-      if(!isChar(e.target.value)){
-        this.setState({fname_err: "error"});
-        this.setState({fname_err_helperText: "Invalid"});
-      }
-      else{
-        this.setState({fname_err: ""});
-        this.setState({fname_err_helperText: ""});
-      }
-    }
-    if(e.target.name === "lname"){
-      if(!isChar(e.target.value)){
-        this.setState({lname_err: "error"});
-        this.setState({lname_err_helperText: "Invalid"});
-      }
-      else{
-        this.setState({lname_err: ""});
-        this.setState({lname_err_helperText: ""});
+  //  Validation After input and displaying of errors
+  validateAfterInput(e) {
+    if (e.target.name === "fname") {
+      if (!isChar(e.target.value)) {
+        this.setState({ fname_err: "error" });
+        this.setState({ fname_err_helperText: "Invalid" });
+      } else {
+        this.setState({ fname_err: "" });
+        this.setState({ fname_err_helperText: "" });
       }
     }
-    if(e.target.name === "year"){
-      if(!isYearValid(e.target.value)){
-        this.setState({year_err: "error"});
-        this.setState({year_err_helperText: "Invalid Year"});
-      }
-      else{
-        this.setState({year_err: ""});
-        this.setState({year_err_helperText: ""});
-      }
-    }
-    if(e.target.name === "month"){
-      if(!isMonthValid(e.target.value)){
-        this.setState({month_err: "error"});
-        this.setState({month_err_helperText: "Invalid Month"});
-      }
-      else{
-        this.setState({month_err: ""});
-        this.setState({month_err_helperText: ""});
+    if (e.target.name === "lname") {
+      if (!isChar(e.target.value)) {
+        this.setState({ lname_err: "error" });
+        this.setState({ lname_err_helperText: "Invalid" });
+      } else {
+        this.setState({ lname_err: "" });
+        this.setState({ lname_err_helperText: "" });
       }
     }
-    if(e.target.name === "day"){
-      if(!isDayValid(e.target.value)){
-        this.setState({day_err: "error"});
-        this.setState({day_err_helperText: "Invalid Day"});
-      }
-      else{
-        this.setState({day_err: ""});
-        this.setState({day_err_helperText: ""});
-      }
-    }
-    if(e.target.name === "password"){
-      if(!isPassword(e.target.value)){
-        this.setState({password_err: "error"});
-        this.setState({password_err_helperText: "Passwords Isn't Secured"});
-      }
-      else{
-        this.setState({password_err: ""});
-        this.setState({password_err_helperText: ""});
+    if (e.target.name === "year") {
+      if (!isYearValid(e.target.value)) {
+        this.setState({ year_err: "error" });
+        this.setState({ year_err_helperText: "Invalid Year" });
+      } else {
+        this.setState({ year_err: "" });
+        this.setState({ year_err_helperText: "" });
       }
     }
-    if(e.target.name === "confirmPassword"){
-      if(!isEqual(e.target.value, this.state.password.toString())){
-        this.setState({confirmPassword_err: "error"});
-        this.setState({confirmPassword_err_helperText: "Passwords Don't Match"});
-      }
-      else{
-        this.setState({confirmPassword_err: ""});
-        this.setState({confirmPassword_err_helperText: ""});
+    if (e.target.name === "month") {
+      if (!isMonthValid(e.target.value)) {
+        this.setState({ month_err: "error" });
+        this.setState({ month_err_helperText: "Invalid Month" });
+      } else {
+        this.setState({ month_err: "" });
+        this.setState({ month_err_helperText: "" });
       }
     }
-    if(isYearValid(this.state.year) && isMonthValid(this.state.month) && isDayValid(this.state.day) && this.ageValid === 0){
-      if(this.isAgeValid()){
+    if (e.target.name === "day") {
+      if (!isDayValid(e.target.value)) {
+        this.setState({ day_err: "error" });
+        this.setState({ day_err_helperText: "Invalid Day" });
+      } else {
+        this.setState({ day_err: "" });
+        this.setState({ day_err_helperText: "" });
+      }
+    }
+    if (e.target.name === "password") {
+      if (!isPassword(e.target.value)) {
+        this.setState({ password_err: "error" });
+        this.setState({ password_err_helperText: "Passwords Isn't Secured" });
+      } else {
+        this.setState({ password_err: "" });
+        this.setState({ password_err_helperText: "" });
+      }
+    }
+    if (e.target.name === "confirmPassword") {
+      if (!isEqual(e.target.value, this.state.password.toString())) {
+        this.setState({ confirmPassword_err: "error" });
+        this.setState({
+          confirmPassword_err_helperText: "Passwords Don't Match",
+        });
+      } else {
+        this.setState({ confirmPassword_err: "" });
+        this.setState({ confirmPassword_err_helperText: "" });
+      }
+    }
+    if (
+      isYearValid(this.state.year) &&
+      isMonthValid(this.state.month) &&
+      isDayValid(this.state.day) &&
+      this.ageValid === 0
+    ) {
+      if (this.isAgeValid()) {
         this.ageValid = 1;
-        this.setState({age_err: "none"});
-      }
-      else{
-        this.setState({age_err: ""});
+        this.setState({ age_err: "none" });
+      } else {
+        this.setState({ age_err: "" });
       }
     }
-    this.setState({error: ""});
+    this.setState({ error: "" });
   }
 
-// Components for form 
-  inputSection(){
-    return(
+  // Components for form
+  inputSection() {
+    return (
       <div className="grey-text">
         {/* Fname and  lastName Row */}
         {this.nameSection()}
@@ -210,44 +228,44 @@ class Register extends Component {
         {/* Confirm Password  */}
         {this.confirmPasswordSection()}
       </div>
-    )
+    );
   }
 
-  nameSection(){
-  return(
-    <div className="row mb-3">
-      <div className="col-6 text-center">
-        <TextField 
-          className="col-12"
-          type="text" 
-          name="fname"
-          label="First Name"
-          helperText={this.state.fname_err_helperText}
-          error={this.state.fname_err ? true : false}
-          value= {this.state.fname}
-          onChange={e => this.onChange(e)}
-          required
-        />
+  nameSection() {
+    return (
+      <div className="row mb-3">
+        <div className="col-6 text-center">
+          <TextField
+            className="col-12"
+            type="text"
+            name="fname"
+            label="First Name"
+            helperText={this.state.fname_err_helperText}
+            error={this.state.fname_err ? true : false}
+            value={this.state.fname}
+            onChange={(e) => this.onChange(e)}
+            required
+          />
+        </div>
+        <div className="col-6 text-center">
+          <TextField
+            className="col-12"
+            type="text"
+            name="lname"
+            label="Last Name"
+            helperText={this.state.lname_err_helperText}
+            error={this.state.lname_err ? true : false}
+            value={this.state.lname}
+            onChange={(e) => this.onChange(e)}
+            required
+          />
+        </div>
       </div>
-      <div className="col-6 text-center">
-        <TextField 
-          className="col-12"
-          type="text" 
-          name="lname"
-          label="Last Name"
-          helperText={this.state.lname_err_helperText}
-          error={this.state.lname_err ? true : false}
-          value= {this.state.lname}
-          onChange={e => this.onChange(e)}
-          required
-        />
-      </div>
-    </div> 
-  )
+    );
   }
 
-  ageSection(){
-    return(
+  ageSection() {
+    return (
       <div className="row mb-3">
         <div className="col text-center">
           <TextField
@@ -258,8 +276,8 @@ class Register extends Component {
             className="col-8"
             helperText={this.state.year_err_helperText}
             error={this.state.year_err ? true : false}
-            value= {this.state.year}
-            onChange={e => this.onChange(e)}
+            value={this.state.year}
+            onChange={(e) => this.onChange(e)}
             inputProps={{ maxLength: 4 }}
             required
             autoComplete="year"
@@ -274,8 +292,8 @@ class Register extends Component {
             className="col-8"
             helperText={this.state.month_err_helperText}
             error={this.state.month_err ? true : false}
-            value= {this.state.month}
-            onChange={e => this.onChange(e)}
+            value={this.state.month}
+            onChange={(e) => this.onChange(e)}
             inputProps={{ maxLength: 2 }}
             required
             autoComplete="month"
@@ -290,70 +308,70 @@ class Register extends Component {
             className="col-8"
             helperText={this.state.day_err_helperText}
             error={this.state.day_err ? true : false}
-            value= {this.state.day}
-            onChange={e => this.onChange(e)}
+            value={this.state.day}
+            onChange={(e) => this.onChange(e)}
             inputProps={{ maxLength: 2 }}
             required
             autoComplete="day"
           />
         </div>
-        <div  
-          className="col-12 mt-3 text-center " 
-          style={{color:"#ff0000",
-          display:this.state.age_err}} >
-        <small>Only users between 18 and 70 </small>
+        <div
+          className="col-12 mt-3 text-center "
+          style={{ color: "#ff0000", display: this.state.age_err }}
+        >
+          <small>Only users between 18 and 70 </small>
         </div>
       </div>
-    )
+    );
   }
 
-  usernameSection(){
-    return(
+  usernameSection() {
+    return (
       <div className="row mb-3">
         <div className="col-12 text-center">
-          <TextField 
+          <TextField
             className="col-12"
-            type="text" 
+            type="text"
             name="username"
             label="Username"
             helperText={this.state.username_err_helperText}
             error={this.state.username_err ? true : false}
-            value= {this.state.username}
-            onChange={e => this.onChange(e)}
+            value={this.state.username}
+            onChange={(e) => this.onChange(e)}
             required
             autoComplete="username"
           />
         </div>
-      </div> 
-    )
+      </div>
+    );
   }
 
-  emailSection(){
-    return(
+  emailSection() {
+    return (
       <div className="row mb-3">
         <div className="col-12 text-center">
-          <TextField 
+          <TextField
             className="col-12"
-            type="email" 
+            type="email"
             name="email"
             label="Email"
             helperText={this.state.email_err_helperText}
             error={this.state.email_err ? true : false}
-            value= {this.state.email}
-            onChange={e => this.onChange(e)}
+            value={this.state.email}
+            onChange={(e) => this.onChange(e)}
             required
             autoComplete="email"
           />
         </div>
-      </div> 
-    )
+      </div>
+    );
   }
 
-  passwordSection(){
-    return(
+  passwordSection() {
+    return (
       <div className="row mb-3">
         <div className="col-12 text-center">
-          <TextField 
+          <TextField
             className="col-12"
             name="password"
             type="password"
@@ -361,20 +379,20 @@ class Register extends Component {
             helperText={this.state.password_err_helperText}
             error={this.state.password_err ? true : false}
             value={this.state.password}
-            onChange={e => this.onChange(e)}
+            onChange={(e) => this.onChange(e)}
             required
             autoComplete="new-password"
           />
         </div>
       </div>
-    )
+    );
   }
 
-  confirmPasswordSection(){
-    return(
+  confirmPasswordSection() {
+    return (
       <div className="row mb-3">
         <div className="col-12 text-center">
-          <TextField 
+          <TextField
             className="col-12"
             name="confirmPassword"
             type="password"
@@ -382,40 +400,37 @@ class Register extends Component {
             helperText={this.state.confirmPassword_err_helperText}
             error={this.state.confirmPassword_err ? true : false}
             value={this.state.confirmPassword}
-            onChange={e => this.onChange(e)}
+            onChange={(e) => this.onChange(e)}
             required
             autoComplete="new-password"
           />
         </div>
       </div>
-    )
+    );
   }
 
-  displayErr(){
-    if(this.state.error.toString() === "" ){
-      return(
-        <div></div>
-        )
-    }else{
-      return(
+  displayErr() {
+    if (this.state.error.toString() === "") {
+      return <div></div>;
+    } else {
+      return (
         <div className="m-2 ml-5 mr-5">
           <Alert variant="outlined" severity="error">
-            {this.state.error.toString()}</Alert>
-       </div>)
+            {this.state.error.toString()}
+          </Alert>
+        </div>
+      );
     }
-    
   }
-  render(){
+  render() {
     return (
       <div>
-        <div  className="container">
+        <div className="container">
           <div className="row">
-            <div className="col-md-8 mx-auto pt-5 mt-5" >
+            <div className="col-md-8 mx-auto pt-5 mt-5">
               <Card className="card m-5 p-5 mx-auto col-10" variant="outlined">
-
                 {/* Form Starts */}
                 <form onSubmit={this.submitHandler}>
-
                   {/* Header Text Start */}
                   <p className="h3 text-center mb-4">Register</p>
                   <div className="text-center">
@@ -425,8 +440,7 @@ class Register extends Component {
 
                   {/* Error Section */}
                   {this.displayErr()}
-                  
-                
+
                   <hr className="mb-2 ml-5 mr-5"></hr>
 
                   {/* Input Box Start */}
@@ -435,17 +449,16 @@ class Register extends Component {
 
                   {/* Button */}
                   <div className="text-center p-3 mt-4">
-                    <Button variant="contained" type="submit" >
+                    <Button variant="contained" type="submit">
                       Register
                     </Button>
                   </div>
-
                 </form>
                 {/* Form Ends */}
 
-                <hr/>
+                <hr />
                 <CardActions className="bg-gray">
-                  <ButtonBase variant="text" size="small"  href="/login">
+                  <ButtonBase variant="text" size="small" href="/login">
                     Already a have an account?
                   </ButtonBase>
                 </CardActions>
@@ -454,7 +467,7 @@ class Register extends Component {
           </div>
         </div>
       </div>
-    )
+    );
   }
 }
 

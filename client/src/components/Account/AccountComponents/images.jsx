@@ -15,10 +15,7 @@ class images extends Component {
   render() {
     return (
       <Paper className="container p-2  col-12" variant="outlined">
-        <Paper
-          className="col-12 mt-2 p-1 text-center"
-          variant="outlined"
-        >
+        <Paper className="col-12 mt-2 p-1 text-center" variant="outlined">
           <h1>Images</h1>
           <small>
             {" "}

@@ -13,23 +13,23 @@ class AuthDetails extends Component {
       password: "",
       password_err: "",
       password_err_helperText: "",
-      isopen: true
+      isopen: true,
     };
   }
 
-  submitHandler = e => {
+  submitHandler = (e) => {
     e.preventDefault();
 
     const user = {
       username: this.state.username.toString(),
-      password: this.state.password.toString()
+      password: this.state.password.toString(),
     };
     this.login(user);
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: [e.target.value]
+      [e.target.name]: [e.target.value],
     });
   };
 
@@ -46,7 +46,7 @@ class AuthDetails extends Component {
             helperText={this.state.lname_err_helperText}
             error={this.state.lname_err ? true : false}
             value={this.state.lname}
-            onChange={e => this.onChange(e)}
+            onChange={(e) => this.onChange(e)}
             required
           />
         </div>
@@ -66,7 +66,7 @@ class AuthDetails extends Component {
             helperText={this.state.username_err_helperText}
             error={this.state.username_err ? true : false}
             value={this.state.username}
-            onChange={e => this.onChange(e)}
+            onChange={(e) => this.onChange(e)}
             required
             autoComplete="username"
           />
@@ -78,10 +78,7 @@ class AuthDetails extends Component {
   render() {
     return (
       <Paper className="container p-2 mt-4 col-12" variant="outlined">
-        <Paper
-          className="col-12 mt-2 p-1 text-center "
-          variant="outlined"
-        >
+        <Paper className="col-12 mt-2 p-1 text-center " variant="outlined">
           <h1>Account Settings</h1>
           <small>Account Information </small>
         </Paper>
