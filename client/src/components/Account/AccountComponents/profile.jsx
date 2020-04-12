@@ -9,13 +9,14 @@ import {
   getUserBio,
   getUserGender,
   getUserGenderPreference,
+  getUserInterest,
 } from "../../../actions/user";
-// import { WithContext as ReactTags } from 'react-tag-input';
 
 class UserProfile extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
+      tags: [{ id: 'Thailand', text: 'Thailand' }, { id: 'India', text: 'India' }],
       username: "",
       username_err: "",
       username_err_helperText: "",
@@ -81,7 +82,7 @@ class UserProfile extends Component {
   genderSection() {
     return (
       <div className="row mb-3">
-        <div className="col-6 text-center">
+        <div className="col-6 ">
           <InputLabel>Gender</InputLabel>
           <Select
             native
@@ -97,7 +98,7 @@ class UserProfile extends Component {
             <option value={"Female"}>Female</option>
           </Select>
         </div>
-        <div className="col-6 text-center">
+        <div className="col-6 ">
           <InputLabel>Preferred Gender</InputLabel>
           <Select
             native
@@ -140,6 +141,49 @@ class UserProfile extends Component {
     );
   }
 
+
+  // handleDelete(i) {
+  //   this.setState({
+  //     tags: this.state.tags.filter((tag, index) => index !== i),
+  //   });
+  // }
+
+  // handleAddition(tag) {
+  //   let { tags } = this.state;
+  //   this.setState({ tags: [...tags, { id: tags.length + 1, text: tag }] });
+  // }
+
+  // handleDrag(tag, currPos, newPos) {
+  //   const tags = [...this.state.tags];
+
+  //   // mutate array
+  //   tags.splice(currPos, 1);
+  //   tags.splice(newPos, 0, tag);
+
+  //   // re-render
+  //   this.setState({ tags });
+  // }
+
+  // handleTagClick(index) {
+  //   console.log('The tag at index ' + index + ' was clicked');
+  // }
+
+  interestSection() {
+    const tags = this.state;
+    return (
+      <div className="col-6 ">
+        <InputLabel>Interests</InputLabel>
+        {/* <ReactTags
+          tags={tags}
+          handleDelete={this.handleDelete}
+          handleAddition={this.handleAddition}
+          handleDrag={this.handleDrag}
+          handleTagClick={this.handleTagClick}
+        /> */}
+      </div>
+    );
+  }
+
   render() {
     return (
       <Paper className="container p-2 mt-4 col-12" variant="outlined">
@@ -164,6 +208,7 @@ class UserProfile extends Component {
               {this.genderSection()}
 
               {/* Gender Section*/}
+              {this.interestSection()}
               {/* {this.bioSection()} */}
             </div>
             <div className="text-center p-3">
