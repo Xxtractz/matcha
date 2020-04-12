@@ -48,6 +48,10 @@ export const getUserStatus = () =>{
   return data.status;
 }
 
+export const getUserInterest = () =>{
+  return data.interets;
+}
+
 export const suggestedUsers = async (profile) => {
   return axios.get(_Url.LogInUrl);
   // axios.post(_Url.LogInUrl,_Logindata,{timeout : 31000})
