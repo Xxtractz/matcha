@@ -175,9 +175,12 @@ class UserProfile extends Component {
   };
 
   addTag = () => {
-    console.log("Tag Added");
+    const val = this.state.temptag;
+    // console.log(
+    //   this.state.tags.find((tag) => tag.toLowerCase() === val.toLowerCase())
+    // );
     // if (
-    //   this.state.tags.find((tag) => tag.toLowerCase() === this.state.temptag.toLowerCase())
+    //   this.state.tags.find((tag) => tag.toLowerCase() === val.toLowerCase())
     // ) {
     //   return;
     // }
@@ -263,9 +266,8 @@ class UserProfile extends Component {
               {/* Gender Section */}
               {this.genderSection()}
 
-              {/* Gender Section*/}
               {this.interestSection()}
-              {/* {this.bioSection()} */}
+              {this.bioSection()}
             </div>
             <div className="text-center p-3">
               <Button variant="contained" type="submit">
