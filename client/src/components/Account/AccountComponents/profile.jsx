@@ -16,7 +16,8 @@ class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tags: [{ id: 'Thailand', text: 'Thailand' }, { id: 'India', text: 'India' }],
+      tags: ["Input"],
+      temptag: "",
       username: "",
       username_err: "",
       username_err_helperText: "",
@@ -141,7 +142,6 @@ class UserProfile extends Component {
     );
   }
 
-
   // handleDelete(i) {
   //   this.setState({
   //     tags: this.state.tags.filter((tag, index) => index !== i),
@@ -168,18 +168,74 @@ class UserProfile extends Component {
   //   console.log('The tag at index ' + index + ' was clicked');
   // }
 
+  removeTag = (i) => {
+    const newTags = [...this.state.tags];
+    newTags.splice(i, 1);
+    this.setState({ tags: newTags });
+  };
+
+  addTag = () => {
+    console.log("Tag Added");
+    // if (
+    //   this.state.tags.find((tag) => tag.toLowerCase() === this.state.temptag.toLowerCase())
+    // ) {
+    //   return;
+    // }
+    this.tagInput.value = null;
+    this.setState({ tags: [...this.state.tags, this.state.temptag] });
+  };
+
+  tagInputChange = (e) => {
+    this.setState({
+      temptag: [e.target.value],
+    });
+    console.log(this.state.temptag);
+
+    // if (e.key === 'Enter' && val) {
+    //   if (this.state.tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
+    //     return;
+    //   }
+    //
+    //   this.tagInput.value = null;
+    // } else if (e.key === 'Backspace' && !val) {
+    //   this.removeTag(this.state.tags.length - 1);
+    // }
+  };
+
   interestSection() {
-    const tags = this.state;
+    const { tags } = this.state;
     return (
       <div className="col-6 ">
         <InputLabel>Interests</InputLabel>
-        {/* <ReactTags
-          tags={tags}
-          handleDelete={this.handleDelete}
-          handleAddition={this.handleAddition}
-          handleDrag={this.handleDrag}
-          handleTagClick={this.handleTagClick}
-        /> */}
+        <div className="input-tag">
+          <ul className="input-tag__tags">
+            {tags.map((tag, i) => (
+              <li key={tag}>
+                {tag}
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.removeTag(i);
+                  }}
+                >
+                  +
+                </button>
+              </li>
+            ))}
+            <li className="input-tag__tags__input">
+              <input
+                type="text"
+                onChange={this.tagInputChange}
+                ref={(c) => {
+                  this.tagInput = c;
+                }}
+              />
+              <button type="button" onClick={this.addTag}>
+                Add
+              </button>
+            </li>
+          </ul>
+        </div>
       </div>
     );
   }
