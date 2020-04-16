@@ -13,7 +13,7 @@ class Messages extends Component {
         {getUserStatus() === "2" ? (
           <Layout>{this.display()}</Layout>
         ) : (
-          this.props.history.push(`/user#incomplete`)
+          this.props.history.push(`/user`)
         )}
       </div>
     );

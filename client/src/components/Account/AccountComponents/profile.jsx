@@ -11,6 +11,9 @@ import {
   getUserGenderPreference,
   getUserInterest,
 } from "../../../actions/user";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import CloseIcon from "@material-ui/icons/Close";
 
 class UserProfile extends Component {
   constructor(props) {
@@ -35,7 +38,6 @@ class UserProfile extends Component {
       username: this.state.username.toString(),
       password: this.state.password.toString(),
     };
-    this.login(user);
   };
 
   onChange = (e) => {
@@ -208,36 +210,41 @@ class UserProfile extends Component {
   interestSection() {
     const { tags } = this.state;
     return (
-      <div className="col-6 ">
-        <InputLabel>Interests</InputLabel>
-        <div className="input-tag">
-          <ul className="input-tag__tags">
-            {tags.map((tag, i) => (
-              <li key={tag}>
-                {tag}
-                <button
-                  type="button"
-                  onClick={() => {
-                    this.removeTag(i);
+      <div className=" row mb-3">
+        <div className="col-10    ">
+          <InputLabel>Interests</InputLabel>
+          <div className="input-tag">
+            <ul className="input-tag__tags">
+              {tags.map((tag, i) => (
+                <li key={tag}>
+                  {tag}
+                  <IconButton
+                    fontSize="small"
+                    type="button"
+                    onClick={() => {
+                      this.removeTag(i);
+                    }}
+                  >
+                    <CloseIcon  fontSize="small"/>
+                  </IconButton>
+                </li>
+              ))}
+              <li className="input-tag__tags__input">
+                <input
+                  type="text"
+                  onChange={this.tagInputChange}
+                  ref={(c) => {
+                    this.tagInput = c;
                   }}
-                >
-                  +
-                </button>
+                />
               </li>
-            ))}
-            <li className="input-tag__tags__input">
-              <input
-                type="text"
-                onChange={this.tagInputChange}
-                ref={(c) => {
-                  this.tagInput = c;
-                }}
-              />
-              <button type="button" onClick={this.addTag}>
-                Add
-              </button>
-            </li>
-          </ul>
+            </ul>
+          </div>
+        </div>
+        <div className="col-2 pt-4">
+          <IconButton type="button" onClick={this.addTag} fontSize="large">
+            <AddCircleIcon />
+          </IconButton>
         </div>
       </div>
     );

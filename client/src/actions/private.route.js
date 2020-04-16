@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { isloggedIn } from "./api";
-import { getUserStatus, isDataAvailavle } from "./user";
+import { isloggedIn } from "./auth";
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
