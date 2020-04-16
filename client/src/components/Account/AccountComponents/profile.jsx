@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Paper, InputLabel } from "@material-ui/core";
-import { Button, TextField, Select, MenuItem } from "@material-ui/core";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { Button, TextField, Select } from "@material-ui/core";
 import {
   getUserFirstName,
   getUserLastName,
@@ -23,22 +22,25 @@ class UserProfile extends Component {
       temptag: "",
       isopen: true,
       firstname: getUserFirstName(),
-      lastname:getUserLastName(),
+      lastname: getUserLastName(),
+      gender: getUserGender(),
+      genderPreference: getUserGenderPreference(),
+      interest: getUserInterest(),
     };
   }
 
   submitHandler = (e) => {
     e.preventDefault();
 
-    const user = {
-      username: this.state.username.toString(),
-      password: this.state.password.toString(),
-    };
+    // const user = {
+    //   username: this.state.username.toString(),
+    //   password: this.state.password.toString(),
+    // };
   };
 
   onChange = (e) => {
-    console.log(e.target.name+":"+ e.target.value);
-    
+    console.log(e.target.name + ":" + e.target.value);
+
     this.setState({
       [e.target.name]: [e.target.value],
     });

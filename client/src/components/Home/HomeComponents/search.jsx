@@ -6,7 +6,6 @@ import {
   FormControlLabel,
   FormControl,
   FormLabel,
-  Typography,
   Slider,
   Button,
 } from "@material-ui/core";
