@@ -21,13 +21,9 @@ class UserProfile extends Component {
     this.state = {
       tags: ["Input"],
       temptag: "",
-      username: "",
-      username_err: "",
-      username_err_helperText: "",
-      password: "",
-      password_err: "",
-      password_err_helperText: "",
       isopen: true,
+      firstname: getUserFirstName(),
+      lastname:getUserLastName(),
     };
   }
 
@@ -41,6 +37,8 @@ class UserProfile extends Component {
   };
 
   onChange = (e) => {
+    console.log(e.target.name+":"+ e.target.value);
+    
     this.setState({
       [e.target.name]: [e.target.value],
     });
@@ -55,11 +53,8 @@ class UserProfile extends Component {
           <TextField
             className="col-12"
             type="text"
-            name="fname"
-            helperText={this.state.fname_err_helperText}
-            error={this.state.fname_err ? true : false}
-            value={this.state.fname}
-            defaultValue={getUserFirstName()}
+            name="firstname"
+            defaultValue={this.state.firstname}
             onChange={(e) => this.onChange(e)}
             required
           />
@@ -69,11 +64,8 @@ class UserProfile extends Component {
           <TextField
             className="col-12"
             type="text"
-            name="lname"
-            defaultValue={getUserLastName()}
-            helperText={this.state.lname_err_helperText}
-            error={this.state.lname_err ? true : false}
-            value={this.state.lname}
+            name="lastname"
+            defaultValue={this.state.lastname}
             onChange={(e) => this.onChange(e)}
             required
           />
@@ -89,7 +81,7 @@ class UserProfile extends Component {
           <InputLabel>Gender</InputLabel>
           <Select
             native
-            value={getUserGender()}
+            // alue={getUserGender()}
             // onChange={handleChange}
             // inputProps={{
             //   name: "age",
@@ -105,7 +97,7 @@ class UserProfile extends Component {
           <InputLabel>Preferred Gender</InputLabel>
           <Select
             native
-            value={getUserGenderPreference()}
+            // value={getUserGenderPreference()}
             // onChange={handleChange}
             // inputProps={{
             //   name: "age",
@@ -123,8 +115,10 @@ class UserProfile extends Component {
 
   bioSection() {
     return (
-      <div className="col-8 text-center">
-        {/* <TextField
+      <div className="row mb-3">
+        <div className="col-12">
+          <InputLabel>Bio</InputLabel>
+          {/* <TextField
             className="col-12"
             type="text"
             name="fname"
@@ -132,43 +126,20 @@ class UserProfile extends Component {
             // helperText={this.state.fname_err_helperText}
             // error={this.state.fname_err ? true : false}
             // value={this.state.fname}
-            // onChange={(e) => this.onChange(e)}
+            // 
             required
           /> */}
-        <TextareaAutosize
-          aria-label="empty textarea"
-          placeholder="Empty"
-          value={getUserBio()}
-        />
+          <textarea
+            className="w-100"
+            aria-label="empty textarea"
+            name="bio"
+            defaultValue={getUserBio()}
+            onChange={(e) => this.onChange(e)}
+          ></textarea>
+        </div>
       </div>
     );
   }
-
-  // handleDelete(i) {
-  //   this.setState({
-  //     tags: this.state.tags.filter((tag, index) => index !== i),
-  //   });
-  // }
-
-  // handleAddition(tag) {
-  //   let { tags } = this.state;
-  //   this.setState({ tags: [...tags, { id: tags.length + 1, text: tag }] });
-  // }
-
-  // handleDrag(tag, currPos, newPos) {
-  //   const tags = [...this.state.tags];
-
-  //   // mutate array
-  //   tags.splice(currPos, 1);
-  //   tags.splice(newPos, 0, tag);
-
-  //   // re-render
-  //   this.setState({ tags });
-  // }
-
-  // handleTagClick(index) {
-  //   console.log('The tag at index ' + index + ' was clicked');
-  // }
 
   removeTag = (i) => {
     const newTags = [...this.state.tags];
@@ -178,15 +149,17 @@ class UserProfile extends Component {
 
   addTag = () => {
     const val = this.state.temptag;
-    // console.log(
-    //   this.state.tags.find((tag) => tag.toLowerCase() === val.toLowerCase())
-    // );
-    // if (
-    //   this.state.tags.find((tag) => tag.toLowerCase() === val.toLowerCase())
-    // ) {
-    //   return;
-    // }
     this.tagInput.value = null;
+    if (val === "") {
+      return;
+    }
+    if (
+      this.state.tags.find(
+        (tag) => tag.toString().toLowerCase() === val.toString().toLowerCase()
+      )
+    ) {
+      return;
+    }
     this.setState({ tags: [...this.state.tags, this.state.temptag] });
   };
 
@@ -194,17 +167,6 @@ class UserProfile extends Component {
     this.setState({
       temptag: [e.target.value],
     });
-    console.log(this.state.temptag);
-
-    // if (e.key === 'Enter' && val) {
-    //   if (this.state.tags.find(tag => tag.toLowerCase() === val.toLowerCase())) {
-    //     return;
-    //   }
-    //
-    //   this.tagInput.value = null;
-    // } else if (e.key === 'Backspace' && !val) {
-    //   this.removeTag(this.state.tags.length - 1);
-    // }
   };
 
   interestSection() {
@@ -220,12 +182,13 @@ class UserProfile extends Component {
                   {tag}
                   <IconButton
                     fontSize="small"
+                    style={{ padding: "5px" }}
                     type="button"
                     onClick={() => {
                       this.removeTag(i);
                     }}
                   >
-                    <CloseIcon  fontSize="small"/>
+                    <CloseIcon fontSize="small" />
                   </IconButton>
                 </li>
               ))}
@@ -241,9 +204,9 @@ class UserProfile extends Component {
             </ul>
           </div>
         </div>
-        <div className="col-2 pt-4">
+        <div className="col-2 pt-3">
           <IconButton type="button" onClick={this.addTag} fontSize="large">
-            <AddCircleIcon />
+            <AddCircleIcon fontSize="large" />
           </IconButton>
         </div>
       </div>

@@ -162,9 +162,17 @@ body {
   padding: 1px 2px;
 }
 
-
 .input-tag__tags li.input-tag__tags__input {
   background: none;
   flex-grow: 1;
   padding: 0;
+}
+
+textarea {
+  border: 1px solid;
+  border-top-style: none;
+  border-right-style: none;
+  /* border-left-style: none; */
+  border-color: #acacac;
+  overflow: auto;
 }
