@@ -25,7 +25,7 @@ app.get('/', function (req, res) {
   var usernames = {};
   
   // rooms which are currently available in chat
-  var rooms = ['room1','room2','room3'];
+  var rooms = [];
   
   io.sockets.on('connection', function (socket) {
       
@@ -43,7 +43,7 @@ app.get('/', function (req, res) {
           // echo to client they've connected
           socket.emit('updatechat', 'SERVER', `you have connected to ${username}`);
           // echo to room 1 that a person has connected to their room
-          socket.broadcast.to('room1').emit('updatechat', 'SERVER', username + ' has connected to this room');
+          socket.broadcast.to(username).emit('updatechat', 'SERVER', username + ' has connected to this room');
           socket.emit('updaterooms', rooms, username);
       });
       
