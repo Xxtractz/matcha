@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { login } from "../../actions/api";
-//import {isEmpty} from "../../utils/validate";
+//import {isEmpty} from '../../utils/validate';
 import { Button, TextField, Card, CardActions } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import IconButton from "@material-ui/core/IconButton";
@@ -105,7 +105,7 @@ class Login extends Component {
         .then((res) => {
           if (res) {
             if (res === 204) {
-              console.log("Username Doesn't Exist");
+              console.log("Username DoesnN't Exist");
             } else if (res.status === 400) {
               this.setState({ errorResponse: true });
               this.setState({ verifyErrorMsg: res.data.User.toString() });
