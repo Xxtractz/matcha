@@ -9,19 +9,19 @@ import Profile from "./AccountComponents/profile";
 import AuthDetails from "./AccountComponents/authdetails";
 import Settings from "./AccountComponents/settings";
 import { getUserStatus } from "../../actions/user";
+import CompleteProfile from "./AccountComponents/completeProfile";
 
 class Account extends Component {
-
-  constructor(){
+  constructor() {
     super();
     this.state = {
-      isopen:true,
-
+      isopen: true,
     };
   }
 
   displayVerifyError() {
     return (
+      <div>
       <Collapse in={this.state.isopen}>
         <Alert
           variant="filled"
@@ -38,19 +38,25 @@ class Account extends Component {
             </IconButton>
           }
         >
-          <strong>
-            Profile incomplete
-          </strong>
+          <strong>Profile incomplete</strong>
         </Alert>
       </Collapse>
+     { this.displayCompleteProfile()}
+      </div>
     );
   }
 
-
-  render() {
+  displayCompleteProfile() {
     return (
-      <Layout>
-        {getUserStatus() !== "2" ? this.displayVerifyError() : ""}
+      <div>
+        <CompleteProfile></CompleteProfile>
+      </div>
+    );
+  }
+
+  displayAccount() {
+    return (
+      <div>
         <Images></Images>
         <Profile></Profile>
         <div className="row ">
@@ -61,6 +67,14 @@ class Account extends Component {
             <AuthDetails></AuthDetails>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  render() {
+    return (
+      <Layout>
+        {getUserStatus() !== "2" ? this.displayVerifyError() : this.displayAccount()}
       </Layout>
     );
   }
