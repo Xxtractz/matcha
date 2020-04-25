@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 
-import {
-  Card,
-  Button,
-  CardHeader,
-  CardMedia,
-  CardActions,
-} from "@material-ui/core";
+import { Card, CardHeader, CardMedia, CardActions } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import InfoIcon from "@material-ui/icons/Info";

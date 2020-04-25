@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Paper, InputLabel } from "@material-ui/core";
-import { Button, TextField, Select, MenuItem } from "@material-ui/core";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize";
+import { Button, TextField, Select } from "@material-ui/core";
 import {
   getUserFirstName,
   getUserLastName,
@@ -11,33 +10,37 @@ import {
   getUserGenderPreference,
   getUserInterest,
 } from "../../../actions/user";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import CloseIcon from "@material-ui/icons/Close";
 
 class UserProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tags: [{ id: 'Thailand', text: 'Thailand' }, { id: 'India', text: 'India' }],
-      username: "",
-      username_err: "",
-      username_err_helperText: "",
-      password: "",
-      password_err: "",
-      password_err_helperText: "",
+      tags: ["Input"],
+      temptag: "",
       isopen: true,
+      firstname: getUserFirstName(),
+      lastname: getUserLastName(),
+      gender: getUserGender(),
+      genderPreference: getUserGenderPreference(),
+      interest: getUserInterest(),
     };
   }
 
   submitHandler = (e) => {
     e.preventDefault();
 
-    const user = {
-      username: this.state.username.toString(),
-      password: this.state.password.toString(),
-    };
-    this.login(user);
+    // const user = {
+    //   username: this.state.username.toString(),
+    //   password: this.state.password.toString(),
+    // };
   };
 
   onChange = (e) => {
+    console.log(e.target.name + ":" + e.target.value);
+
     this.setState({
       [e.target.name]: [e.target.value],
     });
@@ -52,11 +55,8 @@ class UserProfile extends Component {
           <TextField
             className="col-12"
             type="text"
-            name="fname"
-            helperText={this.state.fname_err_helperText}
-            error={this.state.fname_err ? true : false}
-            value={this.state.fname}
-            defaultValue={getUserFirstName()}
+            name="firstname"
+            defaultValue={this.state.firstname}
             onChange={(e) => this.onChange(e)}
             required
           />
@@ -66,11 +66,8 @@ class UserProfile extends Component {
           <TextField
             className="col-12"
             type="text"
-            name="lname"
-            defaultValue={getUserLastName()}
-            helperText={this.state.lname_err_helperText}
-            error={this.state.lname_err ? true : false}
-            value={this.state.lname}
+            name="lastname"
+            defaultValue={this.state.lastname}
             onChange={(e) => this.onChange(e)}
             required
           />
@@ -86,7 +83,7 @@ class UserProfile extends Component {
           <InputLabel>Gender</InputLabel>
           <Select
             native
-            value={getUserGender()}
+            // alue={getUserGender()}
             // onChange={handleChange}
             // inputProps={{
             //   name: "age",
@@ -102,7 +99,7 @@ class UserProfile extends Component {
           <InputLabel>Preferred Gender</InputLabel>
           <Select
             native
-            value={getUserGenderPreference()}
+            // value={getUserGenderPreference()}
             // onChange={handleChange}
             // inputProps={{
             //   name: "age",
@@ -120,8 +117,10 @@ class UserProfile extends Component {
 
   bioSection() {
     return (
-      <div className="col-8 text-center">
-        {/* <TextField
+      <div className="row mb-3">
+        <div className="col-12">
+          <InputLabel>Bio</InputLabel>
+          {/* <TextField
             className="col-12"
             type="text"
             name="fname"
@@ -129,57 +128,89 @@ class UserProfile extends Component {
             // helperText={this.state.fname_err_helperText}
             // error={this.state.fname_err ? true : false}
             // value={this.state.fname}
-            // onChange={(e) => this.onChange(e)}
+            // 
             required
           /> */}
-        <TextareaAutosize
-          aria-label="empty textarea"
-          placeholder="Empty"
-          value={getUserBio()}
-        />
+          <textarea
+            className="w-100"
+            aria-label="empty textarea"
+            name="bio"
+            defaultValue={getUserBio()}
+            onChange={(e) => this.onChange(e)}
+          ></textarea>
+        </div>
       </div>
     );
   }
 
+  removeTag = (i) => {
+    const newTags = [...this.state.tags];
+    newTags.splice(i, 1);
+    this.setState({ tags: newTags });
+  };
 
-  // handleDelete(i) {
-  //   this.setState({
-  //     tags: this.state.tags.filter((tag, index) => index !== i),
-  //   });
-  // }
+  addTag = () => {
+    const val = this.state.temptag;
+    this.tagInput.value = null;
+    if (val === "") {
+      return;
+    }
+    if (
+      this.state.tags.find(
+        (tag) => tag.toString().toLowerCase() === val.toString().toLowerCase()
+      )
+    ) {
+      return;
+    }
+    this.setState({ tags: [...this.state.tags, this.state.temptag] });
+  };
 
-  // handleAddition(tag) {
-  //   let { tags } = this.state;
-  //   this.setState({ tags: [...tags, { id: tags.length + 1, text: tag }] });
-  // }
-
-  // handleDrag(tag, currPos, newPos) {
-  //   const tags = [...this.state.tags];
-
-  //   // mutate array
-  //   tags.splice(currPos, 1);
-  //   tags.splice(newPos, 0, tag);
-
-  //   // re-render
-  //   this.setState({ tags });
-  // }
-
-  // handleTagClick(index) {
-  //   console.log('The tag at index ' + index + ' was clicked');
-  // }
+  tagInputChange = (e) => {
+    this.setState({
+      temptag: [e.target.value],
+    });
+  };
 
   interestSection() {
-    const tags = this.state;
+    const { tags } = this.state;
     return (
-      <div className="col-6 ">
-        <InputLabel>Interests</InputLabel>
-        {/* <ReactTags
-          tags={tags}
-          handleDelete={this.handleDelete}
-          handleAddition={this.handleAddition}
-          handleDrag={this.handleDrag}
-          handleTagClick={this.handleTagClick}
-        /> */}
+      <div className=" row mb-3">
+        <div className="col-10    ">
+          <InputLabel>Interests</InputLabel>
+          <div className="input-tag">
+            <ul className="input-tag__tags">
+              {tags.map((tag, i) => (
+                <li key={tag}>
+                  {tag}
+                  <IconButton
+                    fontSize="small"
+                    style={{ padding: "5px" }}
+                    type="button"
+                    onClick={() => {
+                      this.removeTag(i);
+                    }}
+                  >
+                    <CloseIcon fontSize="small" />
+                  </IconButton>
+                </li>
+              ))}
+              <li className="input-tag__tags__input">
+                <input
+                  type="text"
+                  onChange={this.tagInputChange}
+                  ref={(c) => {
+                    this.tagInput = c;
+                  }}
+                />
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div className="col-2 pt-3">
+          <IconButton type="button" onClick={this.addTag} fontSize="large">
+            <AddCircleIcon fontSize="large" />
+          </IconButton>
+        </div>
       </div>
     );
   }
@@ -207,9 +238,8 @@ class UserProfile extends Component {
               {/* Gender Section */}
               {this.genderSection()}
 
-              {/* Gender Section*/}
               {this.interestSection()}
-              {/* {this.bioSection()} */}
+              {this.bioSection()}
             </div>
             <div className="text-center p-3">
               <Button variant="contained" type="submit">

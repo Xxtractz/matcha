@@ -1,6 +1,6 @@
-import React from "react";
-import { Route, Redirect } from "react-router-dom";
-import { isloggedIn } from "./api";
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { isloggedIn } from './auth';
 
 export const PublicRoute = ({ component: Component, ...rest }) => {
   return (

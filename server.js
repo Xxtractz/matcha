@@ -7,6 +7,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const boom = require('boom');
 const Users = require('./models/users');
+const Chat = require('./models/chats');
 const mongoose = require("mongoose");
 const port = process.env.PORT || 4000;
 const app = express();
@@ -16,13 +17,13 @@ const io = require('socket.io')(http);
 
 http.listen(4001);
 
-// routing
-app.get('/', function (req, res) {
-    res.sendFile(__dirname + '/index.html');
-  });
+// // routing
+// app.get('/', function (req, res) {
+//     res.sendFile(__dirname + '/index.html');
+//   });
   
-  // usernames which are currently connected to the chat
-  var usernames = {};
+//   // usernames which are currently connected to the chat
+   var usernames = {};
   
   // rooms which are currently available in chat
   var rooms = [];
@@ -51,6 +52,13 @@ app.get('/', function (req, res) {
       socket.on('sendchat', function (data) {
           // we tell the client to execute 'updatechat' with 2 parameters
           console.log(data);
+
+          Chat.create(data, (err, doc) => {
+              if(err){
+                  boom.boomify(err);
+              }
+          });
+
           io.sockets.in(socket.room).emit('updatechat', socket.username, data);
       });
       
@@ -66,7 +74,6 @@ app.get('/', function (req, res) {
           socket.emit('updaterooms', rooms, newroom);
       });
       
-  
       // when the user disconnects.. perform this
       socket.on('disconnect', function(){
           // remove the username from global usernames list
@@ -103,7 +110,7 @@ mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true
     .catch(err => console.error('Something went wrong', err));
 
 //require the fastify framework and instantiate it
-/*app.use(function (req, res, next) {
+app.use(function (req, res, next) {
   //exclude other routes
   if ((req.method === 'POST' && req.url=== '/logout') || (req.method === 'GET' && req.url=== '/socket.io/socket.io.js'))
   {
@@ -162,7 +169,7 @@ mongoose.connect(`${db_link}`, { useNewUrlParser: true, useUnifiedTopology: true
           });
       }
   }
-});*/
+});
 // Run server on Port 4000
 app.listen(port, () => console.log(`Server started on Port ${port}`));
 

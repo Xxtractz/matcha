@@ -8,18 +8,17 @@ function handleLogin(token, rtoken) {
   // window.location.reload();
 }
 
-const token = () => {
-  return localStorage.getItem("User_Token");
-}
+// const token = () => {
+//   return localStorage.getItem("User_Token");
+// };
 
-function getHeader(){
-   const headers = {
-     'Content-Type':  'application/json',
-     Authorization: `Bearer ${token()}`
-   }
- return headers;
-}
-
+// function getHeader() {
+//   const headers = {
+//     "Content-Type": "application/json",
+//     Authorization: `Bearer ${token()}`,
+//   };
+//   return headers;
+// }
 
 export const login = async (_Logindata) => {
   return axios
@@ -44,9 +43,9 @@ export const login = async (_Logindata) => {
 };
 
 export const logout = (username) => {
-  axios.post(_Url.LogOutUrl, username).then((res)=>{
+  axios.post(_Url.LogOutUrl, username).then((res) => {
     localStorage.clear();
-  window.location.replace('/login');
+    window.location.replace("/login");
   });
 };
 
@@ -66,12 +65,6 @@ export const register = async (_userdata) => {
         };
       }
     });
-};
-
-export const isloggedIn = () => {
-  if (localStorage.getItem("SessionUI")) {
-    return true;
-  } else return false;
 };
 
 export const verify = async (token) => {

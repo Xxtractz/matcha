@@ -9,7 +9,6 @@ import {
 } from "../../actions/user";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import {
-  Button,
   Card,
   CardMedia,
   CardContent,
@@ -52,8 +51,8 @@ class Nav extends Component {
 
   logout() {
     const user = {
-    username: getUsername()
-    }
+      username: getUsername(),
+    };
     logout(user);
   }
 
@@ -156,25 +155,25 @@ class Nav extends Component {
             </button>
             <div className={this.toggle()}>
               <ul className="navbar-nav ml-auto">
-              <List component="nav">
-                {getUserStatus() === "2" ? this.homeMenu() : ""}
+                <List component="nav">
+                  {getUserStatus() === "2" ? this.homeMenu() : ""}
 
-                {getUserStatus() === "2" ? this.messageMenu() : ""}
+                  {getUserStatus() === "2" ? this.messageMenu() : ""}
 
-                {this.accountMenu()}
+                  {this.accountMenu()}
 
-                <Divider light></Divider>
-                <ListItem
-                  button
-                  className="text-center"
-                  onClick={() => this.logout()}
-                >
-                  <ListItemText>
-                    <PowerSettingsNewIcon className="" />
-                    <span className="p-1">Logout</span>
-                  </ListItemText>
-                </ListItem>
-              </List>
+                  <Divider light></Divider>
+                  <ListItem
+                    button
+                    className="text-center"
+                    onClick={() => this.logout()}
+                  >
+                    <ListItemText>
+                      <PowerSettingsNewIcon className="" />
+                      <span className="p-1">Logout</span>
+                    </ListItemText>
+                  </ListItem>
+                </List>
               </ul>
             </div>
           </div>

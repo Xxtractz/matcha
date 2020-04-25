@@ -1,5 +1,7 @@
 const router = require('express').Router();
 const Users = require('../models/users');
+const Chat = require('../models/chats');
+const boom = require('boom');
 const commonFunction = require('./commonFunctions');
 
 router.post('/likes', async function(req, res){
@@ -27,8 +29,7 @@ router.post('/likes', async function(req, res){
     res.status(400).send({"Likes":"Something went wrong when trying to like"});
 });
 
-router.get('/likes', async function(req, res){
-    
+router.get('/likes', async (req, res) => {
 
     await Users.findOne({username: req.username}, (err, matches) => {
         if(err)
@@ -44,7 +45,19 @@ router.get('/likes', async function(req, res){
     });
 });
 
-router.post('/disLikes', async function(req, res){
+router.post('/chat', async (req, res) => {
+
+  await Chat.find( { usernames: { $all: req.body } }, (err, doc) => {
+    if(err) {
+      boom.boomify(err);
+      res.status(400).send({"chat": "No messages found"});
+    } else {
+      res.status(200).send(doc);
+    }
+  });
+});
+
+router.post('/disLikes', async (req, res) => {
     
 
     await Users.find({username: req.username}, (err, matches) => {

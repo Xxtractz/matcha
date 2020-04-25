@@ -16,7 +16,7 @@ class index extends Component {
             <Profiles></Profiles>
           </Layout>
         ) : (
-          this.props.history.push(`/user#incomplete`)
+          this.props.history.push(`/user`)
         )}
       </div>
     );
