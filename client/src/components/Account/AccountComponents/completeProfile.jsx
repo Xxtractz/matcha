@@ -10,6 +10,10 @@ import {
   getUserGenderPreference,
   getUserInterest,
 } from "../../../actions/user";
+import IconButton from "@material-ui/core/IconButton";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import CloseIcon from "@material-ui/icons/Close";
+
 
 class CompleteProfile extends Component {
   constructor(props) {
@@ -151,7 +155,8 @@ class CompleteProfile extends Component {
             required
           /> */}
           <textarea
-            className="w-100"
+            className="w-100 "
+            style={{background:"inherit"}}
             aria-label="empty textarea"
             name="bio"
             defaultValue={getUserBio()}
@@ -238,6 +243,9 @@ class CompleteProfile extends Component {
     return (
       <div className="container p-2">
         <div className="col-12">{this.nameSection()}</div>
+        <div className="col-12">{this.genderSection()}</div>
+        <div className="col-12">{this.bioSection()}</div>
+        <div className="col-12">{this.interestSection()}</div>
       </div>
     );
   }
@@ -258,7 +266,8 @@ class CompleteProfile extends Component {
         </Paper>
 
         {this.imageSection()}
-
+        <br/>
+        <br/>
         {this.personalDetailsSection()}
       </Paper>
     );
