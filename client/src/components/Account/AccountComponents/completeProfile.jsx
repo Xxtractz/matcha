@@ -14,7 +14,6 @@ import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 
-
 class CompleteProfile extends Component {
   constructor(props) {
     super(props);
@@ -156,7 +155,7 @@ class CompleteProfile extends Component {
           /> */}
           <textarea
             className="w-100 "
-            style={{background:"inherit"}}
+            style={{ background: "inherit" }}
             aria-label="empty textarea"
             name="bio"
             defaultValue={getUserBio()}
@@ -265,10 +264,18 @@ class CompleteProfile extends Component {
           <small> Please Complete you Profile</small>
         </Paper>
 
-        {this.imageSection()}
-        <br/>
-        <br/>
-        {this.personalDetailsSection()}
+        <form onSubmit={this.submitHandler}>
+          {this.imageSection()}
+          <br />
+          <br />
+          {this.personalDetailsSection()}
+
+          <div className="text-center p-3">
+            <Button variant="contained" type="submit">
+              Update
+            </Button>
+          </div>
+        </form>
       </Paper>
     );
   }
