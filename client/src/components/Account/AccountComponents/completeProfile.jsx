@@ -1,6 +1,15 @@
 import React, { Component } from "react";
 import { Paper, InputLabel } from "@material-ui/core";
 import { Button, TextField, Select } from "@material-ui/core";
+import {
+  getUserFirstName,
+  getUserLastName,
+  getUsername,
+  getUserBio,
+  getUserGender,
+  getUserGenderPreference,
+  getUserInterest,
+} from "../../../actions/user";
 
 class CompleteProfile extends Component {
   constructor(props) {
