@@ -4,7 +4,6 @@ import { Button, TextField, Select } from "@material-ui/core";
 import {
   getUserFirstName,
   getUserLastName,
-  getUsername,
   getUserBio,
   getUserGender,
   getUserGenderPreference,
@@ -46,27 +45,14 @@ class CompleteProfile extends Component {
     });
   };
 
-  imageSection() {
+  firstImageSection() {
     return (
-      <div className="container p-2">
-        <div className="col-12 ">
-          <div className="row">
-            <img
-              className="img-thumbnail"
-              src="src/assets/images/addImage.png"
-              alt="imagr"
-              style={{ width: "150px", height: "150px" }}
-            />
-            <input
-              type="button"
-              class="btn btn-secondary"
-              id="btnChangePicture"
-              value="Change"
-            />
-            <input type="file" name="file" />
-          </div>
+      <label for="photo-upload" className="custom-file-upload fas">
+        <div className="img-wrap img-upload">
+          <img for="photo-upload" src={src} />
         </div>
-      </div>
+        <input id="photo-upload" type="file" onChange={onChange} />
+      </label>
     );
   }
 
@@ -265,7 +251,7 @@ class CompleteProfile extends Component {
         </Paper>
 
         <form onSubmit={this.submitHandler}>
-          {this.imageSection()}
+          {this.firstImageSection()}
           <br />
           <br />
           {this.personalDetailsSection()}
