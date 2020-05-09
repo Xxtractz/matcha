@@ -25,6 +25,7 @@ class CompleteProfile extends Component {
       gender: getUserGender(),
       genderPreference: getUserGenderPreference(),
       interest: getUserInterest(),
+      placeHolderImage:"/src/assets/images/addImage.png"
     };
   }
 
@@ -48,10 +49,10 @@ class CompleteProfile extends Component {
   firstImageSection() {
     return (
       <label for="photo-upload" className="custom-file-upload fas">
-        <div className="img-wrap img-upload">
-          <img for="photo-upload" src={src} />
+        <div className="upload-image-wrap img-upload">
+          <img for="photo-upload" src={this.state.placeHolderImage} />
         </div>
-        <input id="photo-upload" type="file" onChange={onChange} />
+        <input id="photo-upload" type="file"/>
       </label>
     );
   }

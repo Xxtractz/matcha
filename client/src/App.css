@@ -176,3 +176,12 @@ textarea {
   border-color: #acacac;
   overflow: auto;
 }
+
+
+.upload-image-wrapper{
+  position: relative;
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+}
