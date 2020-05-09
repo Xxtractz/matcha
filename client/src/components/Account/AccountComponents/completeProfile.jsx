@@ -25,7 +25,7 @@ class CompleteProfile extends Component {
       gender: getUserGender(),
       genderPreference: getUserGenderPreference(),
       interest: getUserInterest(),
-      placeHolderImage:"/src/assets/images/addImage.png"
+      placeHolderImage: "/src/assets/images/addImage.png",
     };
   }
 
@@ -46,14 +46,39 @@ class CompleteProfile extends Component {
     });
   };
 
+  photoUpload(e) {
+    e.preventDefault();
+    const reader = new FileReader();
+    const file = e.target.files[0];
+    console.log("====================================");
+    console.log(file);
+    console.log("====================================");
+    reader.onloadend = () => {
+      console.log("====================================");
+      console.log(reader);
+      console.log("====================================");
+      this.setState({
+        file: file,
+        placeHolderImage: reader.result,
+      });
+    };
+    reader.readAsDataURL(file);
+  }
+
   firstImageSection() {
     return (
-      <label for="photo-upload" className="custom-file-upload fas">
-        <div className="upload-image-wrap img-upload">
-          <img for="photo-upload" src={this.state.placeHolderImage} />
-        </div>
-        <input id="photo-upload" type="file"/>
-      </label>
+      <div className="card-upload">
+        <label className="custom-file-upload fas">
+          <div className="upload-image-wrap img-upload">
+            <img src={this.state.placeHolderImage} />
+          </div>
+          <input
+            id="photo-upload"
+            type="file"
+            onChange={(e) => this.photoUpload(e)}
+          />
+        </label>
+      </div>
     );
   }
 
