@@ -67,18 +67,21 @@ class CompleteProfile extends Component {
 
   firstImageSection() {
     return (
-      <div className="card-upload">
-        <label className="custom-file-upload fas">
-          <div className="upload-image-wrap img-upload">
-            <img src={this.state.placeHolderImage} />
-          </div>
-          <input
-            id="photo-upload"
-            type="file"
-            onChange={(e) => this.photoUpload(e)}
-          />
-        </label>
+      <div className="photo-container">
+
       </div>
+      // <div className="card-upload">
+      //   <label className="custom-file-upload fas">
+      //     <div className="upload-image-wrap img-upload">
+      //       <img src={this.state.placeHolderImage} />
+      //     </div>
+      //     <input
+      //       id="photo-upload"
+      //       type="file"
+      //       onChange={(e) => this.photoUpload(e)}
+      //     />
+      //   </label>
+      // </div>
     );
   }
 
