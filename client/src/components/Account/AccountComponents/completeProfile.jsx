@@ -17,15 +17,17 @@ class CompleteProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      profile: {
+        firstname: getUserFirstName(),
+        lastname: getUserLastName(),
+        gender: getUserGender(),
+        genderPreference: getUserGenderPreference(),
+        interest: getUserInterest(),
+      },
       tags: ["Input"],
       temptag: "",
       isopen: true,
-      firstname: getUserFirstName(),
-      lastname: getUserLastName(),
-      gender: getUserGender(),
-      genderPreference: getUserGenderPreference(),
-      interest: getUserInterest(),
-      placeHolderImage: "/src/assets/images/addImage.png",
+      photourl: "/src/assets/images/addImage.png",
     };
   }
 
@@ -68,7 +70,9 @@ class CompleteProfile extends Component {
   firstImageSection() {
     return (
       <div className="photo-container">
-
+        <div className="image-upload-container" style={{background: `url(${this.state.photourl})`}}>
+          <input type="file" accept=".jpg, .jpeg, .png" />
+        </div>
       </div>
       // <div className="card-upload">
       //   <label className="custom-file-upload fas">
@@ -95,7 +99,7 @@ class CompleteProfile extends Component {
             className="col-12"
             type="text"
             name="firstname"
-            defaultValue={this.state.firstname}
+            defaultValue={this.state.profile.firstname}
             disabled
           />
         </div>
@@ -105,7 +109,7 @@ class CompleteProfile extends Component {
             className="col-12"
             type="text"
             name="lastname"
-            defaultValue={this.state.lastname}
+            defaultValue={this.state.profile.lastname}
             disabled
           />
         </div>
