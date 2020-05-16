@@ -27,7 +27,7 @@ class CompleteProfile extends Component {
       tags: ["Input"],
       temptag: "",
       isopen: true,
-      photourl: "/src/assets/images/addImage.png",
+      photoUrl: "",
     };
   }
 
@@ -52,16 +52,10 @@ class CompleteProfile extends Component {
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
-    console.log("====================================");
-    console.log(file);
-    console.log("====================================");
     reader.onloadend = () => {
-      console.log("====================================");
-      console.log(reader);
-      console.log("====================================");
       this.setState({
         file: file,
-        placeHolderImage: reader.result,
+        photoUrl: reader.result,
       });
     };
     reader.readAsDataURL(file);
@@ -70,15 +64,17 @@ class CompleteProfile extends Component {
   firstImageSection() {
     return (
       <div className="photo-container">
-        <div className="image-upload-container">
-          <img src={this.state.photourl} alt="" />
-          <input
-            type="file"
-            accept=".jpg, .jpeg, .png"
-            onChange={(e) => this.photoUpload(e)}
-          />
-          <Button>Upload</Button>
-        </div>
+        <label htmlFor="image-upload">
+          <div className="image-upload-container" style={{}}>
+            <img src={this.state.photoUrl} alt="" />
+            <input
+              id="image-upload"
+              type="file"
+              accept=".jpg, .jpeg, .png"
+              onChange={(e) => this.photoUpload(e)}
+            />
+          </div>
+        </label>
       </div>
     );
   }
