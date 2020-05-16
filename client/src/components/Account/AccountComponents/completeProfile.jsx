@@ -70,22 +70,32 @@ class CompleteProfile extends Component {
   firstImageSection() {
     return (
       <div className="photo-container">
-        <div className="image-upload-container" style={{background: `url(${this.state.photourl})`}}>
-          <input type="file" accept=".jpg, .jpeg, .png" />
+        <div className="image-upload-container" >
+              <img src={this.state.photourl} alt=""/>
+          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
+          <Button>Upload</Button>
+        </div>
+        <div className="image-upload-container" >
+              <img src={this.state.photourl} alt=""/>
+          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
+          <Button>Upload</Button>
+        </div>
+        <div className="image-upload-container" >
+              <img src={this.state.photourl} alt=""/>
+          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
+          <Button>Upload</Button>
+        </div>
+        <div className="image-upload-container" >
+              <img src={this.state.photourl} alt=""/>
+          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
+          <Button>Upload</Button>
+        </div>
+        <div className="image-upload-container" >
+              <img src={this.state.photourl} alt=""/>
+          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
+          <Button>Upload</Button>
         </div>
       </div>
-      // <div className="card-upload">
-      //   <label className="custom-file-upload fas">
-      //     <div className="upload-image-wrap img-upload">
-      //       <img src={this.state.placeHolderImage} />
-      //     </div>
-      //     <input
-      //       id="photo-upload"
-      //       type="file"
-      //       onChange={(e) => this.photoUpload(e)}
-      //     />
-      //   </label>
-      // </div>
     );
   }
 

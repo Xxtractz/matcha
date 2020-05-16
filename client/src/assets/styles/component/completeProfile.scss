@@ -1,22 +1,22 @@
-.photo-container{
-    overflow: auto;
-    width: 420px;
-    margin: 0 auto;
-    text-align: center;
+.photo-container {
+    overflow: hidden;
+  width: 900px;
+  margin: 0 auto;
+  text-align: center;
 }
 
-.image-upload-container{
-    background-color: #D8D8D8;
-	width: 150px;
-	height: 150px;
-    border-radius: 4px;
-    margin: 10px 10px;
-	float: left;
-	background-size: cover;                      
-	background-repeat: no-repeat;
-    background-position: center center;
+.image-upload-container {
+  background-color: #d8d8d8;
+  width: 150px;
+  height: 150px;
+  border-radius: 4px;
+  margin: 10px 10px;
+  float: left;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
 
-    input[type="file"] {
-		display: none;
-	}
+  input[type="file"] {
+    display: none;
+  }
 }
