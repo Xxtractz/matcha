@@ -1,14 +1,15 @@
 .photo-container {
-    overflow: hidden;
-  width: 900px;
+  overflow: hidden;
+  width: 1000px;
   margin: 0 auto;
+  padding: 10px;
   text-align: center;
 }
 
 .image-upload-container {
   background-color: #d8d8d8;
-  width: 150px;
-  height: 150px;
+  width: 160px;
+  height: 160px;
   border-radius: 4px;
   margin: 10px 10px;
   float: left;

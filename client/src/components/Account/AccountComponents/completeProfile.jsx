@@ -70,29 +70,13 @@ class CompleteProfile extends Component {
   firstImageSection() {
     return (
       <div className="photo-container">
-        <div className="image-upload-container" >
-              <img src={this.state.photourl} alt=""/>
-          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
-          <Button>Upload</Button>
-        </div>
-        <div className="image-upload-container" >
-              <img src={this.state.photourl} alt=""/>
-          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
-          <Button>Upload</Button>
-        </div>
-        <div className="image-upload-container" >
-              <img src={this.state.photourl} alt=""/>
-          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
-          <Button>Upload</Button>
-        </div>
-        <div className="image-upload-container" >
-              <img src={this.state.photourl} alt=""/>
-          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
-          <Button>Upload</Button>
-        </div>
-        <div className="image-upload-container" >
-              <img src={this.state.photourl} alt=""/>
-          <input type="file" accept=".jpg, .jpeg, .png" onChange={(e) => this.photoUpload(e)}/>
+        <div className="image-upload-container">
+          <img src={this.state.photourl} alt="" />
+          <input
+            type="file"
+            accept=".jpg, .jpeg, .png"
+            onChange={(e) => this.photoUpload(e)}
+          />
           <Button>Upload</Button>
         </div>
       </div>
