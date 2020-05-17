@@ -12,8 +12,7 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
-
-
+import { disabledFormInput } from "../../Form/form";
 
 class CompleteProfile extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ class CompleteProfile extends Component {
         genderPreference: getUserGenderPreference(),
         interest: getUserInterest(),
       },
-      tags: ["Input"],
+      tags: [],
       temptag: "",
       isopen: true,
       photoUrl: "",
@@ -76,46 +75,24 @@ class CompleteProfile extends Component {
     );
   }
 
-  disabledFormInput(label,className,type,name,defaultValue) {
-    return(
-      <div className="col-6">
-            <InputLabel>{label}</InputLabel>
-            <TextField
-              className={className}
-              type={type}
-              name={name}
-              defaultValue={defaultValue}
-              disabled
-            />
-          </div>
-    );
-  }
-
   // Form Sections
   nameSection() {
     return (
       <div className="row mb-3">
-        {this.disabledFormInput("First Name","col-12","text","firstname",this.state.profile.firstname)}
-        {/* <div className="col-6">
-          <InputLabel>First Name</InputLabel>
-          <TextField
-            className="col-12"
-            type="text"
-            name="firstname"
-            defaultValue={this.state.profile.firstname}
-            disabled
-          />
-        </div> */}
-        <div className="col-6 ">
-          <InputLabel>Last Name</InputLabel>
-          <TextField
-            className="col-12"
-            type="text"
-            name="lastname"
-            defaultValue={this.state.profile.lastname}
-            disabled
-          />
-        </div>
+        {disabledFormInput(
+          "First Name",
+          "col-12",
+          "text",
+          "firstname",
+          this.state.profile.firstname
+        )}
+        {disabledFormInput(
+          "Last Name",
+          "col-12",
+          "text",
+          "lastname",
+          this.state.profile.lastname
+        )}
       </div>
     );
   }
@@ -123,22 +100,7 @@ class CompleteProfile extends Component {
   genderSection() {
     return (
       <div className="row mb-3">
-        <div className="col-6 ">
-          <InputLabel>Gender</InputLabel>
-          <Select
-            native
-            // alue={getUserGender()}
-            // onChange={handleChange}
-            // inputProps={{
-            //   name: "age",
-            //   id: "age-native-simple",
-            // }}
-          >
-            <option value={"Male"}>Male</option>
-            <option value={"Other"}>Other</option>
-            <option value={"Female"}>Female</option>
-          </Select>
-        </div>
+       
         <div className="col-6 ">
           <InputLabel>Preferred Gender</InputLabel>
           <Select
