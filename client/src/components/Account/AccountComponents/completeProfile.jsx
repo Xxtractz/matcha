@@ -12,8 +12,11 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
-import { disabledFormInput, selecFormInput } from "../../Form/form";
-
+import {
+  disabledFormInput,
+  selecFormInput,
+  textAreaFormInput,
+} from "../../Form/form";
 class CompleteProfile extends Component {
   constructor(props) {
     super(props);
@@ -24,6 +27,7 @@ class CompleteProfile extends Component {
         gender: getUserGender(),
         genderPreference: getUserGenderPreference(),
         interest: getUserInterest(),
+        bio: getUserBio(),
       },
       tags: [],
       temptag: "",
@@ -67,7 +71,7 @@ class CompleteProfile extends Component {
             <input
               id="image-upload"
               type="file"
-              accept=".jpg, .jpeg, .png"
+              accept=".jpg, .jpeg"
               onChange={(e) => this.photoUpload(e)}
             />
           </div>
@@ -124,28 +128,15 @@ class CompleteProfile extends Component {
   bioSection() {
     return (
       <div className="row mb-3">
-        <div className="col-12">
-          <InputLabel>Bio</InputLabel>
-          {/* <TextField
-            className="col-12"
-            type="text"
-            name="fname"
-            // placeholder={getUserFirstName()}
-            // helperText={this.state.fname_err_helperText}
-            // error={this.state.fname_err ? true : false}
-            // value={this.state.fname}
-            // 
-            required
-          /> */}
-          <textarea
-            className="w-100 "
-            style={{ background: "inherit" }}
-            aria-label="empty textarea"
-            name="bio"
-            defaultValue={getUserBio()}
-            onChange={(e) => this.onChange(e)}
-          ></textarea>
-        </div>
+        {textAreaFormInput(
+          "col-12",
+          "Bio",
+          "w-100",
+          "inherit",
+          "bio",
+          this.state.profile.bio,
+          (e) => this.onChange(e)
+        )}
       </div>
     );
   }

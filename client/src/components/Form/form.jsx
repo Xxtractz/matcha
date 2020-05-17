@@ -57,6 +57,7 @@ export const disabledFormInput = (
   );
 };
 
+// Selection Options
 export const selecFormInput = (
   div_className,
   inputLabel,
@@ -74,10 +75,35 @@ export const selecFormInput = (
         defaultValue={defaultValue}
         onChange={onChange}
       >
-        {options.map((optionsValue) => {
-          return <option value={optionsValue}>{optionsValue}</option>;
+        {options.map((optionsValue, index) => {
+          return <option key={index}>{optionsValue}</option>;
         })}
       </Select>
+    </div>
+  );
+};
+
+// TextArea Input
+export const textAreaFormInput = (
+  divClassName,
+  inputLabel,
+  textAreaClassName,
+  textAreaBackground,
+  name,
+  defaultValue,
+  onChange
+) => {
+  return (
+    <div className={divClassName}>
+      <InputLabel>{inputLabel}</InputLabel>
+      <textarea
+        className={textAreaClassName}
+        style={{ background: textAreaBackground }}
+        aria-label="empty textarea"
+        name={name}
+        defaultValue={defaultValue}
+        onChange={onChange}
+      ></textarea>
     </div>
   );
 };

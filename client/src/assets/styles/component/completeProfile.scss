@@ -17,6 +17,11 @@
   background-repeat: no-repeat;
   background-position: center center;
 
+  img {
+    width: 150px;
+    height: 160px;
+  }
+
   input[type="file"] {
     display: none;
   }
