@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Paper, InputLabel } from "@material-ui/core";
-import { Button, TextField, Select } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import {
   getUserFirstName,
   getUserLastName,
@@ -12,7 +12,7 @@ import {
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
-import { disabledFormInput } from "../../Form/form";
+import { disabledFormInput, selecFormInput } from "../../Form/form";
 
 class CompleteProfile extends Component {
   constructor(props) {
@@ -29,6 +29,7 @@ class CompleteProfile extends Component {
       temptag: "",
       isopen: true,
       photoUrl: "",
+      genderOptions: ["Male", "Female", "Both"],
     };
   }
 
@@ -100,23 +101,22 @@ class CompleteProfile extends Component {
   genderSection() {
     return (
       <div className="row mb-3">
-       
-        <div className="col-6 ">
-          <InputLabel>Preferred Gender</InputLabel>
-          <Select
-            native
-            // value={getUserGenderPreference()}
-            // onChange={handleChange}
-            // inputProps={{
-            //   name: "age",
-            //   id: "age-native-simple",
-            // }}
-          >
-            <option value={"Male"}>Male</option>
-            <option value={"Both"}>Both</option>
-            <option value={"Female"}>Female</option>
-          </Select>
-        </div>
+        {selecFormInput(
+          "col-6",
+          "Gender",
+          "gender",
+          this.state.profile.gender,
+          (e) => this.onChange(e),
+          this.state.genderOptions
+        )}
+        {selecFormInput(
+          "col-6",
+          "Preferred Gender",
+          "genderPreference",
+          this.state.profile.genderPreference,
+          (e) => this.onChange(e),
+          this.state.genderOptions
+        )}
       </div>
     );
   }

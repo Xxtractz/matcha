@@ -1,6 +1,6 @@
 import React from "react";
-import { Paper, InputLabel } from "@material-ui/core";
-import { Button, TextField, Select } from "@material-ui/core";
+import { InputLabel } from "@material-ui/core";
+import { TextField, Select } from "@material-ui/core";
 
 // Custom Form inputs using
 export const CustomFormInput = (
@@ -60,26 +60,23 @@ export const disabledFormInput = (
 export const selecFormInput = (
   div_className,
   inputLabel,
-  value,
-  value_key
+  name,
+  defaultValue,
+  onChange,
+  options
 ) => {
   return (
     <div className={div_className}>
       <InputLabel>{inputLabel}</InputLabel>
       <Select
         native
-        // alue={getUserGender()}
-        // onChange={handleChange}
-        // inputProps={{
-        //   name: "age",
-        //   id: "age-native-simple",
-        // }}
+        name={name}
+        defaultValue={defaultValue}
+        onChange={onChange}
       >
-          {/* for (let index = 0; index < array.length; index++) {
-              const element = array[index];
-              
-          } */}
-        
+        {options.map((optionsValue) => {
+          return <option value={optionsValue}>{optionsValue}</option>;
+        })}
       </Select>
     </div>
   );
