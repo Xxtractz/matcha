@@ -13,6 +13,8 @@ import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 
+
+
 class CompleteProfile extends Component {
   constructor(props) {
     super(props);
@@ -33,11 +35,6 @@ class CompleteProfile extends Component {
 
   submitHandler = (e) => {
     e.preventDefault();
-
-    // const user = {
-    //   username: this.state.username.toString(),
-    //   password: this.state.password.toString(),
-    // };
   };
 
   onChange = (e) => {
@@ -79,11 +76,27 @@ class CompleteProfile extends Component {
     );
   }
 
+  disabledFormInput(label,className,type,name,defaultValue) {
+    return(
+      <div className="col-6">
+            <InputLabel>{label}</InputLabel>
+            <TextField
+              className={className}
+              type={type}
+              name={name}
+              defaultValue={defaultValue}
+              disabled
+            />
+          </div>
+    );
+  }
+
   // Form Sections
   nameSection() {
     return (
       <div className="row mb-3">
-        <div className="col-6">
+        {this.disabledFormInput("First Name","col-12","text","firstname",this.state.profile.firstname)}
+        {/* <div className="col-6">
           <InputLabel>First Name</InputLabel>
           <TextField
             className="col-12"
@@ -92,7 +105,7 @@ class CompleteProfile extends Component {
             defaultValue={this.state.profile.firstname}
             disabled
           />
-        </div>
+        </div> */}
         <div className="col-6 ">
           <InputLabel>Last Name</InputLabel>
           <TextField
