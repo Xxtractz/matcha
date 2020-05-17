@@ -32,7 +32,7 @@ class CompleteProfile extends Component {
       tags: [],
       temptag: "",
       isopen: true,
-      photoUrl: "",
+      photoUrl: "src/assets/images/addImage.png",
       genderOptions: ["Male", "Female", "Both"],
     };
   }
