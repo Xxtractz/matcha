@@ -73,11 +73,9 @@ router.post("/register", function (req, res) {
       }
     });
   } else {
-    res
-      .status(400)
-      .send({
-        User: "Please make sure that all the required field are filled",
-      });
+    res.status(400).send({
+      User: "Please make sure that all the required field are filled",
+    });
   }
 });
 
@@ -160,7 +158,7 @@ router.put("/update/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const user = req.body;
-    const { ...updateData } = user;                                                                                                                                                                    
+    const { ...updateData } = user;
 
     await Users.findByIdAndUpdate(
       id,
