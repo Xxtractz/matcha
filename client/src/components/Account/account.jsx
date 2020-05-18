@@ -9,7 +9,7 @@ import Profile from "./AccountComponents/profile";
 import AuthDetails from "./AccountComponents/authdetails";
 import Settings from "./AccountComponents/settings";
 import { getUserStatus } from "../../actions/user";
-import CompleteProfile from "./AccountComponents/completeProfile";
+import CompleteProfile from "./AccountComponents/completeProfile/completeProfile";
 
 class Account extends Component {
   constructor() {

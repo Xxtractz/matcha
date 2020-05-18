@@ -8,7 +8,7 @@ import {
   getUserGender,
   getUserGenderPreference,
   getUserInterest,
-} from "../../../actions/user";
+} from "../../../../actions/user";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
@@ -16,7 +16,7 @@ import {
   disabledFormInput,
   selecFormInput,
   textAreaFormInput,
-} from "../../Form/form";
+} from "../../../Form/form";
 class CompleteProfile extends Component {
   constructor(props) {
     super(props);
@@ -29,15 +29,9 @@ class CompleteProfile extends Component {
         interest: getUserInterest(),
         bio: getUserBio(),
       },
-      image1: "src/assets/images/addImage.png",
-      image2: "src/assets/images/addImage.png",
-      image3: "src/assets/images/addImage.png",
-      image4: "src/assets/images/addImage.png",
-      image5: "src/assets/images/addImage.png",
       tags: [],
       temptag: "",
       isopen: true,
-      photoUrl: "src/assets/images/addImage.png",
       genderOptions: ["Male", "Female", "Both"],
     };
   }
@@ -54,58 +48,35 @@ class CompleteProfile extends Component {
     });
   };
 
-  photoUpload(e, name) {
-    e.preventDefault();
-    // name.preventDefault();
-    console.log('====================================');
-    console.log([name]);
-    console.log('====================================');
-    const reader = new FileReader();
-    const file = e.target.files[0];
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        [name]: reader.result,
-      });
-    };
-    
-    reader.readAsDataURL(file);
-  //   name = null;
-  }
+  removeTag = (i) => {
+    const newTags = [...this.state.tags];
+    newTags.splice(i, 1);
+    this.setState({ tags: newTags });
+  };
 
-  imageTemplate = (name,defaultValue) => {
-    return (
-      <label htmlFor="image-upload">
-        <div className="image-upload-container" style={{}}>
-          <img src={defaultValue} alt="" />
-          <input
-            id="image-upload"
-            type="file"
-            accept=".jpg, .jpeg"
-            onChange={(e) => this.photoUpload(e,name)}
-          />
-        </div>
-      </label>
-    );
-  }
+  addTag = () => {
+    const val = this.state.temptag;
+    this.tagInput.value = null;
+    if (val === "") {
+      return;
+    }
+    if (
+      this.state.tags.find(
+        (tag) => tag.toString().toLowerCase() === val.toString().toLowerCase()
+      )
+    ) {
+      return;
+    }
+    this.setState({ tags: [...this.state.tags, this.state.temptag] });
+  };
 
-  displayImages() {
-    return (
-      <div>
-        {this.imageTemplate("image1",this.state.image1)}
-        {this.imageTemplate("image2",this.state.image2)}
-        {this.imageTemplate("image3",this.state.image3)}
-        {this.imageTemplate("image4",this.state.image4)}
-        {this.imageTemplate("image5",this.state.image5)}
-      </div>
-    );
-  }
+  tagInputChange = (e) => {
+    this.setState({
+      temptag: [e.target.value],
+    });
+  };
 
-  ImageSection() {
-    return <div className="row ">{this.displayImages()}</div>;
-  }
 
-  // Form Sections
   nameSection() {
     return (
       <div className="row mb-3">
@@ -166,33 +137,6 @@ class CompleteProfile extends Component {
     );
   }
 
-  removeTag = (i) => {
-    const newTags = [...this.state.tags];
-    newTags.splice(i, 1);
-    this.setState({ tags: newTags });
-  };
-
-  addTag = () => {
-    const val = this.state.temptag;
-    this.tagInput.value = null;
-    if (val === "") {
-      return;
-    }
-    if (
-      this.state.tags.find(
-        (tag) => tag.toString().toLowerCase() === val.toString().toLowerCase()
-      )
-    ) {
-      return;
-    }
-    this.setState({ tags: [...this.state.tags, this.state.temptag] });
-  };
-
-  tagInputChange = (e) => {
-    this.setState({
-      temptag: [e.target.value],
-    });
-  };
 
   interestSection() {
     const { tags } = this.state;
@@ -257,22 +201,19 @@ class CompleteProfile extends Component {
         square
       >
         <Paper
-          className="col-12 mt-2 p-1 text-center bg-transparent"
+          className="col-12 m-2  text-center bg-transparent"
           variant="outlined"
         >
           <h1>Complete Profile</h1>
           <small> Please Complete you Profile</small>
-        </Paper>
+        </Paper >
 
         <form onSubmit={this.submitHandler}>
-          {this.ImageSection()}
-          <br />
-          <br />
           {this.personalDetailsSection()}
 
           <div className="text-center p-3">
             <Button variant="contained" type="submit">
-              Update
+              Next ->
             </Button>
           </div>
         </form>
