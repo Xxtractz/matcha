@@ -17,6 +17,7 @@ import {
   selecFormInput,
   textAreaFormInput,
 } from "../../../Form/form";
+
 class CompleteProfile extends Component {
   constructor(props) {
     super(props);
@@ -75,7 +76,6 @@ class CompleteProfile extends Component {
       temptag: [e.target.value],
     });
   };
-
 
   nameSection() {
     return (
@@ -136,7 +136,6 @@ class CompleteProfile extends Component {
       </div>
     );
   }
-
 
   interestSection() {
     const { tags } = this.state;
@@ -206,7 +205,7 @@ class CompleteProfile extends Component {
         >
           <h1>Complete Profile</h1>
           <small> Please Complete you Profile</small>
-        </Paper >
+        </Paper>
 
         <form onSubmit={this.submitHandler}>
           {this.personalDetailsSection()}
