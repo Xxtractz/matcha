@@ -29,6 +29,11 @@ class CompleteProfile extends Component {
         interest: getUserInterest(),
         bio: getUserBio(),
       },
+      image1: "src/assets/images/addImage.png",
+      image2: "src/assets/images/addImage.png",
+      image3: "src/assets/images/addImage.png",
+      image4: "src/assets/images/addImage.png",
+      image5: "src/assets/images/addImage.png",
       tags: [],
       temptag: "",
       isopen: true,
@@ -49,35 +54,55 @@ class CompleteProfile extends Component {
     });
   };
 
-  photoUpload(e) {
+  photoUpload(e, name) {
     e.preventDefault();
+    // name.preventDefault();
+    console.log('====================================');
+    console.log([name]);
+    console.log('====================================');
     const reader = new FileReader();
     const file = e.target.files[0];
     reader.onloadend = () => {
       this.setState({
         file: file,
-        photoUrl: reader.result,
+        [name]: reader.result,
       });
     };
+    
     reader.readAsDataURL(file);
+  //   name = null;
   }
 
-  firstImageSection() {
+  imageTemplate = (name,defaultValue) => {
     return (
-      <div className="photo-container">
-        <label htmlFor="image-upload">
-          <div className="image-upload-container" style={{}}>
-            <img src={this.state.photoUrl} alt="" />
-            <input
-              id="image-upload"
-              type="file"
-              accept=".jpg, .jpeg"
-              onChange={(e) => this.photoUpload(e)}
-            />
-          </div>
-        </label>
+      <label htmlFor="image-upload">
+        <div className="image-upload-container" style={{}}>
+          <img src={defaultValue} alt="" />
+          <input
+            id="image-upload"
+            type="file"
+            accept=".jpg, .jpeg"
+            onChange={(e) => this.photoUpload(e,name)}
+          />
+        </div>
+      </label>
+    );
+  }
+
+  displayImages() {
+    return (
+      <div>
+        {this.imageTemplate("image1",this.state.image1)}
+        {this.imageTemplate("image2",this.state.image2)}
+        {this.imageTemplate("image3",this.state.image3)}
+        {this.imageTemplate("image4",this.state.image4)}
+        {this.imageTemplate("image5",this.state.image5)}
       </div>
     );
+  }
+
+  ImageSection() {
+    return <div className="row ">{this.displayImages()}</div>;
   }
 
   // Form Sections
@@ -240,7 +265,7 @@ class CompleteProfile extends Component {
         </Paper>
 
         <form onSubmit={this.submitHandler}>
-          {this.firstImageSection()}
+          {this.ImageSection()}
           <br />
           <br />
           {this.personalDetailsSection()}

@@ -115,3 +115,8 @@ export const Reset = async (username) => {
       }
     });
 };
+
+
+export const uploadImage = (file) =>{
+
+}
