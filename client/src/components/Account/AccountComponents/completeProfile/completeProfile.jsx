@@ -32,7 +32,6 @@ class CompleteProfile extends Component {
       tags: [],
       temptag: "",
       isopen: true,
-      genderOptions: ["Male", "Female", "Both"],
     };
   }
 
@@ -45,10 +44,10 @@ class CompleteProfile extends Component {
     const user = {
       firstname: this.state.firstname,
       lastname: this.state.lastname,
-      gender: this.state.gender,
-      genderPreference: this.state.genderPreference,
-      bio: this.state.bio,
-      interests: this.state.tags,
+      gender: this.state.gender.toString(),
+      genderPreference: this.state.genderPreference.toString(),
+      bio: this.state.bio.toString(),
+      interests: this.state.tags.toString(),
     };
 
     update(getUserid(), user)
@@ -72,11 +71,11 @@ class CompleteProfile extends Component {
     // console.log('====================================');
     // console.log(this.state.lastname);
     // console.log('====================================');
-    // console.log(this.state.gender);
+    // console.log(this.state.gender.toString());
     // console.log('====================================');
-    // console.log(this.state.genderPreference);
+    // console.log(this.state.genderPreference.toString());
     // console.log('====================================');
-    // console.log(this.state.bio);
+    // console.log(this.state.bio.toString());
     // console.log('====================================');
     // console.log(this.state.interest);
     // console.log('====================================');
@@ -140,7 +139,7 @@ class CompleteProfile extends Component {
           "gender",
           this.state.gender,
           (e) => this.onChange(e),
-          this.state.genderOptions
+          ["Male", "Female", "Both"]
         )}
         {selecFormInput(
           "col-6",
@@ -148,7 +147,7 @@ class CompleteProfile extends Component {
           "genderPreference",
           this.state.genderPreference,
           (e) => this.onChange(e),
-          this.state.genderOptions
+          ["Male", "Female", "Both"]
         )}
       </div>
     );
