@@ -11,3 +11,5 @@ export const VerifyUrl = ServerUrl+"/verify/";
 export const ReverifyUrl = ServerUrl+"/verifyAgain";
 
 export const ForgotUrl = ServerUrl+"/verification";
+
+export const UpdateUrl = ServerUrl+"/update";

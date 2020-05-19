@@ -116,7 +116,6 @@ export const Reset = async (username) => {
     });
 };
 
+export const update = (body) => {};
 
-export const uploadImage = (file) =>{
-
-}
+export const uploadImage = (file) => {};
