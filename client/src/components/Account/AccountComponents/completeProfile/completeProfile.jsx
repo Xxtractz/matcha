@@ -7,7 +7,7 @@ import {
   getUserBio,
   getUserGender,
   getUserGenderPreference,
-  getUserInterest,
+  // getUserInterest,
   getUserid,
 } from "../../../../actions/user";
 import IconButton from "@material-ui/core/IconButton";
@@ -24,14 +24,11 @@ class CompleteProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      profile: {
-        firstname: getUserFirstName(),
-        lastname: getUserLastName(),
-        gender: getUserGender(),
-        genderPreference: getUserGenderPreference(),
-        interest: getUserInterest(),
-        bio: getUserBio(),
-      },
+      firstname: getUserFirstName(),
+      lastname: getUserLastName(),
+      gender: getUserGender(),
+      genderPreference: getUserGenderPreference(),
+      bio: getUserBio(),
       tags: [],
       temptag: "",
       isopen: true,
@@ -45,19 +42,44 @@ class CompleteProfile extends Component {
   };
 
   updateProfile() {
-    update(getUserid(),this.state.profile).then((response)=>{
-      console.log(response);
-    }).catch((error)=>{
-      console.log(error);
-    })
+    const user = {
+      firstname: this.state.firstname,
+      lastname: this.state.lastname,
+      gender: this.state.gender,
+      genderPreference: this.state.genderPreference,
+      bio: this.state.bio,
+      interests: this.state.tags,
+    };
+
+    update(getUserid(), user)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   onChange = (e) => {
-    // console.log(e.target.name + ":" + e.target.value);
-
     this.setState({
       [e.target.name]: [e.target.value],
     });
+
+    // console.log(e.target.name + ":" + e.target.value);
+    // console.log(this.state.profile);
+    // console.log('====================================');
+    // console.log(this.state.firstname);
+    // console.log('====================================');
+    // console.log(this.state.lastname);
+    // console.log('====================================');
+    // console.log(this.state.gender);
+    // console.log('====================================');
+    // console.log(this.state.genderPreference);
+    // console.log('====================================');
+    // console.log(this.state.bio);
+    // console.log('====================================');
+    // console.log(this.state.interest);
+    // console.log('====================================');
   };
 
   removeTag = (i) => {
@@ -96,14 +118,14 @@ class CompleteProfile extends Component {
           "col-12",
           "text",
           "firstname",
-          this.state.profile.firstname
+          this.state.firstname
         )}
         {disabledFormInput(
           "Last Name",
           "col-12",
           "text",
           "lastname",
-          this.state.profile.lastname
+          this.state.lastname
         )}
       </div>
     );
@@ -116,7 +138,7 @@ class CompleteProfile extends Component {
           "col-6",
           "Gender",
           "gender",
-          this.state.profile.gender,
+          this.state.gender,
           (e) => this.onChange(e),
           this.state.genderOptions
         )}
@@ -124,7 +146,7 @@ class CompleteProfile extends Component {
           "col-6",
           "Preferred Gender",
           "genderPreference",
-          this.state.profile.genderPreference,
+          this.state.genderPreference,
           (e) => this.onChange(e),
           this.state.genderOptions
         )}
@@ -141,7 +163,7 @@ class CompleteProfile extends Component {
           "w-100",
           "inherit",
           "bio",
-          this.state.profile.bio,
+          this.state.bio,
           (e) => this.onChange(e)
         )}
       </div>
