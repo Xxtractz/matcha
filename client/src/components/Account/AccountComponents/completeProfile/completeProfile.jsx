@@ -8,6 +8,7 @@ import {
   getUserGender,
   getUserGenderPreference,
   getUserInterest,
+  getUserid,
 } from "../../../../actions/user";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -17,6 +18,7 @@ import {
   selecFormInput,
   textAreaFormInput,
 } from "../../../Form/form";
+import { update } from "../../../../actions/api";
 
 class CompleteProfile extends Component {
   constructor(props) {
@@ -39,10 +41,19 @@ class CompleteProfile extends Component {
 
   submitHandler = (e) => {
     e.preventDefault();
+    this.updateProfile();
   };
 
+  updateProfile() {
+    update(getUserid(),this.state.profile).then((response)=>{
+      console.log(response);
+    }).catch((error)=>{
+      console.log(error);
+    })
+  }
+
   onChange = (e) => {
-    console.log(e.target.name + ":" + e.target.value);
+    // console.log(e.target.name + ":" + e.target.value);
 
     this.setState({
       [e.target.name]: [e.target.value],

@@ -116,6 +116,21 @@ export const Reset = async (username) => {
     });
 };
 
-export const update = (body) => {};
+export const update = async (id, body) => {
+  return axios
+    .put(_Url.UpdateUrl + "/" + id, body)
+    .then((response) => {
+      if (response) {
+        return response;
+      }
+    })
+    .catch((error) => {
+      if (error.response) {
+        return error.response;
+      } else {
+        return "Timeout";
+      }
+    });
+};
 
 export const uploadImage = (file) => {};
