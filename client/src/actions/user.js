@@ -4,9 +4,19 @@ const data = jwt.decode(Token, "matchSecrets");
 const axios = require("axios").default;
 const _Url = require("../utils/link");
 
-export const getUserid = () =>{
-  return data._id;
+var getUser = async () =>{
+  return axios.get(`${_Url.UserUrl}/${data._id}`).then((response)=>{
+    console.log(response);
+    
+    return response.data.User;
+  })
+
 }
+const userData = getUser();
+
+export const getUserid = () => {
+  return data._id;
+};
 
 export const getUsername = () => {
   return data.username;
@@ -20,37 +30,39 @@ export const getUserLastName = () => {
   return data.lastname;
 };
 
-export const getUserGender = () =>{
+export const getUserGender = () => {
   return data.gender;
-}
+};
 
-export const getUserEmail = () =>{
+export const getUserEmail = () => {
   return data.email;
-}
+};
 
-export const getUserGenderPreference = () =>{
+export const getUserGenderPreference = () => {
   return data.genderPreference;
-}
+};
 
-export const getUserBio = () =>{
+export const getUserBio = () => {
+  console.log(userData);
+  
   return data.bio;
-}
+};
 
-export const getUserAge = () =>{
+export const getUserAge = () => {
   return data.age;
-}
+};
 
-export const getUserImages = () =>{
+export const getUserImages = () => {
   return data.images;
-}
+};
 
-export const getUserStatus = () =>{
+export const getUserStatus = () => {
   return data.status;
-}
+};
 
-export const getUserInterest = () =>{
+export const getUserInterest = () => {
   return data.interets;
-}
+};
 
 export const suggestedUsers = async (profile) => {
   return axios.get(_Url.LogInUrl);
