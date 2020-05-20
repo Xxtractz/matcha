@@ -155,24 +155,21 @@ router.post("/login", async (req, res) => {
 
 //get a user back
 router.get("/user/:id", async (req, res) => {
-    try {
-        const id = req.params.id;
-        await Users.findById(
-            id, 
-            (err, user) => {
-                if (err) {
-                    console.log(err);
-                    res.send({ User: "Internal server error can not update the user" });
-                } else {
-                    let userH = user;
-                    delete userH.password;
-                    res.status(200).send({ User: userH});
-                }
-            }
-        );
-    } catch (error) {
-        throw boom.boomify(error);
-    }
+  try {
+    const id = req.params.id;
+    await Users.findById(id, (err, user) => {
+      if (err) {
+        console.log(err);
+        res.send({ User: "Internal server error can not update the user" });
+      } else {
+        let userH = user;
+        delete userH.password;
+        res.status(200).send({ User: userH });
+      }
+    });
+  } catch (error) {
+    throw boom.boomify(error);
+  }
 });
 
 //update an existing user information
