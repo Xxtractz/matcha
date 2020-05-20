@@ -50,35 +50,22 @@ class CompleteProfile extends Component {
       interests: this.state.tags.toString(),
     };
 
-    update(getUserid(), user)
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    console.log(user);
+    
+    // update(getUserid(), user)
+    //   .then((response) => {
+    //     console.log(response);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 
   onChange = (e) => {
+    console.log([e.target.name]+":" +[e.target.value]);
     this.setState({
       [e.target.name]: [e.target.value],
     });
-
-    // console.log(e.target.name + ":" + e.target.value);
-    // console.log(this.state.profile);
-    // console.log('====================================');
-    // console.log(this.state.firstname);
-    // console.log('====================================');
-    // console.log(this.state.lastname);
-    // console.log('====================================');
-    // console.log(this.state.gender.toString());
-    // console.log('====================================');
-    // console.log(this.state.genderPreference.toString());
-    // console.log('====================================');
-    // console.log(this.state.bio.toString());
-    // console.log('====================================');
-    // console.log(this.state.interest);
-    // console.log('====================================');
   };
 
   removeTag = (i) => {
@@ -101,12 +88,15 @@ class CompleteProfile extends Component {
       return;
     }
     this.setState({ tags: [...this.state.tags, this.state.temptag] });
+    
+    
   };
 
   tagInputChange = (e) => {
     this.setState({
       temptag: [e.target.value],
     });
+    console.log(this.state.tags);
   };
 
   nameSection() {
