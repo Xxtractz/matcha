@@ -18,21 +18,34 @@ import {
   selecFormInput,
   textAreaFormInput,
 } from "../../../Form/form";
-import { update } from "../../../../actions/api";
+import { update, userData } from "../../../../actions/api";
 
 class CompleteProfile extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       firstname: getUserFirstName(),
       lastname: getUserLastName(),
-      gender: getUserGender(),
-      genderPreference: getUserGenderPreference(),
-      bio: getUserBio(),
+      gender: "",
+      genderPreference: "",
+      bio: "",
       tags: [],
       temptag: "",
       isopen: true,
     };
+    this.getUser();
+  }
+
+  getUser() {
+    userData(getUserid()).then((response) => {
+      console.log(response);
+      this.setState({
+        bio: response.bio,
+        gender: response.gender,
+        genderPreference: response.genderPreference,
+      });
+    });
   }
 
   submitHandler = (e) => {
@@ -51,7 +64,7 @@ class CompleteProfile extends Component {
     };
 
     console.log(user);
-    
+
     // update(getUserid(), user)
     //   .then((response) => {
     //     console.log(response);
@@ -62,7 +75,7 @@ class CompleteProfile extends Component {
   }
 
   onChange = (e) => {
-    console.log([e.target.name]+":" +[e.target.value]);
+    console.log([e.target.name] + ":" + [e.target.value]);
     this.setState({
       [e.target.name]: [e.target.value],
     });
@@ -88,8 +101,6 @@ class CompleteProfile extends Component {
       return;
     }
     this.setState({ tags: [...this.state.tags, this.state.temptag] });
-    
-    
   };
 
   tagInputChange = (e) => {

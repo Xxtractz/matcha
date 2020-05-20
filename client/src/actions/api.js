@@ -133,4 +133,35 @@ export const update = async (id, body) => {
     });
 };
 
+export const userData = async (id) => {
+  return axios.get(`${_Url.UserUrl}/${id}`).then((response) => {
+    return response.data.User;
+  });
+};
+
 export const uploadImage = (file) => {};
+
+export const suggestedUsers = async (profile) => {
+  return axios.get(_Url.LogInUrl);
+  // axios.post(_Url.LogInUrl,_Logindata,{timeout : 31000})
+  //   .then(response => {
+  //     if(response){
+  //       if (response.status ===204) {
+  //         return response.status;
+  //       } else {
+  //         handleLogin(response.data.Token,response.data.RefreshToken);
+  //         return response.status;
+  //       }
+
+  //     }
+  //   })
+  //   .catch(error => {
+  //     if (error.response.status) {
+  //       return error.response.status;
+  //     }
+  //     else
+  //     {
+  //       return "TimeOut";
+  //     }
+  //   } );
+};
