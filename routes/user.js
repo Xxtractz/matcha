@@ -164,8 +164,9 @@ router.get("/user/:id", async (req, res) => {
                     console.log(err);
                     res.send({ User: "Internal server error can not update the user" });
                 } else {
-                    delete user.password;
-                    res.status(200).send({ User: user});
+                    let userH = user;
+                    delete userH.password;
+                    res.status(200).send({ User: userH});
                 }
             }
         );
