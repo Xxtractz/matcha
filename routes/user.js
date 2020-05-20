@@ -162,9 +162,26 @@ router.get("/user/:id", async (req, res) => {
         console.log(err);
         res.send({ User: "Internal server error can not update the user" });
       } else {
-        let userH = user;
-        delete userH.password;
-        res.status(200).send({ User: userH });
+        delete user.password;
+        userOne = {username: user.username,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            email: user.email,
+            gender: user.gender,
+            genderPreference: user.genderPreference,
+            bio: user.bio,
+            status: user.status,
+            profileImage: user.profileImage,
+            images: user.images,
+            active: user.active,
+            date: user.date,
+            age: user.age,
+            dob: user.dob,
+            interets: user.interests,
+            likes: user.likes,
+            dislikes: user.dislikes
+        };
+            res.status(200).send({ User: userOne });
       }
     });
   } catch (error) {
