@@ -153,6 +153,27 @@ router.post("/login", async (req, res) => {
   }
 });
 
+//get a user back
+router.get("/user/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        await Users.findById(
+            id, 
+            (err, user) => {
+                if (err) {
+                    console.log(err);
+                    res.send({ User: "Internal server error can not update the user" });
+                } else {
+                    delete user.password;
+                    res.status(200).send({ User: user});
+                }
+            }
+        );
+    } catch (error) {
+        throw boom.boomify(error);
+    }
+});
+
 //update an existing user information
 router.put("/update/:id", async (req, res) => {
   try {
