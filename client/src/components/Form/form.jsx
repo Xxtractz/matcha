@@ -46,13 +46,7 @@ export const disabledFormInput = (
   return (
     <div className="col-6">
       <InputLabel>{label}</InputLabel>
-      <TextField
-        className={className}
-        type={type}
-        name={name}
-        defaultValue={defaultValue}
-        disabled
-      />
+      <TextField className={className} type={type} name={name} disabled />
     </div>
   );
 };
@@ -62,19 +56,13 @@ export const selecFormInput = (
   div_className,
   inputLabel,
   name,
-  defaultValue,
   onChange,
   options
 ) => {
   return (
     <div className={div_className}>
       <InputLabel>{inputLabel}</InputLabel>
-      <Select
-        native
-        name={name}
-        defaultValue={defaultValue}
-        onChange={onChange}
-      >
+      <Select native name={name} onChange={onChange}>
         {options.map((optionsValue, index) => {
           return <option key={index}>{optionsValue}</option>;
         })}
@@ -90,7 +78,6 @@ export const textAreaFormInput = (
   textAreaClassName,
   textAreaBackground,
   name,
-  defaultValue,
   onChange
 ) => {
   return (
@@ -101,7 +88,6 @@ export const textAreaFormInput = (
         style={{ background: textAreaBackground }}
         aria-label="empty textarea"
         name={name}
-        defaultValue={defaultValue}
         onChange={onChange}
       ></textarea>
     </div>

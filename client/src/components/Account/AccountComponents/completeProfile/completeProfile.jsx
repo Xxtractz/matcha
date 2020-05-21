@@ -40,13 +40,6 @@ class CompleteProfile extends Component {
   getUser() {
     userData(getUserid()).then((response) => {
       console.log(response);
-      this.setState({
-        bio: response.bio,
-        gender: response.gender,
-        genderPreference: response.genderPreference,
-        // tags: [...this.state.tags, ...response.interests],
-      });
-      console.log(response.interests);
     });
   }
 
@@ -112,23 +105,13 @@ class CompleteProfile extends Component {
     console.log(this.state.tags);
   };
 
-  nameSection() {
+  displayHearderText() {
     return (
-      <div className="row mb-3">
-        {disabledFormInput(
-          "First Name",
-          "col-12",
-          "text",
-          "firstname",
-          this.state.firstname
-        )}
-        {disabledFormInput(
-          "Last Name",
-          "col-12",
-          "text",
-          "lastname",
-          this.state.lastname
-        )}
+      <div className="mb-4">
+        <strong>
+          {getUserFirstName()} {getUserLastName()}
+        </strong>
+        {`, Please complete your profile to have full access of the application. Thanks`}
       </div>
     );
   }
@@ -136,19 +119,16 @@ class CompleteProfile extends Component {
   genderSection() {
     return (
       <div className="row mb-3">
-        {selecFormInput(
-          "col-6",
-          "Gender",
-          "gender",
-          getUserGender(),
-          (e) => this.onChange(e),
-          ["", "Male", "Female", "Both"]
-        )}
+        {selecFormInput("col-6", "Gender", "gender", (e) => this.onChange(e), [
+          "",
+          "Male",
+          "Female",
+          "Both",
+        ])}
         {selecFormInput(
           "col-6",
           "Preferred Gender",
           "genderPreference",
-          getUserGenderPreference(),
           (e) => this.onChange(e),
           ["", "Male", "Female", "Both"]
         )}
@@ -159,14 +139,8 @@ class CompleteProfile extends Component {
   bioSection() {
     return (
       <div className="row mb-3">
-        {textAreaFormInput(
-          "col-12",
-          "Bio",
-          "w-100",
-          "inherit",
-          "bio",
-          this.state.bio,
-          (e) => this.onChange(e)
+        {textAreaFormInput("col-12", "Bio", "w-100", "inherit", "bio", (e) =>
+          this.onChange(e)
         )}
       </div>
     );
@@ -219,7 +193,7 @@ class CompleteProfile extends Component {
   personalDetailsSection() {
     return (
       <div className="container p-2">
-        <div className="col-12">{this.nameSection()}</div>
+        <div className="col-12">{this.displayHearderText()}</div>
         <div className="col-12">{this.genderSection()}</div>
         <div className="col-12">{this.bioSection()}</div>
         <div className="col-12">{this.interestSection()}</div>
