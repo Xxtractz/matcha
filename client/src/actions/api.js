@@ -138,8 +138,7 @@ export const update = async (id, body) => {
 
 export const userData = async (id) => {
   return axios.get(`${_Url.UserUrl}/${id}`).then((response) => {
-    console.log(response);
-    handleStoreUser(response.data.User)
+    handleStoreUser(JSON.stringify(response.data.User));
     return response.data.User.status;
   });
 };
