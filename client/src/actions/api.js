@@ -5,7 +5,10 @@ function handleLogin(token, rtoken) {
   localStorage.setItem("SessionUI", "true");
   localStorage.setItem("User_Token", token);
   localStorage.setItem("refresh", rtoken);
-  // window.location.reload();
+}
+
+function handleStoreUser(user){
+  sessionStorage.setItem("user",user);
 }
 
 // const token = () => {
@@ -135,7 +138,9 @@ export const update = async (id, body) => {
 
 export const userData = async (id) => {
   return axios.get(`${_Url.UserUrl}/${id}`).then((response) => {
-    return response.data.User;
+    console.log(response);
+    handleStoreUser(response.data.User)
+    return response.data.User.status;
   });
 };
 
