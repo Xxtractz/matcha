@@ -44,6 +44,7 @@ class CompleteProfile extends Component {
         bio: response.bio,
         gender: response.gender,
         genderPreference: response.genderPreference,
+        tags: [...this.state.tags,...response.interests]
       });
     });
   }
@@ -60,18 +61,18 @@ class CompleteProfile extends Component {
       gender: this.state.gender.toString(),
       genderPreference: this.state.genderPreference.toString(),
       bio: this.state.bio.toString(),
-      interests: this.state.tags.toString(),
+      interests: this.state.tags,
     };
 
     console.log(user);
 
-    // update(getUserid(), user)
-    //   .then((response) => {
-    //     console.log(response);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    update(getUserid(), user)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   onChange = (e) => {
@@ -138,17 +139,17 @@ class CompleteProfile extends Component {
           "col-6",
           "Gender",
           "gender",
-          this.state.gender,
+          getUserGender(),
           (e) => this.onChange(e),
-          ["Male", "Female", "Both"]
+          ["","Male", "Female", "Both"]
         )}
         {selecFormInput(
           "col-6",
           "Preferred Gender",
           "genderPreference",
-          this.state.genderPreference,
+          getUserGenderPreference(),
           (e) => this.onChange(e),
-          ["Male", "Female", "Both"]
+          ["","Male", "Female", "Both"]
         )}
       </div>
     );
