@@ -178,7 +178,7 @@ router.get("/user/:id", async (req, res) => {
             date: user.date,
             age: user.age,
             dob: user.dob,
-            interets: user.interests,
+            interests: user.interests,
             likes: user.likes,
             dislikes: user.dislikes
         };
@@ -195,6 +195,7 @@ router.put("/update/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const user = req.body;
+    console.log(req.body);
     const { ...updateData } = user;
 
     await Users.findByIdAndUpdate(
