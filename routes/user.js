@@ -117,7 +117,7 @@ router.post("/login", async(req, res) => {
                                     date: user.date,
                                     age: user.age,
                                     dob: user.dob,
-                                    interets: user.interests,
+                                    interests: user.interests,
                                     likes: user.likes,
                                     dislikes: user.dislikes,
                                 };
