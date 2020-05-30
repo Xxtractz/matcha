@@ -79,6 +79,7 @@ router.post("/register", function(req, res) {
     }
 });
 
+
 //user logging in
 router.post("/login", async(req, res) => {
     try {
@@ -368,6 +369,62 @@ router.post("/verification", async(req, res) => {
         }
     );
 });
+
+//refreshing the token
+router.post("/refresh", async(req, res) => {
+
+  try {
+    Users.findOne({username: req.body.username}, (err, user) => {
+
+      if (err) {
+        res.status(500).send({user: "Error finding user"})
+      } else if (user) {
+        var loggedUser = {
+          _id: user._id,
+          username: user.username,
+          firstname: user.firstname,
+          lastname: user.lastname,
+          email: user.email,
+          gender: user.gender,
+          genderPreference: user.genderPreference,
+          bio: user.bio,
+          status: user.status,
+          profileImage: user.profileImage,
+          images: user.images,
+          active: user.active,
+          date: user.date,
+          age: user.age,
+          dob: user.dob,
+          interets: user.interests,
+          likes: user.likes,
+          dislikes: user.dislikes,
+      };
+        const token = jwt.sign(loggedUser, process.env.SECRETS);
+        const refreshToken = jwt.sign(
+            loggedUser,
+            process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
+        );
+        const response = {
+            username: req.body.username,
+            Token: token,
+            RefreshToken: refreshToken,
+        };
+        const auth = new Auth(response);
+        auth.save();
+        const resp = {
+            Token: token,
+            RefreshToken: refreshToken,
+        };
+        res.status(200).send(resp);
+      } else {
+        res.status(400).send({user: "Cannot find the user you are looking for"})
+      }
+    });
+  } catch (error) {
+    boom.boomify(error);
+  }
+})
+
 
 //user logging out
 router.post("/logout", async(req, res) => {
