@@ -11,7 +11,7 @@ import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import { selecFormInput, textAreaFormInput } from "../../../Form/form";
 import { update, userData } from "../../../../actions/api";
-import { uploadImages } from './uploadImages';
+import  UploadImages  from './uploadImages';
 
 class CompleteProfile extends Component {
   constructor(props) {
@@ -26,7 +26,7 @@ class CompleteProfile extends Component {
       tags: [],
       temptag: "",
       isopen: true,
-      stepOne: true,
+      stepOne: false,
     };
     this.getUser();
   }
@@ -216,7 +216,7 @@ class CompleteProfile extends Component {
   displayImageSection() {
     return (
       <div>
-        <uploadImages></uploadImages>
+        <UploadImages></UploadImages>
       </div>
     )
   }

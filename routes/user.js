@@ -55,7 +55,7 @@ router.post("/register", function(req, res) {
                                         commonFunction.sendEmail(
                                             req.body.email,
                                             "Verify your account",
-                                            '<p> Please <a href="http://localhost:3001/verify?token=' +
+                                            '<p> Please <a href="http://localhost:3000/verify?token=' +
                                             token +
                                             '"> Click Here </a> to verify.</p>'
                                         );
@@ -118,7 +118,7 @@ router.post("/login", async(req, res) => {
                                     date: user.date,
                                     age: user.age,
                                     dob: user.dob,
-                                    interets: user.interests,
+                                    interests: user.interests,
                                     likes: user.likes,
                                     dislikes: user.dislikes,
                                 };
@@ -318,7 +318,7 @@ router.post("/verifyAgain", async(req, res) => {
             commonFunction.sendEmail(
                 req.body.email,
                 "Verify your account",
-                '<p> Please <a href="http://localhost:3001/verify?token=' +
+                '<p> Please <a href="http://localhost:3000/verify?token=' +
                 token +
                 '"> Click Here </a> to verify.</p>'
             );
