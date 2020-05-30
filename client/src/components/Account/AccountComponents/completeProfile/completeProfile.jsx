@@ -4,21 +4,14 @@ import { Button } from "@material-ui/core";
 import {
   getUserFirstName,
   getUserLastName,
-  getUserBio,
-  getUserGender,
-  getUserGenderPreference,
-  // getUserInterest,
   getUserid,
 } from "../../../../actions/user";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
-import {
-  disabledFormInput,
-  selecFormInput,
-  textAreaFormInput,
-} from "../../../Form/form";
+import { selecFormInput, textAreaFormInput } from "../../../Form/form";
 import { update, userData } from "../../../../actions/api";
+import { uploadImages } from './uploadImages';
 
 class CompleteProfile extends Component {
   constructor(props) {
@@ -33,14 +26,13 @@ class CompleteProfile extends Component {
       tags: [],
       temptag: "",
       isopen: true,
+      stepOne: true,
     };
     this.getUser();
   }
 
   getUser() {
-    userData(getUserid()).then((response) => {
-      console.log(response);
-    });
+    userData(getUserid());
   }
 
   submitHandler = (e) => {
@@ -49,20 +41,28 @@ class CompleteProfile extends Component {
   };
 
   updateProfile() {
+
+    let interestToString = [];
+
+    for (var i = 0; i < this.state.tags.length; i++) {
+      interestToString = interestToString.concat(this.state.tags[i]);
+    }
     const user = {
       firstname: this.state.firstname,
       lastname: this.state.lastname,
       gender: this.state.gender.toString(),
       genderPreference: this.state.genderPreference.toString(),
       bio: this.state.bio.toString(),
-      interests: [...this.state.tags],
+      interests: interestToString,
     };
 
     console.log(user);
 
     update(getUserid(), user)
       .then((response) => {
-        console.log(response);
+        if (response.status === 200) {
+          this.setState({ stepOne: false });
+        }
       })
       .catch((error) => {
         console.log(error);
@@ -70,7 +70,6 @@ class CompleteProfile extends Component {
   }
 
   onChange = (e) => {
-    console.log([e.target.name] + ":" + [e.target.value]);
     this.setState({
       [e.target.name]: [e.target.value],
     });
@@ -102,7 +101,6 @@ class CompleteProfile extends Component {
     this.setState({
       temptag: [e.target.value],
     });
-    console.log(this.state.tags);
   };
 
   displayHearderText() {
@@ -201,6 +199,28 @@ class CompleteProfile extends Component {
     );
   }
 
+  displayDetailsform() {
+    return (
+      <form onSubmit={this.submitHandler}>
+        {this.personalDetailsSection()}
+
+        <div className="text-center p-3">
+          <Button variant="contained" type="submit">
+            Next ->
+          </Button>
+        </div>
+      </form>
+    );
+  }
+
+  displayImageSection() {
+    return (
+      <div>
+        <uploadImages></uploadImages>
+      </div>
+    )
+  }
+
   render() {
     return (
       <Paper
@@ -215,16 +235,7 @@ class CompleteProfile extends Component {
           <h1>Complete Profile</h1>
           <small> Please Complete you Profile</small>
         </Paper>
-
-        <form onSubmit={this.submitHandler}>
-          {this.personalDetailsSection()}
-
-          <div className="text-center p-3">
-            <Button variant="contained" type="submit">
-              Next ->
-            </Button>
-          </div>
-        </form>
+        {this.state.stepOne ? this.displayDetailsform() : this.displayImageSection()}
       </Paper>
     );
   }

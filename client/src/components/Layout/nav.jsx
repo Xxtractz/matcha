@@ -98,9 +98,9 @@ class Nav extends Component {
                   {/* C:\Users\user\Desktop\Matcha\client\src\assets\images\users\wt90uj */}
                   <img
                     className="card-img"
-                    src={
-                      "src/assets/images/users/" + getUsername() + "/img_1.jpg"
-                    }
+                    // src={
+                    //   "src/assets/images/users/" + getUsername() + "/img_1.jpg"
+                    // }
                     alt="profile"
                   />
                 </CardMedia>
