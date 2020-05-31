@@ -19,13 +19,17 @@
 .App {
     font-family: sans-serif;
     /* text-align: center; */
-    background-color: #f6f9fe;
+    background-color: inherit;
     height: 100vh;
 }
 
 .image-item {
     display: flex;
     margin: 10px 0;
+    img {
+        width: 20%;
+        height: 20%;
+    }
 }
 
 .image-item__btn-wrapper {
