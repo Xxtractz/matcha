@@ -23,12 +23,20 @@
     height: 100vh;
 }
 
+.image-section {
+    max-width: 345px !important;
+    margin: 15px;
+    background-color: inherit !important;
+}
+
 .image-item {
     display: flex;
     margin: 10px 0;
     img {
-        width: 20%;
-        height: 20%;
+        width: 150px;
+        height: 160px;
+        // width: 35%;
+        // height: auto;
     }
 }
 
@@ -36,8 +44,4 @@
     display: flex;
     flex-direction: column;
     margin-left: 10px;
-}
-
-button {
-    height: 40px;
 }

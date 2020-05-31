@@ -215,7 +215,7 @@ class CompleteProfile extends Component {
 
   displayImageSection() {
     return (
-      <div>
+      <div className="container p-2  bg-transparent col-12">
         <UploadImages></UploadImages>
       </div>
     )
@@ -223,10 +223,10 @@ class CompleteProfile extends Component {
 
   render() {
     return (
-      <Paper
+      <div
         className="container p-2  bg-transparent col-12"
-        variant="outlined"
-        square
+        // variant="outlined"
+        // square
       >
         <Paper
           className="col-12 m-2  text-center bg-transparent"
@@ -236,7 +236,7 @@ class CompleteProfile extends Component {
           <small> Please Complete you Profile</small>
         </Paper>
         {this.state.stepOne ? this.displayDetailsform() : this.displayImageSection()}
-      </Paper>
+      </div>
     );
   }
 }
