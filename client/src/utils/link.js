@@ -16,4 +16,4 @@ export const UpdateUrl = ServerUrl + "/update";
 
 export const UserUrl = ServerUrl + "/user";
 
-export const UserUrl = ServerUrl + "/user";
+export const RefreshUrl = ServerUrl + "/refresh";

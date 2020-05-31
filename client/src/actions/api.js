@@ -23,12 +23,27 @@ function handleStoreUser(user) {
 //   return headers;
 // }
 
-
-/**
- * 
- *create a funct that will keep updating local storage?? 
-  look into the login as an example
- */
+export const refresh = async(username) => {
+    return axios
+        .post(_Url.RefreshUrl, username, { timeout: 31000 })
+        .then((response) => {
+            if (response) {
+                if (response.status === 204) {
+                    return response.status;
+                } else {
+                    handleLogin(response.data.Token, response.data.RefreshToken);
+                    return response.status;
+                }
+            }
+        })
+        .catch((error) => {
+            if (error.response) {
+                return error.response;
+            } else {
+                return "TimeOut";
+            }
+        });
+};
 
 export const login = async(_Logindata) => {
     return axios
@@ -150,12 +165,15 @@ export const userData = async(id) => {
     });
 };
 
-export const uploadImage = (file) => {
+export const uploadImage = (image) => {
     const unsignedUploadPreset = "odj1pwzn";
     const cloudName = "dz1whmlhr";
     const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
 
-    return axios.post(uploadUrl, { upload_preset: unsignedUploadPreset, file: file });
+    return axios.post(uploadUrl, {
+        upload_preset: unsignedUploadPreset,
+        file: image,
+    });
 };
 
 export const suggestedUsers = async(profile) => {

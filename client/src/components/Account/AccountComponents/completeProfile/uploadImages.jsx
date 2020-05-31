@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import ImageUploading from "react-images-uploading";
 
 class UploadImages extends Component {
 
@@ -6,23 +7,24 @@ class UploadImages extends Component {
     super(props);
 
     this.state = {
-      image1:'src/assets/images/addImage.png',
-      file:""
+      profileImage: '',
+      defaultimage: 'src/assets/images/addImage.png',
+      file: ""
     };
   }
 
-    photoUpload = (e) => {
+  photoUpload = (e) => {
     e.preventDefault();
     console.log("====================================");
     console.log(e.target.name);
     console.log("====================================");
     const reader = new FileReader();
     const file = e.target.files[0];
-    
+
     reader.onloadend = () => {
       this.setState({
         file: file,
-        image1 : reader.result,
+        profileImage: reader.result,
       });
     };
 
@@ -47,14 +49,14 @@ class UploadImages extends Component {
     );
   };
 
-  image1() {
+  profilePicture() {
     return (
       <label htmlFor="image-upload">
         <div className="image-upload-container" style={{}}>
-          <img src={this.state.image1} alt="" />
+          <img src={this.state.profileImage === '' ? this.state.defaultimage : this.state.profileImage} alt="" />
           <input
             id="image-upload"
-            name="image1"
+            name="profilePicture"
             type="file"
             accept=".jpg, .jpeg"
             onChange={(e) => this.photoUpload(e)}
@@ -65,20 +67,53 @@ class UploadImages extends Component {
   }
 
   displayImages() {
-    return (
-      <div>
-        {this.image1()}
-        {/* {this.imageTemplate("image2", this.state.image2)}
-        {this.imageTemplate("image3", this.state.image3)}
-        {this.imageTemplate("image4", this.state.image4)}
-        {this.imageTemplate("image5", this.state.image5)} */}
-      </div>
-    );
+    const maxNumber = 69;
+  const onChange = imageList => {
+    // data for submit
+    console.log(imageList);
+  };
+  return (
+    <div className="App">
+      <ImageUploading multiple onChange={onChange} maxNumber={maxNumber}>
+        {({ imageList, onImageUpload, onImageRemoveAll }) => (
+          // write your building UI
+          <div className="upload__image-wrapper">
+            <button onClick={onImageUpload}>Upload images</button>&nbsp;
+            <button onClick={onImageRemoveAll}>Remove all images</button>
+            {imageList.map(image => (
+              <div key={image.key} className="image-item">
+                <img src={image.dataURL} alt="" width="100" />
+                <div className="image-item__btn-wrapper">
+                  <button
+                    onClick={() => {
+                      image.onUpdate();
+                    }}
+                  >
+                    Update
+                  </button>
+                  <button onClick={image.onRemove}>Remove</button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </ImageUploading>
+    </div>
+  );
+    // return (
+    //   <div>
+    //     {this.profilePicture()}
+    //     {/* {this.imageTemplate("image2", this.state.image2)}
+    //     {this.imageTemplate("image3", this.state.image3)}
+    //     {this.imageTemplate("image4", this.state.image4)}
+    //     {this.imageTemplate("image5", this.state.image5)} */}
+    //   </div>
+    // );
   }
 
 
   render() {
-  return <div>{this.displayImages()}</div>;
+    return <div>{this.displayImages()}</div>;
   }
 }
 
