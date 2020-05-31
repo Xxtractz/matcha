@@ -6,20 +6,23 @@ class UploadImages extends Component {
     super(props);
 
     this.state = {
+      image1:'src/assets/images/addImage.png',
+      file:""
     };
   }
 
     photoUpload = (e) => {
     e.preventDefault();
     console.log("====================================");
-    console.log(e.target);
+    console.log(e.target.name);
     console.log("====================================");
     const reader = new FileReader();
     const file = e.target.files[0];
+    
     reader.onloadend = () => {
       this.setState({
         file: file,
-        [e.target.name]: reader.result,
+        image1 : reader.result,
       });
     };
 
@@ -48,7 +51,7 @@ class UploadImages extends Component {
     return (
       <label htmlFor="image-upload">
         <div className="image-upload-container" style={{}}>
-          {/* <img src={this.state.image1} alt="" /> */}
+          <img src={this.state.image1} alt="" />
           <input
             id="image-upload"
             name="image1"
