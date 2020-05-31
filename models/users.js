@@ -23,6 +23,7 @@ var userSchema = new Schema({
     interests: [],
     likes: [],
     dislikes: [],
+    lastseen: { type: String, default: "0" }
 });
 
 userSchema.pre("save", function(next) {

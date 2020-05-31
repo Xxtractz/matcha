@@ -121,6 +121,7 @@ router.post("/login", async(req, res) => {
                                     interests: user.interests,
                                     likes: user.likes,
                                     dislikes: user.dislikes,
+                                    lastseen: "1"
                                 };
                                 const token = jwt.sign(loggedUser, process.env.SECRETS);
                                 const refreshToken = jwt.sign(
@@ -161,7 +162,6 @@ router.get("/user/:id", async(req, res) => {
                 console.log(err);
                 res.send({ User: "Internal server error can not update the user" });
             } else {
-                //delete user.password;
                 userOne = {
                     username: user.username,
                     firstname: user.firstname,
@@ -179,7 +179,8 @@ router.get("/user/:id", async(req, res) => {
                     dob: user.dob,
                     interests: user.interests,
                     likes: user.likes,
-                    dislikes: user.dislikes
+                    dislikes: user.dislikes,
+                    lastseen: user.lastseen
                 };
                 res.status(200).send({ User: userOne });
             }
@@ -370,14 +371,14 @@ router.post("/verification", async(req, res) => {
     );
 });
 
-//refreshing the token
+//refreshing the token this
 router.post("/refresh", async(req, res) => {
 
   try {
     Users.findOne({username: req.body.username}, (err, user) => {
 
       if (err) {
-        res.status(500).send({user: "Error finding user"})
+        res.status(500).send({User: "Error finding user"})
       } else if (user) {
         var loggedUser = {
           _id: user._id,
@@ -417,7 +418,7 @@ router.post("/refresh", async(req, res) => {
         };
         res.status(200).send(resp);
       } else {
-        res.status(400).send({user: "Cannot find the user you are looking for"})
+        res.status(400).send({User: "Cannot find the user you are looking for"})
       }
     });
   } catch (error) {
@@ -429,14 +430,28 @@ router.post("/refresh", async(req, res) => {
 //user logging out
 router.post("/logout", async(req, res) => {
     console.log(req.body);
-    await Auth.findOneAndDelete({ username: req.body.username }, (err, doc) => {
+    try {
+      var date = new Date(Date.now()).toLocaleString();
+      await Users.findOneAndUpdate({username: req.body.username}, {lastseen: date }, (err, doc) => {
         if (err) {
-            console.log(err);
-            res.status(500).send("Internal server error");
-        } else {
-            res.status(200).send({ User: "User successfully logged out" });
+          res.status(500).send({User: "Error updating the user you hear"});
+        } else if (doc) {
+
+          Auth.findOneAndDelete({ username: req.body.username }, (err, doc) => {
+            if (err) {
+                console.log(err);
+                res.status(500).send("Internal server error");
+            } else {
+                res.status(200).send({ User: "User successfully logged out" });
+            }
+        });
+
         }
-    });
+      });
+      
+    } catch (error) {
+      boom.boomify(error);
+    }
 });
 
 module.exports = router;
