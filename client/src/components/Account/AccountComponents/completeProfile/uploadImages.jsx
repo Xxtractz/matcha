@@ -17,24 +17,6 @@ class UploadImages extends Component {
     };
   }
 
-  photoUpload = (e) => {
-    e.preventDefault();
-    console.log("====================================");
-    console.log(e.target.name);
-    console.log("====================================");
-    const reader = new FileReader();
-    const file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        profileImage: reader.result,
-      });
-    };
-
-    reader.readAsDataURL(file);
-    window.removeEventListener("resize", this.photoUpload);
-  };
 
   displayImages() {
     const maxNumber = 5;
@@ -65,13 +47,13 @@ class UploadImages extends Component {
                 Add images
               </Button>
               &nbsp;
-              <Button
+              {/* <Button
                 variant="outlined"
                 color="secondary"
                 onClick={onImageRemoveAll}
               >
                 Remove all images
-              </Button>
+              </Button> */}
               &nbsp;
               <Button variant="contained" color="primary">
                 Send
@@ -107,14 +89,11 @@ class UploadImages extends Component {
                     <CardActionArea>
                       <CardMedia
                         component="img"
-                        alt="Contemplative Reptile"
                         height="140"
                         image={image.dataURL}
-                        title="Contemplative Reptile"
                       />
                     </CardActionArea>
-
-                    <CardActions>
+                    {/* <CardActions>
                       <Button
                         variant="outlined"
                         color="primary"
@@ -132,7 +111,7 @@ class UploadImages extends Component {
                       >
                         Remove
                       </Button>
-                    </CardActions>
+                    </CardActions> */}
                     {/* </div> */}
                   </Card>
                 ))}
