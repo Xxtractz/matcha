@@ -3,28 +3,95 @@ import ImageUploading from "react-images-uploading";
 import { Button } from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardMedia from "@material-ui/core/CardMedia";
+import { uploadImage, update } from "../../../../actions/api";
+import { getUserid } from "../../../../actions/user";
 
 class UploadImages extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      profilePictureUploaded: false,
+      imageOne: false,
+      imageTwo: false,
+      imageThree: false,
+      imageFour: false,
       profileImage: "",
+      Images: [],
       defaultimage: "src/assets/images/addImage.png",
       file: "",
     };
   }
 
+  submitHandler = (e) => {
+    e.preventDefault();
+    this.Complete();
+  };
+
+  Complete() {
+    const user = {
+      status: "2",
+      profileImage: this.state.profileImage,
+      images: this.state.Images,
+    };
+
+    console.log(user);
+
+    update(getUserid(), user)
+      .then((response) => {
+        if (response.status === 200) {
+          this.setState({ stepOne: false });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  uploadToCloudinary(image) {
+    uploadImage(image).then((res) => {
+      console.log(res);
+      console.log(res.data);
+      console.log(res.data.secure_url);
+      if (this.state.profileImage === "") {
+        this.setState({ profileImage: res.data.secure_url });
+      } else {
+        this.setState({ tags: [...this.state.Images, res.data.secure_url] });
+      }
+    });
+  }
+
+  checkAndUpload(imageList) {
+    if (!this.state.profilePictureUploaded) {
+      this.uploadToCloudinary(imageList[0].dataURL);
+      this.setState({ profilePictureUploaded: true });
+    } else {
+      if (!this.state.imageOne && imageList[1].dataURL.legnth < 1) {
+        this.uploadToCloudinary(imageList[1].dataURL);
+        this.setState({ imageOne: true });
+      }
+      if (!this.state.imageTwo && imageList[2].dataURL) {
+        this.uploadToCloudinary(imageList[2].dataURL);
+        this.setState({ imageTwo: true });
+      }
+      if (!this.state.imageThree && imageList[3].dataURL) {
+        this.uploadToCloudinary(imageList[3].dataURL);
+        this.setState({ profilePictureUploaded: true });
+      }
+      if (!this.state.imageFour && imageList[4].dataURL) {
+        this.uploadToCloudinary(imageList[4].dataURL);
+        this.setState({ profilePictureUploaded: true });
+      }
+    }
+  }
 
   displayImages() {
     const maxNumber = 5;
     const maxMbFileSize = 2 * 1024 * 1024;
     const onChange = (imageList) => {
-      // data for submit
-      console.log(imageList);
-      console.log(imageList[0].file.name);
+      // Checks and Upload
+      this.checkAndUpload(imageList);
     };
 
     return (
@@ -37,27 +104,15 @@ class UploadImages extends Component {
           acceptType={["jpg", "gif", "png"]}
         >
           {({ imageList, onImageUpload, onImageRemoveAll, errors }) => (
-            // write your building UI
             <div className="upload__image-wrapper ">
               <Button
                 variant="outlined"
                 color="primary"
                 onClick={onImageUpload}
               >
-                Add images
+                Upload Image
               </Button>
               &nbsp;
-              {/* <Button
-                variant="outlined"
-                color="secondary"
-                onClick={onImageRemoveAll}
-              >
-                Remove all images
-              </Button> */}
-              &nbsp;
-              <Button variant="contained" color="primary">
-                Send
-              </Button>
               <div
                 className={
                   errors.acceptType ||
@@ -93,26 +148,6 @@ class UploadImages extends Component {
                         image={image.dataURL}
                       />
                     </CardActionArea>
-                    {/* <CardActions>
-                      <Button
-                        variant="outlined"
-                        color="primary"
-                        onClick={() => {
-                          image.onUpdate();
-                        }}
-                      >
-                        Update
-                      </Button>
-                      <br />
-                      <Button
-                        variant="outlined"
-                        color="secondary"
-                        onClick={image.onRemove}
-                      >
-                        Remove
-                      </Button>
-                    </CardActions> */}
-                    {/* </div> */}
                   </Card>
                 ))}
               </div>
@@ -124,7 +159,22 @@ class UploadImages extends Component {
   }
 
   render() {
-    return <div>{this.displayImages()}</div>;
+    return (
+      <form onSubmit={this.submitHandler}>
+        <div>
+          <Button
+            className="mb-3"
+            variant="contained"
+            color="primary"
+            type="submit"
+            // onClick={this.Complete()}
+          >
+            Complete
+          </Button>
+        </div>
+        {this.displayImages()}
+      </form>
+    );
   }
 }
 
