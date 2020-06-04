@@ -3,50 +3,53 @@ var Token = localStorage.getItem("User_Token");
 const data = jwt.decode(Token, "matchSecrets");
 
 export const getUserid = () => {
-  return data._id;
+    return data._id;
 };
 
 export const getUsername = () => {
-  return data.username;
+    return data.username;
 };
 
 export const getUserFirstName = () => {
-  return data.firstname;
+    return data.firstname;
 };
 
 export const getUserLastName = () => {
-  return data.lastname;
+    return data.lastname;
 };
 
 export const getUserGender = () => {
-  return data.gender;
+    return data.gender;
 };
 
 export const getUserEmail = () => {
-  return data.email;
+    return data.email;
 };
 
 export const getUserGenderPreference = () => {
-  return data.genderPreference;
+    return data.genderPreference;
 };
 
 export const getUserBio = () => {
-  return data.bio;
+    return data.bio;
 };
 
 export const getUserAge = () => {
-  return data.age;
+    return data.age;
 };
 
 export const getUserImages = () => {
-  return data.images;
+    return data.images;
 };
 
 export const getUserStatus = () => {
-  return data.status;
+    return data.status;
 };
 
 export const getUserInterest = () => {
-  return data.interets;
+    return data.interets;
 };
 
+export const getProfilePicture = () => {
+    return data.profileImage;
+}

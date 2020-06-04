@@ -6,6 +6,7 @@ import {
   getUserLastName,
   getUsername,
   getUserStatus,
+  getProfilePicture,
 } from "../../actions/user";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import {
@@ -95,12 +96,9 @@ class Nav extends Component {
             <div className="col-12 mt-5 ">
               <Card className="mt-5 text-center bg_transparent_white ">
                 <CardMedia className="">
-                  {/* C:\Users\user\Desktop\Matcha\client\src\assets\images\users\wt90uj */}
                   <img
                     className="card-img"
-                    // src={
-                    //   "src/assets/images/users/" + getUsername() + "/img_1.jpg"
-                    // }
+                    src={getProfilePicture()}
                     alt="profile"
                   />
                 </CardMedia>

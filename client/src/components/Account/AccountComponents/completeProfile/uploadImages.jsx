@@ -33,16 +33,18 @@ class UploadImages extends Component {
     const user = {
       status: "2",
       profileImage: this.state.profileImage,
-      images: this.state.Images,
+      // images: this.state.Images,
     };
 
     console.log(user);
 
     update(getUserid(), user)
       .then((response) => {
-        if (response.status === 200) {
-          this.setState({ stepOne: false });
-        }
+        console.log(response);
+        
+        // if (response.status === 200) {
+        //   this.setState({ stepOne: false });
+        // }
       })
       .catch((error) => {
         console.log(error);
@@ -56,9 +58,10 @@ class UploadImages extends Component {
       console.log(res.data.secure_url);
       if (this.state.profileImage === "") {
         this.setState({ profileImage: res.data.secure_url });
-      } else {
-        this.setState({ tags: [...this.state.Images, res.data.secure_url] });
-      }
+      } 
+      // else {
+      //   this.setState({ tags: [...this.state.Images, res.data.secure_url] });
+      // }
     });
   }
 
@@ -66,28 +69,29 @@ class UploadImages extends Component {
     if (!this.state.profilePictureUploaded) {
       this.uploadToCloudinary(imageList[0].dataURL);
       this.setState({ profilePictureUploaded: true });
-    } else {
-      if (!this.state.imageOne && imageList[1].dataURL.legnth < 1) {
-        this.uploadToCloudinary(imageList[1].dataURL);
-        this.setState({ imageOne: true });
-      }
-      if (!this.state.imageTwo && imageList[2].dataURL) {
-        this.uploadToCloudinary(imageList[2].dataURL);
-        this.setState({ imageTwo: true });
-      }
-      if (!this.state.imageThree && imageList[3].dataURL) {
-        this.uploadToCloudinary(imageList[3].dataURL);
-        this.setState({ profilePictureUploaded: true });
-      }
-      if (!this.state.imageFour && imageList[4].dataURL) {
-        this.uploadToCloudinary(imageList[4].dataURL);
-        this.setState({ profilePictureUploaded: true });
-      }
     }
+    // } else {
+    //   if (!this.state.imageOne && imageList[1].dataURL.legnth < 1) {
+    //     this.uploadToCloudinary(imageList[1].dataURL);
+    //     this.setState({ imageOne: true });
+    //   }
+    //   if (!this.state.imageTwo && imageList[2].dataURL) {
+    //     this.uploadToCloudinary(imageList[2].dataURL);
+    //     this.setState({ imageTwo: true });
+    //   }
+    //   if (!this.state.imageThree && imageList[3].dataURL) {
+    //     this.uploadToCloudinary(imageList[3].dataURL);
+    //     this.setState({ profilePictureUploaded: true });
+    //   }
+    //   if (!this.state.imageFour && imageList[4].dataURL) {
+    //     this.uploadToCloudinary(imageList[4].dataURL);
+    //     this.setState({ profilePictureUploaded: true });
+    //   }
+    // }
   }
 
   displayImages() {
-    const maxNumber = 5;
+    const maxNumber = 1;
     const maxMbFileSize = 2 * 1024 * 1024;
     const onChange = (imageList) => {
       // Checks and Upload
