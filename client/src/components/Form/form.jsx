@@ -89,6 +89,7 @@ export const textAreaFormInput = (
         aria-label="empty textarea"
         name={name}
         onChange={onChange}
+        required
       ></textarea>
     </div>
   );

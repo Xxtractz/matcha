@@ -1,19 +1,47 @@
 .image-upload-container {
-  width: 160px;
-  height: 160px;
-  border-radius: 4px;
-  margin: 10px 10px;
-  float: left;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-
-  img {
-    width: 150px;
+    width: 160px;
     height: 160px;
-  }
+    border-radius: 4px;
+    margin: 10px 10px;
+    float: left;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    img {
+        width: 150px;
+        height: 160px;
+    }
+    input[type="file"] {
+        display: none;
+    }
+}
 
-  input[type="file"] {
-    display: none;
-  }
+.App {
+    font-family: sans-serif;
+    /* text-align: center; */
+    background-color: inherit;
+    height: 100vh;
+}
+
+.image-section {
+    max-width: 345px !important;
+    margin: 15px;
+    background-color: inherit !important;
+}
+
+.image-item {
+    display: flex;
+    margin: 10px 0;
+    img {
+        width: 150px;
+        height: 160px;
+        // width: 35%;
+        // height: auto;
+    }
+}
+
+.image-item__btn-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
 }
