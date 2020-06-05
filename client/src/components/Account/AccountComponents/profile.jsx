@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Paper, InputLabel } from "@material-ui/core";
-import { Button, TextField, Select } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import {
   getUserFirstName,
   getUserLastName,
@@ -10,9 +10,6 @@ import {
   getUserGenderPreference,
   getUserInterest,
 } from "../../../actions/user";
-import IconButton from "@material-ui/core/IconButton";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
-import CloseIcon from "@material-ui/icons/Close";
 
 class UserProfile extends Component {
   nameSection() {
@@ -61,7 +58,7 @@ class UserProfile extends Component {
       <div className=" row mb-3">
         <div className="col-10    ">
           <InputLabel>Interests</InputLabel>
-          {getUserInterest().toString()}
+          <p>{getUserInterest().toString()}</p>
         </div>
       </div>
     );
@@ -85,12 +82,17 @@ class UserProfile extends Component {
           <div className="grey-text">
             {/* name Section */}
             {this.nameSection()}
+            <hr />
 
             {/* Gender Section */}
             {this.genderSection()}
+            <hr />
 
             {this.interestSection()}
+            <hr />
+
             {this.bioSection()}
+            <hr />
           </div>
           <div className="text-center p-3">
             <Button variant="contained" type="submit">

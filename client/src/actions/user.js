@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 var Token = localStorage.getItem("User_Token");
 const data = jwt.decode(Token, "matchSecrets");
 
+console.log(data);
 export const getUserid = () => {
     return data._id;
 };
@@ -47,7 +48,7 @@ export const getUserStatus = () => {
 };
 
 export const getUserInterest = () => {
-    return data.interets;
+    return data.interests;
 };
 
 export const getProfilePicture = () => {

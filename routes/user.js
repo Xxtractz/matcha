@@ -374,56 +374,56 @@ router.post("/verification", async(req, res) => {
 //refreshing the token this
 router.post("/refresh", async(req, res) => {
 
-  try {
-    Users.findOne({username: req.body.username}, (err, user) => {
+    try {
+        Users.findOne({ username: req.body.username }, (err, user) => {
 
-      if (err) {
-        res.status(500).send({User: "Error finding user"})
-      } else if (user) {
-        var loggedUser = {
-          _id: user._id,
-          username: user.username,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          email: user.email,
-          gender: user.gender,
-          genderPreference: user.genderPreference,
-          bio: user.bio,
-          status: user.status,
-          profileImage: user.profileImage,
-          images: user.images,
-          active: user.active,
-          date: user.date,
-          age: user.age,
-          dob: user.dob,
-          interets: user.interests,
-          likes: user.likes,
-          dislikes: user.dislikes,
-      };
-        const token = jwt.sign(loggedUser, process.env.SECRETS);
-        const refreshToken = jwt.sign(
-            loggedUser,
-            process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
-        );
-        const response = {
-            username: req.body.username,
-            Token: token,
-            RefreshToken: refreshToken,
-        };
-        const auth = new Auth(response);
-        auth.save();
-        const resp = {
-            Token: token,
-            RefreshToken: refreshToken,
-        };
-        res.status(200).send(resp);
-      } else {
-        res.status(400).send({User: "Cannot find the user you are looking for"})
-      }
-    });
-  } catch (error) {
-    boom.boomify(error);
-  }
+            if (err) {
+                res.status(500).send({ User: "Error finding user" })
+            } else if (user) {
+                var loggedUser = {
+                    _id: user._id,
+                    username: user.username,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    gender: user.gender,
+                    genderPreference: user.genderPreference,
+                    bio: user.bio,
+                    status: user.status,
+                    profileImage: user.profileImage,
+                    images: user.images,
+                    active: user.active,
+                    date: user.date,
+                    age: user.age,
+                    dob: user.dob,
+                    interests: user.interests,
+                    likes: user.likes,
+                    dislikes: user.dislikes,
+                };
+                const token = jwt.sign(loggedUser, process.env.SECRETS);
+                const refreshToken = jwt.sign(
+                    loggedUser,
+                    process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
+                );
+                const response = {
+                    username: req.body.username,
+                    Token: token,
+                    RefreshToken: refreshToken,
+                };
+                const auth = new Auth(response);
+                auth.save();
+                const resp = {
+                    Token: token,
+                    RefreshToken: refreshToken,
+                };
+                res.status(200).send(resp);
+            } else {
+                res.status(400).send({ User: "Cannot find the user you are looking for" })
+            }
+        });
+    } catch (error) {
+        boom.boomify(error);
+    }
 })
 
 
@@ -431,26 +431,26 @@ router.post("/refresh", async(req, res) => {
 router.post("/logout", async(req, res) => {
     console.log(req.body);
     try {
-      var date = new Date(Date.now()).toLocaleString();
-      await Users.findOneAndUpdate({username: req.body.username}, {lastseen: date }, (err, doc) => {
-        if (err) {
-          res.status(500).send({User: "Error updating the user you hear"});
-        } else if (doc) {
-
-          Auth.findOneAndDelete({ username: req.body.username }, (err, doc) => {
+        var date = new Date(Date.now()).toLocaleString();
+        await Users.findOneAndUpdate({ username: req.body.username }, { lastseen: date }, (err, doc) => {
             if (err) {
-                console.log(err);
-                res.status(500).send("Internal server error");
-            } else {
-                res.status(200).send({ User: "User successfully logged out" });
+                res.status(500).send({ User: "Error updating the user you hear" });
+            } else if (doc) {
+
+                Auth.findOneAndDelete({ username: req.body.username }, (err, doc) => {
+                    if (err) {
+                        console.log(err);
+                        res.status(500).send("Internal server error");
+                    } else {
+                        res.status(200).send({ User: "User successfully logged out" });
+                    }
+                });
+
             }
         });
 
-        }
-      });
-      
     } catch (error) {
-      boom.boomify(error);
+        boom.boomify(error);
     }
 });
 
