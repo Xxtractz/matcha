@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
-import { getUsername, getProfilePicture } from "../../../actions/user";
+import { getProfilePicture } from "../../../actions/user";
 
 class images extends Component {
   renderImage = () => {

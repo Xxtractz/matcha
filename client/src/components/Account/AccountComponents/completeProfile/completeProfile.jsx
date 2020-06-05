@@ -26,7 +26,7 @@ class CompleteProfile extends Component {
       tags: [],
       temptag: "",
       isopen: true,
-      stepOne: false,
+      stepOne: true,
     };
     this.getUser();
   }

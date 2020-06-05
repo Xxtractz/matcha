@@ -42,9 +42,10 @@ class UploadImages extends Component {
       .then((response) => {
         console.log(response);
         
-        // if (response.status === 200) {
-        //   this.setState({ stepOne: false });
-        // }
+        if (response.status === 200) {
+          window.location.reload();
+        }
+        
       })
       .catch((error) => {
         console.log(error);
