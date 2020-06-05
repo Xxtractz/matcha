@@ -6,6 +6,7 @@ import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import InfoIcon from "@material-ui/icons/Info";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import { blue, red } from "@material-ui/core/colors";
+import { getProfilePicture } from "../../../actions/user";
 
 class Profiles extends Component {
   state = {
@@ -13,7 +14,7 @@ class Profiles extends Component {
       {
         name: "Keiko",
         age: 29,
-        img: "src/assets/images/profile.png",
+        img: getProfilePicture(),
         phone: "(360) 454-6102",
         about:
           "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu et pede. Nunc sed orci lobortis augue scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis diam.",

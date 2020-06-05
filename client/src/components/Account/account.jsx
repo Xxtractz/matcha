@@ -74,6 +74,8 @@ class Account extends Component {
   render() {
     return (
       <Layout>
+        {console.log(getUserStatus())
+        }
         {getUserStatus() !== "2" ? this.displayVerifyError() : this.displayAccount()}
       </Layout>
     );

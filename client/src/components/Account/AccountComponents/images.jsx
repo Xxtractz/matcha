@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
-import { getUsername } from "../../../actions/user";
+import { getProfilePicture } from "../../../actions/user";
 
 class images extends Component {
   renderImage = () => {
-    let src = "src/assets/images/users/" + getUsername() + "/img_1.jpg";
+    let src = getProfilePicture();
     // FileReader .
     return (
       <div className="col-md p-2 m-3">
