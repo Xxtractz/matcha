@@ -4,15 +4,18 @@ import { getProfilePicture } from "../../../actions/user";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
+import { Button } from "@material-ui/core";
 
 class images extends Component {
-  display() {
+  display(image) {
     return (
-      <Card className="image-section">
-        <CardActionArea>
-          <CardMedia component="img" height="140" src={getProfilePicture()} />
-        </CardActionArea>
-      </Card>
+      <div className="col-sm">
+        <Card className="image-section">
+          <CardActionArea>
+            <CardMedia component="img" height="140" src={image} />
+          </CardActionArea>
+        </Card>
+      </div>
     );
   }
   render() {
@@ -27,20 +30,27 @@ class images extends Component {
           </small>
         </Paper>
         <div className="upload__image-wrapper "></div>
-        <div className="row">
-          <Card className="image-section">
-            <CardActionArea>
-              <CardMedia
-                component="img"
-                height="140"
-                src={getProfilePicture()}
-              />
-            </CardActionArea>
-          </Card>
-          {this.display()}
-          {this.display()}
-          {this.display()}
-          {this.display()}
+        <div className="row m-3">
+          <div className="col-md">
+            <Card className="image-section">
+              <CardActionArea>
+                <CardMedia
+                  component="img"
+                  height="140"
+                  src={getProfilePicture()}
+                />
+              </CardActionArea>
+            </Card>
+          </div>
+          {this.display(getProfilePicture())}
+          {this.display(getProfilePicture())}
+          {this.display(getProfilePicture())}
+          {this.display(getProfilePicture())}
+        </div>
+        <div className="text-center p-3">
+          <Button variant="contained" type="submit">
+            Update
+          </Button>
         </div>
       </Paper>
     );
