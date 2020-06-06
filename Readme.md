@@ -5,14 +5,11 @@ This is a dating site like project, which will mimic some functionalities like T
 
 - [x] Node Js
 - [x] Express FrameWork
-- [x] MongoDB
-- [x] EJS Templating
-- [x] MDBootstrap
+- [x] MySQL
+- [x] React
+- [x] Bootstrap
+- [x] Material UI
 - [x] HTML5
 - [x] CSS3
 - [x] JavaScript
 
-
-## AUTHOR
-
-> Musa Baloyi | Xxtractz
