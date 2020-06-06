@@ -1,17 +1,20 @@
 import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
 import { getProfilePicture } from "../../../actions/user";
+import Card from "@material-ui/core/Card";
+import CardActionArea from "@material-ui/core/CardActionArea";
+import CardMedia from "@material-ui/core/CardMedia";
 
 class images extends Component {
-  renderImage = () => {
-    let src = getProfilePicture();
-    // FileReader .
+  display() {
     return (
-      <div className="col-md p-2 m-3">
-        <img className="img-fluid" src={src} alt="" />
-      </div>
+      <Card className="image-section">
+        <CardActionArea>
+          <CardMedia component="img" height="140" src={getProfilePicture()} />
+        </CardActionArea>
+      </Card>
     );
-  };
+  }
   render() {
     return (
       <Paper className="container p-2  col-12" variant="outlined">
@@ -23,20 +26,21 @@ class images extends Component {
             your profile
           </small>
         </Paper>
+        <div className="upload__image-wrapper "></div>
         <div className="row">
-          {this.renderImage()}
-          {/* <div className="col-md-2 p-2 m-3">
-              <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
-            </div>
-            <div className="col-md-2 p-2 m-3">
-              <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
-            </div>
-            <div className="col-md-2 p-2 m-3">
-              <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
-            </div>
-            <div className="col-md-2 p-2 m-3">
-              <img className="img-fluid" src="src/assets/images/profile.png" alt=""/>
-            </div> */}
+          <Card className="image-section">
+            <CardActionArea>
+              <CardMedia
+                component="img"
+                height="140"
+                src={getProfilePicture()}
+              />
+            </CardActionArea>
+          </Card>
+          {this.display()}
+          {this.display()}
+          {this.display()}
+          {this.display()}
         </div>
       </Paper>
     );
