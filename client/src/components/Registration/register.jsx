@@ -449,7 +449,7 @@ class Register extends Component {
 
                   {/* Button */}
                   <div className="text-center p-3 mt-4">
-                    <Button variant="contained" type="submit">
+                    <Button variant="outlined" color="primary" type="submit">
                       Register
                     </Button>
                   </div>
