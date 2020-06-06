@@ -12,7 +12,6 @@ import CloseIcon from "@material-ui/icons/Close";
 import { selecFormInput, textAreaFormInput } from "../../../Form/form";
 import { update, userData } from "../../../../actions/api";
 import UploadImages from "./uploadImages";
-import { isEmpty } from "../../../../utils/validate";
 
 class CompleteProfile extends Component {
   constructor(props) {
@@ -22,14 +21,8 @@ class CompleteProfile extends Component {
       firstname: getUserFirstName(),
       lastname: getUserLastName(),
       gender: "",
-      gender_err: "",
-      gender_err_helperText: "",
       genderPreference: "",
-      genderPreference_err: "",
-      genderPreference_err_helperText: "",
       bio: "",
-      bio_err: "",
-      bio_err_helperText: "",
       tags: [],
       tags_err: "",
       tags_err_helperText: "",
@@ -38,26 +31,6 @@ class CompleteProfile extends Component {
       stepOne: true,
     };
     this.getUser();
-  }
-
-   //  Validation before posting to backend
-   isvalidated() {
-    if (
-      isEmpty(this.state.gender) &&
-      isEmpty(this.state.lname_err) &&
-      isEmpty(this.state.username_err) &&
-      isEmpty(this.state.year_err) &&
-      isEmpty(this.state.month_err) &&
-      isEmpty(this.state.day_err) &&
-      isEmpty(this.state.email_err) &&
-      isEmpty(this.state.password_err) &&
-      isEmpty(this.state.confirmPassword_err) &&
-      !isEmpty(this.state.age_err)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
   }
 
   getUser() {
@@ -206,6 +179,9 @@ class CompleteProfile extends Component {
               </li>
             </ul>
           </div>
+          <code>
+            {this.state.tags_err ? this.state.tags_err_helperText : ""}
+          </code>
         </div>
         <div className="col-2 pt-3">
           <IconButton type="button" onClick={this.addTag} fontSize="large">
@@ -233,7 +209,7 @@ class CompleteProfile extends Component {
         {this.personalDetailsSection()}
 
         <div className="text-center p-3">
-          <Button variant="contained" type="submit">
+          <Button variant="outlined" color="primary" type="submit">
             Next ->
           </Button>
         </div>

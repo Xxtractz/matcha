@@ -62,7 +62,7 @@ export const selecFormInput = (
   return (
     <div className={div_className}>
       <InputLabel>{inputLabel}</InputLabel>
-      <Select native name={name} onChange={onChange}>
+      <Select native name={name} onChange={onChange} required>
         {options.map((optionsValue, index) => {
           return <option key={index}>{optionsValue}</option>;
         })}
@@ -90,6 +90,8 @@ export const textAreaFormInput = (
         name={name}
         onChange={onChange}
         required
+        rows="10"
+        minLength="20"
       ></textarea>
     </div>
   );

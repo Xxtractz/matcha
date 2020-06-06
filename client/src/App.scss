@@ -1,170 +1,168 @@
 /* Common css */
+
 @import './assets/styles/common/button.scss';
+@import './assets/styles/common/card.scss';
 @import './assets/styles/common/color.scss';
 @import './assets/styles/common/input_tags.scss';
 
-
 /* Components */
+
 @import './assets/styles/component/completeProfile.scss';
-
-
-
 html {
-  min-height: 100% !important;
+    min-height: 100% !important;
 }
 
 body {
-  margin: 0;
-  min-height: 100% !important;
-  /* font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace; */
-  font-family: "Lucida Console", "Lucida Sans Typewriter", monaco,
-    "Bitstream Vera Sans Mono", monospace;
-  background: #eeeeee !important;
-  /* */
+    margin: 0;
+    min-height: 100% !important;
+    /* font-family: Lucida Console,Lucida Sans Typewriter,monaco,Bitstream Vera Sans Mono,monospace; */
+    font-family: "Lucida Console", "Lucida Sans Typewriter", monaco, "Bitstream Vera Sans Mono", monospace;
+    background: #eeeeee !important;
+    /* */
 }
 
-
 .sidebar {
-  margin: 0;
-  padding: 0;
-  width: 300px;
-  background: linear-gradient(to top, #ff00cc, #333399) !important;
-  color: white !important;
-  position: fixed;
-  height: 100%;
-  overflow: auto;
-  z-index: 1;
-  border-right: solid 0.2px #0c0c0c;
+    margin: 0;
+    padding: 0;
+    width: 300px;
+    background: linear-gradient(to top, #ff00cc, #333399) !important;
+    color: white !important;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    z-index: 1;
+    border-right: solid 0.2px #0c0c0c;
 }
 
 .navbarCustom {
-  /* margin-left: 300px; */
-  display: none !important;
+    /* margin-left: 300px; */
+    display: none !important;
 }
 
 .content {
-  margin-left: 300px;
-  padding: 16px;
-  height: 70% !important;
+    margin-left: 300px;
+    padding: 16px;
+    height: 70% !important;
 }
 
 .profile_img_Card {
-  height: 220px !important;
-  contain: size !important;
+    height: 220px !important;
+    contain: size !important;
 }
 
 .MuiCardMedia-root {
-  background-size: contain !important;
+    background-size: contain !important;
 }
+
 @media screen and (max-width: 900px) {
-  .sidebar {
-    width: 200px;
-    /* width: 100%;
+    .sidebar {
+        width: 200px;
+        /* width: 100%;
       height: auto;
       position: relative; */
-    /* display: none; */
-  }
-  .content {
-    margin-left: 200px;
-  }
-  .navbarCustom {
-    margin-left: 200px;
-  }
+        /* display: none; */
+    }
+    .content {
+        margin-left: 200px;
+    }
+    .navbarCustom {
+        margin-left: 200px;
+    }
 }
 
 @media screen and (max-width: 700px) {
-  .sidebar {
-    /* width: 100%;
+    .sidebar {
+        /* width: 100%;
       height: auto;
       position: relative; */
-    display: none;
-  }
-  /* .sidebar a {float: left;} */
-  .content {
-    margin-left: 0;
-  }
-  .navbarCustom {
-    display: inherit !important;
-    margin-left: 0px;
-  }
+        display: none;
+    }
+    /* .sidebar a {float: left;} */
+    .content {
+        margin-left: 0;
+    }
+    .navbarCustom {
+        display: inherit !important;
+        margin-left: 0px;
+    }
 }
 
 .fourOhfour {
-  padding: 20% 10% 10% 10% !important;
-  min-width: 100% !important;
-  min-height: 100% !important;
+    padding: 20% 10% 10% 10% !important;
+    min-width: 100% !important;
+    min-height: 100% !important;
 }
-
-
 
 textarea {
-  border: 1px solid;
-  border-top-style: none;
-  border-right-style: none;
-  /* border-left-style: none; */
-  border-color: #acacac;
-  overflow: auto;
+    border: 1px solid;
+    border-top-style: none;
+    border-right-style: none;
+    /* border-left-style: none; */
+    border-color: #acacac;
+    overflow: auto;
 }
 
-
-.upload-image-wrapper{
-  position: relative;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 50%;
+.upload-image-wrapper {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
 }
 
-.card-upload{
-  width: 310px;
-  height: 627px;
-  padding: 15px;
-  margin-top: 40px;
-  border-radius: 25px;
-  display: flex;
-  justify-content: center;
-  background: #fff;
-  animation: open .5s;
+.card-upload {
+    width: 310px;
+    height: 627px;
+    padding: 15px;
+    margin-top: 40px;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    animation: open .5s;
 }
 
 .custom-file-upload {
-  border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  padding: 6px;
-  cursor: pointer;
-  background: linear-gradient(270deg, #3fa1a9, #79f1a4);
-  margin-bottom: 25px;
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    padding: 6px;
+    cursor: pointer;
+    background: linear-gradient(270deg, #3fa1a9, #79f1a4);
+    margin-bottom: 25px;
 }
 
-.img-wrap{
-  position: relative;
-  width: 200px;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 50%;
+.img-wrap {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
 }
-.img-upload:before{
-  content: "\f093";
-  font-size: 90px;
-  position: absolute;
-  padding-top: 80px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
-  color: #63d3a6;
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  opacity: 0;
-  transition: .5s ease;
-  background-color: #fff;
+
+.img-upload:before {
+    content: "\f093";
+    font-size: 90px;
+    position: absolute;
+    padding-top: 80px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #63d3a6;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #fff;
 }
-.img-upload:hover:before{
- opacity: 1;
+
+.img-upload:hover:before {
+    opacity: 1;
 }
+
 img {
-  width: auto;
-  height: 100%;
+    width: auto;
+    height: 100%;
 }

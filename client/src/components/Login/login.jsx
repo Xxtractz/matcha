@@ -176,7 +176,7 @@ class Login extends Component {
           {this.state.errorResponse ? this.displayVerifyError() : ""}
           <div className="row">
             <div className="col-md-6 mx-auto pt-5 mt-5">
-              <Card className="card m-5 p-5 mx-auto col-10 " variant="outlined">
+              <Card className="card m-5 p-5 mx-auto col-10 form" variant="outlined">
                 <form onSubmit={this.submitHandler}>
                   <p className="h3 text-center mb-4">Sign in</p>
                   <div className="text-center">
@@ -191,14 +191,14 @@ class Login extends Component {
                     {this.passwordSection()}
                   </div>
                   <div className="text-center p-3">
-                    <Button variant="contained" type="submit">
+                    <Button variant="outlined" color="primary" type="submit">
                       Login
                     </Button>
                   </div>
                 </form>
                 <hr />
                 <CardActions className="bg-gray">
-                  <Button variant="contained" size="small" href="/register">
+                  <Button variant="outlined" color="primary" size="small" href="/register">
                     Register
                   </Button>
                 </CardActions>
