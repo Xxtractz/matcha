@@ -432,12 +432,13 @@ router.post("/logout", async(req, res) => {
     console.log(req.body);
     try {
         var date = new Date(Date.now()).toLocaleString();
-        await Users.findOneAndUpdate({ username: req.body.username }, { lastseen: date }, (err, doc) => {
+        await Users.findOneAndUpdate({ username: req.body.username }, { lastseen: date }, async (err, doc) => {
             if (err) {
                 res.status(500).send({ User: "Error updating the user you hear" });
             } else if (doc) {
 
-                Auth.findOneAndDelete({ username: req.body.username }, (err, doc) => {
+                console.log("We are now here");
+                await Auth.deleteMany({ username: req.body.username }, (err, doc) => {
                     if (err) {
                         console.log(err);
                         res.status(500).send("Internal server error");
