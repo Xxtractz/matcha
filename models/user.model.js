@@ -103,4 +103,4 @@ User.removeAll = result => {
     });
 };
 
-module.exports = user;
+module.exports = User;

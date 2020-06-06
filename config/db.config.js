@@ -1,7 +1,7 @@
 module.exports = {
-    HOST: "remotemysql.com",
-    USER: "utQlqWfeo",
+    HOST: 'remotemysql.com',
+    USER: "utQlqEWfeo",
     PASSWORD: "E3oDaJ5suO",
-    DB: "utQlqWfeo",
+    DB: "utQlqEWfeo",
     PORT: "3306"
 };
