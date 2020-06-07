@@ -104,8 +104,7 @@ class Register extends Component {
       isEmpty(this.state.day_err) &&
       isEmpty(this.state.email_err) &&
       isEmpty(this.state.password_err) &&
-      isEmpty(this.state.confirmPassword_err) &&
-      !isEmpty(this.state.age_err)
+      isEmpty(this.state.confirmPassword_err)
     ) {
       return true;
     } else {
@@ -420,7 +419,7 @@ class Register extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 mx-auto pt-5 mt-5">
-              <Card className="card m-5 p-5 mx-auto col-10" variant="outlined">
+              <Card className="card m-5 p-5 mx-auto col-10 form" variant="outlined">
                 {/* Form Starts */}
                 <form onSubmit={this.submitHandler}>
                   {/* Header Text Start */}
