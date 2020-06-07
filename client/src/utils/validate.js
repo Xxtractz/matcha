@@ -34,17 +34,8 @@ export const getAge = (dateString) => {
     return age;
 };
 
-export const validateAge = (year, month, day) => {
-    const max_year = new Date().getFullYear() - 70;
-    const min_year = new Date().getFullYear() - 18;
-    const _month = new Date().getMonth() + 1;
-    const _day = new Date().getDay();
-
-    const dateofbirthDate = new Date(year + "-" + month + "-" + day);
-    const mindate = new Date(min_year + "-" + _month + "-" + _day);
-    const maxdate = new Date(max_year + "-" + _month + "-" + _day);
-
-    if (dateofbirthDate <= mindate && dateofbirthDate >= maxdate) {
+export const validateAge = (age) => {
+    if (age >= 18 && age <= 70) {
         return true;
     } else return false;
 };

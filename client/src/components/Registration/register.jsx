@@ -51,10 +51,8 @@ class Register extends Component {
       confirmPassword: "",
       confirmPassword_err: "",
       confirmPassword_err_helperText: "",
-      age_err: "none",
       error: "",
     };
-    this.ageValid = 0;
   }
 
   // use history.push('/some/path') here
@@ -116,7 +114,11 @@ class Register extends Component {
   }
 
   isAgeValid() {
-    if (validateAge(this.state.year, this.state.month, this.state.day)) {
+    if (
+      validateAge(
+        getAge(this.state.year + "-" + this.state.month + "-" + this.state.day)
+      )
+    ) {
       return true;
     } else {
       return false;
@@ -190,19 +192,6 @@ class Register extends Component {
         this.setState({ confirmPassword_err_helperText: "" });
       }
     }
-    if (
-      isYearValid(this.state.year) &&
-      isMonthValid(this.state.month) &&
-      isDayValid(this.state.day) &&
-      this.ageValid === 0
-    ) {
-      if (this.isAgeValid()) {
-        this.ageValid = 1;
-        this.setState({ age_err: "none" });
-      } else {
-        this.setState({ age_err: "" });
-      }
-    }
     this.setState({ error: "" });
   }
 
@@ -264,6 +253,14 @@ class Register extends Component {
     );
   }
 
+  displayAgeError() {
+    return (
+      <div className="col-12 mt-3 text-center " style={{ color: "#ff0000" }}>
+        <small>Only users between 18 and 70 </small>
+      </div>
+    );
+  }
+
   ageSection() {
     return (
       <div className="row mb-3">
@@ -315,12 +312,7 @@ class Register extends Component {
             autoComplete="day"
           />
         </div>
-        <div
-          className="col-12 mt-3 text-center "
-          style={{ color: "#ff0000", display: this.state.age_err }}
-        >
-          <small>Only users between 18 and 70 </small>
-        </div>
+        {this.isAgeValid() ? "" : this.displayAgeError()}
       </div>
     );
   }
