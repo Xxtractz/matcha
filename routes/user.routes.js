@@ -2,7 +2,7 @@ module.exports = app => {
     const users = require("../controllers/user.controller.js");
 
     //registering the user
-    app.post("/users", users.create);
+    app.post("/users/register", users.create);
 
     //check if email already exists
     app.post("/users/checkEmail", users.checkEmail);
