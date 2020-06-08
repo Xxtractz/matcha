@@ -2,7 +2,7 @@ const router = require("express").Router();
 const Users = require("../models/users");
 const Chat = require("../models/chats");
 const boom = require("boom");
-const commonFunction = require("./commonFunctions");
+const commonFunction = require("../controllers/commonFunctions");
 
 router.post("/likes", async function (req, res) {
   await Users.find({ username: req.username }, (err, matches) => {
