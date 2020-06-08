@@ -8,7 +8,7 @@ const dotenv = require("dotenv").config();
 const Users = require("../models/users");
 const boom = require("boom");
 const Auth = require("../models/auth");
-const commonFunction = require("./commonFunctions");
+const commonFunction = require("../controllers/commonFunctions");
 
 router.use(cors());
 
