@@ -51,7 +51,7 @@ class Register extends Component {
       confirmPassword: "",
       confirmPassword_err: "",
       confirmPassword_err_helperText: "",
-      error: "",
+      error: ""
     };
   }
 

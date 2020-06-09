@@ -45,7 +45,7 @@ class Login extends Component {
           <strong>{this.state.verifyErrorMsg}</strong>{" "}
           <a
             href={
-              "http://localhost:3001/verify?token=" + this.state.verifyToken
+              "http://localhost:3000/verify?token=" + this.state.verifyToken
             }
           >
             Click here to verify
