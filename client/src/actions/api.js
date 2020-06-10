@@ -79,7 +79,7 @@ export const logout = (username) => {
 
 export const register = async(_userdata) => {
     return axios
-        .post(_Url.verifyUserAfterRegUrl, _userdata)
+        .post(_Url.registerUserUrl, _userdata)
         .then((response) => {
             if (response) {
                 return { status: "true" };

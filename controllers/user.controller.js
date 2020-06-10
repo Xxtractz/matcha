@@ -1,15 +1,17 @@
 const User = require("../models/user.model");
 const commonFunction = require("./commonFunctions");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt-nodejs");
+const boom = require("boom");
 
 exports.create = (req, res) => {
     var date = new Date(Date.now()).toLocaleString();
-    if (req.body.fname &&
-        req.body.lname &&
-        req.body.username &&
-        req.body.email &&
-        req.body.password &&
-        req.body.age) {
+    if (!req.body.fname &&
+        !req.body.lname &&
+        !req.body.username &&
+        !req.body.email &&
+        !req.body.password &&
+        !req.body.age) {
         res.status(400).send({
             User: "Content can not be empty"
         });
@@ -31,7 +33,7 @@ exports.create = (req, res) => {
         });
     });
 
-    const user = new User({
+    let user = {
         username: req.body.username,
         email: req.body.email,
         lastname: req.body.lname,
@@ -41,7 +43,7 @@ exports.create = (req, res) => {
         dob: req.body.dob,
         date: date,
         status: "0"
-    });
+    };
 
     const token = jwt.sign(user, process.env.SECRETS);
     user.token = token;
@@ -291,7 +293,7 @@ exports.refreshToken = (req, res) => {
 
 exports.checkToken = (req, res) => {
     User.checksToken(req.body.username, (err, data) => {
-        if(err) {
+        if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
                     User: "Not found user with username" + req.body.username
@@ -325,7 +327,7 @@ exports.verifyReg = (req, res) => {
                 });
             } else {
                 res.status(500).send({
-                    User: "Error finding user with username " + username 
+                    User: "Error finding user with username " + username
                 });
             }
         } else {

@@ -2,7 +2,6 @@ import React from "react";
 import { InputLabel } from "@material-ui/core";
 import { TextField, Select } from "@material-ui/core";
 
-// Custom Form inputs using
 export const CustomFormInput = (
   inputLabel,
   className,
@@ -35,7 +34,6 @@ export const CustomFormInput = (
   );
 };
 
-// Disabled Form Inputs
 export const disabledFormInput = (
   label,
   className,
@@ -51,7 +49,6 @@ export const disabledFormInput = (
   );
 };
 
-// Selection Options
 export const selecFormInput = (
   div_className,
   inputLabel,
@@ -71,7 +68,7 @@ export const selecFormInput = (
   );
 };
 
-// TextArea Input
+
 export const textAreaFormInput = (
   divClassName,
   inputLabel,

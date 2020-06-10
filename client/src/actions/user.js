@@ -2,7 +2,11 @@ const jwt = require("jsonwebtoken");
 var Token = localStorage.getItem("User_Token");
 const data = jwt.decode(Token, "matchSecrets");
 
+console.log('=============================================');
+console.log('LOGGINg from Matcha/client/src/actions/user.js');
+console.log('=============================================');
 console.log(data);
+console.log('=============================================');
 export const getUserid = () => {
     return data._id;
 };
