@@ -124,70 +124,70 @@ mongoose
     .catch((err) => console.error("Something went wrong", err));
 
 //require the fastify framework and instantiate it
-// app.use(function (req, res, next) {
-//   //exclude other routes
-//   if (
-//     (req.method === "POST" && req.url === "/logout") ||
-//     (req.method === "GET" && req.url === "/socket.io/socket.io.js")
-//   ) {
-//     next();
-//   } else {
-//     // Website you wish to allow to connect
-//     res.setHeader("Access-Control-Allow-Origin", "*");
+app.use(function(req, res, next) {
+    //exclude other routes
+    if (
+        (req.method === "POST" && req.url === "/logout") ||
+        (req.method === "GET" && req.url === "/socket.io/socket.io.js")
+    ) {
+        next();
+    } else {
+        // Website you wish to allow to connect
+        res.setHeader("Access-Control-Allow-Origin", "*");
 
-//     // Request methods you wish to allow
-//     res.setHeader(
-//       "Access-Control-Allow-Methods",
-//       "GET, OPTIONS, PUT, PATCH, DELETE, POST"
-//     );
+        // Request methods you wish to allow
+        res.setHeader(
+            "Access-Control-Allow-Methods",
+            "GET, OPTIONS, PUT, PATCH, DELETE, POST"
+        );
 
-//     // Request headers you wish to allow
-//     res.setHeader(
-//       "Access-Control-Allow-Headers",
-//       "X-Requested-With,content-type, authorization"
-//     );
+        // Request headers you wish to allow
+        res.setHeader(
+            "Access-Control-Allow-Headers",
+            "X-Requested-With,content-type, authorization"
+        );
 
-//     // Set to true if you need the website to include cookies in the requests sent
-//     // to the API (e.g. in case you use sessions)
-//     res.setHeader("Access-Control-Allow-Credentials", true);
+        // Set to true if you need the website to include cookies in the requests sent
+        // to the API (e.g. in case you use sessions)
+        res.setHeader("Access-Control-Allow-Credentials", true);
 
-//     //console.log(req.headers);
+        //console.log(req.headers);
 
-//     // check header for the token
-//     let token = req.headers["authorization"];
-//     // decode token
-//     if (token !== "undefined" && token) {
-//       let splittedToken = token.split(" ");
-//       let data;
-//       jwt.verify(splittedToken[1], process.env.SECRETS, (err, decoded) => {
-//         if (err) {
-//           res.status(401).send("Token has expired");
-//         }
-//         data = decoded;
-//       });
-//       const id = data.user;
-//       Auth.findOne({ username: id }, (err, doc) => {
-//         console.log(doc);
-//         console.log(data);
-//         if (err) {
-//           console.log(err);
-//           res
-//             .status(500)
-//             .send("Something wrong when trying to find in database");
-//         } else if (doc && doc.Token === splittedToken[1]) {
-//           next();
-//         } else {
-//           res.status(401).send("Invalid token or token was revoked");
-//         }
-//       });
-//     } else {
-//       // if there is no token
-//       res.status(401).send({
-//         message: "No token provided.",
-//       });
-//     }
-//   }
-// });
+        // check header for the token
+        let token = req.headers["authorization"];
+        // decode token
+        if (token !== "undefined" && token) {
+            let splittedToken = token.split(" ");
+            let data;
+            jwt.verify(splittedToken[1], process.env.SECRETS, (err, decoded) => {
+                if (err) {
+                    res.status(401).send("Token has expired");
+                }
+                data = decoded;
+            });
+            const id = data.user;
+            Auth.findOne({ username: id }, (err, doc) => {
+                console.log(doc);
+                console.log(data);
+                if (err) {
+                    console.log(err);
+                    res
+                        .status(500)
+                        .send("Something wrong when trying to find in database");
+                } else if (doc && doc.Token === splittedToken[1]) {
+                    next();
+                } else {
+                    res.status(401).send("Invalid token or token was revoked");
+                }
+            });
+        } else {
+            // if there is no token
+            res.status(401).send({
+                message: "No token provided.",
+            });
+        }
+    }
+});
 
 require("./routes/user.routes.js")(app);
 // Run server on Port 4000

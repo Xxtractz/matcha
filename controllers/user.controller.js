@@ -1,17 +1,15 @@
 const User = require("../models/user.model");
 const commonFunction = require("./commonFunctions");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt-nodejs");
-const boom = require("boom");
 
 exports.create = (req, res) => {
     var date = new Date(Date.now()).toLocaleString();
-    if (!req.body.fname &&
-        !req.body.lname &&
-        !req.body.username &&
-        !req.body.email &&
-        !req.body.password &&
-        !req.body.age) {
+    if (req.body.fname &&
+        req.body.lname &&
+        req.body.username &&
+        req.body.email &&
+        req.body.password &&
+        req.body.age) {
         res.status(400).send({
             User: "Content can not be empty"
         });
@@ -33,7 +31,7 @@ exports.create = (req, res) => {
         });
     });
 
-    let user = {
+    const user = new User({
         username: req.body.username,
         email: req.body.email,
         lastname: req.body.lname,
@@ -43,7 +41,7 @@ exports.create = (req, res) => {
         dob: req.body.dob,
         date: date,
         status: "0"
-    };
+    });
 
     const token = jwt.sign(user, process.env.SECRETS);
     user.token = token;
