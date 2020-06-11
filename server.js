@@ -129,7 +129,7 @@ mongoose
 app.use(function(req, res, next) {
     //exclude other routes
     if (
-        (req.method === "POST" && req.url === "/logout") ||
+        (req.method === "POST" && req.url === "/logout") || (req.method === "POST" && req.url === "/users/register") ||
         (req.method === "GET" && req.url === "/socket.io/socket.io.js")
     ) {
         next();
