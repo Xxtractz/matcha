@@ -14,6 +14,7 @@ const app = express();
 const usersRoutes = require("./routes/user");
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
+const userRoutes = require('./routes/user.routes');
 
 http.listen(4001);
 
@@ -111,6 +112,7 @@ app.use(express.static(path.join(__dirname, "client")));
 
 //adding routes
 app.use("/", usersRoutes); //users information capturing routes
+app.use('/', userRoutes); 
 
 // DB Connection
 const db_link = require("./config/keys").MongoUrl;
@@ -189,7 +191,6 @@ app.use(function (req, res, next) {
   }
 });
 
-require("./routes/user.routes.js")(app);
 // Run server on Port 4000
 app.listen(port, () => console.log(`Server started on Port ${port}`));
 

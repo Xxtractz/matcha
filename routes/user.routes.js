@@ -1,5 +1,5 @@
-module.exports = app => {
-    const users = require("../controllers/user.controller.js");
+const app = require('express').Router();
+const users = require("../controllers/user.controller.js");
 
     //registering the user
     app.post("/users/register", users.create);
@@ -45,4 +45,5 @@ module.exports = app => {
 
     //delete all the users in the database
     app.delete("/users", users.deleteAll);
-};
+
+    module.exports = app;
