@@ -1,19 +1,25 @@
 const ServerUrl = "http://localhost:4000";
 
-export const signInUrl = ServerUrl + "/register";
 
-export const LogInUrl = ServerUrl + "/login";
+/**
+ * All User Related url
+ * */
 
-export const LogOutUrl = ServerUrl + "/logout";
-
-export const VerifyUrl = ServerUrl + "/verify/";
-
+// Register User
+export const registerUserUrl = ServerUrl + "/users/register";
+// Verify User after Registeration
+export const verifyUserAfterRegUrl = ServerUrl + "/users/verify";
+export const loginUserUrl = ServerUrl + "/users/login";
+export const logoutUserUrl = ServerUrl + "/users/logout";
 export const ReverifyUrl = ServerUrl + "/verifyAgain";
-
-export const ForgotUrl = ServerUrl + "/verification";
-
+export const forgotPasswordUrl = ServerUrl + "/users/verification";
 export const UpdateUrl = ServerUrl + "/update";
 
-export const UserUrl = ServerUrl + "/user";
+// update a user by their id _PUT Method
+export const updateUserById = ServerUrl + "/users/";
 
-export const RefreshUrl = ServerUrl + "/refresh";
+export const deleteUserById = ServerUrl + "/users/";
+
+// You can get and delete on these URLs
+export const usersUrl = ServerUrl + "/users";
+export const refreshTokenUrl = ServerUrl + "/users/refresh";

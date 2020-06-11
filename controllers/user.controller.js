@@ -291,7 +291,7 @@ exports.refreshToken = (req, res) => {
 
 exports.checkToken = (req, res) => {
     User.checksToken(req.body.username, (err, data) => {
-        if(err) {
+        if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
                     User: "Not found user with username" + req.body.username
@@ -325,7 +325,7 @@ exports.verifyReg = (req, res) => {
                 });
             } else {
                 res.status(500).send({
-                    User: "Error finding user with username " + username 
+                    User: "Error finding user with username " + username
                 });
             }
         } else {

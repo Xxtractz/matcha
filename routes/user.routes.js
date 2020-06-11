@@ -10,7 +10,7 @@ const users = require("../controllers/user.controller.js");
     //check if username already exists
     app.post("/users/checkUsername", users.checkUsername);
 
-   //verification for forgot password
+    //verification for forgot password
     app.post("/users/verification", users.verification);
 
     //verification for invalid token and getting new token

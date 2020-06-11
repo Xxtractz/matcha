@@ -55,8 +55,6 @@ class Register extends Component {
     };
   }
 
-  // use history.push('/some/path') here
-  // Onchange Event... Assigns values to the state on Constructor
   onChange = (e) => {
     this.validateAfterInput(e);
     this.setState({
@@ -64,7 +62,6 @@ class Register extends Component {
     });
   };
 
-  // Handles submit , Stops the normal submit fuctionality,assigns values to new object
   submitHandler = (e) => {
     e.preventDefault();
     if (this.isvalidated()) {
@@ -114,13 +111,15 @@ class Register extends Component {
 
   isAgeValid() {
     if (
-      validateAge(
-        getAge(this.state.year + "-" + this.state.month + "-" + this.state.day)
-      )
+      isEmpty(this.state.year_err) &&
+      isEmpty(this.state.month_err) &&
+      isEmpty(this.state.day_err)
     ) {
       return true;
     } else {
-      return false;
+      validateAge(
+        getAge(this.state.year + "-" + this.state.month + "-" + this.state.day)
+      );
     }
   }
 
@@ -401,17 +400,20 @@ class Register extends Component {
   }
 
   displayErr() {
-    if (this.state.error.toString() === "") {
-      return <div></div>;
-    } else {
-      return (
-        <div className="m-2 ml-5 mr-5">
-          <Alert variant="outlined" severity="error">
-            {this.state.error.toString()}
-          </Alert>
-        </div>
-      );
+    if (this.state.error) {
+      if (this.state.error.toString() === "") {
+        return <div></div>;
+      } else {
+        return (
+          <div className="m-2 ml-5 mr-5">
+            <Alert variant="outlined" severity="error">
+              {this.state.error.toString()}
+            </Alert>
+          </div>
+        );
+      }
     }
+    return <div></div>;
   }
   render() {
     return (
@@ -419,7 +421,10 @@ class Register extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-8 mx-auto pt-5 mt-5">
-              <Card className="card m-5 p-5 mx-auto col-10 form" variant="outlined">
+              <Card
+                className="card m-5 p-5 mx-auto col-10 form"
+                variant="outlined"
+              >
                 {/* Form Starts */}
                 <form onSubmit={this.submitHandler}>
                   {/* Header Text Start */}

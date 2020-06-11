@@ -11,6 +11,11 @@ function handleStoreUser(user) {
     sessionStorage.setItem("user", user);
 }
 
+function hardLogout() {
+    sessionStorage.clear();
+    localStorage.clear();
+}
+
 // const token = () => {
 //   return localStorage.getItem("User_Token");
 // };
@@ -25,9 +30,10 @@ function handleStoreUser(user) {
 
 export const refresh = async(username) => {
     return axios
-        .post(_Url.RefreshUrl, username, { timeout: 31000 })
+        .post(_Url.refreshTokenUrl, username, { timeout: 31000 })
         .then((response) => {
             if (response) {
+                console.log(response);
                 if (response.status === 204) {
                     return response.status;
                 } else {
@@ -37,17 +43,14 @@ export const refresh = async(username) => {
             }
         })
         .catch((error) => {
-            if (error.response) {
-                return error.response;
-            } else {
-                return "TimeOut";
-            }
+            hardLogout();
+            window.location.reload();
         });
 };
 
 export const login = async(_Logindata) => {
     return axios
-        .post(_Url.LogInUrl, _Logindata, { timeout: 31000 })
+        .post(_Url.loginUserUrl, _Logindata, { timeout: 31000 })
         .then((response) => {
             if (response) {
                 if (response.status === 204) {
@@ -68,7 +71,7 @@ export const login = async(_Logindata) => {
 };
 
 export const logout = (username) => {
-    axios.post(_Url.LogOutUrl, username).then((res) => {
+    axios.post(_Url.logoutUserUrl, username).then((res) => {
         localStorage.clear();
         window.location.replace("/login");
     });
@@ -76,7 +79,7 @@ export const logout = (username) => {
 
 export const register = async(_userdata) => {
     return axios
-        .post(_Url.signInUrl, _userdata)
+        .post(_Url.registerUserUrl, _userdata)
         .then((response) => {
             if (response) {
                 return { status: "true" };
@@ -94,7 +97,7 @@ export const register = async(_userdata) => {
 
 export const verify = async(token) => {
     try {
-        const response = await axios.get(_Url.VerifyUrl + token);
+        const response = await axios.get(_Url.verifyUserAfterRegUrl + token);
         if (response) {
             return response;
         }
@@ -126,7 +129,7 @@ export const Reverify = async(email) => {
 
 export const Reset = async(username) => {
     return axios
-        .post(_Url.ForgotUrl, username, { timeout: 31000 })
+        .post(_Url.forgotPasswordUrl, username, { timeout: 31000 })
         .then((response) => {
             if (response) {
                 return response;
@@ -159,7 +162,7 @@ export const update = async(id, body) => {
 };
 
 export const userData = async(id) => {
-    return axios.get(`${_Url.UserUrl}/${id}`).then((response) => {
+    return axios.get(`${_Url.usersUrl}/${id}`).then((response) => {
         handleStoreUser(JSON.stringify(response.data.User));
         return response.data.User.status;
     });
