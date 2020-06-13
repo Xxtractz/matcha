@@ -1,8 +1,9 @@
-const User = require("../models/user.model");
+const User = require("../models/user.model.js");
 const commonFunction = require("./commonFunctions");
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt-nodejs");
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
     var date = new Date(Date.now()).toLocaleString();
     if (req.body.fname &&
         req.body.lname &&
@@ -18,7 +19,7 @@ exports.create = (req, res) => {
     let password = req.body.password;
     let hashPass = null;
 
-    bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
+    await bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
         if (err) {
             boom.boomify(err);
         }
@@ -28,6 +29,7 @@ exports.create = (req, res) => {
                 boom.boomify(err);
             }
             hashPass = hash;
+            console.log(hashPass);
         });
     });
 
@@ -43,7 +45,19 @@ exports.create = (req, res) => {
         status: "0"
     });
 
-    const token = jwt.sign(user, process.env.SECRETS);
+    const userLog = {
+        username: req.body.username,
+        email: req.body.email,
+        lastname: req.body.lname,
+        firstname: req.body.fname,
+        password: hashPass,
+        age: req.body.age,
+        dob: req.body.dob,
+        date: date,
+        status: "0"
+    };
+
+    const token = jwt.sign(userLog, process.env.SECRETS);
     user.token = token;
 
     User.create(user, (err, data) => {
@@ -59,7 +73,8 @@ exports.create = (req, res) => {
                 token +
                 '"> Click Here </a> to verify.</p>'
             );
-            res.status(200).send(data);
+            console.log(data);
+            res.status(200).send({user: data});
         }
     });
 
