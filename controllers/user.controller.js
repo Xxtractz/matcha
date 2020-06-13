@@ -41,7 +41,7 @@ exports.create = async (req, res) => {
                 email: decryptedData.email,
                 lastname: decryptedData.lname,
                 firstname: decryptedData.fname,
-                password: hashPass,
+                password: hash,
                 age: decryptedData.age,
                 dob: decryptedData.dob,
                 date: date,
