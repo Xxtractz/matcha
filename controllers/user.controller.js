@@ -2,25 +2,25 @@ const User = require("../models/user.model.js");
 const commonFunction = require("./commonFunctions");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const CrptoJS = require('crypto-js');
+const CryptoJS = require('crypto-js');
 
 exports.create = async (req, res) => {
     const date = new Date(Date.now()).toLocaleString();
 
-    const bytes  = CryptoJS.AES.decrypt(req, process.env.SECRET);
+    const bytes  = CryptoJS.AES.decrypt(req.body.user, 'StopShhh');
     const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    if (!decryptedData.body.fname &&
-        !decryptedData.body.lname &&
-        !decryptedData.body.username &&
-        !decryptedData.body.email &&
-        !decryptedData.body.password &&
-        !decryptedData.body.age) {
+    if (!decryptedData.fname &&
+        !decryptedData.lname &&
+        !decryptedData.username &&
+        !decryptedData.email &&
+        !decryptedData.password &&
+        !decryptedData.age) {
         res.status(400).send({
             User: "Content can not be empty"
         });
     }
 
-    let password = decryptedData.body.password;
+    let password = decryptedData.password;
     let hashPass = null;
 
     await bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
@@ -38,25 +38,25 @@ exports.create = async (req, res) => {
     });
 
     const user = new User({
-        username: decryptedData.body.username,
-        email: decryptedData.body.email,
-        lastname: decryptedData.body.lname,
-        firstname: decryptedData.body.fname,
+        username: decryptedData.username,
+        email: decryptedData.email,
+        lastname: decryptedData.lname,
+        firstname: decryptedData.fname,
         password: hashPass,
-        age: decryptedData.body.age,
-        dob: decryptedData.body.dob,
+        age: decryptedData.age,
+        dob: decryptedData.dob,
         date: date,
         status: "0"
     });
 
     const userLog = {
-        username: decryptedData.body.username,
-        email: decryptedData.body.email,
-        lastname: decryptedData.body.lname,
-        firstname: decryptedData.body.fname,
+        username: decryptedData.username,
+        email: decryptedData.email,
+        lastname: decryptedData.lname,
+        firstname: decryptedData.fname,
         password: hashPass,
-        age: decryptedData.body.age,
-        dob: decryptedData.body.dob,
+        age: decryptedData.age,
+        dob: decryptedData.dob,
         date: date,
         status: "0"
     };
@@ -71,7 +71,7 @@ exports.create = async (req, res) => {
             });
         } else {
             commonFunction.sendEmail(
-                decryptedData.body.email,
+                decryptedData.email,
                 "Verify your account",
                 '<p> Please <a href="http://localhost:3000/verify?token=' +
                 token +

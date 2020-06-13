@@ -30,9 +30,9 @@ function hardLogout() {
 // }
 
 export const register = async(userData) => {
-    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData),process.env.SECRET).toString();
+    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData),'StopShhh').toString();
     return axios
-        .post(_Url.registerUserUrl, encryptedData)
+        .post(_Url.registerUserUrl, {user : encryptedData})
         .then((response) => {
             if (response) {
                 return { status: "true" };
