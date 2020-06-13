@@ -1,7 +1,8 @@
 const User = require("../models/user.model.js");
 const commonFunction = require("./commonFunctions");
+const boom = require("@hapi/boom");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require('bcrypt');
 const CryptoJS = require('crypto-js');
 
 exports.create = async (req, res) => {
@@ -20,66 +21,55 @@ exports.create = async (req, res) => {
         });
     }
 
-    let password = decryptedData.password;
-    let hashPass = null;
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(decryptedData.password, salt, (err, hash) => {
 
-    await bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
-        if (err) {
-            boom.boomify(err);
-        }
-
-        bcrypt.hash(password, salt, null, (err, hash) => {
-            if (err) {
-                boom.boomify(err);
-            }
-            hashPass = hash;
-            console.log(hashPass);
-        });
-    });
-
-    const user = new User({
-        username: decryptedData.username,
-        email: decryptedData.email,
-        lastname: decryptedData.lname,
-        firstname: decryptedData.fname,
-        password: hashPass,
-        age: decryptedData.age,
-        dob: decryptedData.dob,
-        date: date,
-        status: "0"
-    });
-
-    const userLog = {
-        username: decryptedData.username,
-        email: decryptedData.email,
-        lastname: decryptedData.lname,
-        firstname: decryptedData.fname,
-        password: hashPass,
-        age: decryptedData.age,
-        dob: decryptedData.dob,
-        date: date,
-        status: "0"
-    };
-
-    const token = jwt.sign(userLog, process.env.SECRETS);
-    user.token = token;
-
-    User.create(user, (err, data) => {
-        if (err) {
-            res.status(500).send({
-                User: err.message || "Some error occured while creating a user."
+            const user = new User({
+                username: decryptedData.username,
+                email: decryptedData.email,
+                lastname: decryptedData.lname,
+                firstname: decryptedData.fname,
+                password: hash,
+                age: decryptedData.age,
+                dob: decryptedData.dob,
+                date: date,
+                status: "0"
             });
-        } else {
-            commonFunction.sendEmail(
-                decryptedData.email,
-                "Verify your account",
-                '<p> Please <a href="http://localhost:3000/verify?token=' +
-                token +
-                '"> Click Here </a> to verify.</p>'
-            );
-            console.log(data);
-            res.status(200).send({user: data});
-        }
+
+            const userLog = {
+                username: decryptedData.username,
+                email: decryptedData.email,
+                lastname: decryptedData.lname,
+                firstname: decryptedData.fname,
+                password: hashPass,
+                age: decryptedData.age,
+                dob: decryptedData.dob,
+                date: date,
+                status: "0"
+            };
+
+            const token = jwt.sign(userLog, process.env.SECRETS);
+            user.token = token;
+
+            User.create(user, (err, data) => {
+                if (err) {
+                    res.status(500).send({
+                        User: err.message || "Some error occured while creating a user."
+                    });
+                } else {
+                    commonFunction.sendEmail(
+                        decryptedData.email,
+                        "Verify your account",
+                        '<p> Please <a href="http://localhost:3000/verify?token=' +
+                        token +
+                        '"> Click Here </a> to verify.</p>'
+                    );
+                    console.log(data);
+                    res.status(200).send({user: data});
+                }
+            });
+
+        });
     });
 
 };

@@ -1,6 +1,6 @@
 const nodeMailer = require("nodemailer");
 const dotenv = require("dotenv").config();
-const boom = require("boom");
+const boom = require('@hapi/boom');
 
 exports.checkSignedIn = (req, res, next) => {
   console.log(req.session.user);
@@ -14,27 +14,27 @@ exports.checkSignedIn = (req, res, next) => {
 exports.interestsIf = (req, res) => {
   let ints = [];
 
-  if (req.session.user.NO == "on") {
+  if (req.session.user.NO === "on") {
     ints.push({ NO: "on" });
   }
 
-  if (req.session.user.LP == "on") {
+  if (req.session.user.LP === "on") {
     ints.push({ LP: "on" });
   }
 
-  if (req.session.user.LW == "on") {
+  if (req.session.user.LW === "on") {
     ints.push({ LW: "on" });
   }
 
-  if (req.session.user.RD == "on") {
+  if (req.session.user.RD === "on") {
     ints.push({ RD: "on" });
   }
 
-  if (req.session.user.MV == "on") {
+  if (req.session.user.MV === "on") {
     ints.push({ MV: "on" });
   }
 
-  if (req.session.user.SE == "on") {
+  if (req.session.user.SE === "on") {
     ints.push({ SE: "on" });
   }
 

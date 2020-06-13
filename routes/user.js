@@ -2,11 +2,11 @@ const _ = require("lodash");
 const jwt = require("jsonwebtoken");
 const cors = require("cors");
 const router = require("express").Router();
-const bcrypt = require("bcrypt-nodejs");
+const bcrypt = require("bcrypt");
 const tokenGen = require("uuid-token-generator");
 const dotenv = require("dotenv").config();
 const Users = require("../models/users");
-const boom = require("boom");
+const boom = require("@hapi/boom");
 const Auth = require("../models/auth");
 const commonFunction = require("../controllers/commonFunctions");
 
