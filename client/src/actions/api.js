@@ -1,6 +1,6 @@
 import axios from 'axios';
-import bCrypt  from 'bcryptjs';
 import * as _Url from "../utils/link";
+import CryptoJS from 'crypto-js';
 
 function handleLogin(token, rtoken) {
     localStorage.setItem("SessionUI", "true");
@@ -30,17 +30,9 @@ function hardLogout() {
 // }
 
 export const register = async(userData) => {
-     let hashedData = null;
-
-    await bCrypt.genSalt(10, function(err, salt) {
-        bCrypt.hash(userData.toString(), salt, function(err, hash) {
-            // console.log(hash)
-            hashedData = hash;
-        });
-    });
-
+    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(userData),process.env.SECRET).toString();
     return axios
-        .post(_Url.registerUserUrl, hashedData)
+        .post(_Url.registerUserUrl, encryptedData)
         .then((response) => {
             if (response) {
                 return { status: "true" };
