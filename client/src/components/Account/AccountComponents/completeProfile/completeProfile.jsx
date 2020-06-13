@@ -4,7 +4,7 @@ import { Button } from "@material-ui/core";
 import {
   getUserFirstName,
   getUserLastName,
-  getUserid,
+  getUserId,
 } from "../../../../actions/user";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
@@ -34,7 +34,7 @@ class CompleteProfile extends Component {
   }
 
   getUser() {
-    userData(getUserid());
+    userData(getUserId());
   }
 
   submitHandler = (e) => {
@@ -59,7 +59,7 @@ class CompleteProfile extends Component {
 
     console.log(user);
 
-    update(getUserid(), user)
+    update(getUserId(), user)
       .then((response) => {
         if (response.status === 200) {
           this.setState({ stepOne: false });
@@ -220,7 +220,7 @@ class CompleteProfile extends Component {
   displayImageSection() {
     return (
       <div className="container p-2  bg-transparent col-12">
-        <UploadImages></UploadImages>
+        <UploadImages/>
       </div>
     );
   }

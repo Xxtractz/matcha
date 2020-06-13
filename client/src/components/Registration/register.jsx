@@ -21,8 +21,8 @@ import {
 } from "../../utils/validate";
 
 class Register extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       fname: "",
       fname_err: "",
@@ -92,21 +92,15 @@ class Register extends Component {
 
   //  Validation before posting to backend
   isvalidated() {
-    if (
-      isEmpty(this.state.fname_err) &&
-      isEmpty(this.state.lname_err) &&
-      isEmpty(this.state.username_err) &&
-      isEmpty(this.state.year_err) &&
-      isEmpty(this.state.month_err) &&
-      isEmpty(this.state.day_err) &&
-      isEmpty(this.state.email_err) &&
-      isEmpty(this.state.password_err) &&
-      isEmpty(this.state.confirmPassword_err)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+    return isEmpty(this.state.fname_err) &&
+        isEmpty(this.state.lname_err) &&
+        isEmpty(this.state.username_err) &&
+        isEmpty(this.state.year_err) &&
+        isEmpty(this.state.month_err) &&
+        isEmpty(this.state.day_err) &&
+        isEmpty(this.state.email_err) &&
+        isEmpty(this.state.password_err) &&
+        isEmpty(this.state.confirmPassword_err);
   }
 
   isAgeValid() {
@@ -223,16 +217,15 @@ class Register extends Component {
       <div className="row mb-3">
         <div className="col-6 text-center">
           <TextField
-            className="col-12"
-            type="text"
-            name="fname"
-            label="First Name"
-            helperText={this.state.fname_err_helperText}
-            error={this.state.fname_err ? true : false}
-            value={this.state.fname}
-            onChange={(e) => this.onChange(e)}
-            required
-          />
+    className="col-12"
+    type="text"
+    name="fname"
+    label="First Name"
+    helperText={this.state.fname_err_helperText}
+    error={!!this.state.fname_err}
+    value={this.state.fname}
+    onChange={(e) => this.onChange(e)}
+    required/>
         </div>
         <div className="col-6 text-center">
           <TextField
@@ -241,7 +234,7 @@ class Register extends Component {
             name="lname"
             label="Last Name"
             helperText={this.state.lname_err_helperText}
-            error={this.state.lname_err ? true : false}
+            error={!!this.state.lname_err}
             value={this.state.lname}
             onChange={(e) => this.onChange(e)}
             required
@@ -270,7 +263,7 @@ class Register extends Component {
             type="text"
             className="col-8"
             helperText={this.state.year_err_helperText}
-            error={this.state.year_err ? true : false}
+            error={!!this.state.year_err}
             value={this.state.year}
             onChange={(e) => this.onChange(e)}
             inputProps={{ maxLength: 4 }}
@@ -286,7 +279,7 @@ class Register extends Component {
             type="text"
             className="col-8"
             helperText={this.state.month_err_helperText}
-            error={this.state.month_err ? true : false}
+            error={!!this.state.month_err}
             value={this.state.month}
             onChange={(e) => this.onChange(e)}
             inputProps={{ maxLength: 2 }}
@@ -302,7 +295,7 @@ class Register extends Component {
             type="text"
             className="col-8"
             helperText={this.state.day_err_helperText}
-            error={this.state.day_err ? true : false}
+            error={!!this.state.day_err}
             value={this.state.day}
             onChange={(e) => this.onChange(e)}
             inputProps={{ maxLength: 2 }}
@@ -325,7 +318,7 @@ class Register extends Component {
             name="username"
             label="Username"
             helperText={this.state.username_err_helperText}
-            error={this.state.username_err ? true : false}
+            error={!!this.state.username_err}
             value={this.state.username}
             onChange={(e) => this.onChange(e)}
             required
@@ -346,7 +339,7 @@ class Register extends Component {
             name="email"
             label="Email"
             helperText={this.state.email_err_helperText}
-            error={this.state.email_err ? true : false}
+            error={!!this.state.email_err}
             value={this.state.email}
             onChange={(e) => this.onChange(e)}
             required
@@ -367,7 +360,7 @@ class Register extends Component {
             type="password"
             label="Password"
             helperText={this.state.password_err_helperText}
-            error={this.state.password_err ? true : false}
+            error={!!this.state.password_err}
             value={this.state.password}
             onChange={(e) => this.onChange(e)}
             required
@@ -388,7 +381,7 @@ class Register extends Component {
             type="password"
             label="Confirm Password"
             helperText={this.state.confirmPassword_err_helperText}
-            error={this.state.confirmPassword_err ? true : false}
+            error={!!this.state.confirmPassword_err}
             value={this.state.confirmPassword}
             onChange={(e) => this.onChange(e)}
             required
@@ -402,7 +395,7 @@ class Register extends Component {
   displayErr() {
     if (this.state.error) {
       if (this.state.error.toString() === "") {
-        return <div></div>;
+        return <div/>;
       } else {
         return (
           <div className="m-2 ml-5 mr-5">
@@ -413,7 +406,7 @@ class Register extends Component {
         );
       }
     }
-    return <div></div>;
+    return <div/>;
   }
   render() {
     return (
@@ -437,7 +430,7 @@ class Register extends Component {
                   {/* Error Section */}
                   {this.displayErr()}
 
-                  <hr className="mb-2 ml-5 mr-5"></hr>
+                  <hr className="mb-2 ml-5 mr-5"/>
 
                   {/* Input Box Start */}
                   {this.inputSection()}

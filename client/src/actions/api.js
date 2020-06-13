@@ -1,4 +1,4 @@
-const axios = require("axios").default;
+const axiosRequest = require("axios").default;
 const _Url = require("../utils/link");
 
 function handleLogin(token, rtoken) {
@@ -29,7 +29,7 @@ function hardLogout() {
 // }
 
 export const refresh = async(username) => {
-    return axios
+    return axiosRequest
         .post(_Url.refreshTokenUrl, username, { timeout: 31000 })
         .then((response) => {
             if (response) {
@@ -42,15 +42,15 @@ export const refresh = async(username) => {
                 }
             }
         })
-        .catch((error) => {
+        .catch(() => {
             hardLogout();
             window.location.reload();
         });
 };
 
-export const login = async(_Logindata) => {
-    return axios
-        .post(_Url.loginUserUrl, _Logindata, { timeout: 31000 })
+export const login = async(logindata) => {
+    return axiosRequest
+        .post(_Url.loginUserUrl, logindata, { timeout: 31000 })
         .then((response) => {
             if (response) {
                 if (response.status === 204) {
@@ -71,14 +71,14 @@ export const login = async(_Logindata) => {
 };
 
 export const logout = (username) => {
-    axios.post(_Url.logoutUserUrl, username).then((res) => {
+    axiosRequest.post(_Url.logoutUserUrl, username).then(() => {
         localStorage.clear();
         window.location.replace("/login");
     });
 };
 
 export const register = async(_userdata) => {
-    return axios
+    return axiosRequest
         .post(_Url.registerUserUrl, _userdata)
         .then((response) => {
             if (response) {
@@ -97,7 +97,7 @@ export const register = async(_userdata) => {
 
 export const verify = async(token) => {
     try {
-        const response = await axios.get(_Url.verifyUserAfterRegUrl + token);
+        const response = await axiosRequest.get(_Url.verifyUserAfterRegUrl + token);
         if (response) {
             return response;
         }
@@ -111,7 +111,7 @@ export const verify = async(token) => {
 };
 
 export const Reverify = async(email) => {
-    return axios
+    return axiosRequest
         .post(_Url.ReverifyUrl, email, { timeout: 31000 })
         .then((response) => {
             if (response) {
@@ -128,7 +128,7 @@ export const Reverify = async(email) => {
 };
 
 export const Reset = async(username) => {
-    return axios
+    return axiosRequest
         .post(_Url.forgotPasswordUrl, username, { timeout: 31000 })
         .then((response) => {
             if (response) {
@@ -145,7 +145,7 @@ export const Reset = async(username) => {
 };
 
 export const update = async(id, body) => {
-    return axios
+    return axiosRequest
         .put(_Url.UpdateUrl + "/" + id, body)
         .then((response) => {
             if (response) {
@@ -162,7 +162,7 @@ export const update = async(id, body) => {
 };
 
 export const userData = async(id) => {
-    return axios.get(`${_Url.usersUrl}/${id}`).then((response) => {
+    return axiosRequest.get(`${_Url.usersUrl}/${id}`).then((response) => {
         handleStoreUser(JSON.stringify(response.data.User));
         return response.data.User.status;
     });
@@ -173,33 +173,33 @@ export const uploadImage = (image) => {
     const cloudName = "dz1whmlhr";
     const uploadUrl = `https://api.cloudinary.com/v1_1/${cloudName}/upload`;
 
-    return axios.post(uploadUrl, {
+    return axiosRequest.post(uploadUrl, {
         upload_preset: unsignedUploadPreset,
         file: image,
     });
 };
 
-export const suggestedUsers = async(profile) => {
-    return axios.get(_Url.LogInUrl);
-    // axios.post(_Url.LogInUrl,_Logindata,{timeout : 31000})
-    //   .then(response => {
-    //     if(response){
-    //       if (response.status ===204) {
-    //         return response.status;
-    //       } else {
-    //         handleLogin(response.data.Token,response.data.RefreshToken);
-    //         return response.status;
-    //       }
-
-    //     }
-    //   })
-    //   .catch(error => {
-    //     if (error.response.status) {
-    //       return error.response.status;
-    //     }
-    //     else
-    //     {
-    //       return "TimeOut";
-    //     }
-    //   } );
-};
+// export const suggestedUsers = async(profile) => {
+//     return axiosRequest.get(_Url.LogInUrl);
+//     // axios.post(_Url.LogInUrl,_Logindata,{timeout : 31000})
+//     //   .then(response => {
+//     //     if(response){
+//     //       if (response.status ===204) {
+//     //         return response.status;
+//     //       } else {
+//     //         handleLogin(response.data.Token,response.data.RefreshToken);
+//     //         return response.status;
+//     //       }
+//
+//     //     }
+//     //   })
+//     //   .catch(error => {
+//     //     if (error.response.status) {
+//     //       return error.response.status;
+//     //     }
+//     //     else
+//     //     {
+//     //       return "TimeOut";
+//     //     }
+//     //   } );
+// };

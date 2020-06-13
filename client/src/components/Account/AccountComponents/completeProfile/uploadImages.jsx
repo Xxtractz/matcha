@@ -5,7 +5,7 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import { uploadImage, update } from "../../../../actions/api";
-import { getUserid } from "../../../../actions/user";
+import { getUserId } from "../../../../actions/user";
 
 class UploadImages extends Component {
   constructor(props) {
@@ -38,7 +38,7 @@ class UploadImages extends Component {
 
     console.log(user);
 
-    update(getUserid(), user)
+    update(getUserId(), user)
       .then((response) => {
         console.log(response);
         
@@ -108,7 +108,7 @@ class UploadImages extends Component {
           maxFileSize={maxMbFileSize}
           acceptType={["jpg", "gif", "png"]}
         >
-          {({ imageList, onImageUpload, onImageRemoveAll, errors }) => (
+          {({ imageList, onImageUpload, errors }) => (
             <div className="upload__image-wrapper ">
               <Button
                 variant="outlined"
