@@ -1,16 +1,16 @@
 const User = require("../models/user.model.js");
 const commonFunction = require("./commonFunctions");
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt-nodejs");
+const bcrypt = require("bcrypt");
 
 exports.create = async (req, res) => {
-    var date = new Date(Date.now()).toLocaleString();
-    if (req.body.fname &&
-        req.body.lname &&
-        req.body.username &&
-        req.body.email &&
-        req.body.password &&
-        req.body.age) {
+    const date = new Date(Date.now()).toLocaleString();
+    if (!req.body.fname &&
+        !req.body.lname &&
+        !req.body.username &&
+        !req.body.email &&
+        !req.body.password &&
+        !req.body.age) {
         res.status(400).send({
             User: "Content can not be empty"
         });

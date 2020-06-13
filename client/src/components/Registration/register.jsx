@@ -217,15 +217,16 @@ class Register extends Component {
       <div className="row mb-3">
         <div className="col-6 text-center">
           <TextField
-    className="col-12"
-    type="text"
-    name="fname"
-    label="First Name"
-    helperText={this.state.fname_err_helperText}
-    error={!!this.state.fname_err}
-    value={this.state.fname}
-    onChange={(e) => this.onChange(e)}
-    required/>
+              className="col-12"
+              type="text"
+              name="fname"
+              label="First Name"
+              helperText={this.state.fname_err_helperText}
+              error={!!this.state.fname_err}
+              value={this.state.fname}
+              onChange={(e) => this.onChange(e)}
+              required
+          />
         </div>
         <div className="col-6 text-center">
           <TextField

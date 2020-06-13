@@ -8,6 +8,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.39",
     "axios": "^0.19.1",
+    "bcryptjs": "^2.4.3",
     "bootstrap": "^4.3.1",
     "bootstrap-css-only": "^4.3.1",
     "jsonwebtoken": "^8.5.1",
@@ -18,7 +19,7 @@
     "react-dom": "^16.11.0",
     "react-images-uploading": "^2.2.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.3.0",
+    "react-scripts": "3.4.1",
     "react-spinners": "^0.8.3",
     "reactstrap": "^8.1.1"
   },
@@ -43,5 +44,8 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:4000"
+  "proxy": "http://localhost:4000",
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0"
+  }
 }

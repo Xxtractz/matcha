@@ -1,4 +1,5 @@
-const jwt = require("jsonwebtoken");
+import * as jwt from 'jsonwebtoken';
+
 const Token = localStorage.getItem("User_Token");
 const data = jwt.decode(Token, "matchSecrets");
 

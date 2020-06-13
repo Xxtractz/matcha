@@ -28,7 +28,7 @@ const users = require("../controllers/user.controller.js");
     //refreshing the token 
     app.post("/users/refresh", users.refreshToken);
 
-    //verifythe user after registration
+    //verify the user after registration
     app.get("/users/verify/:id", users.verifyReg);
 
     //getting all the users in the database
@@ -46,4 +46,4 @@ const users = require("../controllers/user.controller.js");
     //delete all the users in the database
     app.delete("/users", users.deleteAll);
 
-    module.exports = app;
+    module.exports= app;

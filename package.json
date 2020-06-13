@@ -9,6 +9,7 @@
         "dev": "concurrently \"npm run start\" \"npm run client \""
     },
     "dependencies": {
+        "bcrypt": "^5.0.0",
         "bcrypt-nodejs": "0.0.3",
         "bcryptjs": "^2.4.3",
         "body-parser": "^1.19.0",
@@ -28,6 +29,7 @@
         "mongoose": "^5.7.5",
         "morgan": "~1.9.1",
         "mysql": "^2.18.1",
+        "node-pre-gyp": "^0.15.0",
         "nodemailer": "^6.4.2",
         "nodemon": "^1.19.4",
         "react-bootstrap-sidebar": "0.0.1",
