@@ -85,10 +85,11 @@ exports.login = (req, res) => {
         });
     }
 
-    console.log(decryptedData.username, decryptedData.password);
     User.logins(decryptedData.username, decryptedData.password, (err, data) => {
         if (err) {
+            console.log(err);
             if (err.kind === "not_found") {
+                console.log(err.kind)
                 console.log("We are here!!!!!!!!!!!!!!!!!");
                 res.status(404).send({
                     User: "The user does not exists"
@@ -99,16 +100,14 @@ exports.login = (req, res) => {
                 });
             }
         } else {
-            res.status(200).send({
-                data
-            });
+            res.status(200).send(data);
         }
     });
 
 };
 
 exports.checkEmail = (req, res) => {
-    User.checksEmail(req.body.email, (err, data) => {
+    User.checksEmail(req.body.email, (err) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(200).send({
@@ -143,6 +142,7 @@ exports.checkUsername = (req, res) => {
             res.status(400).send({
                 User: "The user already exists"
             });
+            return;
         }
     });
 };

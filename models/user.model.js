@@ -37,10 +37,12 @@ User.logins = (username, password, result) => {
             return;
         }
 
-        if (res.length) {
+        // console.log(res);
 
+        if (res.length) {
+            console.log("Im inside of res.length");
             bcrypt.compare(password, res[0].password, (err, response) => {
-                
+                console.log(response);
                 if (response) {
                     const userLog = {
                         userid: res[0].userid,
@@ -69,7 +71,7 @@ User.logins = (username, password, result) => {
                     const userid = res[0].userid;
                     const usernameq = res[0].username; 
 
-                    sql.query("INSERT INTO auth (userid, username, Token, RefreshToken) VALUES (?,?,?,?)", [ userid, usernameq, token, refreshToken ], (err, res) => {
+                    sql.query("INSERT INTO auth (userid, username, Token, RefreshToken) VALUES (?,?,?,?)", [ userid, usernameq, token, refreshToken ], (err, ) => {
                         if (err) {
                             console.log("Error ", err);
                             result(err, null);      
@@ -86,7 +88,7 @@ User.logins = (username, password, result) => {
 
             });
 
-        }
+        }else
 
         result({ kind: "not_found" }, null);
     });

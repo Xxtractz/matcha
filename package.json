@@ -5,7 +5,7 @@
     "scripts": {
         "client-install": "npm install --prefix client",
         "start": "nodemon server.js",
-        "client": "npm start --prefix client",
+        "client": "set BROWSER=none&&npm start --prefix client",
         "dev": "concurrently \"npm run start\" \"npm run client \""
     },
     "dependencies": {

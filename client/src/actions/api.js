@@ -73,12 +73,13 @@ export const login = async(loginData) => {
     return axios
         .post(_Url.loginUserUrl, {user : encryptedData}, { timeout: 31000 })
         .then((response) => {
+            console.log(response);
             if (response) {
                 if (response.status === 204) {
                     return response.status;
-                } else {
-                    handleLogin(response.data.Token, response.data.RefreshToken);
-                    return response.status;
+                // } else {
+                //     // handleLogin(response.data.Token, response.data.RefreshToken);
+                //     return response.status;
                 }
             }
         })
