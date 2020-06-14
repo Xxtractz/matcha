@@ -1,4 +1,6 @@
 const sql = require("./db.js");
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 //constructor
 const User = function(user){
@@ -28,7 +30,7 @@ User.create = (newUser, result) => {
 
 //login in the user
 User.logins = (username, password, result) => {
-    sql.query("SELECT * FROM users WHERE username = ? AND password = ?", [ username, password ], (err, res) => {
+    sql.query("SELECT * FROM users WHERE username = ?", username, (err, res) => {
         if (err) {
             console.log("Error in logins: ", err);
             result(err, null);
@@ -36,40 +38,54 @@ User.logins = (username, password, result) => {
         }
 
         if (res.length) {
-            const userLog = {
-                userid: res[0].userid,
-                username: res[0].username,
-                email: res[0].email,
-                lastname: res[0].lastname,
-                firstname: res[0].firstname,
-                gender: res[0].gender,
-                genderPreference: res[0].genderPreference,
-                age: res[0].age,
-                profileImage: res[0].profileImage,
-                active: res[0].active,
-                lastseen: [0].lastseen,
-                dob: res[0].dob,
-                date: res[0].date,
-                bio: res[0].bio,
-                status: res[0].status
-            };
 
-            const token = jwt.sign(userLog, process.env.SECRETS);
-            const refreshToken = jwt.sign(
-                userLog,
-                process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
-            );
+            bcrypt.compare(password, res[0].password, (err, response) => {
+                
+                if (response) {
+                    const userLog = {
+                        userid: res[0].userid,
+                        username: res[0].username,
+                        email: res[0].email,
+                        lastname: res[0].lastname,
+                        firstname: res[0].firstname,
+                        gender: res[0].gender,
+                        genderPreference: res[0].genderPreference,
+                        age: res[0].age,
+                        profileImage: res[0].profileImage,
+                        active: res[0].active,
+                        lastseen: [0].lastseen,
+                        dob: res[0].dob,
+                        date: res[0].date,
+                        bio: res[0].bio,
+                        status: res[0].status
+                    };
+        
+                    const token = jwt.sign(userLog, process.env.SECRETS);
+                    const refreshToken = jwt.sign(
+                        userLog,
+                        process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
+                    );
+        
+                    const userid = res[0].userid;
+                    const usernameq = res[0].username; 
 
-            sql.query("INSERT INTO auth VALUES (?,?,?,?)", [ res[0].userid, res[0],username, token, refreshToken ], (err, res) => {
-                if (err) {
-                    console.log("Error ", err);
-                    result(err, null);
+                    sql.query("INSERT INTO auth (userid, username, Token, RefreshToken) VALUES (?,?,?,?)", [ userid, usernameq, token, refreshToken ], (err, res) => {
+                        if (err) {
+                            console.log("Error ", err);
+                            result(err, null);      
+                            return;
+                        }
+        
+                        result(null, userLog);
+                        return;
+                    });
+                } else {
+                    result({ kind: "Bad_Credencials" }, null);
                     return;
                 }
 
-                result(null, { authid: res.authid, ...res });
-                return;
             });
+
         }
 
         result({ kind: "not_found" }, null);
