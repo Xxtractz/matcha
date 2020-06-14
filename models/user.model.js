@@ -26,6 +26,56 @@ User.create = (newUser, result) => {
     });
 };
 
+//login in the user
+User.logins = (username, password, result) => {
+    sql.query("SELECT * FROM users WHERE username = ? AND password = ?", [ username, password ], (err, res) => {
+        if (err) {
+            console.log("Error in logins: ", err);
+            result(err, null);
+            return;
+        }
+
+        if (res.length) {
+            const userLog = {
+                userid: res[0].userid,
+                username: res[0].username,
+                email: res[0].email,
+                lastname: res[0].lastname,
+                firstname: res[0].firstname,
+                gender: res[0].gender,
+                genderPreference: res[0].genderPreference,
+                age: res[0].age,
+                profileImage: res[0].profileImage,
+                active: res[0].active,
+                lastseen: [0].lastseen,
+                dob: res[0].dob,
+                date: res[0].date,
+                bio: res[0].bio,
+                status: res[0].status
+            };
+
+            const token = jwt.sign(userLog, process.env.SECRETS);
+            const refreshToken = jwt.sign(
+                userLog,
+                process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
+            );
+
+            sql.query("INSERT INTO auth VALUES (?,?,?,?)", [ res[0].userid, res[0],username, token, refreshToken ], (err, res) => {
+                if (err) {
+                    console.log("Error ", err);
+                    result(err, null);
+                    return;
+                }
+
+                result(null, { authid: res.authid, ...res });
+                return;
+            });
+        }
+
+        result({ kind: "not_found" }, null);
+    });
+};
+
 //find a user using their id
 User.findById = (userid, result) => {
     sql.query(`SELECT * FROM users WHERE userid = ${userid}`, (err, res) => {

@@ -4,6 +4,9 @@ const users = require("../controllers/user.controller.js");
     //registering the user
     app.post("/users/register", users.create);
 
+    //user login
+    app.post("/users/login", users.login);
+
     //check if email already exists
     app.post("/users/checkEmail", users.checkEmail);
 

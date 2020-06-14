@@ -74,6 +74,37 @@ exports.create = async (req, res) => {
 
 };
 
+exports.login = (req, res) => {
+    const bytes  = CryptoJS.AES.decrypt(req.body.user, 'StopShhh');
+    const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    if (
+        !decryptedData.username &&
+        !decryptedData.password) {
+        res.status(400).send({
+            User: "Content can not be empty"
+        });
+    }
+
+    User.logins(decryptedData.username, decryptedData.password, (err, data) => {
+        if (err) {
+            if (err.kind === "not_found") {
+                res.status(404).send({
+                    User: "The user does not exists"
+                });
+            } else {
+                res.status(500).send({
+                    User: "Error getting the user with email " + decryptedData.username
+                });
+            }
+        } else {
+            res.status(200).send({
+                data
+            });
+        }
+    });
+
+};
+
 exports.checkEmail = (req, res) => {
     User.checksEmail(req.body.email, (err, data) => {
         if (err) {
