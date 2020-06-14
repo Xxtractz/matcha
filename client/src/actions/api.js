@@ -68,9 +68,10 @@ export const refresh = async(username) => {
         });
 };
 
-export const login = async(logindata) => {
+export const login = async(loginData) => {
+    const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(loginData),'StopShhh').toString();
     return axios
-        .post(_Url.loginUserUrl, logindata, { timeout: 31000 })
+        .post(_Url.loginUserUrl, {user : encryptedData}, { timeout: 31000 })
         .then((response) => {
             if (response) {
                 if (response.status === 204) {
