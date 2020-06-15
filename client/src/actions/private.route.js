@@ -10,7 +10,8 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
         render = {
             (props) => {
                 if (isloggedIn()) {
-                    refresh({username: getUsername()}).then();
+                    // refresh({username: getUsername()}).then();
+
                     return <Component {...props }
                     />;
                 } else {

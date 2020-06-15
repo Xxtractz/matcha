@@ -63,8 +63,8 @@ export const refresh = async(username) => {
             }
         })
         .catch(() => {
-            hardLogout();
-            window.location.reload();
+            // hardLogout();
+            // window.location.reload();
         });
 };
 
@@ -77,9 +77,9 @@ export const login = async(loginData) => {
             if (response) {
                 if (response.status === 204) {
                     return response.status;
-                // } else {
-                //     // handleLogin(response.data.Token, response.data.RefreshToken);
-                //     return response.status;
+                } else {
+                    handleLogin(response.data.Token, response.data.RefreshToken);
+                    return response.status;
                 }
             }
         })

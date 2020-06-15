@@ -67,7 +67,11 @@ User.logins = (username, password, result) => {
                         userLog,
                         process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
                     );
-        
+
+                    const response = {
+                        Token: token,
+                        RefreshToken: refreshToken,
+                    };
                     const userid = res[0].userid;
                     const usernameq = res[0].username; 
 
@@ -78,7 +82,7 @@ User.logins = (username, password, result) => {
                             return;
                         }
         
-                        result(null, userLog);
+                        result(null, response);
                         return;
                     });
                 } else {
@@ -235,19 +239,19 @@ User.refreshsToken = (username, result) => {
             loggedUser,
             process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
         );
-        const response = {
-            username: req.body.username,
-            Token: token,
-            RefreshToken: refreshToken,
-        };
 
         sql.query("UPDATE auth SET Token = ?, RefreshToken = ? WHERE username = ?", [response.Token, response.RefreshToken, username], (err, res) => {
             if (err) {
-                console.log("Error in refreshsToken update ", err);
+                console.log("Error in refresh Token update ", err);
                 result(null, err);
                 return ;
             }
         });
+
+        const response = {
+            Token: token,
+            RefreshToken: refreshToken,
+        };
 
         result(null, response);
     });
