@@ -63,8 +63,8 @@ export const refresh = async(username) => {
             }
         })
         .catch(() => {
-            // hardLogout();
-            // window.location.reload();
+            hardLogout();
+            window.location.reload();
         });
 };
 
