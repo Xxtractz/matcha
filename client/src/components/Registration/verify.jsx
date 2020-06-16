@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, TextField, Card, CardActions } from "@material-ui/core";
 import { verify } from "../../actions/api";
-import { Reverify } from "../../actions/api";
+import { reverifyUser } from "../../actions/api";
 import { Alert } from "@material-ui/lab";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
@@ -42,7 +42,7 @@ class verifyUser extends Component {
   };
 
   handleVerify(email) {
-    Reverify(email)
+    reverifyUser(email)
       .then((res) => {
         if (res) {
           if (res.status === 204) {

@@ -322,7 +322,7 @@ exports.refreshToken = (req, res) => {
                 });
             } else {
                 res.status(500).send({
-                    Username: "Erroor finding the user with username " + req.body.username
+                    Username: "Error finding the user with username " + req.body.username
                 });
             }
         } else {
@@ -405,7 +405,7 @@ exports.update = (req, res) => {
 };
 
 exports.logout = (req, res) => {
-    User.logoutUser(req.body.username, (err, data) => {
+    User.logoutUser(req.body.username.toString(), (err) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({

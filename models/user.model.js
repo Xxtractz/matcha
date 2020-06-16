@@ -240,6 +240,11 @@ User.refreshsToken = (username, result) => {
             process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
         );
 
+        const response = {
+            Token: token,
+            RefreshToken: refreshToken,
+        };
+
         sql.query("UPDATE auth SET Token = ?, RefreshToken = ? WHERE username = ?", [response.Token, response.RefreshToken, username], (err, res) => {
             if (err) {
                 console.log("Error in refresh Token update ", err);
@@ -248,36 +253,36 @@ User.refreshsToken = (username, result) => {
             }
         });
 
-        const response = {
-            Token: token,
-            RefreshToken: refreshToken,
-        };
-
+        sql.end();
         result(null, response);
     });
 };
 
 //logout user and update their last seen
 User.logoutUser = (username, result) => {
-    var date = new Date(Date.now()).toLocaleString();
-    sql.query("UPDATE users SET lastseen = ?, WHERE username = ?", [date, username], (err, res) => {
+    const date = new Date(Date.now()).toLocaleString();
+    const query = `UPDATE users SET lastseen = ?, WHERE username = ?`;
+    sql.query(query, [date, username.toString()], (err, res) => {
+        console.log(err);
         if (err) {
-            console.log("Error in logout user");
             result(null, err);
             return ;
         }
+        console.log(res);
 
         if (affectedRows === 0) {
             result({ kind: "not_found" }, null);
             return;
         }
 
-        sql.query("DELETE FROM auth WHERE username = ?", username, (err, res) => {
+        sql.query("DELETE * FROM auth WHERE username = ?", username, (err, res) => {
             if (err) {
                 console.log("Error in logoutUser delete ", err);
                 result(null, err);
                 return;
             }
+
+            console.log(res);
 
             if (affectedRows === 0) {
                 result({ kind: "not_found" }, null);

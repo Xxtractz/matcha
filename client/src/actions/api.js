@@ -48,12 +48,12 @@ export const register = async(userData) => {
             }
         });
 };
+
 export const refresh = async(username) => {
     return axios
         .post(_Url.refreshTokenUrl, username, { timeout: 31000 })
         .then((response) => {
             if (response) {
-                console.log(response);
                 if (response.status === 204) {
                     return response.status;
                 } else {
@@ -99,8 +99,6 @@ export const logout = (username) => {
     });
 };
 
-
-
 export const verify = async(token) => {
     try {
         const response = await axios.get(_Url.verifyUserAfterRegUrl + token);
@@ -116,7 +114,7 @@ export const verify = async(token) => {
     }
 };
 
-export const Reverify = async(email) => {
+export const reverifyUser = async(email) => {
     return axios
         .post(_Url.ReverifyUrl, email, { timeout: 31000 })
         .then((response) => {
