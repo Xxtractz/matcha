@@ -53,8 +53,9 @@ exports.create = async (req, res) => {
 
             User.create(user, (err, data) => {
                 if (err) {
-                    res.status(500).send({
-                        User: err.message || "Some error occured while creating a user."
+                    console.log(err);
+                    res.status(409).send({
+                        User: err + ' Already Exist' || "Some error occured while creating a user."
                     });
                 } else {
                     commonFunction.sendEmail(
@@ -89,11 +90,11 @@ exports.login = async (req, res) => {
         if (err) {
             console.log(err);
             if (err.kind === "not_found") {
-                console.log(err.kind)
-                console.log("We are here!!!!!!!!!!!!!!!!!");
                 res.status(404).send({
                     User: "The user does not exists"
                 });
+            }else if(err.kind === "notVerified"){
+                res.status(401).send({User : "Account Not Verified",token:err.token});
             } else {
                 res.status(500).send({
                     User: "Error getting the user with email " + decryptedData.username
@@ -358,6 +359,9 @@ exports.checkToken = (req, res) => {
 exports.verifyReg = (req, res) => {
     const data = jwt.verify(req.params.id, process.env.SECRETS);
     const username = data.username;
+    console.log("++++++++++++++++++++++++++++++++++++++++++VERIFY");
+    console.log(data);
+    console.log("\n\n");
 
     User.verifysReg(username, (err, data) => {
         if (err) {

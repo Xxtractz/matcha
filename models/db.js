@@ -12,19 +12,34 @@ const poolConnection = mysql.createPool({
 
 let matchaDb = {};
 
+
+matchaDb.insert = (table,data)=>{
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `Insert INTO ${table} SET ?`,
+            data,
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+}
 matchaDb.findById = (table, id) => {
-  return new Promise((resolve, reject) => {
-    poolConnection.query(
-      `SELECT * from ${table} WHERE userid = ?`,
-      [id],
-      (err, results) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(results[0]);
-      }
-    );
-  });
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `SELECT * from ${table} WHERE userid = ?`,
+            [id],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
 };
 
 matchaDb.findByUsername = (table, username) => {

@@ -38,6 +38,7 @@ export const register = async (userData) => {
     .post(_Url.registerUserUrl, { user: encryptedData })
     .then((response) => {
       if (response) {
+        console.log(response)
         return { status: "true" };
       }
     })

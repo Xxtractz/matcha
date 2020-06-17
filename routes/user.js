@@ -275,28 +275,28 @@ router.post("/token/check", async(req, res) => {
 });
 
 //verify the user after registration
-router.get("/verify/:id", async(req, res) => {
-    try {
-        const data = jwt.verify(req.params.id, process.env.SECRETS);
-        const username = data.username;
-        await Users.findOneAndUpdate({ username: username }, { status: "1" },
-            (err, doc) => {
-                if (err) {
-                    console.log(err);
-                    res.status(500).send("Internal server error");
-                } else if (doc) {
-                    res.status(200).send({ Verify: "Successfully verified the user." });
-                } else {
-                    res
-                        .status(400)
-                        .send({ Verify: "Try resending the verification link again" });
-                }
-            }
-        );
-    } catch (error) {
-        res.status(400).send({ Verify: "Invalid token." });
-    }
-});
+// router.get("/verify/:id", async(req, res) => {
+//     try {
+//         const data = jwt.verify(req.params.id, process.env.SECRETS);
+//         const username = data.username;
+//         await Users.findOneAndUpdate({ username: username }, { status: "1" },
+//             (err, doc) => {
+//                 if (err) {
+//                     console.log(err);
+//                     res.status(500).send("Internal server error");
+//                 } else if (doc) {
+//                     res.status(200).send({ Verify: "Successfully verified the user." });
+//                 } else {
+//                     res
+//                         .status(400)
+//                         .send({ Verify: "Try resending the verification link again" });
+//                 }
+//             }
+//         );
+//     } catch (error) {
+//         res.status(400).send({ Verify: "Invalid token." });
+//     }
+// });
 
 //verification for invalid token and getting new token
 router.post("/verifyAgain", async(req, res) => {

@@ -45,7 +45,7 @@ class Login extends Component {
           <strong>{this.state.verifyErrorMsg}</strong>{" "}
           <a
             href={
-              "http://localhost:3000/verify?token=" + this.state.verifyToken
+              "http://localhost:3000/verify/?token=" + this.state.verifyToken
             }
           >
             Click here to verify
@@ -110,10 +110,10 @@ class Login extends Component {
           if (res) {
             if (res.status === 404) {
               this.setState({ error: "Username does not exist" });
-            } else if (res.status === 400) {
+            } else if (res.status === 401) {
               this.setState({ errorResponse: true });
               this.setState({ verifyErrorMsg: res.data.User.toString() });
-              this.setState({ verifyToken: res.data.Token.toString() });
+              this.setState({ verifyToken: res.data.token.toString() });
             }
             if (res === 200) {
               window.location.reload();

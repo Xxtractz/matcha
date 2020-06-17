@@ -15,17 +15,38 @@ const User = function (user) {
 };
 
 //registering a user
-User.create = (newUser, result) => {
-  sql.query("Insert INTO users SET ?", newUser, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
-      return;
+User.create =  async (newUser, result) => {
+  try{
+    let newUserDetails = await sql.insert('users',newUser);
+    // sql.query("Insert INTO users SET ?", newUser, (err, res) => {
+    //   if (err) {
+    //     console.log("error: ", err);
+    //     result(err, null);
+    //     return;
+    //   }
+    if (newUserDetails){
+      console.log("User created: ", { userid: newUserDetails.userid, ...newUserDetails });
+      result(null, { userid: newUserDetails.userid, ...newUserDetails });
+    }else {
+      console.log("User created: ", newUserDetails);
+      result(newUserDetails, null);
+    }
+  }catch (e) {
+    console.log("User created: ", e);
+    console.log("\n\nUser created: ", e.code);
+    console.log("\n\nUser created: ", e.message);
+    if(e.code ==='ER_DUP_ENTRY'){
+       let message = e.message.match(/(\x27).+(\x27) /gm);
+      result(message[0],null);
     }
 
-    console.log("User created: ", { userid: res.userid, ...newUser });
-    result(null, { userid: res.userid, ...newUser });
-  });
+    // result(e, null);
+  }
+
+
+
+
+  // });
 };
 
 //login in the user
@@ -56,28 +77,32 @@ User.logins = async (username, password, result) => {
             status: user.status,
           };
 
-          const token = jwt.sign(userLog, process.env.SECRETS);
-          const refreshToken = jwt.sign(
-            userLog,
-            process.env.REFRESHTOKENSECRETS,
-            { expiresIn: process.env.REFRESHTOKENLIFE }
-          );
+          if (user.status === '0') {
+            return result({ kind: "notVerified" , token: jwt.sign(userLog, process.env.SECRETS)}, null);
+          } else {
+            const token = jwt.sign(userLog, process.env.SECRETS);
+            const refreshToken = jwt.sign(
+              userLog,
+              process.env.REFRESHTOKENSECRETS,
+              { expiresIn: process.env.REFRESHTOKENLIFE }
+            );
 
-          const response = {
-            Token: token,
-            RefreshToken: refreshToken,
-          };
+            const response = {
+              Token: token,
+              RefreshToken: refreshToken,
+            };
 
-          sql.addLastSeen(user.username, "online");
+            sql.addLastSeen(user.username, "online");
 
-          let resultsCallback = sql.saveAuth(
-            user.userid,
-            user.username,
-            response.Token,
-            response.RefreshToken
-          );
-          if (resultsCallback) {
-            result(null, response);
+            let resultsCallback = sql.saveAuth(
+              user.userid,
+              user.username,
+              response.Token,
+              response.RefreshToken
+            );
+            if (resultsCallback) {
+              result(null, response);
+            }
           }
         } else {
           result({ kind: "Bad_Credencials" }, null);
