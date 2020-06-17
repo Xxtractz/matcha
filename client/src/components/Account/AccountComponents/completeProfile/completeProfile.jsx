@@ -30,7 +30,7 @@ class CompleteProfile extends Component {
       isopen: true,
       stepOne: true,
     };
-    this.getUser();
+    // this.getUser();
   }
 
   getUser() {

@@ -74,7 +74,7 @@ exports.create = async (req, res) => {
 
 };
 
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
     const bytes  = CryptoJS.AES.decrypt(req.body.user, 'StopShhh');
     const decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     if (
@@ -85,7 +85,7 @@ exports.login = (req, res) => {
         });
     }
 
-    User.logins(decryptedData.username, decryptedData.password, (err, data) => {
+    await User.logins(decryptedData.username, decryptedData.password, (err, data) => {
         if (err) {
             console.log(err);
             if (err.kind === "not_found") {
@@ -314,7 +314,7 @@ exports.changePassword = (req, res) => {
 };
 
 exports.refreshToken = (req, res) => {
-    User.refreshsToken(req.body.username, (err, data) => {
+    User.refreshToken(req.body.username, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
@@ -404,8 +404,8 @@ exports.update = (req, res) => {
     );
 };
 
-exports.logout = (req, res) => {
-    User.logoutUser(req.body.username.toString(), (err) => {
+exports.logout = async (req, res) => {
+   await User.logoutUser(req.body.username.toString(), (err) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({

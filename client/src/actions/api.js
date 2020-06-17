@@ -68,14 +68,14 @@ export const refresh = async(username) => {
         });
 };
 
-export const login = async(loginData) => {
+export const login = (loginData) => {
     const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(loginData),'StopShhh').toString();
     return axios
         .post(_Url.loginUserUrl, {user : encryptedData}, { timeout: 31000 })
         .then((response) => {
             console.log(response);
             if (response) {
-                if (response.status === 204) {
+                if (response.status === 404) {
                     return response.status;
                 } else {
                     handleLogin(response.data.Token, response.data.RefreshToken);
@@ -93,7 +93,7 @@ export const login = async(loginData) => {
 };
 
 export const logout = (username) => {
-    axios.post(_Url.logoutUserUrl, username).then(() => {
+    axios.post(_Url.logoutUserUrl, username,{ timeout: 31000 }).then(() => {
         localStorage.clear();
         window.location.replace("/login");
     });

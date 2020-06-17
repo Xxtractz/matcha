@@ -12,8 +12,8 @@ import { getUserStatus } from "../../actions/user";
 import CompleteProfile from "./AccountComponents/completeProfile/completeProfile";
 
 class Account extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       isopen: true,
     };
@@ -21,7 +21,7 @@ class Account extends Component {
 
   displayVerifyError() {
     return (
-      <div>
+      <div className="mt-5">
       <Collapse in={this.state.isopen}>
         <Alert
           variant="filled"

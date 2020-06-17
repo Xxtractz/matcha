@@ -29,39 +29,88 @@ User.create = (newUser, result) => {
 };
 
 //login in the user
-User.logins = (username, password, result) => {
-    sql.query("SELECT * FROM users WHERE username = ?", username, (err, res) => {
-        if (err) {
-            console.log("Error in logins: ", err);
+User.logins = async (username, password, result) => {
+try {
+    let user = await sql.findByUsername(username);
+    if(!user){
+        result({ kind: "not_found" }, null);
+    }else{
+        bcrypt.compare(password, user.password, (err, response) => {
+            console.log(response);
+            if (response) {
+                const userLog = {
+                    userid: user.userid,
+                    username: user.username,
+                    email: user.email,
+                    lastname: user.lastname,
+                    firstname: user.firstname,
+                    gender: user.gender,
+                    genderPreference: user.genderPreference,
+                    age: user.age,
+                    profileImage: user.profileImage,
+                    active: user.active,
+                    lastseen: user.lastseen,
+                    dob: user.dob,
+                    date: user.date,
+                    bio: user.bio,
+                    status: user.status
+                };
+
+                const token = jwt.sign(userLog, process.env.SECRETS);
+                const refreshToken = jwt.sign(
+                    userLog,
+                    process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
+                );
+
+                const response = {
+                    Token: token,
+                    RefreshToken: refreshToken,
+                };
+
+                sql.addLastSeen(user.username,'online');
+
+                let resultsCallback = sql.saveAuth(user.userid,user.username,response.Token,response.RefreshToken);
+                if (resultsCallback){
+                    result(null, response);
+                }
+            } else {
+                result({ kind: "Bad_Credencials" }, null);
+                return;
+            }
+
+        });
+    }
+}catch (err) {
+    console.log("Error in logins: ", err);
             result(err, null);
             return;
-        }
+}
+};
 
-        // console.log(res);
-
-        if (res.length) {
-            console.log("Im inside of res.length");
-            bcrypt.compare(password, res[0].password, (err, response) => {
-                console.log(response);
-                if (response) {
+User.refreshToken = async (username, result) => {
+    try {
+        let user = await sql.findByUsername(username);
+        if(!user){
+            result({ kind: "not_found" }, null);
+        }else{
                     const userLog = {
-                        userid: res[0].userid,
-                        username: res[0].username,
-                        email: res[0].email,
-                        lastname: res[0].lastname,
-                        firstname: res[0].firstname,
-                        gender: res[0].gender,
-                        genderPreference: res[0].genderPreference,
-                        age: res[0].age,
-                        profileImage: res[0].profileImage,
-                        active: res[0].active,
-                        lastseen: [0].lastseen,
-                        dob: res[0].dob,
-                        date: res[0].date,
-                        bio: res[0].bio,
-                        status: res[0].status
+                        userid: user.userid,
+                        username: user.username,
+                        email: user.email,
+                        lastname: user.lastname,
+                        firstname: user.firstname,
+                        gender: user.gender,
+                        genderPreference: user.genderPreference,
+                        age: user.age,
+                        profileImage: user.profileImage,
+                        active: user.active,
+                        lastseen: user.lastseen,
+                        dob: user.dob,
+                        date: user.date,
+                        bio: user.bio,
+                        status: user.status
                     };
-        
+
                     const token = jwt.sign(userLog, process.env.SECRETS);
                     const refreshToken = jwt.sign(
                         userLog,
@@ -72,48 +121,73 @@ User.logins = (username, password, result) => {
                         Token: token,
                         RefreshToken: refreshToken,
                     };
-                    const userid = res[0].userid;
-                    const usernameq = res[0].username; 
 
-                    sql.query("INSERT INTO auth (userid, username, Token, RefreshToken) VALUES (?,?,?,?)", [ userid, usernameq, token, refreshToken ], (err, ) => {
-                        if (err) {
-                            console.log("Error ", err);
-                            result(err, null);      
-                            return;
-                        }
-        
+                    let resultsCallback = sql.updateAuth(user.username,response.Token,response.RefreshToken);
+                    if (resultsCallback){
                         result(null, response);
-                        return;
-                    });
-                } else {
-                    result({ kind: "Bad_Credencials" }, null);
-                    return;
-                }
+                    }
 
-            });
+        }
+    }catch (err) {
+        console.log("Error in logins: ", err);
+        result(err, null);
+        return;
+    }
+};
 
-        }else
-
+//logout user and update their last seen
+User.logoutUser = async (username, result) => {
+    const date = new Date(Date.now()).toLocaleString();
+    let lastSeen =  sql.addLastSeen(username,date);
+    console.log(lastSeen);
+    if(!lastSeen){
         result({ kind: "not_found" }, null);
-    });
+        return;
+    }else {
+        let logout = sql.removeSession(username)
+
+        return result(null, logout);
+    }
+    // sql.query(query, [date, username.toString()], (err, res) => {
+    //     console.log(err);
+    //     if (err) {
+    //         result(null, err);
+    //         return ;
+    //     }
+    //     console.log(res);
+    //
+    //     if (affectedRows === 0) {
+    //         result({ kind: "not_found" }, null);
+    //         return;
+    //     }
+    //
+    //     sql.query("DELETE * FROM auth WHERE username = ?", username, (err, res) => {
+    //         if (err) {
+    //             console.log("Error in logoutUser delete ", err);
+    //             result(null, err);
+    //             return;
+    //         }
+    //
+    //         console.log(res);
+    //
+    //         if (affectedRows === 0) {
+    //             result({ kind: "not_found" }, null);
+    //             return ;
+    //         }
+    //     });
+    //
+    //     result(null, res[0]);
+    // });
 };
 
 //find a user using their id
-User.findById = (userid, result) => {
-    sql.query(`SELECT * FROM users WHERE userid = ${userid}`, (err, res) => {
-        if (err) {
-            console.log("Error in findById: ", err);
-            result(err, null);
-            return;
-        }
-
-        if (res.length) {
-            result(null, res[0]);
-            return;
-        }
-
+User.findById = async (userid, result) => {
+    let user = await sql.findById(userid);
+    if(!user){
         result({ kind: "not_found" }, null);
-    });
+    }else {
+        result(null, user);
+    }
 };
 
 //chenge the user password
@@ -204,94 +278,6 @@ User.verifysReg = (username, result) => {
         result(null, {username: username, ...res[0]});
     });
 
-};
-
-//refreshes the token
-User.refreshsToken = (username, result) => {
-    sql.query("SELECT * FROM users WHERE username = ?", username, (err, res) => {
-        if (err) {
-            console.log("Error in refreshsToken: ", err);
-            result(null, err);
-            return;
-        }
-        var loggedUser = {
-            userid: res[0].userid,
-            username: res[0].username,
-            firstname: res[0].firstname,
-            lastname: res[0].lastname,
-            email: res[0].email,
-            gender: res[0].gender,
-            genderPreference: res[0].genderPreference,
-            bio: res[0].bio,
-            status: res[0].status,
-            profileImage: res[0].profileImage,
-            images: res[0].images,
-            active: res[0].active,
-            date: res[0].date,
-            age: res[0].age,
-            dob: res[0].dob,
-            interests: res[0].interests,
-            likes: res[0].likes,
-            dislikes: res[0].dislikes,
-        };
-        const token = jwt.sign(loggedUser, process.env.SECRETS);
-        const refreshToken = jwt.sign(
-            loggedUser,
-            process.env.REFRESHTOKENSECRETS, { expiresIn: process.env.REFRESHTOKENLIFE }
-        );
-
-        const response = {
-            Token: token,
-            RefreshToken: refreshToken,
-        };
-
-        sql.query("UPDATE auth SET Token = ?, RefreshToken = ? WHERE username = ?", [response.Token, response.RefreshToken, username], (err, res) => {
-            if (err) {
-                console.log("Error in refresh Token update ", err);
-                result(null, err);
-                return ;
-            }
-        });
-
-        sql.end();
-        result(null, response);
-    });
-};
-
-//logout user and update their last seen
-User.logoutUser = (username, result) => {
-    const date = new Date(Date.now()).toLocaleString();
-    const query = `UPDATE users SET lastseen = ?, WHERE username = ?`;
-    sql.query(query, [date, username.toString()], (err, res) => {
-        console.log(err);
-        if (err) {
-            result(null, err);
-            return ;
-        }
-        console.log(res);
-
-        if (affectedRows === 0) {
-            result({ kind: "not_found" }, null);
-            return;
-        }
-
-        sql.query("DELETE * FROM auth WHERE username = ?", username, (err, res) => {
-            if (err) {
-                console.log("Error in logoutUser delete ", err);
-                result(null, err);
-                return;
-            }
-
-            console.log(res);
-
-            if (affectedRows === 0) {
-                result({ kind: "not_found" }, null);
-                return ;
-            }
-        });
-
-        result(null, res[0]);
-    });
 };
 
 //get all the users in the database

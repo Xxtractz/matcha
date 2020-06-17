@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { login } from "../../actions/api";
+import {handleLogin, login} from "../../actions/api";
 //import {isEmpty} from '../../utils/validate';
 import { Button, TextField, Card, CardActions } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
@@ -11,16 +11,17 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      username: "",
-      username_err: "",
-      username_err_helperText: "",
-      password: "",
-      password_err: "",
-      password_err_helperText: "",
+      username: '',
+      username_err: '',
+      username_err_helperText: '',
+      password: '',
+      password_err: '',
+      password_err_helperText: '',
       isopen: true,
       errorResponse: false,
-      verifyErrorMsg: "",
-      verifyToken: "",
+      verifyErrorMsg: '',
+      verifyToken: '',
+      error:''
     };
   }
 
@@ -83,6 +84,9 @@ class Login extends Component {
     this.setState({
       [e.target.name]: [e.target.value],
     });
+    if(this.state.error){
+      this.setState({error:''});
+    }
   };
 
   validInput() {
@@ -103,15 +107,17 @@ class Login extends Component {
     if (this.validInput()) {
       login(loginUserData)
         .then((res) => {
+          console.log(res);
           if (res) {
-            if (res === 204) {
-              console.log("Username DoesnN't Exist");
+            if (res.status === 404) {
+              this.setState({ error: 'Username does not exist' });
             } else if (res.status === 400) {
               this.setState({ errorResponse: true });
               this.setState({ verifyErrorMsg: res.data.User.toString() });
               this.setState({ verifyToken: res.data.Token.toString() });
             }
             if (res === 200) {
+              // handleLogin(res.data.Token, res.data.RefreshToken)
               window.location.reload();
             } else {
               console.log(res);
@@ -121,6 +127,7 @@ class Login extends Component {
           }
         })
         .catch((err) => {
+          console.log(err);
           console.log("Timeout");
         });
     } else this.setState({ err: "Invalid Details Entered" });
@@ -168,6 +175,24 @@ class Login extends Component {
       </div>
     );
   }
+
+  displayErr() {
+    if (this.state.error) {
+      if (this.state.error.toString() === "") {
+        return <div/>;
+      } else {
+        return (
+            <div className="m-2 ml-5 mr-5">
+              <Alert variant="outlined" severity="error">
+                {this.state.error.toString()}
+              </Alert>
+            </div>
+        );
+      }
+    }
+    return <div/>;
+  }
+
   render() {
     return (
       <div>
@@ -176,6 +201,7 @@ class Login extends Component {
           {this.state.errorResponse ? this.displayVerifyError() : ""}
           <div className="row">
             <div className="col-md-6 mx-auto pt-5 mt-5">
+              {this.displayErr()}
               <Card className="card m-5 p-5 mx-auto col-10 form" variant="outlined">
                 <form onSubmit={this.submitHandler}>
                   <p className="h3 text-center mb-4">Sign in</p>
