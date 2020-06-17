@@ -307,34 +307,12 @@ User.verifysAgain = (email, result) => {
 
 //update the user by id
 User.updateByID = (userid, user, result) => {
-  sql.query(
-    "UPDATE users SET email = ?, lastname = ?, firstname = ?, age = ?, dob = ?, gender = ?, genderPreference = ?, bio = ?, profileImage = ? WHERE userid = ?",
-    [
-      user.email,
-      user.lastname,
-      user.firstname,
-      user.age,
-      user.dob,
-      user.gender,
-      user.genderPreference,
-      user.bio,
-      user.profileImage,
-      userid,
-    ],
-    (err, res) => {
-      if (err) {
-        console.log("Error trying to update user by ID: ", err);
-        return null, err;
-      }
-
-      if (res.affectedRows == 0) {
-        result({ kind: "not_found" }, null);
-        return;
-      }
-
-      result(null, { userid: userid, ...user });
-    }
-  );
+  try {
+    let updateUser = sql.updateUserById(userid,user);
+    result(null, { userid: userid, ...updateUser });
+  }catch (e) {
+    result(e, null);
+  }
 };
 
 //remove one user by id

@@ -15,9 +15,9 @@ export const forgotPasswordUrl = ServerUrl + "/users/verification";
 export const UpdateUrl = ServerUrl + "/update";
 
 // update a user by their id _PUT Method
-export const updateUserById = ServerUrl + "/users/";
+export const updateUserById = ServerUrl + "/users";
 
-export const deleteUserById = ServerUrl + "/users/";
+export const deleteUserById = ServerUrl + "/users";
 
 // You can get and delete on these URLs
 export const usersUrl = ServerUrl + "/users";

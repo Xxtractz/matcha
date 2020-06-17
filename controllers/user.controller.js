@@ -1,3 +1,5 @@
+
+
 const User = require("../models/user.model.js");
 const commonFunction = require("./commonFunctions");
 const boom = require("@hapi/boom");
@@ -128,7 +130,7 @@ exports.checkEmail = (req, res) => {
 };
 
 exports.checkUsername = (req, res) => {
-    User.checksUsername(req.body.username, (err, data) => {
+    User.checksUsername(req.body.username, (err) => {
         if (err) {
             if (err.kind === "not_found") {
                 res.status(200).send({
@@ -143,7 +145,6 @@ exports.checkUsername = (req, res) => {
             res.status(400).send({
                 User: "The user already exists"
             });
-            return;
         }
     });
 };
@@ -240,6 +241,7 @@ exports.findAll = (req, res) => {
 };
 
 exports.findOne = (req, res) => {
+    console.log("Trying to Find one");
     User.findById(req.params.userid, (err, user) => {
         if (err) {
             if (err.kind === "not_found") {
@@ -381,15 +383,17 @@ exports.verifyReg = (req, res) => {
 };
 
 exports.update = (req, res) => {
+    console.log("UpdateUrl");
+    console.log(req);
     if (!req.body) {
         res.status(400).send({
             User: "Content can not be empty."
         });
     }
 
-    User.updateById(
+    User.updateByID(
         req.params.userid,
-        new User(req.body),
+        req.body,
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {

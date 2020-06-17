@@ -6,12 +6,9 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const cors = require("cors");
 const boom = require("@hapi/boom");
-const Users = require("./models/users");
 const Chat = require("./models/chats");
-const mongoose = require("mongoose");
 const port = process.env.PORT || 4000;
 const app = express();
-const usersRoutes = require("./routes/user");
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const userRoutes = require('./routes/user.routes');
@@ -55,7 +52,7 @@ io.sockets.on("connection", function(socket) {
         // we tell the client to execute 'updatechat' with 2 parameters
         console.log(data);
 
-        Chat.create(data, (err, doc) => {
+        Chat.create(data, (err) => {
             if (err) {
                 boom.boomify(err);
             }
@@ -111,29 +108,22 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "client")));
 
 //adding routes
-app.use("/", usersRoutes); //users information capturing routes
 app.use('/', userRoutes); 
 
-// DB Connection
-const db_link = require("./config/keys").MongoUrl;
-mongoose
-    .connect(`${db_link}`, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useFindAndModify: false,
-    })
-    .then(() => console.log("Now connected to MongoDB!"))
-    .catch((err) => console.error("Something went wrong", err));
 
 //require the fastify framework and instantiate it
 app.use(function(req, res, next) {
     //exclude other routes
+    // console.log(req);
     if (
+
         (req.method === "POST" && req.url === "/logout") || (req.method === "POST" && req.url === "/users/register") ||
         (req.method === "GET" && req.url === "/socket.io/socket.io.js")
     ) {
+        console.log(req.url);
         next();
     } else {
+        console.log(req.url);
         // Website you wish to allow to connect
         res.setHeader("Access-Control-Allow-Origin", "*");
 
@@ -160,27 +150,12 @@ app.use(function(req, res, next) {
         // decode token
         if (token !== "undefined" && token) {
             let splittedToken = token.split(" ");
-            let data;
-            jwt.verify(splittedToken[1], process.env.SECRETS, (err, decoded) => {
-                if (err) {
-                    res.status(401).send("Token has expired");
-                }
-                data = decoded;
-            });
-            const id = data.user;
-            Auth.findOne({ username: id }, (err, doc) => {
-                console.log(doc);
-                console.log(data);
+            jwt.verify(splittedToken[1], process.env.SECRETS, (err) => {
                 if (err) {
                     console.log(err);
-                    res
-                        .status(500)
-                        .send("Something wrong when trying to find in database");
-                } else if (doc && doc.Token === splittedToken[1]) {
-                    next();
-                } else {
-                    res.status(401).send("Invalid token or token was revoked");
+                    res.status(401).send("Token has expired");
                 }
+                next();
             });
         } else {
             // if there is no token

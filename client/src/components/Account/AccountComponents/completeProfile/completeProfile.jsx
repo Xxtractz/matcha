@@ -54,7 +54,7 @@ class CompleteProfile extends Component {
       gender: this.state.gender.toString(),
       genderPreference: this.state.genderPreference.toString(),
       bio: this.state.bio.toString(),
-      interests: interestToString,
+      // interests: interestToString,
     };
 
     console.log(user);

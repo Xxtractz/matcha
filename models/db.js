@@ -87,6 +87,25 @@ matchaDb.updateAuth = (username, token, refreshToken) => {
   });
 };
 
+matchaDb.updateUserById = (userid, user) => {
+    console.log(user);
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `UPDATE users SET ? WHERE userid = ?`,
+            [user,
+                userid,
+            ],
+            (err, results) => {
+                console.log(results);
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+};
+
 matchaDb.updateStatus = (username, status) => {
     return new Promise((resolve, reject) => {
         poolConnection.query(
