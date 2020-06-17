@@ -14,16 +14,9 @@ const User = function (user) {
   this.date = user.date;
 };
 
-//registering a user
 User.create =  async (newUser, result) => {
   try{
     let newUserDetails = await sql.insert('users',newUser);
-    // sql.query("Insert INTO users SET ?", newUser, (err, res) => {
-    //   if (err) {
-    //     console.log("error: ", err);
-    //     result(err, null);
-    //     return;
-    //   }
     if (newUserDetails){
       console.log("User created: ", { userid: newUserDetails.userid, ...newUserDetails });
       result(null, { userid: newUserDetails.userid, ...newUserDetails });
@@ -38,14 +31,8 @@ User.create =  async (newUser, result) => {
       result(message[0],null);
     }
   }
-
-
-
-
-  // });
 };
 
-//login in the user
 User.logins = async (username, password, result) => {
   try {
     let user = await sql.findByUsername("users", username);
@@ -101,15 +88,13 @@ User.logins = async (username, password, result) => {
             }
           }
         } else {
-          result({ kind: "Bad_Credencials" }, null);
-          return;
+          return result({ kind: "Bad_Credencials" }, null);
         }
       });
     }
   } catch (err) {
     console.log("Error in logins: ", err);
-    result(err, null);
-    return;
+    return result(err, null);
   }
 };
 
@@ -158,22 +143,18 @@ User.refreshToken = async (username, result) => {
     }
   } catch (err) {
     console.log("Error in logins: ", err);
-    result(err, null);
-    return;
+    return result(err, null);
   }
 };
 
-//logout user and update their last seen
 User.logoutUser = async (username, result) => {
   const date = new Date(Date.now()).toLocaleString();
   let lastSeen = sql.addLastSeen(username, date);
   console.log(lastSeen);
   if (!lastSeen) {
-    result({ kind: "not_found" }, null);
-    return;
+    return result({ kind: "not_found" }, null);
   } else {
     let logout = sql.removeSession(username);
-
     return result(null, logout);
   }
 };
@@ -196,14 +177,12 @@ User.changesPassword = (username, password, result) => {
     (err, res) => {
       if (err) {
         console.log("Error trying to update password: ", err);
-        return null, err;
+        return result(err, null);
       }
-
       if (res.affectedRows == 0) {
         result({ kind: "not_found" }, null);
         return;
       }
-
       result(null, { userid: userid, ...res[0] });
     }
   );
@@ -272,25 +251,6 @@ User.verifysReg = async (username, result) => {
   }catch (e) {
     result(e, null);
   }
-
-  // sql.query(
-  //   "UPDATE users SET status = ? WHERE username = ?",
-  //   ["1", username],
-  //   (err, res) => {
-  //     if (err) {
-  //       console.log("Error in verifysReg: ", err);
-  //       result(null, err);
-  //       return;
-  //     }
-  //
-  //     if (res.affectedRows == 0) {
-  //       result({ kind: "not_found" }, null);
-  //       return;
-  //     }
-  //
-  //     result(null, { username: username, ...res[0] });
-  //   }
-  // );
 };
 
 //get all the users in the database
@@ -399,7 +359,7 @@ User.remove = (userid, result) => {
 User.removeAll = (result) => {
   sql.query("DELETE FROM users", (err, res) => {
     if (err) {
-      console.log("Error trying to delete all users: ", errr);
+      console.log("Error trying to delete all users: ", err);
       result(null, err);
       return;
     }
