@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import {handleLogin, login} from "../../actions/api";
-//import {isEmpty} from '../../utils/validate';
+import { login } from "../../actions/api";
 import { Button, TextField, Card, CardActions } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,17 +10,17 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      username: '',
-      username_err: '',
-      username_err_helperText: '',
-      password: '',
-      password_err: '',
-      password_err_helperText: '',
+      username: "",
+      username_err: "",
+      username_err_helperText: "",
+      password: "",
+      password_err: "",
+      password_err_helperText: "",
       isopen: true,
       errorResponse: false,
-      verifyErrorMsg: '',
-      verifyToken: '',
-      error:''
+      verifyErrorMsg: "",
+      verifyToken: "",
+      error: "",
     };
   }
 
@@ -84,8 +83,8 @@ class Login extends Component {
     this.setState({
       [e.target.name]: [e.target.value],
     });
-    if(this.state.error){
-      this.setState({error:''});
+    if (this.state.error) {
+      this.setState({ error: "" });
     }
   };
 
@@ -110,14 +109,13 @@ class Login extends Component {
           console.log(res);
           if (res) {
             if (res.status === 404) {
-              this.setState({ error: 'Username does not exist' });
+              this.setState({ error: "Username does not exist" });
             } else if (res.status === 400) {
               this.setState({ errorResponse: true });
               this.setState({ verifyErrorMsg: res.data.User.toString() });
               this.setState({ verifyToken: res.data.Token.toString() });
             }
             if (res === 200) {
-              // handleLogin(res.data.Token, res.data.RefreshToken)
               window.location.reload();
             } else {
               console.log(res);
@@ -179,18 +177,18 @@ class Login extends Component {
   displayErr() {
     if (this.state.error) {
       if (this.state.error.toString() === "") {
-        return <div/>;
+        return <div />;
       } else {
         return (
-            <div className="m-2 ml-5 mr-5">
-              <Alert variant="outlined" severity="error">
-                {this.state.error.toString()}
-              </Alert>
-            </div>
+          <div className="m-2 ml-5 mr-5">
+            <Alert variant="outlined" severity="error">
+              {this.state.error.toString()}
+            </Alert>
+          </div>
         );
       }
     }
-    return <div/>;
+    return <div />;
   }
 
   render() {
@@ -202,7 +200,10 @@ class Login extends Component {
           <div className="row">
             <div className="col-md-6 mx-auto pt-5 mt-5">
               {this.displayErr()}
-              <Card className="card m-5 p-5 mx-auto col-10 form" variant="outlined">
+              <Card
+                className="card m-5 p-5 mx-auto col-10 form"
+                variant="outlined"
+              >
                 <form onSubmit={this.submitHandler}>
                   <p className="h3 text-center mb-4">Sign in</p>
                   <div className="text-center">
@@ -224,7 +225,12 @@ class Login extends Component {
                 </form>
                 <hr />
                 <CardActions className="bg-gray">
-                  <Button variant="outlined" color="primary" size="small" href="/register">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    size="small"
+                    href="/register"
+                  >
                     Register
                   </Button>
                 </CardActions>

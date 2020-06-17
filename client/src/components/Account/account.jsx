@@ -22,26 +22,26 @@ class Account extends Component {
   displayVerifyError() {
     return (
       <div className="mt-5">
-      <Collapse in={this.state.isopen}>
-        <Alert
-          variant="filled"
-          severity="error"
-          action={
-            <IconButton
-              aria-label="close"
-              size="small"
-              onClick={() => {
-                this.setState({ isopen: false });
-              }}
-            >
-              <CloseIcon fontSize="inherit" />
-            </IconButton>
-          }
-        >
-          <strong>Profile incomplete</strong>
-        </Alert>
-      </Collapse>
-     { this.displayCompleteProfile()}
+        <Collapse in={this.state.isopen}>
+          <Alert
+            variant="filled"
+            severity="error"
+            action={
+              <IconButton
+                aria-label="close"
+                size="small"
+                onClick={() => {
+                  this.setState({ isopen: false });
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+          >
+            <strong>Profile incomplete</strong>
+          </Alert>
+        </Collapse>
+        {this.displayCompleteProfile()}
       </div>
     );
   }
@@ -74,9 +74,9 @@ class Account extends Component {
   render() {
     return (
       <Layout>
-        {console.log(getUserStatus())
-        }
-        {getUserStatus() !== "2" ? this.displayVerifyError() : this.displayAccount()}
+        {getUserStatus() !== "2"
+          ? this.displayVerifyError()
+          : this.displayAccount()}
       </Layout>
     );
   }
