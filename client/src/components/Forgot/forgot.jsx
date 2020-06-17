@@ -88,17 +88,23 @@ class Forgot extends Component {
                   {this.usernameSection()}
                 </div>
                 <div className="text-center p-3">
-                  <Button variant="contained" type="submit">
+                  <Button variant="outlined"
+                          color="primary"
+                          size="small" type="submit">
                     Reset
                   </Button>
                 </div>
               </form>
               <hr />
               <CardActions className="bg-gray">
-                <Button variant="contained" size="small" href="/register">
+                <Button variant="outlined"
+                        color="primary"
+                        size="small"  href="/register">
                   Register
                 </Button>
-                <Button variant="contained" size="small" href="/login">
+                <Button variant="outlined"
+                        color="primary"
+                        size="small" href="/login">
                   Login
                 </Button>
               </CardActions>

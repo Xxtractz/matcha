@@ -87,6 +87,21 @@ matchaDb.updateAuth = (username, token, refreshToken) => {
   });
 };
 
+matchaDb.updateStatus = (username, status) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            "UPDATE users SET status = ? WHERE username = ?",
+            [status, username],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+};
+
 matchaDb.addLastSeen = (username, lastSeen) => {
   return new Promise((resolve, reject) => {
     poolConnection.query(

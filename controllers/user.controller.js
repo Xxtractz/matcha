@@ -55,7 +55,7 @@ exports.create = async (req, res) => {
                 if (err) {
                     console.log(err);
                     res.status(409).send({
-                        User: err + ' Already Exist' || "Some error occured while creating a user."
+                        User: err + ' Already Exist' || "Some error occurred while creating a user."
                     });
                 } else {
                     commonFunction.sendEmail(

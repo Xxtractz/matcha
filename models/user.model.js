@@ -32,15 +32,11 @@ User.create =  async (newUser, result) => {
       result(newUserDetails, null);
     }
   }catch (e) {
-    console.log("User created: ", e);
-    console.log("\n\nUser created: ", e.code);
-    console.log("\n\nUser created: ", e.message);
+    console.log(e);
     if(e.code ==='ER_DUP_ENTRY'){
        let message = e.message.match(/(\x27).+(\x27) /gm);
       result(message[0],null);
     }
-
-    // result(e, null);
   }
 
 
@@ -268,25 +264,33 @@ User.checksToken = (username, result) => {
 };
 
 //verifies user after redistration
-User.verifysReg = (username, result) => {
-  sql.query(
-    "UPDATE users SET status = ? WHERE username = ?",
-    ["1", username],
-    (err, res) => {
-      if (err) {
-        console.log("Error in verifysReg: ", err);
-        result(null, err);
-        return;
-      }
+User.verifysReg = async (username, result) => {
+  try{
+    let statusUpdate = await sql.updateStatus(username,'1');
 
-      if (res.affectedRows == 0) {
-        result({ kind: "not_found" }, null);
-        return;
-      }
+      result(null, { username: username, statusUpdate });
+  }catch (e) {
+    result(e, null);
+  }
 
-      result(null, { username: username, ...res[0] });
-    }
-  );
+  // sql.query(
+  //   "UPDATE users SET status = ? WHERE username = ?",
+  //   ["1", username],
+  //   (err, res) => {
+  //     if (err) {
+  //       console.log("Error in verifysReg: ", err);
+  //       result(null, err);
+  //       return;
+  //     }
+  //
+  //     if (res.affectedRows == 0) {
+  //       result({ kind: "not_found" }, null);
+  //       return;
+  //     }
+  //
+  //     result(null, { username: username, ...res[0] });
+  //   }
+  // );
 };
 
 //get all the users in the database

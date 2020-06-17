@@ -7,7 +7,7 @@ const ServerUrl = "http://localhost:4000";
 // Register User
 export const registerUserUrl = ServerUrl + "/users/register";
 // Verify User after Registeration
-export const verifyUserAfterRegUrl = ServerUrl + "/users/verify";
+export const verifyUserAfterRegUrl = ServerUrl + "/users/verify/";
 export const loginUserUrl = ServerUrl + "/users/login";
 export const logoutUserUrl = ServerUrl + "/users/logout";
 export const ReverifyUrl = ServerUrl + "/verifyAgain";

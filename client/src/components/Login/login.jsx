@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { login } from "../../actions/api";
-import { Button, TextField, Card, CardActions } from "@material-ui/core";
+import {Button, TextField, Card, CardActions, ButtonBase} from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import IconButton from "@material-ui/core/IconButton";
 import Collapse from "@material-ui/core/Collapse";
@@ -233,6 +233,14 @@ class Login extends Component {
                   >
                     Register
                   </Button>
+                </CardActions>
+                <CardActions className="bg-gray">
+                  <ButtonBase variant="text" size="small" href="/forgot">
+                    forgot password?
+                  </ButtonBase>
+                  <ButtonBase variant="text" size="small" href="/verify">
+                  verify account?
+                </ButtonBase>
                 </CardActions>
               </Card>
             </div>
