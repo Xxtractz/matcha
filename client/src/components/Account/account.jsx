@@ -8,7 +8,7 @@ import Images from "./AccountComponents/images";
 import Profile from "./AccountComponents/profile";
 import AuthDetails from "./AccountComponents/authdetails";
 import Settings from "./AccountComponents/settings";
-import { getUserStatus } from "../../actions/user";
+import {getActive} from "../../actions/user";
 import CompleteProfile from "./AccountComponents/completeProfile/completeProfile";
 
 class Account extends Component {
@@ -74,7 +74,7 @@ class Account extends Component {
   render() {
     return (
       <Layout>
-        {getUserStatus() !== "2"
+        {getActive() !== 1
           ? this.displayVerifyError()
           : this.displayAccount()}
       </Layout>

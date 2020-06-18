@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Layout from "../Layout/layout";
-import { getUserStatus } from "../../actions/user";
+import {getActive} from "../../actions/user";
 
 class Messages extends Component {
   display() {
@@ -10,7 +10,7 @@ class Messages extends Component {
   render() {
     return (
       <div>
-        {getUserStatus() === "2" ? (
+        {getActive() === 1 ? (
           <Layout>{this.display()}</Layout>
         ) : (
           this.props.history.push(`/user`)

@@ -5,8 +5,7 @@ import {
   getUserFirstName,
   getUserLastName,
   getUsername,
-  getUserStatus,
-  getProfilePicture,
+  getProfilePicture, getActive,
 } from "../../actions/user";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import {
@@ -112,9 +111,9 @@ class Nav extends Component {
             <hr />
             <div className="col-12">
               <List component="nav">
-                {getUserStatus() === "2" ? this.homeMenu() : ""}
+                {getActive() === 1 ? this.homeMenu() : ""}
 
-                {getUserStatus() === "2" ? this.messageMenu() : ""}
+                {getActive() === 1 ? this.messageMenu() : ""}
 
                 {this.accountMenu()}
 
@@ -154,9 +153,9 @@ class Nav extends Component {
             <div className={this.toggle()}>
               <ul className="navbar-nav ml-auto">
                 <List component="nav">
-                  {getUserStatus() === "2" ? this.homeMenu() : ""}
+                  {getActive() === 1 ? this.homeMenu() : ""}
 
-                  {getUserStatus() === "2" ? this.messageMenu() : ""}
+                  {getActive() === 1 ? this.messageMenu() : ""}
 
                   {this.accountMenu()}
 

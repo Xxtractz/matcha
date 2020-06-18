@@ -4,13 +4,13 @@ import { Button } from "@material-ui/core";
 import {
   getUserFirstName,
   getUserLastName,
-  getUserId,
+  getUserId, getUserStatus
 } from "../../../../actions/user";
 import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import { selecFormInput, textAreaFormInput } from "../../../Form/form";
-import { update, userData } from "../../../../actions/api";
+import {refresh, update} from "../../../../actions/api";
 import UploadImages from "./uploadImages";
 
 class CompleteProfile extends Component {
@@ -30,11 +30,6 @@ class CompleteProfile extends Component {
       isopen: true,
       stepOne: true,
     };
-    // this.getUser();
-  }
-
-  getUser() {
-    userData(getUserId());
   }
 
   submitHandler = (e) => {
@@ -45,7 +40,7 @@ class CompleteProfile extends Component {
   updateProfile() {
     let interestToString = [];
 
-    for (var i = 0; i < this.state.tags.length; i++) {
+    for (let i = 0; i < this.state.tags.length; i++) {
       interestToString = interestToString.concat(this.state.tags[i]);
     }
     const user = {
@@ -54,7 +49,7 @@ class CompleteProfile extends Component {
       gender: this.state.gender.toString(),
       genderPreference: this.state.genderPreference.toString(),
       bio: this.state.bio.toString(),
-      // interests: interestToString,
+      status: '2',
     };
 
     console.log(user);
@@ -62,7 +57,8 @@ class CompleteProfile extends Component {
     update(getUserId(), user)
       .then((response) => {
         if (response.status === 200) {
-          this.setState({ stepOne: false });
+          this.displayImageSection();
+          refresh(this.state.firstname).then();
         }
       })
       .catch((error) => {
@@ -239,7 +235,7 @@ class CompleteProfile extends Component {
           <h1>Complete Profile</h1>
           <small> Please Complete you Profile</small>
         </Paper>
-        {this.state.stepOne
+        {getUserStatus() === "1"
           ? this.displayDetailsform()
           : this.displayImageSection()}
       </div>

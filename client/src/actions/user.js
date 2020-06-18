@@ -3,6 +3,8 @@ import * as jwt from 'jsonwebtoken';
 const Token = localStorage.getItem("User_Token");
 const data = jwt.decode(Token, "matchSecrets");
 
+
+console.log(data);
 export const getUserId = () => {
     return data.userid;
 };
@@ -53,4 +55,8 @@ export const getUserInterest = () => {
 
 export const getProfilePicture = () => {
     return data.profileImage;
+}
+
+export const getActive = () =>{
+    return data.active;
 }

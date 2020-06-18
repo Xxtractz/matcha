@@ -4,13 +4,13 @@ import React, { Component } from "react";
 import Layout from "../Layout/layout";
 import Profiles from "./HomeComponents/profiles";
 import Search from "./HomeComponents/search";
-import { getUserStatus } from "../../actions/user";
+import {getActive} from "../../actions/user";
 
 class index extends Component {
   render() {
     return (
       <div>
-        {getUserStatus() === "2" ? (
+        {getActive() === 1 ? (
           <Layout>
             <Search></Search>
             <Profiles></Profiles>
