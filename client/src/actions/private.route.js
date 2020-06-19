@@ -6,16 +6,18 @@ import { getUsername } from "./user";
 
 export const PrivateRoute = ({ component: Component, ...rest }) => {
   return (
-    <Route
-      {...rest}
-      render={(props) => {
+    <Route {...rest} component={(props) => {
         if (isloggedIn()) {
           refresh({ username: getUsername() }).then();
-          return <Component {...props} />;
+          return (
+                <div>
+                    <Component {...props} />
+                </div>
+            );
         } else {
           return (
             <Redirect
-              to={{ pathname: "/login", state: { from: props.location } }}
+              to="/login"
             />
           );
         }
@@ -23,3 +25,4 @@ export const PrivateRoute = ({ component: Component, ...rest }) => {
     />
   );
 };
+

@@ -6,6 +6,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import { uploadImage, update } from "../../../../actions/api";
 import { getUserId } from "../../../../actions/user";
+import LoadingOverlay from 'react-loading-overlay';
 
 class UploadImages extends Component {
   constructor(props) {
@@ -18,9 +19,11 @@ class UploadImages extends Component {
       imageThree: false,
       imageFour: false,
       profileImage: "",
-      Images: [],
-      defaultimage: "src/assets/images/addImage.png",
-      file: "",
+      image_1:"",
+      image_2:"",
+      image_3:"",
+      image_4:"",
+      uploading: false
     };
   }
 
@@ -33,7 +36,11 @@ class UploadImages extends Component {
     const user = {
       status: "2",
       profileImage: this.state.profileImage,
-      // images: this.state.Images,
+      image_1: this.state.image_1,
+      image_2: this.state.image_2,
+      image_3: this.state.image_3,
+      image_4: this.state.image_4,
+      active: 1
     };
 
     console.log(user);
@@ -54,48 +61,79 @@ class UploadImages extends Component {
 
   uploadToCloudinary(image) {
     uploadImage(image).then((res) => {
-      console.log(res);
-      console.log(res.data);
-      console.log(res.data.secure_url);
-      if (this.state.profileImage === "") {
-        this.setState({ profileImage: res.data.secure_url });
-      } 
-      // else {
-      //   this.setState({ tags: [...this.state.Images, res.data.secure_url] });
-      // }
+      if (res.status === 200){
+        if (this.state.profileImage === "") {
+          this.setState({ profileImage: res.data.secure_url });
+        } else if (this.state.image_1 === "") {
+          this.setState({ image_1: res.data.secure_url });
+        } else if (this.state.image_2 === "") {
+          this.setState({ image_2: res.data.secure_url });
+        } else if (this.state.image_3 === "") {
+          this.setState({ image_3: res.data.secure_url });
+        }else if (this.state.image_4 === "") {
+          this.setState({ image_4: res.data.secure_url });
+        }
+        this.setState({uploading: false});
+      }
     });
   }
 
   checkAndUpload(imageList) {
+    console.log(imageList.length);
     if (!this.state.profilePictureUploaded) {
       this.uploadToCloudinary(imageList[0].dataURL);
       this.setState({ profilePictureUploaded: true });
+    } else {
+      if (!this.state.imageOne && imageList.length === 2) {
+        this.uploadToCloudinary(imageList[1].dataURL);
+        this.setState({ imageOne: true });
+      }
+      if (!this.state.imageTwo && imageList.length === 3) {
+        this.uploadToCloudinary(imageList[2].dataURL);
+        this.setState({ imageTwo: true });
+      }
+      if (!this.state.imageThree  && imageList.length === 4 ) {
+        this.uploadToCloudinary(imageList[3].dataURL);
+        this.setState({ profilePictureUploaded: true });
+      }
+      if (!this.state.imageFour && imageList.length === 5) {
+        this.uploadToCloudinary(imageList[4].dataURL);
+        this.setState({ profilePictureUploaded: true });
+      }
     }
-    // } else {
-    //   if (!this.state.imageOne && imageList[1].dataURL.legnth < 1) {
-    //     this.uploadToCloudinary(imageList[1].dataURL);
-    //     this.setState({ imageOne: true });
-    //   }
-    //   if (!this.state.imageTwo && imageList[2].dataURL) {
-    //     this.uploadToCloudinary(imageList[2].dataURL);
-    //     this.setState({ imageTwo: true });
-    //   }
-    //   if (!this.state.imageThree && imageList[3].dataURL) {
-    //     this.uploadToCloudinary(imageList[3].dataURL);
-    //     this.setState({ profilePictureUploaded: true });
-    //   }
-    //   if (!this.state.imageFour && imageList[4].dataURL) {
-    //     this.uploadToCloudinary(imageList[4].dataURL);
-    //     this.setState({ profilePictureUploaded: true });
-    //   }
-    // }
+  }
+
+  loading(){
+    return(
+        <div className="overlay">
+          <div style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            fontsize: '50px',
+            color: 'white',
+            transform: 'translate(-50%,-50%)',
+            mstransform: 'translate(-50%,-50%)'
+          }
+          }>
+            <LoadingOverlay
+                active={true}
+                spinner
+                text='Uploading ...'
+            >
+            </LoadingOverlay>
+          </div>
+
+        </div>
+    )
   }
 
   displayImages() {
-    const maxNumber = 1;
+    const maxNumber = 5;
     const maxMbFileSize = 2 * 1024 * 1024;
     const onChange = (imageList) => {
       // Checks and Upload
+      this.setState({uploading : true});
       this.checkAndUpload(imageList);
     };
 
@@ -177,6 +215,8 @@ class UploadImages extends Component {
             Complete
           </Button>
         </div>
+
+        {this.state.uploading ? this.loading():''}
         {this.displayImages()}
       </form>
     );

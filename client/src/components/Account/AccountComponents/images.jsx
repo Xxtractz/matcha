@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
-import { getProfilePicture } from "../../../actions/user";
+import {getImageFour, getImageOne, getImageThree, getImageTwo, getProfilePicture} from "../../../actions/user";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
@@ -29,7 +29,6 @@ class images extends Component {
             your profile
           </small>
         </Paper>
-        <div className="upload__image-wrapper "></div>
         <div className="row m-3">
           <div className="col-md">
             <Card className="image-section">
@@ -42,10 +41,10 @@ class images extends Component {
               </CardActionArea>
             </Card>
           </div>
-          {this.display(getProfilePicture())}
-          {this.display(getProfilePicture())}
-          {this.display(getProfilePicture())}
-          {this.display(getProfilePicture())}
+          {this.display(getImageOne())}
+          {this.display(getImageTwo())}
+          {this.display(getImageThree())}
+          {this.display(getImageFour())}
         </div>
         <div className="text-center p-3">
           <Button variant="contained" type="submit">

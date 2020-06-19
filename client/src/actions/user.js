@@ -57,6 +57,22 @@ export const getProfilePicture = () => {
     return data.profileImage;
 }
 
+export const getImageOne = () => {
+    return data.image_1;
+}
+
+export const getImageTwo = () => {
+    return data.image_2;
+}
+
+export const getImageThree = () => {
+    return data.image_3;
+}
+
+export const getImageFour = () => {
+    return data.image_4;
+}
+
 export const getActive = () =>{
     return data.active;
 }

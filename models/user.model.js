@@ -114,6 +114,10 @@ User.refreshToken = async (username, result) => {
         genderPreference: user.genderPreference,
         age: user.age,
         profileImage: user.profileImage,
+        image_1:user.image_1,
+        image_2:user.image_2,
+        image_3:user.image_3,
+        image_4:user.image_4,
         active: user.active,
         lastseen: user.lastseen,
         dob: user.dob,
@@ -171,21 +175,21 @@ User.findById = async (userid, result) => {
 
 //chenge the user password
 User.changesPassword = (username, password, result) => {
-  sql.query(
-    "UPDATE users SET password = ? WHERE username = ?",
-    [password, username],
-    (err, res) => {
-      if (err) {
-        console.log("Error trying to update password: ", err);
-        return result(err, null);
-      }
-      if (res.affectedRows == 0) {
-        result({ kind: "not_found" }, null);
-        return;
-      }
-      result(null, { userid: userid, ...res[0] });
-    }
-  );
+  // sql.query(
+  //   "UPDATE users SET password = ? WHERE username = ?",
+  //   [password, username],
+  //   (err, res) => {
+  //     if (err) {
+  //       console.log("Error trying to update password: ", err);
+  //       return result(err, null);
+  //     }
+  //     if (res.affectedRows == 0) {
+  //       result({ kind: "not_found" }, null);
+  //       return;
+  //     }
+  //     result(null, { userid: userid, ...res[0] });
+  //   }
+  // );
 };
 
 //check if the email exists before registrations or when updating the email
@@ -268,23 +272,23 @@ User.getAll = (result) => {
 
 //used to update the password at forgot password
 User.verifications = (username, password, result) => {
-  sql.query(
-    "UPDATE users SET password = ? WHERE username = ?",
-    [password, username],
-    (err, res) => {
-      if (err) {
-        console.log("Error trying to update password: ", err);
-        return null, err;
-      }
-
-      if (res.affectedRows == 0) {
-        result({ kind: "not_found" }, null);
-        return;
-      }
-
-      result(null, { userid: userid, ...res[0] });
-    }
-  );
+  // sql.query(
+  //   "UPDATE users SET password = ? WHERE username = ?",
+  //   [password, username],
+  //   (err, res) => {
+  //     if (err) {
+  //       console.log("Error trying to update password: ", err);
+  //       return null, err;
+  //     }
+  //
+  //     if (res.affectedRows == 0) {
+  //       result({ kind: "not_found" }, null);
+  //       return;
+  //     }
+  //
+  //     result(null, { userid: userid, ...res[0] });
+  //   }
+  // );
 };
 
 //verification for invalid token and getting new token
@@ -317,20 +321,20 @@ User.updateByID = (userid, user, result) => {
 
 //remove one user by id
 User.remove = (userid, result) => {
-  sql.query("DELETE FROM users WHERE userid = ?", userid, (err, res) => {
-    if (err) {
-      console.log("Error trying to delete by ID: ", err);
-      result(null, err);
-      return;
-    }
-
-    if (res.affectedRows == 0) {
-      result({ kind: "not_found" }, null);
-      return;
-    }
-
-    result(null, res);
-  });
+  // sql.query("DELETE FROM users WHERE userid = ?", userid, (err, res) => {
+  //   if (err) {
+  //     console.log("Error trying to delete by ID: ", err);
+  //     result(null, err);
+  //     return;
+  //   }
+  //
+  //   if (res.affectedRows == 0) {
+  //     result({ kind: "not_found" }, null);
+  //     return;
+  //   }
+  //
+  //   result(null, res);
+  // });
 };
 
 //remove all the users in the database

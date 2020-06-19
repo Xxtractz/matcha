@@ -58,7 +58,7 @@ class UserProfile extends Component {
       <div className=" row mb-3">
         <div className="col-10    ">
           <InputLabel>Interests</InputLabel>
-          <p>{getUserInterest().toString()}</p>
+          {/*<p>{getUserInterest().toString()}</p>*/}
         </div>
       </div>
     );

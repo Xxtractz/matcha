@@ -6,9 +6,9 @@ import {
   FormControlLabel,
   FormControl,
   FormLabel,
-  Slider,
   Button,
 } from "@material-ui/core";
+import Slider from '@material-ui/core/Slider'
 
 class Search extends Component {
   constructor() {
