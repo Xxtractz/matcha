@@ -182,7 +182,7 @@ export const getUsers = async (gender) => {
   return axios.post(`${_Url.usersUrl}/${gender}`,{gender:gender}).then((response) => {
     // handleStoreUser(JSON.stringify(response.data.User));
     // return response.data.User.status;
-    console.log(response);
+    return response;
   });
 };
 
