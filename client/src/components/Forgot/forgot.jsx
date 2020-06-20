@@ -24,10 +24,11 @@ class Forgot extends Component {
     Reset(username)
       .then((res) => {
         if (res) {
-          if (res === 204) {
+          console.log(res);
+          if (res.status === 204) {
             console.log("Username Doesn't Exist");
           }
-          if (res === 200) {
+          if (res.status === 200) {
             window.location.replace("/login");
           } else {
             console.log(res);
