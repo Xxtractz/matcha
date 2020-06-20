@@ -186,6 +186,13 @@ export const getUsers = async (gender) => {
   });
 };
 
+export const loadImage = (image) => {
+  return axios.request(image).then((res) => {
+    console.log(res);
+    return res.request.responseURL;
+  })
+}
+
 export const uploadImage = (image) => {
   const unsignedUploadPreset = "odj1pwzn";
   const cloudName = "dz1whmlhr";

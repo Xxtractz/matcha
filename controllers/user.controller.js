@@ -90,13 +90,15 @@ exports.login = async (req, res) => {
 
     await User.logins(decryptedData.username, decryptedData.password, (err, data) => {
         if (err) {
-            console.log(err);
             if (err.kind === "not_found") {
                 res.status(404).send({
                     User: "The user does not exists"
                 });
+
+            }else if(err.kind === "bad_creds"){
+                res.status(401).send({User : "Invalid Credentials"});
             }else if(err.kind === "notVerified"){
-                res.status(401).send({User : "Account Not Verified",token:err.token});
+                res.status(403).send({User : "Account Not Verified",token:err.token});
             } else {
                 res.status(500).send({
                     User: "Error getting the user with email " + decryptedData.username
@@ -106,7 +108,6 @@ exports.login = async (req, res) => {
             res.status(200).send(data);
         }
     });
-
 };
 
 exports.checkEmail = (req, res) => {
@@ -186,7 +187,10 @@ exports.resetPassword = async (req, res) => {
 }
 
 exports.verifyAgain = (req, res) => {
+    console.log('I on verify');
     User.verifysAgain(req.body.email, (err, data) => {
+        console.log(err);
+        console.log("Response",data)
         if (err) {
             if (err.kind === "not_found") {
                 res.status(404).send({
@@ -206,16 +210,22 @@ exports.verifyAgain = (req, res) => {
                 username: data.username,
                 email: data.email,
             };
-            const token = jwt.sign(user, process.env.SECRETS);
-            user.token = token;
-            commonFunction.sendEmail(
-                req.body.email,
-                "Verify your account",
-                '<p> Please <a href="http://localhost:3000/verify?token=' +
-                token +
-                '"> Click Here </a> to verify.</p>'
-            );
-            res.status(200).send({ User: "Successfully verified the user." });
+
+            if (data.status === '0'){
+                const token = jwt.sign(user, process.env.SECRETS);
+                user.token = token;
+                commonFunction.sendEmail(
+                    req.body.email,
+                    "Verify your account",
+                    '<p> Please <a href="http://localhost:3000/verify?token=' +
+                    token +
+                    '"> Click Here </a> to verify.</p>'
+                );
+                res.status(200).send({ User: "Successfully verified the user." });
+            }else
+            {
+                res.status(409).send({User: "Successfully verified the user."});
+            }
         }
     });
 }

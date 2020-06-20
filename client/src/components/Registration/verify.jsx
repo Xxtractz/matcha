@@ -15,6 +15,7 @@ class verifyUser extends Component {
       invalidToken: false,
       displayform: false,
       email: "",
+      error: "",
     };
   }
 
@@ -45,20 +46,25 @@ class verifyUser extends Component {
     reverifyUser(email)
       .then((res) => {
         if (res) {
-          if (res.status === 204) {
-            console.log("Username Doesn't Exist");
-          }
           if (res.status === 200) {
             window.location.replace("/login");
-          } else {
-            console.log(res);
+          }
+          else if (res.status === 404) {
+            this.setState({ error: "Username does not exist" });
+          }
+          else if (res.status === 409) {
+            this.setState({ error: "Account has been Verified" });
+          }
+          else {
+            this.setState({ error: "Sorry, System is unavailable, please try again later" });
           }
         } else {
-          console.log("Server is Offline");
+          this.setState({ error: "Sorry, System is unavailable, please try again later" });
         }
       })
       .catch((err) => {
-        console.log("Timeout");
+        console.log(err);
+        this.setState({ error: "Sorry, System is unavailable, please try again later" });
       });
   }
 
@@ -66,6 +72,9 @@ class verifyUser extends Component {
     this.setState({
       [e.target.name]: [e.target.value],
     });
+    if (this.state.error) {
+      this.setState({ error: "" });
+    }
   };
 
   emailSection() {
@@ -116,10 +125,28 @@ class verifyUser extends Component {
     );
   }
 
+  displayErr() {
+    if (this.state.error) {
+      if (this.state.error.toString() === "") {
+        return <div />;
+      } else {
+        return (
+            <div className="m-2 ml-5 mr-5">
+              <Alert variant="outlined" severity="error">
+                {this.state.error.toString()}
+              </Alert>
+            </div>
+        );
+      }
+    }
+    return <div />;
+  }
+
   displayform() {
     return (
       <div className="row">
         <div className="col-md-6 mx-auto pt-5 mt-5">
+          {this.displayErr()}
           <Card className="card m-5 p-5 mx-auto col-10 " variant="outlined">
             <form onSubmit={this.submitHandler}>
               <p className="h3 text-center mb-4">Verify Account</p>

@@ -88,7 +88,7 @@ User.logins = async (username, password, result) => {
             }
           }
         } else {
-          return result({ kind: "Bad_Credencials" }, null);
+          return result({ kind: "bad_creds" }, null);
         }
       });
     }
@@ -296,21 +296,30 @@ User.reset = async (username, password, result) => {
 };
 
 //verification for invalid token and getting new token
-User.verifysAgain = (email, result) => {
-  sql.query(`SELECT * FROM users WHERE email = ?`, email, (err, res) => {
-    if (err) {
-      console.log("Error in verifysAgain: ", err);
-      result(err, null);
-      return;
-    }
-
-    if (res.length) {
-      result(null, res[0]);
-      return;
-    }
-
-    result({ kind: "not_found" }, null);
-  });
+User.verifysAgain = async (email, result) => {
+  try {
+    let user = await sql.findByEmail(email);
+    return result(null, user);
+  }
+  catch (e) {
+    console.log(e);
+    return result({ kind: "not_found" }, null);
+  }
+  //
+  // sql.query(`SELECT * FROM users WHERE email = ?`, email, (err, res) => {
+  //   if (err) {
+  //     console.log("Error in verifysAgain: ", err);
+  //     result(err, null);
+  //     return;
+  //   }
+  //
+  //   if (res.length) {
+  //     result(null, res[0]);
+  //     return;
+  //   }
+  //
+  //   result({ kind: "not_found" }, null);
+  // });
 };
 
 //update the user by id

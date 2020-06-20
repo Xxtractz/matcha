@@ -6,41 +6,44 @@ import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import InfoIcon from "@material-ui/icons/Info";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import { blue, red } from "@material-ui/core/colors";
-import {getProfilePicture, getUserGenderPreference} from "../../../actions/user";
-import {getUsers} from "../../../actions/api";
+import { getUserGenderPreference} from "../../../actions/user";
+import {getUsers, loadImage} from "../../../actions/api";
 
 class Profiles extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cards: [],
-
+      image:''
     };
     this.getCardState();
   }
 
   getCardState(){
     getUsers(getUserGenderPreference()).then((res)=>{
-      console.log(res);
       this.setState({ cards : [...res.data]});
-      console.log(this.state.cards);
     });
   }
 
-  like = () => {
-    if (
-      this.state.cards[0].name !== null &&
-      this.state.cards[0].name !== undefined
-    ) {
-      console.log(this.state.cards[0].name + " Was Liked");
+  like = (user) => {
+      console.log(user + " Was Liked");
       this.remove();
-    }
   };
 
-  dislike = () => {
-    console.log(this.state.cards[0].name + " Was disLiked");
+  dislike = (user) => {
+    console.log(user + " Was disLiked");
     this.remove();
   };
+
+  loadimage(imgUrl){
+    loadImage(imgUrl).then(res =>
+        {
+          console.log(res);
+          this.setState({image : res})
+        }
+    )
+    return this.state.image;
+  }
 
   remove = () => {
     this.setState(({ cards }) => ({ cards: cards.slice(1, cards.length) }));
@@ -54,13 +57,13 @@ class Profiles extends Component {
           <CardMedia
             style={{ height: "75%", paddingTop: 0 }}
             image={user.profileImage}
-            title="Paella dish"
+            title={user.firstname +' ' + user.lastname }
           />
           <CardActions className="pl-5">
             <IconButton
               aria-label="Like"
               onClick={() => {
-                this.like();
+                this.like(user.firstname);
               }}
             >
               <FavoriteTwoToneIcon style={{ fontSize: 36, color: red[500] }} />
@@ -71,7 +74,7 @@ class Profiles extends Component {
             <IconButton
               aria-label="dislike"
               onClick={() => {
-                this.dislike();
+                this.dislike(user.firstname);
               }}
             >
               <ThumbDownIcon style={{ fontSize: 36, color: red[600] }} />

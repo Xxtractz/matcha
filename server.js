@@ -117,7 +117,9 @@ app.use(function(req, res, next) {
     // console.log(req);
     if (
 
-        (req.method === "POST" && req.url === "/logout") || (req.method === "POST" && req.url === "/users/register") ||
+        (req.method === "POST" && req.url === "/logout") ||
+        (req.method === "POST" && req.url === "/users/register") ||
+        (req.method === "POST" && req.url === "/verifyAgain") ||
         (req.method === "GET" && req.url === "/socket.io/socket.io.js")
     ) {
         console.log(req.url);

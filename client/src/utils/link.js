@@ -10,7 +10,7 @@ export const registerUserUrl = ServerUrl + "/users/register";
 export const verifyUserAfterRegUrl = ServerUrl + "/users/verify/";
 export const loginUserUrl = ServerUrl + "/users/login";
 export const logoutUserUrl = ServerUrl + "/users/logout";
-export const ReverifyUrl = ServerUrl + "/verifyAgain";
+export const ReverifyUrl = ServerUrl + "/users/verifyAgain";
 export const forgotPasswordUrl = ServerUrl + "/users/reset";
 export const UpdateUrl = ServerUrl + "/update";
 

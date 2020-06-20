@@ -57,6 +57,21 @@ matchaDb.findByUsername = (table, username) => {
   });
 };
 
+matchaDb.findByEmail = (email) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `SELECT * from users WHERE email = ?`,
+            [email],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+};
+
 matchaDb.saveAuth = (userId, username, token, refreshToken) => {
   return new Promise((resolve, reject) => {
     poolConnection.query(
@@ -123,7 +138,6 @@ matchaDb.updateUserByUsername = (username, user) => {
         );
     });
 };
-
 
 matchaDb.updateStatus = (username, status) => {
     return new Promise((resolve, reject) => {

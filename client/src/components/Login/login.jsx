@@ -108,17 +108,18 @@ class Login extends Component {
         .then((res) => {
           console.log(res);
           if (res) {
-            if (res.status === 404) {
+            if (res === 200) {
+              window.location.reload();
+            } else if (res.status === 404) {
               this.setState({ error: "Username does not exist" });
+            } else if (res.status === 401) {
+              this.setState({ error: "Invalid Credentials" });
             } else if (res.status === 401) {
               this.setState({ errorResponse: true });
               this.setState({ verifyErrorMsg: res.data.User.toString() });
               this.setState({ verifyToken: res.data.token.toString() });
-            }
-            if (res === 200) {
-              window.location.reload();
-            } else {
-              console.log(res);
+            }else {
+              this.setState({ error: "Sorry, System is unavailable, please try again later" });
             }
           } else {
             console.log("Server is Offline");
