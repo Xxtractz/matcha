@@ -1,9 +1,6 @@
 import React, { Component } from "react";
 import {
   Paper,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
   FormControl,
   FormLabel,
   Button,
@@ -39,40 +36,6 @@ class Search extends Component {
 
   valuetext = (value) => {
     return value;
-  };
-
-  genderSection = () => {
-    return (
-      <FormControl component="fieldset">
-        <FormLabel>Gender</FormLabel>
-        <RadioGroup
-          aria-label="position"
-          name="genderValue"
-          value={this.state.genderValue}
-          onChange={this.handleChangeGender}
-          row
-        >
-          <FormControlLabel
-            value="female"
-            control={<Radio color="primary" />}
-            label="Female"
-            labelPlacement="top"
-          />
-          <FormControlLabel
-            value="male"
-            control={<Radio color="primary" />}
-            label="Male"
-            labelPlacement="top"
-          />
-          <FormControlLabel
-            value="other"
-            control={<Radio color="primary" />}
-            label="Other"
-            labelPlacement="top"
-          />
-        </RadioGroup>
-      </FormControl>
-    );
   };
 
   locationSection = () => {
@@ -165,7 +128,6 @@ class Search extends Component {
           <hr />
           <div className="row">
             <div className="col text-center">{this.ageSection()}</div>
-            <div className="col">{this.genderSection()}</div>
             <div className="col">{this.locationSection()}</div>
           </div>
         </Paper>
