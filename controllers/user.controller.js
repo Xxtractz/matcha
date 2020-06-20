@@ -149,46 +149,39 @@ exports.checkUsername = (req, res) => {
     });
 };
 
-exports.verification = (req, res) => {
+exports.resetPassword = async (req, res) => {
+    let username = req.body.username;
     let hashPass;
     let special = "@#%!";
     let password = Math.random().toString(36).substring(5);
     password += special.charAt(Math.floor(Math.random() * special.length));
     password += Math.random().toString(36).substring(3).toUpperCase();
 
-    bcrypt.genSalt(process.env.SALT_FACTOR, (err, salt) => {
-        if (err) {
-            boom.boomify(err);
-        }
-
-        bcrypt.hash(password, salt, null, (err, hash) => {
-            if (err) {
-                boom.boomify(err);
-            }
+    bcrypt.genSalt(10, (err, salt) => {
+        bcrypt.hash(password, salt,  (err, hash) => {
             hashPass = hash;
+            User.reset(username, hashPass, (err, data) => {
+                if (err) {
+                    if (err.kind === "not_found") {
+                        res.status(404).send({
+                            User: `Not found user with username ${req.body.username}.`
+                        });
+                    } else {
+                        res.status(500).send({
+                            User: "Error updating user with username " + req.body.username
+                        });
+                    }
+                } else {
+                    let html = `<h1>Password was reset</h1> <br> <p>These are your login details: <br><b> Username: ${username}</b><br><b>Password: ${password}</b><br> </p>`;
+                    commonFunction.sendEmail(
+                        data.email,
+                        "Successfully Reset Password",
+                        html
+                    );
+                    res.status(200).send({ Verify: "Successfully reset the password" });
+                }
+            });
         });
-    });
-
-    User.verifications(req.body.username, hashPass, (err, data) => {
-        if (err) {
-            if (err.kind === "not_found") {
-                res.status(404).send({
-                    User: `Not found user with username ${req.body.username}.`
-                });
-            } else {
-                res.status(500).send({
-                    User: "Error updating user with username " + req.body.username
-                });
-            }
-        } else {
-            let html = `<h1>Password was reset</h1> <br> <p>These are your login details: <br><b> Username: ${doc.username}</b><br><b>Password: ${password}</b><br> </p>`;
-            commonFunction.sendEmail(
-                doc.email,
-                "Successfully Reset Password",
-                html
-            );
-            res.status(200).send({ Verify: "Successfully reset the password" });
-        }
     });
 }
 
@@ -228,7 +221,7 @@ exports.verifyAgain = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
-    User.getAll((err, data) => {
+    User.getUsers(req.body.gender,(err, data) => {
         if (err) {
             res.status(500).send({
                 User: err.message || "Some error occurred while getting users."
@@ -237,6 +230,15 @@ exports.findAll = (req, res) => {
             res.status(200).send(data);
         }
     });
+    // User.getAll((err, data) => {
+    //     if (err) {
+    //         res.status(500).send({
+    //             User: err.message || "Some error occurred while getting users."
+    //         });
+    //     } else {
+    //         res.status(200).send(data);
+    //     }
+    // });
 
 };
 

@@ -178,6 +178,14 @@ export const userData = async (id) => {
   });
 };
 
+export const getUsers = async (gender) => {
+  return axios.post(`${_Url.usersUrl}/${gender}`,{gender:gender}).then((response) => {
+    // handleStoreUser(JSON.stringify(response.data.User));
+    // return response.data.User.status;
+    console.log(response);
+  });
+};
+
 export const uploadImage = (image) => {
   const unsignedUploadPreset = "odj1pwzn";
   const cloudName = "dz1whmlhr";

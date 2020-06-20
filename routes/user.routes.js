@@ -14,7 +14,7 @@ const users = require("../controllers/user.controller.js");
     app.post("/users/checkUsername", users.checkUsername);
 
     //verification for forgot password
-    app.post("/users/verification", users.verification);
+    app.post("/users/reset", users.resetPassword);
 
     //verification for invalid token and getting new token
     app.post("/users/verifyAgain", users.verifyAgain);
@@ -33,6 +33,9 @@ const users = require("../controllers/user.controller.js");
 
     //verify the user after registration
     app.get("/users/verify/:id", users.verifyReg);
+
+    //getting all the users in the database
+    app.post("/users/:gender", users.findAll);
 
     //getting all the users in the database
     app.get("/users", users.findAll);

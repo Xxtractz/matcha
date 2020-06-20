@@ -56,7 +56,7 @@ class Account extends Component {
 
   displayAccount() {
     return (
-      <div>
+      <div className='mt-5'>
         <Images></Images>
         <Profile></Profile>
         <div className="row ">

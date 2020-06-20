@@ -11,7 +11,7 @@ export const verifyUserAfterRegUrl = ServerUrl + "/users/verify/";
 export const loginUserUrl = ServerUrl + "/users/login";
 export const logoutUserUrl = ServerUrl + "/users/logout";
 export const ReverifyUrl = ServerUrl + "/verifyAgain";
-export const forgotPasswordUrl = ServerUrl + "/users/verification";
+export const forgotPasswordUrl = ServerUrl + "/users/reset";
 export const UpdateUrl = ServerUrl + "/update";
 
 // update a user by their id _PUT Method

@@ -270,25 +270,29 @@ User.getAll = (result) => {
   });
 };
 
+//get all the users in the database
+User.getUsers = async (gender,result) => {
+  let user = await sql.getRandomUsers(gender);
+  console.log(user);
+  if (!user) {
+    result({ kind: "not_found" }, null);
+  } else {
+    result(null, user);
+  }
+};
+
+
 //used to update the password at forgot password
-User.verifications = (username, password, result) => {
-  // sql.query(
-  //   "UPDATE users SET password = ? WHERE username = ?",
-  //   [password, username],
-  //   (err, res) => {
-  //     if (err) {
-  //       console.log("Error trying to update password: ", err);
-  //       return null, err;
-  //     }
-  //
-  //     if (res.affectedRows == 0) {
-  //       result({ kind: "not_found" }, null);
-  //       return;
-  //     }
-  //
-  //     result(null, { userid: userid, ...res[0] });
-  //   }
-  // );
+User.reset = async (username, password, result) => {
+  try {
+      await sql.updateUserByUsername(username,{password:password});
+      let user = await sql.findByUsername('users',username);
+    return result(null, user);
+  }
+  catch (e) {
+    console.log(e);
+    return result({ kind: "not_found" }, null);
+  }
 };
 
 //verification for invalid token and getting new token

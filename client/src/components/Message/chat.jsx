@@ -4,7 +4,7 @@ import {getActive} from "../../actions/user";
 
 class Messages extends Component {
   display() {
-    return <div>Chat Content</div>;
+    return <div className='mt-5'>Chat Content</div>;
   }
 
   render() {
