@@ -44,26 +44,27 @@ class CompleteProfile extends Component {
       interestToString = interestToString.concat(this.state.tags[i]);
     }
     const user = {
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      gender: this.state.gender.toString(),
-      genderPreference: this.state.genderPreference.toString(),
-      bio: this.state.bio.toString(),
-      status: '2',
+        firstname: this.state.firstname,
+        lastname: this.state.lastname,
+        gender: this.state.gender.toString(),
+        genderPreference: this.state.genderPreference.toString(),
+        bio: this.state.bio.toString(),
+        status: '2',
+        interests: interestToString
     };
 
     console.log(user);
 
-    update(getUserId(), user)
-      .then((response) => {
-        if (response.status === 200) {
-          this.displayImageSection();
-          refresh(this.state.firstname).then();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    // update(getUserId(), user)
+    //   .then((response) => {
+    //     if (response.status === 200) {
+    //       this.displayImageSection();
+    //       refresh(this.state.firstname).then();
+    //     }
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
   }
 
   onChange = (e) => {

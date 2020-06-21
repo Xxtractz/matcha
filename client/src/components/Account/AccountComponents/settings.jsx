@@ -44,7 +44,7 @@ class Settings extends Component {
               {this.privacySection()}
             </div>
             <div className="text-center p-3">
-              <Button variant="contained" type="submit">
+              <Button variant="contained" type="submit" href="/user#updateSettings">
                 Update
               </Button>
             </div>

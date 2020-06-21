@@ -47,7 +47,7 @@ class images extends Component {
           {this.display(getImageFour())}
         </div>
         <div className="text-center p-3">
-          <Button variant="contained" type="submit">
+          <Button variant="contained" type="submit" href="/user#updateImages">
             Update
           </Button>
         </div>

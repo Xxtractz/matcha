@@ -95,9 +95,9 @@ class UserProfile extends Component {
             <hr />
           </div>
           <div className="text-center p-3">
-            <Button variant="contained" type="submit">
-              Update
-            </Button>
+              <Button variant="contained" type="submit" href="/user#updateProfile">
+                  Update
+              </Button>
           </div>
         </div>
       </Paper>
