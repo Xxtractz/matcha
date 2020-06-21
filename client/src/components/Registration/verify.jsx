@@ -86,8 +86,6 @@ class verifyUser extends Component {
             type="email"
             name="email"
             label="Email"
-            // helperText={this.state.email_err_helperText}
-            // error={this.state.email_err ? true : false}
             value={this.state.email}
             onChange={(e) => this.onChange(e)}
             required

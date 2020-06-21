@@ -10,6 +10,7 @@ import AuthDetails from "./AccountComponents/authdetails";
 import Settings from "./AccountComponents/settings";
 import {getActive} from "../../actions/user";
 import CompleteProfile from "./AccountComponents/completeProfile/completeProfile";
+import Update from "./AccountComponents/editdetails/update";
 
 class Account extends Component {
   constructor(props) {
@@ -54,19 +55,35 @@ class Account extends Component {
     );
   }
 
+  displayUpdate(){
+      return (
+        <div>
+            <Update></Update>
+        </div>
+      );
+  }
+
+  displayProfile(){
+      return(
+          <div>
+              <Images></Images>
+              <Profile></Profile>
+              <div className="row ">
+                  <div className="col-md">
+                      <Settings></Settings>
+                  </div>
+                  <div className="col-md">
+                      <AuthDetails></AuthDetails>
+                  </div>
+              </div>
+          </div>
+      )
+  }
+
   displayAccount() {
     return (
       <div className='mt-5'>
-        <Images></Images>
-        <Profile></Profile>
-        <div className="row ">
-          <div className="col-md">
-            <Settings></Settings>
-          </div>
-          <div className="col-md">
-            <AuthDetails></AuthDetails>
-          </div>
-        </div>
+          {window.location.hash ? this.displayUpdate() :   this.displayProfile()}
       </div>
     );
   }
