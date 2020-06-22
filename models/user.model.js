@@ -101,9 +101,16 @@ User.logins = async (username, password, result) => {
 User.refreshToken = async (username, result) => {
   try {
     let user = await sql.findByUsername( username);
+
     if (!user) {
       result({ kind: "not_found" }, null);
     } else {
+      let interest = await sql.getInterests(user.userid);
+      let interestToString = [];
+
+      for (let i = 0; i < interest.length; i++) {
+        interestToString = interestToString.concat(interest[i].interest);
+      }
       const userLog = {
         userid: user.userid,
         username: user.username,
@@ -124,7 +131,9 @@ User.refreshToken = async (username, result) => {
         date: user.date,
         bio: user.bio,
         status: user.status,
+        interest: interestToString
       };
+
 
       const token = jwt.sign(userLog, process.env.SECRETS);
       const refreshToken = jwt.sign(userLog, process.env.REFRESHTOKENSECRETS, {

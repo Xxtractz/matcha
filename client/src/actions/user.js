@@ -50,7 +50,7 @@ export const getUserStatus = () => {
 };
 
 export const getUserInterest = () => {
-    return data.interests;
+    return data.interest;
 };
 
 export const getProfilePicture = () => {

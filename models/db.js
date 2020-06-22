@@ -65,13 +65,13 @@ matchaDb.findByEmail = (email) => {
 matchaDb.getInterests = (userid) => {
     return new Promise((resolve, reject) => {
         poolConnection.query(
-            `SELECT interest from interest WHERE userid = ?`,
+            `SELECT interest from interests WHERE userid = ?`,
             [userid],
             (err, results) => {
                 if (err) {
                     return reject(err);
                 }
-                return resolve(results[0]);
+                return resolve(results);
             }
         );
     });
