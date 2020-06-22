@@ -44,7 +44,7 @@ const users = require("../controllers/user.controller.js");
     app.get("/users/:userid", users.findOne);
 
     //update a user by their id
-    app.put("/users/:userid", users.update);
+    app.post("/users/update/:userid", users.update);
 
     //delete a user by their id
     app.delete("/users/:userid", users.delete);

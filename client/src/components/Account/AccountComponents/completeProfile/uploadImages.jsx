@@ -5,7 +5,7 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import { uploadImage, update } from "../../../../actions/api";
-import { getUserId } from "../../../../actions/user";
+import {getUserFirstName, getUserId, getUserLastName} from "../../../../actions/user";
 import LoadingOverlay from 'react-loading-overlay';
 
 class UploadImages extends Component {
@@ -13,6 +13,8 @@ class UploadImages extends Component {
     super(props);
 
     this.state = {
+      firstname: getUserFirstName(),
+      lastname: getUserLastName(),
       profilePictureUploaded: false,
       imageOne: false,
       imageTwo: false,
@@ -34,7 +36,6 @@ class UploadImages extends Component {
 
   Complete() {
     const user = {
-      status: "2",
       profileImage: this.state.profileImage,
       image_1: this.state.image_1,
       image_2: this.state.image_2,

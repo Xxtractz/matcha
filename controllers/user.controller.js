@@ -402,26 +402,78 @@ exports.update = (req, res) => {
             User: "Content can not be empty."
         });
     }
-
-    User.updateByID(
-        req.params.userid,
-        req.body,
-        (err, data) => {
-            if (err) {
-                if (err.kind === "not_found") {
-                    res.status(404).send({
-                        User: `Not found user with id ${req.params.userid}.`
-                    });
-                } else {
-                    res.status(500).send({
-                        User: "Error updating user with ID " + req.params.userid
-                    });
-                }
-            } else {
-                res.status(200).send(data);
-            }
+    const userid = req.params.userid;
+    if (req.body.type){const interests = req.body.interests;
+        const user = {
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            gender: req.body.gender,
+            genderPreference: req.body.genderPreference,
+            bio: req.body.bio,
+            status: req.body.status
         }
-    );
+
+        User.updateInterest(userid, interests,(err, data) => {
+                if (err) {
+                    if (err.kind === "not_found") {
+                        res.status(404).send({
+                            User: `Not found user with id ${req.params.userid}.`
+                        });
+                    } else {
+                        res.status(500).send({
+                            User: "Error updating user with ID " + req.params.userid
+                        });
+                    }
+                } else {
+                    res.status(200).send(data);
+                }
+            }
+        );
+        User.updateByID(
+            userid,
+            user,
+            (err, data) => {
+                console.log(err);
+                console.log('=============',data)
+                if (err) {
+                    if (err.kind === "not_found") {
+                        res.status(404).send({
+                            User: `Not found user with id ${userid}.`
+                        });
+                    } else {
+                        res.status(500).send({
+                            User: "Error updating user with ID " + userid
+                        });
+                    }
+                } else {
+                    res.status(200).send(data);
+                }
+            }
+        );
+    }else{
+        User.updateByID(
+            userid,
+            req.body,
+            (err, data) => {
+                if (err) {
+                    if (err.kind === "not_found") {
+                        res.status(404).send({
+                            User: `Not found user with id ${userid}.`
+                        });
+                    } else {
+                        res.status(500).send({
+                            User: "Error updating user with ID " + userid
+                        });
+                    }
+                } else {
+                    res.status(200).send(data);
+                }
+            }
+        );
+    }
+
+
+
 };
 
 exports.logout = async (req, res) => {

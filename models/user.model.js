@@ -35,7 +35,7 @@ User.create =  async (newUser, result) => {
 
 User.logins = async (username, password, result) => {
   try {
-    let user = await sql.findByUsername("users", username);
+    let user = await sql.findByUsername(username);
     if (!user) {
       result({ kind: "not_found" }, null);
     } else {
@@ -100,7 +100,7 @@ User.logins = async (username, password, result) => {
 
 User.refreshToken = async (username, result) => {
   try {
-    let user = await sql.findByUsername("users", username);
+    let user = await sql.findByUsername( username);
     if (!user) {
       result({ kind: "not_found" }, null);
     } else {
@@ -286,7 +286,7 @@ User.getUsers = async (gender,result) => {
 User.reset = async (username, password, result) => {
   try {
       await sql.updateUserByUsername(username,{password:password});
-      let user = await sql.findByUsername('users',username);
+      let user = await sql.findByUsername(username);
     return result(null, user);
   }
   catch (e) {
@@ -327,6 +327,16 @@ User.updateByID = (userid, user, result) => {
   try {
     let updateUser = sql.updateUserById(userid,user);
     result(null, { userid: userid, ...updateUser });
+  }catch (e) {
+    result(e, null);
+  }
+};
+
+//update the user by id
+User.updateInterest = (userid, interests, result) => {
+  try {
+    let updateInterest = sql.addInterests(userid,interests);
+    result(null, updateInterest);
   }catch (e) {
     result(e, null);
   }

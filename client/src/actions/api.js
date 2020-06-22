@@ -156,7 +156,7 @@ export const Reset = async (username) => {
 
 export const update = async (id, body) => {
   return axios
-    .put(_Url.updateUserById + "/" + id, body,{headers:getHeader()})
+    .post(_Url.updateUserById + "/" + id, body)
     .then((response) => {
       if (response) {
         return response;

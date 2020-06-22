@@ -13,20 +13,10 @@ const poolConnection = mysql.createPool({
 let matchaDb = {};
 
 
-matchaDb.insert = (table,data)=>{
-    return new Promise((resolve, reject) => {
-        poolConnection.query(
-            `Insert INTO ${table} SET ?`,
-            data,
-            (err, results) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve(results[0]);
-            }
-        );
-    });
-}
+/*
+* ALl User Select Queries
+* */
+
 matchaDb.findById = (table, id) => {
     return new Promise((resolve, reject) => {
         poolConnection.query(
@@ -42,19 +32,19 @@ matchaDb.findById = (table, id) => {
     });
 };
 
-matchaDb.findByUsername = (table, username) => {
-  return new Promise((resolve, reject) => {
-    poolConnection.query(
-      `SELECT * from ${table} WHERE username = ?`,
-      [username],
-      (err, results) => {
-        if (err) {
-          return reject(err);
-        }
-        return resolve(results[0]);
-      }
-    );
-  });
+matchaDb.findByUsername = (username) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `SELECT * from users WHERE username = ?`,
+            [username],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
 };
 
 matchaDb.findByEmail = (email) => {
@@ -71,6 +61,54 @@ matchaDb.findByEmail = (email) => {
         );
     });
 };
+
+matchaDb.getInterests = (userid) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `SELECT interest from interest WHERE userid = ?`,
+            [userid],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+}
+
+matchaDb.addInterests = (userid,interests = []) => {
+    return new Promise((resolve, reject) => {
+        for (let interest of interests) {
+        poolConnection.query(
+            `Insert INTO interests SET userid = ?, interest = ?`,
+            [userid,interest.toLocaleString()],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+
+        );
+        }
+    });
+}
+
+matchaDb.insert = (table,data)=>{
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `Insert INTO ${table} SET ?`,
+            data,
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+}
 
 matchaDb.saveAuth = (userId, username, token, refreshToken) => {
   return new Promise((resolve, reject) => {
