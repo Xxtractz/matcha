@@ -85,14 +85,11 @@ class AuthDetails extends Component {
         <div className="p-2 mt-4 col-8 mx-auto">
           <form onSubmit={this.submitHandler}>
             <div className="grey-text">
-              {/* email Section */}
-              {this.emailSection()}
-
               {/* Username Section */}
               {this.usernameSection()}
             </div>
             <div className="text-center p-3">
-              <Button variant="contained" type="submit">
+              <Button variant="outlined" color="primary" type="submit">
                 Update
               </Button>
             </div>

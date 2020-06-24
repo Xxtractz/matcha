@@ -29,7 +29,7 @@ class Settings extends Component {
   }
   render() {
     return (
-      <Paper className="container p-2 mt-4 col-12">
+      <Paper className="container p-2 mt-4 col-12" variant="outlined">
         <Paper className="col-12 mt-2 p-1 text-center " variant="outlined">
           <h1>Setting</h1>
           <small>Account Seetings </small>
@@ -44,7 +44,7 @@ class Settings extends Component {
               {this.privacySection()}
             </div>
             <div className="text-center p-3">
-              <Button variant="contained" type="submit" href="/user#updateSettings">
+              <Button variant="outlined" color="primary" type="submit" href="/user#updateSettings">
                 Update
               </Button>
             </div>
