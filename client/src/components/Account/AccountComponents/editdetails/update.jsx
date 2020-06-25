@@ -43,7 +43,6 @@ class Update extends Component {
                         {window.location.hash === '#updateProfile'? this.updateProfile():''}
                         {window.location.hash === '#updateImages'? this.updateImages():''}
                     </div>
-
                 </Paper>
             </div>
         );
