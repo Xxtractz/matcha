@@ -42,6 +42,12 @@ User.logins = async (username, password, result) => {
       bcrypt.compare(password, user.password, (err, response) => {
         console.log(response);
         if (response) {
+          let interest = sql.getInterests(user.userid);
+          let interestToString = [];
+
+          for (let i = 0; i < interest.length; i++) {
+            interestToString = interestToString.concat(interest[i].interest);
+          }
           const userLog = {
             userid: user.userid,
             username: user.username,
@@ -58,6 +64,7 @@ User.logins = async (username, password, result) => {
             date: user.date,
             bio: user.bio,
             status: user.status,
+            interest: interestToString
           };
 
           if (user.status === '0') {
