@@ -80,7 +80,6 @@ class UploadImages extends Component {
   }
 
   checkAndUpload(imageList) {
-    console.log(imageList.length);
     if (!this.state.profilePictureUploaded) {
       this.uploadToCloudinary(imageList[0].dataURL);
       this.setState({ profilePictureUploaded: true });

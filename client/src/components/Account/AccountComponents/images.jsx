@@ -7,6 +7,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import { Button } from "@material-ui/core";
 
 class images extends Component {
+
   display(image) {
     return (
       <div className="col-sm">
@@ -18,6 +19,7 @@ class images extends Component {
       </div>
     );
   }
+
   render() {
     return (
       <Paper className="container p-2  col-12" variant="outlined">
