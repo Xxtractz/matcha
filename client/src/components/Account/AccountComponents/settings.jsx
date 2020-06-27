@@ -1,54 +1,40 @@
 import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
-import { Button } from "@material-ui/core";
+import { Button, Switch } from "@material-ui/core";
+import {getNotify} from "../../../actions/user";
 // import { getUserName, getUserLastName } from "../../../actions/user";
 
 class Settings extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-
-  submitHandler = (e) => {
-    e.preventDefault();
-  };
-
-  onChange = (e) => {
-    this.setState({
-      [e.target.name]: [e.target.value],
-    });
-  };
-
   // Form Sections
   notifictaionSection() {
-    return "All Notifications settings will be set here";
+    return (
+        <div className="row">
+            <div className="col-12 text-center">
+            Notifications : OFF
+            <Switch color="primary" checked={getNotify()} disabled/> ON
+            </div>
+        </div>
+    );
   }
 
-  privacySection() {
-    return "privacy section (Visibility related  and blocking of users goes here)";
-  }
   render() {
     return (
       <Paper className="container p-2 mt-4 col-12" variant="outlined">
         <Paper className="col-12 mt-2 p-1 text-center " variant="outlined">
           <h1>Setting</h1>
-          <small>Account Seetings </small>
+          <small>Account Settings </small>
         </Paper>
         <div className="p-2 mt-4 col-8 mx-auto">
-          <form onSubmit={this.submitHandler}>
             <div className="grey-text">
               {/* Noticication Section */}
               {this.notifictaionSection()}
 
-              {/* Privacy Section */}
-              {this.privacySection()}
             </div>
             <div className="text-center p-3">
               <Button variant="outlined" color="primary" type="submit" href="/user#updateSettings">
                 Update
               </Button>
             </div>
-          </form>
         </div>
       </Paper>
     );

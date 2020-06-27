@@ -21,6 +21,7 @@ class UpdateBio extends Component {
 
     submitHandler = (e) => {
         e.preventDefault();
+        console.log(e,"testing")
         // console.log(e);
     }
 
@@ -28,17 +29,8 @@ class UpdateBio extends Component {
         return (
             <form onSubmit={this.submitHandler}>
                 <div className="row m-5">
-                    <div className="col-3 text-center">
-                        <InputLabel>Current Value</InputLabel>
-                        <TextField
-                            className="col-12 text-center"
-                            type="text"
-                            value={getUserBio()}
-                            disabled
-                        />
-                    </div>
-                    <div className="col-6 text-center">
-                        <InputLabel>Changing to</InputLabel>
+                    <div className="col-8 text-center">
+                        <InputLabel>Update</InputLabel>
                         <textarea
                             className="col-12"
                             style={{ background: "inherit" }}
@@ -52,7 +44,7 @@ class UpdateBio extends Component {
                         ></textarea>
                     </div>
                     <div className="col-3 text-center">
-                        <Button className='m-2' variant="outlined" color="primary">
+                        <Button className='m-5' variant="outlined" color="primary" type="submit" id={'#updatebio'}>
                             Update
                         </Button>
                     </div>
@@ -68,7 +60,7 @@ class UpdateBio extends Component {
                     Update Bio
                 </p>
                 <hr/>
-
+                {this.updateBio()}
                 <hr/>
             </div>
         );

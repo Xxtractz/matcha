@@ -64,7 +64,8 @@ User.logins = async (username, password, result) => {
             date: user.date,
             bio: user.bio,
             status: user.status,
-            interest: interestToString
+            interest: interestToString,
+            notify: user.notify
           };
 
           if (user.status === '0') {
@@ -138,7 +139,8 @@ User.refreshToken = async (username, result) => {
         date: user.date,
         bio: user.bio,
         status: user.status,
-        interest: interestToString
+        interest: interestToString,
+        notify: user.notify
       };
 
 

@@ -76,3 +76,7 @@ export const getImageFour = () => {
 export const getActive = () =>{
     return data.active;
 }
+
+export const getNotify = ()=>{
+    return (data.notify === 1);
+}
