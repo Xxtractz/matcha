@@ -4,6 +4,7 @@ import UpdateFullName from "./updatefullname";
 import UpdateGender from "./updategender";
 import UpdateBio from "./updatebio";
 import UpdateInterests from "./updateinterests";
+import UpdateImages from "./updateimages";
 
 class Update extends Component {
 
@@ -21,7 +22,7 @@ class Update extends Component {
     updateImages(){
         return (
             <div>
-               Images
+               <UpdateImages/>
             </div>
         );
     }

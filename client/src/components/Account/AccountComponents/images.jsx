@@ -41,10 +41,10 @@ class images extends Component {
               </CardActionArea>
             </Card>
           </div>
-          {this.display(getImageOne())}
-          {this.display(getImageTwo())}
-          {this.display(getImageThree())}
-          {this.display(getImageFour())}
+          {getImageOne()?this.display(getImageOne()):''}
+          {getImageTwo()?this.display(getImageTwo()):''}
+          {getImageThree()?this.display(getImageThree()):''}
+          {getImageFour()?this.display(getImageFour()):''}
         </div>
         <div className="text-center p-3">
           <Button variant="outlined" color="primary" type="submit" href="/user#updateImages">

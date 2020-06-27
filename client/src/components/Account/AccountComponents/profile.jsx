@@ -75,7 +75,7 @@ class UserProfile extends Component {
           <h5>
             Hi,{getUsername()}{" "}
             <small>
-              <code>(to change username see Account settings)</code>{" "}
+              <code>(to change username,password and email see Account settings)</code>{" "}
             </small>
           </h5>
           <br />
