@@ -5,7 +5,14 @@ import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import CardMedia from "@material-ui/core/CardMedia";
 import LoadingOverlay from "react-loading-overlay";
-import {getProfilePicture, getUserId} from "../../../../actions/user";
+import {
+    getImageFour,
+    getImageOne,
+    getImageThree,
+    getImageTwo,
+    getProfilePicture,
+    getUserId
+} from "../../../../actions/user";
 import {update, uploadImage} from "../../../../actions/api";
 
 class UpdateImages extends Component {
@@ -23,11 +30,9 @@ class UpdateImages extends Component {
         update(getUserId(), imageData)
             .then((response) => {
                 console.log(response);
-
                 if (response.status === 200) {
-                    window.location.open('/user');
+                    window.location = ""
                 }
-
             })
             .catch((error) => {
                 console.log(error);
@@ -37,8 +42,18 @@ class UpdateImages extends Component {
     uploadToCloudinary(imageTitle,image){
         uploadImage(image).then((res) => {
             if (res.status === 200){
-                if (imageTitle === "profileImage"){
-                this.updateProfileImages({profileImage: res.data.secure_url})}
+                this.setState({uploadingMessage: "Almost there..."});
+                if (imageTitle === "profileImage") {
+                    this.updateProfileImages({profileImage: res.data.secure_url});
+                } else if (imageTitle === "image_1") {
+                    this.updateProfileImages({image_1: res.data.secure_url});
+                } else if (imageTitle === "image_2"){
+                    this.updateProfileImages({image_2: res.data.secure_url});
+                } else if (imageTitle === "image_3"){
+                    this.updateProfileImages({image_3: res.data.secure_url});
+                } else if (imageTitle === "image_4"){
+                    this.updateProfileImages({image_4: res.data.secure_url});
+                }
             }});
     }
 
@@ -96,17 +111,84 @@ class UpdateImages extends Component {
         );
     }
 
+    updateImage_1(){
+        return (
+            <div>
+                <div className='row'>
+                    <div className='col-6'>
+                        <Button className='ml-4' disabled>Image 1</Button>
+                        {this.display(getImageOne())}
+                    </div>
+                    <div className='col-6'>
+                        {this.displayImages("image_1","Update First Image")}
+                    </div>
+                </div>
+
+            </div>
+        );
+    }
+    updateImage_2(){
+        return (
+            <div>
+                <div className='row'>
+                    <div className='col-6'>
+                        <Button className='ml-4' disabled>Image 2</Button>
+                        {this.display(getImageTwo())}
+                    </div>
+                    <div className='col-6'>
+                        {this.displayImages("image_2","Update Second Image")}
+                    </div>
+                </div>
+
+            </div>
+        );
+    }
+
+    updateImage_3(){
+        return (
+            <div>
+                <div className='row'>
+                    <div className='col-6'>
+                        <Button className='ml-4' disabled>Image 3</Button>
+                        {this.display(getImageThree())}
+                    </div>
+                    <div className='col-6'>
+                        {this.displayImages("image_3","Update Third Image")}
+                    </div>
+                </div>
+
+            </div>
+        );
+    }
+
+    updateImage_4(){
+        return (
+            <div>
+                <div className='row'>
+                    <div className='col-6'>
+                        <Button className='ml-4' disabled>Image 4</Button>
+                        {this.display(getImageFour())}
+                    </div>
+                    <div className='col-6'>
+                        {this.displayImages("image_4","Update Fourth Image")}
+                    </div>
+                </div>
+
+            </div>
+        );
+    }
+
     displayImages(imageTitle,buttonName) {
         const maxNumber = 1;
         const maxMbFileSize = 2 * 1024 * 1024;
         const onChange = (imageList) => {
             this.uploadToCloudinary(imageTitle,imageList[0].dataURL);
-            // Checks and Upload
-            // this.checkAndUpload(imageList);
+            this.setState({uploading : true});
+            this.setState({uploadingMessage: "Uploading Image..."});
         };
 
         return (
-            <div >
+            <div className="m-1">
                 <ImageUploading
                     multiple
                     onChange={onChange}
@@ -168,7 +250,12 @@ class UpdateImages extends Component {
     render() {
         return (
             <div className='A'>
+                {this.state.uploading ? this.loading():''}
                 {this.updateProfilePicture()}
+                {getImageOne()?this.updateImage_1():this.displayImages("image_1","Add First Image")}
+                {getImageTwo()?this.updateImage_2():this.displayImages("image_2","Add Second Image")}
+                {getImageThree()?this.updateImage_3():this.displayImages("image_3","Add Third Image")}
+                {getImageFour()?this.updateImage_4():this.displayImages("image_4","Add Fourth Image")}
                 {/*{this.displayImages()}*/}
             </div>
         );
