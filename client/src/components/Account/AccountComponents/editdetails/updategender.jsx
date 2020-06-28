@@ -1,7 +1,13 @@
 import React, {Component} from 'react';
 import {selecFormInput} from "../../../Form/form";
 import {Button, InputLabel, TextField} from "@material-ui/core";
-import {getUserFirstName, getUserGender, getUserGenderPreference} from "../../../../actions/user";
+import {
+    getUserGender,
+    getUserGenderPreference,
+    getUserId,
+    getUsername
+} from "../../../../actions/user";
+import {refresh, update} from "../../../../actions/api";
 
 class UpdateGender extends Component {
 
@@ -15,11 +21,36 @@ class UpdateGender extends Component {
 
     submitHandler = (e) => {
         e.preventDefault();
-    };
+        if(e.target.id === "gender"){
+            if (this.state.gender !== ""){
+                this.updateDetails({gender: this.state.gender});
+            }
+        }else if(e.target.id === "genderPreference"){
+            if (this.state.genderPreference !== ""){
+                this.updateDetails({genderPreference: this.state.genderPreference});
+            }
+        }
+    }
+
+    updateDetails(user){
+        update(getUserId(), user)
+            .then((response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    refresh(getUsername()).then();
+                    window.location.pathname = "/";
+                    window.location.hash ="";
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }
+
 
     updateGender() {
         return (
-            <form onSubmit={this.submitHandler}>
+            <form id="gender" onSubmit={this.submitHandler}>
                 <div className="row m-5">
                     <div className="col-3 text-center">
                         <InputLabel>Current Value</InputLabel>
@@ -36,10 +67,10 @@ class UpdateGender extends Component {
                             "Changing to",
                             "gender",
                             (e) => this.onChange(e),
-                            ["", "Male", "Female", "Both",])}
+                            ["","Male", "Female", "Both",])}
                     </div>
                     <div className="col-3 text-center">
-                        <Button className='m-2' variant="outlined" color="primary">
+                        <Button className='m-2' variant="outlined" color="primary" type="submit">
                             Update
                         </Button>
                     </div>
@@ -50,7 +81,7 @@ class UpdateGender extends Component {
 
     updateGenderPreference(){
         return(
-            <form onSubmit={this.submitHandler}>
+            <form id="genderPreference" onSubmit={this.submitHandler}>
                 <div className="row m-5">
                     <div className="col-3 text-center">
                         <InputLabel>Current Value</InputLabel>
@@ -67,11 +98,11 @@ class UpdateGender extends Component {
                             "Changing to",
                             "genderPreference",
                             (e) => this.onChange(e),
-                            ["", "Male", "Female", "Both"]
+                            ["","Male", "Female", "Both"]
                         )}
                     </div>
                     <div className="col-3 text-center">
-                        <Button className='m-2' variant="outlined" color="primary">
+                        <Button className='m-2' variant="outlined" color="primary" type="submit">
                             Update
                         </Button>
                     </div>

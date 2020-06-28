@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, InputLabel, TextField} from "@material-ui/core";
-import {getUserFirstName, getUserLastName} from "../../../../actions/user";
+import {getUserFirstName, getUserId, getUserLastName, getUsername} from "../../../../actions/user";
+import {refresh, update} from "../../../../actions/api";
 
 class UpdateFullName extends Component {
 
@@ -17,17 +18,36 @@ class UpdateFullName extends Component {
         this.setState({
             [e.target.name]: [e.target.value],
         });
-        console.log(this.state);
     }
 
     submitHandler = (e) => {
         e.preventDefault();
-        // console.log(e);
+        console.log(e.target.id);
+        if(e.target.id === "firstname"){
+            this.updateDetails({firstname : this.state.newFirstName});
+        }else if(e.target.id === "lastname"){
+            this.updateDetails({lastname : this.state.newLastName});
+        }
+    }
+
+    updateDetails = (user) =>{
+        update(getUserId(), user)
+            .then((response) => {
+                console.log(response);
+                if (response.status === 200) {
+                    refresh(getUsername()).then();
+                    window.location.pathname = "/";
+                    window.location.hash ="";
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 
     updateFirstName(){
         return (
-            <form id='#firstname' onSubmit={this.submitHandler}>
+            <form id='firstname' onSubmit={this.submitHandler}>
                 <div className="row m-5">
                     <div className="col-3 text-center">
                         <InputLabel>Current Value</InputLabel>
@@ -50,7 +70,7 @@ class UpdateFullName extends Component {
                         />
                     </div>
                     <div className="col-3 text-center">
-                        <Button className='m-2' variant="outlined" color="primary">
+                        <Button className='m-2' variant="outlined" color="primary" type="submit">
                             Update
                         </Button>
                     </div>
@@ -61,36 +81,36 @@ class UpdateFullName extends Component {
 
     updateLastName(){
         return (
-            <div className="row m-5">
-                <div className="col-3 text-center">
-                    <InputLabel>Current Value</InputLabel>
-                    <TextField
-                        className="col-12 text-center"
-                        type="text"
-                        name="lname"
-                        value={getUserLastName()}
-                        disabled
-                    />
+            <form id='lastname' onSubmit={this.submitHandler}>
+                <div className="row m-5">
+                    <div className="col-3 text-center">
+                        <InputLabel>Current Value</InputLabel>
+                        <TextField
+                            className="col-12 text-center"
+                            type="text"
+                            name="lname"
+                            value={getUserLastName()}
+                            disabled
+                        />
+                    </div>
+                    <div className="col-6 text-center">
+                        <InputLabel>Changing to</InputLabel>
+                        <TextField
+                            className="col-12"
+                            type="text"
+                            name="newLastName"
+                            value={this.state.newLastName}
+                            onChange={(e) => this.onChange(e)}
+                            required
+                        />
+                    </div>
+                    <div className="col-3 text-center">
+                        <Button className='m-2' variant="outlined" color="primary" type="submit">
+                            Update
+                        </Button>
+                    </div>
                 </div>
-                <div className="col-6 text-center">
-                    <InputLabel>Changing to</InputLabel>
-                    <TextField
-                        className="col-12"
-                        type="text"
-                        name="fname"
-                        // helperText={this.state.fname_err_helperText}
-                        // error={!!this.state.fname_err}
-                        // value={this.state.fname}
-                        // onChange={(e) => this.onChange(e)}
-                        required
-                    />
-                </div>
-                <div className="col-3 text-center">
-                    <Button className='m-2' variant="outlined" color="primary" href='/user'>
-                        Update
-                    </Button>
-                </div>
-            </div>
+            </form>
         );
     }
 

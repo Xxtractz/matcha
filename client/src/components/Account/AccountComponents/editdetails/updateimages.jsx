@@ -31,7 +31,8 @@ class UpdateImages extends Component {
             .then((response) => {
                 console.log(response);
                 if (response.status === 200) {
-                    window.location = ""
+                    window.location.pathname = "/";
+                    window.location.hash ="";
                 }
             })
             .catch((error) => {
