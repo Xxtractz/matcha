@@ -2,8 +2,6 @@ import axios from "axios";
 import * as _Url from "../utils/link";
 import CryptoJS from "crypto-js";
 
-const token = localStorage.getItem("User_Token");
-
 function handleLogin(token, rtoken) {
   localStorage.setItem("SessionUI", "true");
   localStorage.setItem("User_Token", token);
@@ -22,13 +20,6 @@ function hardLogout() {
 // const token = () => {
 //   return localStorage.getItem("User_Token");
 // };
-
-function getHeader() {
-  return {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
-  };
-}
 
 export const register = async (userData) => {
   const encryptedData = CryptoJS.AES.encrypt(

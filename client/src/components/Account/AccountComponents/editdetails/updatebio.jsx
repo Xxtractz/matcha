@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import {Button, InputLabel, TextField} from "@material-ui/core";
-import {getUserBio, getUserGender, getUserId, getUsername} from "../../../../actions/user";
-import {selecFormInput, textAreaFormInput} from "../../../Form/form";
+import {Button, InputLabel} from "@material-ui/core";
+import {getUserBio, getUserId, getUsername} from "../../../../actions/user";
 import {refresh, update} from "../../../../actions/api";
 
 class UpdateBio extends Component {
@@ -58,7 +57,7 @@ class UpdateBio extends Component {
                             required
                             rows="10"
                             minLength="20"
-                        ></textarea>
+                        />
                     </div>
                     <div className="col-3 text-center">
                         <Button className='m-5' variant="outlined" color="primary" type="submit">
