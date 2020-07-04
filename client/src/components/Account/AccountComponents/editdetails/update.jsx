@@ -19,6 +19,12 @@ class Update extends Component {
         );
     }
 
+    updateAuthDetails(){
+        return(<div>
+
+        </div>)
+    }
+
     updateImages(){
         return (
             <div>
