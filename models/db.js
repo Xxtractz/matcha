@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const dbConfig = require("../config/db.config");
+const { reject } = require("lodash");
 
 const poolConnection = mysql.createPool({
   connectionLimit: 100,
@@ -72,6 +73,21 @@ matchaDb.getInterests = (userid) => {
                     return reject(err);
                 }
                 return resolve(results);
+            }
+        );
+    });
+}
+
+matchaDb.getChats = (receiverUsername, senderUsername) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `SELECT * FROM chats WHERE (receiverUsername = ? OR senderUsername = ?) AND (senderUsername = ? OR receiverUsername = ?)`,
+            [receiverUsername, receiverUsername, senderUsername, senderUsername],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results)
             }
         );
     });
