@@ -291,7 +291,7 @@ User.getAll = (result) => {
 //get all the users in the database
 User.getUsers = async (gender,result) => {
   let user = await sql.getRandomUsers(gender);
-  console.log(user);
+  // console.log(user);
   if (!user) {
     result({ kind: "not_found" }, null);
   } else {
@@ -359,13 +359,13 @@ User.deleteCurrentInterest = async (userid) =>{
     for (let i = 0; i < getInterests.length; i++) {
       interestsToDelete  = interestsToDelete .concat(getInterests[i].interest);
     }
-     await sql.removeInterests(userid, interestsToDelete);
+      sql.removeInterests(userid, interestsToDelete).then(r => {});
   }catch (e) {
   }
 }
 
 //update the user by id
-User.updateInterest = (userid, interests, result) => {
+User.updateInterest = async (userid, interests, result) => {
   try {
      User.deleteCurrentInterest(userid).then(r => {});
     let updateInterest = sql.addInterests(userid,interests);

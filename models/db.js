@@ -276,7 +276,7 @@ matchaDb.getRandomUsers = (gender) => {
             "SELECT * FROM users WHERE gender=? AND ( age BETWEEN 20 AND 50) LIMIT 15",
             [gender],
             (err, results) => {
-                console.log(results);
+                // console.log(results);
                 if (err) {
                     return reject(err);
                 }

@@ -5,6 +5,10 @@ import UpdateGender from "./updategender";
 import UpdateBio from "./updatebio";
 import UpdateInterests from "./updateinterests";
 import UpdateImages from "./updateimages";
+import UpdateUsername from "./updateusername";
+import UpdateEmail from "./updateemail";
+import UpdatePassword from "./updatepassword";
+import UpdateNotification from "./updatenotifictaion";
 
 class Update extends Component {
 
@@ -19,10 +23,22 @@ class Update extends Component {
         );
     }
 
-    updateAuthDetails(){
-        return(<div>
+    updateSetting(){
+        return (
+            <div>
+                <UpdateNotification/>
+            </div>
+        )
+    }
 
-        </div>)
+    updateAuthDetails(){
+        return(
+            <div>
+                <UpdateUsername/>
+                <UpdateEmail/>
+                <UpdatePassword/>
+            </div>
+        )
     }
 
     updateImages(){
@@ -49,6 +65,8 @@ class Update extends Component {
                     <div className="p-3">
                         {window.location.hash === '#updateProfile'? this.updateProfile():''}
                         {window.location.hash === '#updateImages'? this.updateImages():''}
+                        {window.location.hash === '#UpdateAuthDetails'? this.updateAuthDetails():''}
+                        {window.location.hash === '#updateSettings'? this.updateSetting():''}
                     </div>
                 </Paper>
             </div>

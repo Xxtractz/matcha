@@ -2,11 +2,10 @@ import React, { Component } from "react";
 import { Paper } from "@material-ui/core";
 import { Button, Switch } from "@material-ui/core";
 import {getNotify} from "../../../actions/user";
-// import { getUserName, getUserLastName } from "../../../actions/user";
 
 class Settings extends Component {
-  // Form Sections
-  notifictaionSection() {
+
+  notificationSection() {
     return (
         <div className="row">
             <div className="col-12 text-center">
@@ -27,7 +26,7 @@ class Settings extends Component {
         <div className="p-2 mt-4 col-8 mx-auto">
             <div className="grey-text">
               {/* Noticication Section */}
-              {this.notifictaionSection()}
+              {this.notificationSection()}
 
             </div>
             <div className="text-center p-3">

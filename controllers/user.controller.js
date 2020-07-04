@@ -403,7 +403,8 @@ exports.update = (req, res) => {
         });
     }
     const userid = req.params.userid;
-    if (req.body.type){const interests = req.body.interests;
+    if (req.body.type){
+        const interests = req.body.interests;
         const user = {
             firstname: req.body.firstname,
             lastname: req.body.lastname,
@@ -468,6 +469,8 @@ exports.update = (req, res) => {
             }
         );
 
+    }else if(req.body.pass){
+
     }else{
         User.updateByID(
             userid,
@@ -489,9 +492,6 @@ exports.update = (req, res) => {
             }
         );
     }
-
-
-
 };
 
 exports.logout = async (req, res) => {
