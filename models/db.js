@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const dbConfig = require("../config/db.config");
+const { reject } = require("lodash");
 
 const poolConnection = mysql.createPool({
   connectionLimit: 100,
