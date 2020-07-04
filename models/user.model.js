@@ -350,9 +350,24 @@ User.updateByID = (userid, user, result) => {
   }
 };
 
+User.deleteCurrentInterest = async (userid) =>{
+  try {
+    const getInterests =  await sql.getInterests(userid);
+    console.log(getInterests);
+    let interestsToDelete = [];
+
+    for (let i = 0; i < getInterests.length; i++) {
+      interestsToDelete  = interestsToDelete .concat(getInterests[i].interest);
+    }
+     await sql.removeInterests(userid, interestsToDelete);
+  }catch (e) {
+  }
+}
+
 //update the user by id
 User.updateInterest = (userid, interests, result) => {
   try {
+     User.deleteCurrentInterest(userid).then(r => {});
     let updateInterest = sql.addInterests(userid,interests);
     result(null, updateInterest);
   }catch (e) {

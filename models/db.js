@@ -3,7 +3,7 @@ const dbConfig = require("../config/db.config");
 const { reject } = require("lodash");
 
 const poolConnection = mysql.createPool({
-  connectionLimit: 100,
+  connectionLimit: 1000,
   host: dbConfig.HOST,
   user: dbConfig.USER,
   password: dbConfig.PASSWORD,
@@ -196,8 +196,6 @@ matchaDb.removeSession = (username) => {
 * Interests  Start Here
 */
 
-filterInterests = (currentInterests, newInterests) => newInterests.filter(interest => !currentInterests.includes(interest))
-
 
 matchaDb.getInterests = (userid) => {
     return new Promise((resolve, reject) => {
@@ -214,48 +212,39 @@ matchaDb.getInterests = (userid) => {
     });
 }
 
-matchaDb.addInterests = (userid,interests = []) => {
-    const currentInterests = this.getInterests(userId);
-    const interestsToAdd = filterInterests(currentInterests, interests);
-    const interestsToDelete = filterInterests(interests, currentInterests);
-
-
+matchaDb.removeInterests = (userid,interestsToDelete = []) => {
     return new Promise((resolve, reject) => {
-        try{
-            if (interestsToDelete.length > 0){
-                for (let interestToDelete of interestsToDelete) {
-                    poolConnection.query(
-                        `DELETE FROM interests WHERE userid = ? AND interest = ?`,
-                        [userid,interestToDelete.toLocaleString()],
-                        (err, results) => {
-                            if (err) {
-                                return reject(err);
-                            }
-                            if (interestsToAdd.length >! 0)
-                            {
-                                return resolve(results[0]);
-                            }
-                        }
-                    );
+        console.log('interestsToDelete => ', interestsToDelete)
+        for (let interestToDelete of interestsToDelete) {
+            poolConnection.query(
+                `DELETE FROM interests WHERE userid = ? AND interest = ?`,
+                [userid, interestToDelete.toLocaleString()],
+                (err, results) => {
+                    if (err) {
+                        return reject(err);
+                    }
+                    return resolve(results[0]);
                 }
-            }
-            if (interestsToAdd.length > 0){
-                for (let interestToAdd of interestsToAdd) {
-                    poolConnection.query(
-                        `Insert INTO interests SET userid = ?, interest = ?`,
-                        [userid,interestToAdd.toLocaleString()],
-                        (err, results) => {
-                            if (err) {
-                                return reject(err);
-                            }
-                            return resolve(results[0]);
-                        }
-                    );
-                }
-            }
-        }catch (e) {
-
+            );
         }
+    });
+}
+
+
+matchaDb.addInterests =  async (userid, interestsToAdd = []) => {
+    return new Promise((resolve, reject) => {
+            for (let interestToAdd of interestsToAdd) {
+                poolConnection.query(
+                    `Insert INTO interests SET userid = ?, interest = ?`,
+                    [userid,interestToAdd.toLocaleString()],
+                    (err, results) => {
+                        if (err) {
+                            return reject(err);
+                        }
+                        return resolve(results[0]);
+                    }
+                );
+            }
     });
 }
 

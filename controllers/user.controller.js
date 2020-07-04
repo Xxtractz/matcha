@@ -396,7 +396,7 @@ exports.verifyReg = (req, res) => {
 
 exports.update = (req, res) => {
     console.log("UpdateUrl");
-    console.log(req);
+    // console.log(req);
     if (!req.body) {
         res.status(400).send({
             User: "Content can not be empty."
@@ -449,7 +449,9 @@ exports.update = (req, res) => {
         );
     }else if (req.body.interests){
         const interests = req.body.interests;
+        console.log("Inside of Interest Update")
         User.updateInterest(userid, interests,(err, data) => {
+            console.log(err);
                 if (err) {
                     if (err.kind === "not_found") {
                         res.status(404).send({
