@@ -469,8 +469,26 @@ exports.update = (req, res) => {
             }
         );
 
-    }else if(req.body.pass){
-
+    }else if(req.body.password){
+        bcrypt.genSalt(10, (err, salt) => {
+            bcrypt.hash(req.body.password.toString(), salt,  (err, hash) => {
+                User.reset(req.body.username, hash, (err, data) => {
+                    if (err) {
+                        if (err.kind === "not_found") {
+                            res.status(404).send({
+                                User: `Not found user with username ${req.body.username}.`
+                            });
+                        } else {
+                            res.status(500).send({
+                                User: "Error updating user with username " + req.body.username
+                            });
+                        }
+                    } else {
+                        res.status(200).send({ Verify: "Successfully changed the password" });
+                    }
+                });
+            });
+        });
     }else{
         User.updateByID(
             userid,

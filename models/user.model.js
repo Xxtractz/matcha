@@ -313,6 +313,8 @@ User.reset = async (username, password, result) => {
   }
 };
 
+
+
 //verification for invalid token and getting new token
 User.verifysAgain = async (email, result) => {
   try {

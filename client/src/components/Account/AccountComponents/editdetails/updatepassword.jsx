@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {getUserEmail, getUserId, getUsername} from "../../../../actions/user";
+import {getUserId, getUsername} from "../../../../actions/user";
 import {refresh, update} from "../../../../actions/api";
-import {Button, InputLabel, TextField} from "@material-ui/core";
-import {isChar, isDayValid, isEqual, isMonthValid, isPassword, isYearValid} from "../../../../utils/validate";
+import {Button, TextField} from "@material-ui/core";
+import {isEqual,isPassword} from "../../../../utils/validate";
 
 class UpdatePassword extends Component {
     constructor(props) {
@@ -23,13 +23,14 @@ class UpdatePassword extends Component {
         this.setState({
             [e.target.name]: [e.target.value],
         });
+        this.validateAfterInput(e);
     }
 
     submitHandler = (e) => {
         e.preventDefault();
         console.log(e.target.id);
         if(e.target.id === "password" ){
-            this.updateDetails({email : this.state.email});
+            this.updateDetails({password : this.state.password, username: getUsername()});
         }
     }
 
@@ -49,7 +50,6 @@ class UpdatePassword extends Component {
     }
 
     validateAfterInput(e) {
-
         if (e.target.name === "password") {
             if (!isPassword(e.target.value)) {
                 this.setState({ password_err: "error" });
@@ -117,7 +117,7 @@ class UpdatePassword extends Component {
 
     updatepassword(){
         return (
-            <form id='email' onSubmit={this.submitHandler}>
+            <form id='password' onSubmit={this.submitHandler}>
                 <div className="row m-5">
                     <div className="col-4 text-center">
                         {this.passwordSection()}
