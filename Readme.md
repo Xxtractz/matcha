@@ -1,6 +1,13 @@
 # Matcha
 This is a dating site like project, which will mimic some functionalities like Tinder & other dating sites
 
+### How Run Locally 
+- npm install
+- cd client
+- npm install
+- cd .. 
+- npm run dev 
+
 ## Technologies
 
 - [x] Node Js

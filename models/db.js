@@ -62,39 +62,6 @@ matchaDb.findByEmail = (email) => {
     });
 };
 
-matchaDb.getInterests = (userid) => {
-    return new Promise((resolve, reject) => {
-        poolConnection.query(
-            `SELECT interest from interests WHERE userid = ?`,
-            [userid],
-            (err, results) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve(results);
-            }
-        );
-    });
-}
-
-matchaDb.addInterests = (userid,interests = []) => {
-    return new Promise((resolve, reject) => {
-        for (let interest of interests) {
-        poolConnection.query(
-            `Insert INTO interests SET userid = ?, interest = ?`,
-            [userid,interest.toLocaleString()],
-            (err, results) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve(results[0]);
-            }
-
-        );
-        }
-    });
-}
-
 matchaDb.insert = (table,data)=>{
     return new Promise((resolve, reject) => {
         poolConnection.query(
@@ -222,6 +189,78 @@ matchaDb.removeSession = (username) => {
     );
   });
 };
+
+
+/*
+* Interests  Start Here
+*/
+
+filterInterests = (currentInterests, newInterests) => newInterests.filter(interest => !currentInterests.includes(interest))
+
+
+matchaDb.getInterests = (userid) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `SELECT interest from interests  WHERE userid = ?`,
+            [userid],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            }
+        );
+    });
+}
+
+matchaDb.addInterests = (userid,interests = []) => {
+    const currentInterests = this.getInterests(userId);
+    const interestsToAdd = filterInterests(currentInterests, interests);
+    const interestsToDelete = filterInterests(interests, currentInterests);
+
+
+    return new Promise((resolve, reject) => {
+        try{
+            if (interestsToDelete.length > 0){
+                for (let interestToDelete of interestsToDelete) {
+                    poolConnection.query(
+                        `DELETE FROM interests WHERE userid = ? AND interest = ?`,
+                        [userid,interestToDelete.toLocaleString()],
+                        (err, results) => {
+                            if (err) {
+                                return reject(err);
+                            }
+                            if (interestsToAdd.length >! 0)
+                            {
+                                return resolve(results[0]);
+                            }
+                        }
+                    );
+                }
+            }
+            if (interestsToAdd.length > 0){
+                for (let interestToAdd of interestsToAdd) {
+                    poolConnection.query(
+                        `Insert INTO interests SET userid = ?, interest = ?`,
+                        [userid,interestToAdd.toLocaleString()],
+                        (err, results) => {
+                            if (err) {
+                                return reject(err);
+                            }
+                            return resolve(results[0]);
+                        }
+                    );
+                }
+            }
+        }catch (e) {
+
+        }
+    });
+}
+
+/*
+* Interests  Start Ends Here
+*/
 
 
 matchaDb.getOnlineUsers = () => {

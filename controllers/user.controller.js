@@ -429,10 +429,7 @@ exports.update = (req, res) => {
                 }
             }
         );
-        User.updateByID(
-            userid,
-            user,
-            (err, data) => {
+        User.updateByID(userid, user, (err, data) => {
                 console.log(err);
                 console.log('=============',data)
                 if (err) {
@@ -450,6 +447,25 @@ exports.update = (req, res) => {
                 }
             }
         );
+    }else if (req.body.interests){
+        const interests = req.body.interests;
+        User.updateInterest(userid, interests,(err, data) => {
+                if (err) {
+                    if (err.kind === "not_found") {
+                        res.status(404).send({
+                            User: `Not found user with id ${req.params.userid}.`
+                        });
+                    } else {
+                        res.status(500).send({
+                            User: "Error updating user with ID " + req.params.userid
+                        });
+                    }
+                } else {
+                    res.status(200).send(data);
+                }
+            }
+        );
+
     }else{
         User.updateByID(
             userid,
