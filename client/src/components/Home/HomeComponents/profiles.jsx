@@ -19,7 +19,7 @@ class Profiles extends Component {
     this.state = {
       cards: [],
       image:'',
-      open:false
+      infoDialog:false
     };
     this.getCardState();
   }
@@ -28,6 +28,12 @@ class Profiles extends Component {
     getUsers(getUserGenderPreference()).then((res)=>{
       this.setState({ cards : [...res.data]});
     });
+  }
+
+  info = ()=>{
+    if(this.state.infoDialog){
+      this.setState({ infoDialog : false});
+    }else this.setState({ infoDialog : true});
   }
 
   like = (user) => {
@@ -73,7 +79,10 @@ class Profiles extends Component {
             >
               <FavoriteTwoToneIcon style={{ fontSize: 36, color: red[500] }} />
             </IconButton>
-            <IconButton aria-label="info">
+            <IconButton aria-label="info"
+                        onClick={() => {
+                          this.info();
+                        }}>
               <InfoIcon style={{ fontSize: 36, color: blue[300] }} />
             </IconButton>
             <IconButton
@@ -115,7 +124,7 @@ class Profiles extends Component {
           <Dialog
               // fullWidth='320'
               maxWidth={'lg'}
-              open={true}
+              open={this.state.infoDialog}
               // onClose={handleClose}
               aria-labelledby="max-width-dialog-title"
           >
@@ -151,10 +160,9 @@ class Profiles extends Component {
               </DialogContentText>
             </DialogContent>
             <DialogActions>
-              {/*<Button onClick={handleClose} color="primary">*/}
-              {/*  Close*/}
-              {/*</Button>*/}
-              <Button  color="primary">
+              <Button onClick={() => {
+                this.info();
+              }} color="primary">
                 Close
               </Button>
             </DialogActions>
