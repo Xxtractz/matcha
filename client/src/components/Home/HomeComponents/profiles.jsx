@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-
-import { Card, CardHeader, CardMedia, CardActions } from "@material-ui/core";
+import { Card, CardHeader, CardMedia, CardActions, Button } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import InfoIcon from "@material-ui/icons/Info";
@@ -8,13 +7,19 @@ import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import { blue, red } from "@material-ui/core/colors";
 import { getUserGenderPreference} from "../../../actions/user";
 import {getUsers, loadImage} from "../../../actions/api";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 class Profiles extends Component {
   constructor(props) {
     super(props);
     this.state = {
       cards: [],
-      image:''
+      image:'',
+      open:false
     };
     this.getCardState();
   }
@@ -68,7 +73,7 @@ class Profiles extends Component {
             >
               <FavoriteTwoToneIcon style={{ fontSize: 36, color: red[500] }} />
             </IconButton>
-            <IconButton aria-label="Like">
+            <IconButton aria-label="info">
               <InfoIcon style={{ fontSize: 36, color: blue[300] }} />
             </IconButton>
             <IconButton
@@ -93,6 +98,71 @@ class Profiles extends Component {
     return <div>Theres Nothing to display</div>;
   }
 
+  displayImages(src){
+    return(
+        <div className={'col-md-3 p-1'}><Card variant="outlined" style={{ height: "320px", width: "250px" }}>
+          <CardMedia
+              style={{ height: "100%", paddingTop: 0 }}
+              image={src}
+          />
+        </Card></div>
+    )
+  }
+
+  viewUser(user){
+    return(
+        <div>
+          <Dialog
+              // fullWidth='320'
+              maxWidth={'lg'}
+              open={true}
+              // onClose={handleClose}
+              aria-labelledby="max-width-dialog-title"
+          >
+            <DialogTitle id="max-width-dialog-title">
+              {user.firstname +' ' + user.lastname }
+              <p className={'small'} >{user.gender +"\n "+user.age}</p>
+            </DialogTitle>
+
+            <DialogContent>
+              <div className={'row'}>
+                {this.displayImages(user.profileImage)}
+                {user.image_1 ? this.displayImages(user.image_1): ''}
+                {user.image_2 ? this.displayImages(user.image_2): ''}
+                {user.image_3 ? this.displayImages(user.image_3): ''}
+                {user.image_4 ? this.displayImages(user.image_4): ''}
+              </div>
+            </DialogContent>
+
+            <DialogContent>
+              <DialogContentText>
+                {"Hi, I am interested in " + user.genderPreference +"s"}
+              </DialogContentText>
+              <p className={'lead'}>Bio</p>
+              <DialogContentText>
+                  {user.bio}
+              </DialogContentText>
+            </DialogContent>
+
+            <DialogContent>
+              <p className={'lead'}>Interests</p>
+              <DialogContentText>
+                {user.interest ? user.interest.toString():''}
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              {/*<Button onClick={handleClose} color="primary">*/}
+              {/*  Close*/}
+              {/*</Button>*/}
+              <Button  color="primary">
+                Close
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </div>
+    )
+  }
+
   render() {
     return (
       <div className="container mb-4">
@@ -101,6 +171,9 @@ class Profiles extends Component {
             {this.state.cards.length > 0
               ? this.display(this.state.cards[0])
               : this.displayEmpty()}
+            {this.state.cards.length > 0
+                ? this.viewUser(this.state.cards[0])
+                : ""}
           </div>
         </div>
       </div>
