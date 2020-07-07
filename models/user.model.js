@@ -313,8 +313,6 @@ User.reset = async (username, password, result) => {
   }
 };
 
-
-
 //verification for invalid token and getting new token
 User.verifysAgain = async (email, result) => {
   try {
@@ -325,21 +323,6 @@ User.verifysAgain = async (email, result) => {
     console.log(e);
     return result({ kind: "not_found" }, null);
   }
-  //
-  // sql.query(`SELECT * FROM users WHERE email = ?`, email, (err, res) => {
-  //   if (err) {
-  //     console.log("Error in verifysAgain: ", err);
-  //     result(err, null);
-  //     return;
-  //   }
-  //
-  //   if (res.length) {
-  //     result(null, res[0]);
-  //     return;
-  //   }
-  //
-  //   result({ kind: "not_found" }, null);
-  // });
 };
 
 //update the user by id
@@ -352,47 +335,23 @@ User.updateByID = (userid, user, result) => {
   }
 };
 
-User.deleteCurrentInterest = async (userid) =>{
+User.deleteInterest = async (userid,interestsToDelete,result) =>{
   try {
-    const getInterests =  await sql.getInterests(userid);
-    console.log(getInterests);
-    let interestsToDelete = [];
-
-    for (let i = 0; i < getInterests.length; i++) {
-      interestsToDelete  = interestsToDelete .concat(getInterests[i].interest);
-    }
-      sql.removeInterests(userid, interestsToDelete).then(r => {});
+    let updateInterest = sql.removeInterests(userid, interestsToDelete);
+    result(null, updateInterest);
   }catch (e) {
+    result(e, null);
   }
 }
 
 //update the user by id
 User.updateInterest = async (userid, interests, result) => {
   try {
-     User.deleteCurrentInterest(userid).then(r => {});
     let updateInterest = sql.addInterests(userid,interests);
     result(null, updateInterest);
   }catch (e) {
     result(e, null);
   }
-};
-
-//remove one user by id
-User.remove = (userid, result) => {
-  // sql.query("DELETE FROM users WHERE userid = ?", userid, (err, res) => {
-  //   if (err) {
-  //     console.log("Error trying to delete by ID: ", err);
-  //     result(null, err);
-  //     return;
-  //   }
-  //
-  //   if (res.affectedRows == 0) {
-  //     result({ kind: "not_found" }, null);
-  //     return;
-  //   }
-  //
-  //   result(null, res);
-  // });
 };
 
 //remove all the users in the database
