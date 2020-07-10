@@ -231,7 +231,7 @@ exports.verifyAgain = (req, res) => {
 }
 
 exports.findAll = (req, res) => {
-    User.getUsers(req.body.gender,(err, data) => {
+    User.getUsers(req.body.userid,req.body.gender,req.body.minAge,req.body.maxAge,(err, data) => {
         if (err) {
             res.status(500).send({
                 User: err.message || "Some error occurred while getting users."

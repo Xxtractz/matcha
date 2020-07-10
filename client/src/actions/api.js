@@ -169,13 +169,14 @@ export const userData = async (id) => {
   });
 };
 
-export const getUsers = async (gender) => {
-  return axios.post(`${_Url.usersUrl}/${gender}`,{gender:gender}).then((response) => {
-    // handleStoreUser(JSON.stringify(response.data.User));
-    // return response.data.User.status;
+export const getUsers = async (userid,gender,minAge, maxAge) => {
+  return axios.post(`${_Url.usersUrl}/${userid}`,{userid:userid,gender:gender,minAge:minAge,maxAge:maxAge}).then((response) => {
+    localStorage.setItem('users', JSON.stringify( response.data));
+    console.log(response.data);
     return response;
   });
 };
+
 
 export const loadImage = (image) => {
   return axios.request(image).then((res) => {

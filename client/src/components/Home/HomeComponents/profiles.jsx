@@ -5,13 +5,15 @@ import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import InfoIcon from "@material-ui/icons/Info";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import { blue, red } from "@material-ui/core/colors";
-import { getUserGenderPreference} from "../../../actions/user";
+import {getUserGenderPreference, getUserId, getUserLatitude, getUserLongitude} from "../../../actions/user";
 import {getUsers, loadImage} from "../../../actions/api";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import * as geolib from 'geolib';
+import sortByDistance from 'sort-by-distance';
 
 class Profiles extends Component {
   constructor(props) {
@@ -19,6 +21,8 @@ class Profiles extends Component {
     this.state = {
       cards: [],
       image:'',
+      minAge: 18,
+      maxAge: 70,
       infoDialog:false
     };
     this.getCardState();
@@ -26,8 +30,30 @@ class Profiles extends Component {
 
   getCardState(){
 
-    getUsers(getUserGenderPreference()=== "Both" ? "Other":getUserGenderPreference()).then((res)=>{
-      this.setState({ cards : [...res.data]});
+    const points = [
+      { longitude: 3, latitude: 5},
+      { longitude: 80, latitude: 34},
+      { longitude: 3, latitude: 7},
+      { longitude: 22, latitude: 88},
+      { longitude: 100, latitude: 60},
+    ]
+
+    const opts = {
+      yName: 'latitude',
+      xName: 'longitude'
+    }
+
+
+
+    getUsers(
+        getUserId(),
+        (getUserGenderPreference()=== "Both" ? "Other":getUserGenderPreference()),
+        this.state.minAge,
+        this.state.maxAge
+    ).then((res)=>{
+      const origin = { longitude: getUserLongitude(), latitude: getUserLatitude()}
+      // console.log(sortByDistance(origin,res.data, opts))
+      this.setState({ cards : [...sortByDistance(origin,res.data, opts)]});
     });
   }
 
@@ -62,13 +88,14 @@ class Profiles extends Component {
   };
 
   display(user) {
+    console.log(geolib.getDistance({latitude : getUserLatitude(), longitude: getUserLongitude()},{latitude: user.latitude, longitude : user.longitude},1));
     return (
       <div>
         <Card variant="outlined" style={{ height: "620px", width: "320px" }}>
           <CardHeader title={user.firstname +' ' + user.lastname } subheader={user.age} />
           <CardMedia
             style={{ height: "75%", paddingTop: 0 }}
-            image={user.profileImage}
+            image={user.profileImage ? user.profileImage : "https://source.unsplash.com/random/720x1080-1/?human"}
             title={user.firstname +' ' + user.lastname }
           />
           <CardActions className="pl-5">

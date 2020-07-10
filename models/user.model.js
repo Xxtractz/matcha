@@ -65,7 +65,9 @@ User.logins = async (username, password, result) => {
             bio: user.bio,
             status: user.status,
             interest: interestToString,
-            notify: user.notify
+            notify: user.notify,
+            longitude: user.longitude,
+            latitude: user.latitude
           };
 
           if (user.status === '0') {
@@ -140,7 +142,9 @@ User.refreshToken = async (username, result) => {
         bio: user.bio,
         status: user.status,
         interest: interestToString,
-        notify: user.notify
+        notify: user.notify,
+        longitude: user.longitude,
+        latitude: user.latitude
       };
 
 
@@ -289,8 +293,8 @@ User.getAll = (result) => {
 };
 
 //get all the users in the database
-User.getUsers = async (gender,result) => {
-  let user = await sql.getRandomUsers(gender);
+User.getUsers = async (userid,gender,agemin,agemax,result) => {
+  let user = await sql.getUsers(userid,gender,agemin,agemax);
   // console.log(user);
   if (!user) {
     result({ kind: "not_found" }, null);
