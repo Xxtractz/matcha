@@ -303,6 +303,17 @@ User.getUsers = async (userid,gender,agemin,agemax,result) => {
   }
 };
 
+//get all the users in the database
+User.AllInterest = async (userid,result) => {
+  let user = await sql.getAllInterests(userid);
+  // console.log(user);
+  if (!user) {
+    result({ kind: "not_found" }, null);
+  } else {
+    result(null, user);
+  }
+};
+
 
 //used to update the password at forgot password
 User.reset = async (username, password, result) => {

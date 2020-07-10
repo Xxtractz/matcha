@@ -177,6 +177,14 @@ export const getUsers = async (userid,gender,minAge, maxAge) => {
   });
 };
 
+export const getInterests = async (userid) => {
+  return axios.post(`${_Url.interestsUrl}/${userid}`,{userid:userid}).then((response) => {
+    localStorage.setItem('interests', JSON.stringify( response.data));
+    console.log(response.data);
+    return response;
+  });
+};
+
 
 export const loadImage = (image) => {
   return axios.request(image).then((res) => {
@@ -195,28 +203,3 @@ export const uploadImage = (image) => {
     file: image,
   });
 };
-
-// export const suggestedUsers = async(profile) => {
-//     return axios.get(_Url.LogInUrl);
-//     // axios.post(_Url.LogInUrl,_Logindata,{timeout : 31000})
-//     //   .then(response => {
-//     //     if(response){
-//     //       if (response.status ===204) {
-//     //         return response.status;
-//     //       } else {
-//     //         handleLogin(response.data.Token,response.data.RefreshToken);
-//     //         return response.status;
-//     //       }
-//
-//     //     }
-//     //   })
-//     //   .catch(error => {
-//     //     if (error.response.status) {
-//     //       return error.response.status;
-//     //     }
-//     //     else
-//     //     {
-//     //       return "TimeOut";
-//     //     }
-//     //   } );
-// };

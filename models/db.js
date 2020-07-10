@@ -248,6 +248,22 @@ matchaDb.addInterests =  async (userid, interestsToAdd = []) => {
     });
 }
 
+matchaDb.getAllInterests = (userid) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            "SELECT * FROM interests WHERE userid != ?",
+            [userid],
+            (err, results) => {
+                // console.log(results);
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            }
+        );
+    });
+}
+
 /*
 * Interests  Start Ends Here
 */
@@ -268,7 +284,6 @@ matchaDb.getOnlineUsers = () => {
         );
     });
 }
-
 
 matchaDb.getRandomUsers = (gender) => {
     return new Promise((resolve, reject) => {

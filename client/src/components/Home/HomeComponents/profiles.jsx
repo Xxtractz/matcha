@@ -6,7 +6,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import { blue, red } from "@material-ui/core/colors";
 import {getActive, getUserGenderPreference, getUserId, getUserLatitude, getUserLongitude} from "../../../actions/user";
-import {getUsers, loadImage} from "../../../actions/api";
+import {getInterests, getUsers, loadImage} from "../../../actions/api";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -29,7 +29,17 @@ class Profiles extends Component {
       ageMax: 70,
       locationDistance: 0,
     };
+  }
+
+  componentDidMount() {
     this.getCardState();
+    this.getInterestsState();
+  }
+
+  getInterestsState(){
+    getInterests(getUserId()).then((res)=>{
+      this.setState({ interests : [...res.data]});
+    });
   }
 
   getCardState(){
@@ -143,7 +153,11 @@ class Profiles extends Component {
               {user.firstname +' ' + user.lastname }
               <p className={'small'} >
                 { user.gender === "Other" ? "Unknown":user.gender }
-                { "\n "+user.age}</p>
+                { "\n "+user.age}
+                { (user.lastseen === 'online')
+                    ? <small className={"text-success"}>{ "\n "+user.lastseen}</small>
+                    : <small className={"text-secondary"}>{ "\n \t lastseen : \n "+user.lastseen}</small>}
+              </p>
             </DialogTitle>
 
             <DialogContent>
@@ -170,7 +184,6 @@ class Profiles extends Component {
             <DialogContent>
               <p className={'lead'}>Interests</p>
               <DialogContentText>
-                {console.log(user.interest)}
                 {user.interest ? user.interest.toString():''}
               </DialogContentText>
             </DialogContent>
