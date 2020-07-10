@@ -22,6 +22,7 @@ import verifyUser from "./components/Registration/verify";
 // Modified Route
 import { PrivateRoute } from "./actions/private.route";
 import { PublicRoute } from "./actions/public.route";
+import Admin from "./components/admin";
 
 class App extends Component {
   render() {
@@ -36,6 +37,7 @@ class App extends Component {
             <PublicRoute exact path="/register" component={Register} />
             <PublicRoute exact path="/verify" component={verifyUser} />
             <PublicRoute exact path="/forgot" component={Forgot} />
+            <PublicRoute exact path="/admin" component={Admin} />
             <Route exact path="/404" component={NotFound} />
             <Redirect to="/404" />
           </Switch>
