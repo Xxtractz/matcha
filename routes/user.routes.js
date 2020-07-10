@@ -35,6 +35,9 @@ const users = require("../controllers/user.controller.js");
     app.get("/users/verify/:id", users.verifyReg);
 
     //getting all the users in the database
+    app.post("/interests/:userid", users.findAllInterests);
+
+    //getting all the users in the database
     app.post("/users/:gender", users.findAll);
 
     //getting all the users in the database

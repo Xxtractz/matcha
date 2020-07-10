@@ -263,6 +263,22 @@ matchaDb.addInterests =  async (userid, interestsToAdd = []) => {
     });
 }
 
+matchaDb.getAllInterests = (userid) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            "SELECT * FROM interests WHERE userid != ?",
+            [userid],
+            (err, results) => {
+                // console.log(results);
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            }
+        );
+    });
+}
+
 /*
 * Interests  Start Ends Here
 */
@@ -284,7 +300,6 @@ matchaDb.getOnlineUsers = () => {
     });
 }
 
-
 matchaDb.getRandomUsers = (gender) => {
     return new Promise((resolve, reject) => {
         poolConnection.query(
@@ -301,16 +316,17 @@ matchaDb.getRandomUsers = (gender) => {
     });
 }
 
-matchaDb.getUsers = (minimumAge, maximumAge,distanceMin,distanceMax,interests,popularity) => {
-    // select ST_Distance_Sphere(
-    //     point(-11.11, 12.12),
-    //     point(-13.13, 14.14)
-    // ) * .001
-    const query = `SELECT * FROM users WHERE gender=? AND ( age BETWEEN 20 AND 50) LIMIT 15`;
+matchaDb.getUsers = (userid,gender,agemin,agemax) => {
+    const query = `SELECT * FROM users 
+                    WHERE userid != ? 
+                    AND gender=?  
+                    AND ( age BETWEEN ? AND ?) 
+                    ORDER BY popularity 
+                    LIMIT 1000`;
     return new Promise((resolve, reject) => {
         poolConnection.query(
             query,
-            [],
+            [userid,gender,agemin,agemax],
             (err, results) => {
                 // console.log(results);
                 if (err) {

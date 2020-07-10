@@ -80,3 +80,11 @@ export const getActive = () =>{
 export const getNotify = ()=>{
     return (data.notify === 1);
 }
+
+export const getUserLatitude = ()=>{
+    return data.latitude ;
+}
+
+export const getUserLongitude = ()=>{
+    return data.longitude ;
+}

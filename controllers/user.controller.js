@@ -230,8 +230,8 @@ exports.verifyAgain = (req, res) => {
     });
 }
 
-exports.findAll = (req, res) => {
-    User.getUsers(req.body.gender,(err, data) => {
+exports.findAllInterests = (req, res) => {
+    User.AllInterest(req.body.userid,(err, data) => {
         if (err) {
             res.status(500).send({
                 User: err.message || "Some error occurred while getting users."
@@ -240,16 +240,19 @@ exports.findAll = (req, res) => {
             res.status(200).send(data);
         }
     });
-    // User.getAll((err, data) => {
-    //     if (err) {
-    //         res.status(500).send({
-    //             User: err.message || "Some error occurred while getting users."
-    //         });
-    //     } else {
-    //         res.status(200).send(data);
-    //     }
-    // });
+};
 
+
+exports.findAll = (req, res) => {
+    User.getUsers(req.body.userid,req.body.gender,req.body.minAge,req.body.maxAge,(err, data) => {
+        if (err) {
+            res.status(500).send({
+                User: err.message || "Some error occurred while getting users."
+            });
+        } else {
+            res.status(200).send(data);
+        }
+    });
 };
 
 exports.findOne = (req, res) => {
@@ -411,7 +414,9 @@ exports.update = (req, res) => {
             gender: req.body.gender,
             genderPreference: req.body.genderPreference,
             bio: req.body.bio,
-            status: req.body.status
+            status: req.body.status,
+            longitude: req.body.longitude,
+            latitude: req.body.latitude
         }
 
         User.updateInterest(userid, interests,(err, data) => {
@@ -428,28 +433,28 @@ exports.update = (req, res) => {
                         });
                     }
                 } else {
-                    res.status(200).send(data);
+                    User.updateByID(userid, user, (err, data) => {
+                            console.log(err);
+                            console.log('=============',data)
+                            if (err) {
+                                if (err.kind === "not_found") {
+                                    res.status(404).send({
+                                        User: `Not found user with id ${userid}.`
+                                    });
+                                } else {
+                                    res.status(500).send({
+                                        User: "Error updating user with ID " + userid
+                                    });
+                                }
+                            } else {
+                                res.status(200).send(data);
+                            }
+                        }
+                    );
                 }
             }
         );
-        User.updateByID(userid, user, (err, data) => {
-                console.log(err);
-                console.log('=============',data)
-                if (err) {
-                    if (err.kind === "not_found") {
-                        res.status(404).send({
-                            User: `Not found user with id ${userid}.`
-                        });
-                    } else {
-                        res.status(500).send({
-                            User: "Error updating user with ID " + userid
-                        });
-                    }
-                } else {
-                    res.status(200).send(data);
-                }
-            }
-        );
+
     }else if (req.body.interests){
         const interests = req.body.interests;
         console.log("Inside of Interest Update")

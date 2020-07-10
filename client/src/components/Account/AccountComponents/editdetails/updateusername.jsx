@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {refresh, update} from "../../../../actions/api";
-import {getUserId, getUserLastName, getUsername} from "../../../../actions/user";
+import {getUserId, getUsername} from "../../../../actions/user";
 import {Button, InputLabel, TextField} from "@material-ui/core";
 
 class UpdateUsername extends Component {
@@ -12,7 +12,6 @@ class UpdateUsername extends Component {
             username: "",
         }
     }
-
 
     onChange = (e) => {
         this.setState({

@@ -20,5 +20,8 @@ export const updateUserById = ServerUrl + "/users/update";
 export const deleteUserById = ServerUrl + "/users";
 
 // You can get and delete on these URLs
+export const interestsUrl = ServerUrl + "/interests";
+
+// You can get and delete on these URLs
 export const usersUrl = ServerUrl + "/users";
 export const refreshTokenUrl = ServerUrl + "/users/refresh";
