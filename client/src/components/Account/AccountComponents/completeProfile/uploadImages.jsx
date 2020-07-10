@@ -45,8 +45,8 @@ class UploadImages extends Component {
     };
 
     console.log(user);
-
-    update(getUserId(), user)
+    if(!(this.state.profileImage === "")){
+      update(getUserId(), user)
       .then((response) => {
         console.log(response);
         
@@ -58,6 +58,7 @@ class UploadImages extends Component {
       .catch((error) => {
         console.log(error);
       });
+    }
   }
 
   uploadToCloudinary(image) {

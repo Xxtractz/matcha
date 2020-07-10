@@ -10,7 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import CloseIcon from "@material-ui/icons/Close";
 import { selecFormInput, textAreaFormInput } from "../../../Form/form";
-import {refresh, update} from "../../../../actions/api";
+import {update} from "../../../../actions/api";
 import UploadImages from "./uploadImages";
 
 class CompleteProfile extends Component {
@@ -29,14 +29,27 @@ class CompleteProfile extends Component {
       temptag: "",
       isopen: true,
       stepOne: true,
+      longitude : 0,
+      latitude : 0
     };
   }
 
+  getGeolocation(){
+    window.navigator.geolocation.getCurrentPosition(
+        success => this.setState({ latitude: success.coords.latitude, longitude: success.coords.longitude })
+        ,err => fetch("https://ipinfo.io/?token=eba87c568e8798")
+            .then((res) => {
+              return res.json();
+            })
+            .then((res) => {
+              sessionStorage.setItem('latitude',res.loc.toString().split(',')[0]);
+              sessionStorage.setItem('longitude',res.loc.toString().split(',')[1]);
+            })
+    );
+  }
+
   componentDidMount() {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      console.log("Latitude is :", position.coords.latitude);
-      console.log("Longitude is :", position.coords.longitude);
-    });
+    this.getGeolocation()
   }
 
   submitHandler = (e) => {
@@ -58,7 +71,9 @@ class CompleteProfile extends Component {
         genderPreference: this.state.genderPreference.toString(),
         bio: this.state.bio.toString(),
         status: '2',
-        interests: interestToString
+        interests: interestToString,
+        longitude: this.state.longitude,
+        latitude: this.state.latitude
     };
 
     console.log(user);
@@ -66,8 +81,8 @@ class CompleteProfile extends Component {
     update(getUserId(), user)
       .then((response) => {
         if (response.status === 200) {
-          this.displayImageSection();
-          refresh(this.state.firstname).then();
+          window.location.pathname = "/";
+          sessionStorage.clear();
         }
       })
       .catch((error) => {
@@ -79,6 +94,10 @@ class CompleteProfile extends Component {
     this.setState({
       [e.target.name]: [e.target.value],
     });
+
+    if (this.state.longitude === 0){
+      this.setState({ latitude: sessionStorage.getItem('latitude'), longitude: sessionStorage.getItem('longitude') })
+    }
   };
 
   removeTag = (i) => {

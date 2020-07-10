@@ -6,7 +6,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import { blue, red } from "@material-ui/core/colors";
 import {getActive, getUserGenderPreference, getUserId, getUserLatitude, getUserLongitude} from "../../../actions/user";
-import {getInterests, getUsers, loadImage} from "../../../actions/api";
+import {getInterests, getUsers} from "../../../actions/api";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -140,10 +140,9 @@ class Profiles extends Component {
   viewUser(user){
     let interests = '';
     this.state.interests.filter(interest => interest.userid === user.userid).map(filteredInterest =>{
-      console.log(filteredInterest);
       interests = filteredInterest.interest.toString() + ',';
-    })
-    console.log(interests)
+      return  0;
+    });
     return(
         <div>
           <Dialog
