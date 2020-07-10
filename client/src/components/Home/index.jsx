@@ -10,14 +10,18 @@ class index extends Component {
   render() {
     return (
       <div>
-        {getActive() === 1 ? (
+
           <Layout>
             <Search></Search>
-            <Profiles></Profiles>
+              {getActive() === 1 ? (
+            <Profiles></Profiles>  ) : (
+                <div className={'m-5'}>
+                    <h3>{"You need to complete your Profile, please navigate to account to complete you profile"}</h3>
+                </div>
+
+              )}
           </Layout>
-        ) : (
-          this.props.history.push(`/user`)
-        )}
+
       </div>
     );
   }

@@ -286,5 +286,22 @@ matchaDb.getRandomUsers = (gender) => {
     });
 }
 
+matchaDb.getUsers = (minimumAge, maximumAge,distanceMin,distanceMax,interests,popularity) => {
+    const query = `SELECT * FROM users WHERE gender=? AND ( age BETWEEN 20 AND 50) LIMIT 15`;
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            query,
+            [],
+            (err, results) => {
+                // console.log(results);
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            }
+        );
+    });
+}
+
 module.exports = matchaDb;
 

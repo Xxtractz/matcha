@@ -56,7 +56,7 @@ exports.sendEmail = (email, subject, message) => {
   });
 
   let mailOptions = {
-    from: '"Matcha" <pietthabiso@gmail.com>',
+    from: '"Matcha" <noreply@matcha.io>',
     to: email,
     subject: subject,
     html: message,

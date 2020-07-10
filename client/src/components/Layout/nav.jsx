@@ -111,7 +111,7 @@ class Nav extends Component {
             <hr />
             <div className="col-12">
               <List component="nav">
-                {getActive() === 1 ? this.homeMenu() : ""}
+                {this.homeMenu()}
 
                 {getActive() === 1 ? this.messageMenu() : ""}
 
@@ -153,7 +153,7 @@ class Nav extends Component {
             <div className={this.toggle()}>
               <ul className="navbar-nav ml-auto">
                 <List component="nav">
-                  {getActive() === 1 ? this.homeMenu() : ""}
+                  {this.homeMenu()}
 
                   {getActive() === 1 ? this.messageMenu() : ""}
 

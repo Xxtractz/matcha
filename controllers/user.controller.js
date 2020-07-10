@@ -415,6 +415,8 @@ exports.update = (req, res) => {
         }
 
         User.updateInterest(userid, interests,(err, data) => {
+            console.log("Update \n\n Interests ==> err",err);
+            console.log("\n\n\nUpdate \n\n Interests ==> data",data);
                 if (err) {
                     if (err.kind === "not_found") {
                         res.status(404).send({

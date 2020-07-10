@@ -25,7 +25,8 @@ class Profiles extends Component {
   }
 
   getCardState(){
-    getUsers(getUserGenderPreference()).then((res)=>{
+
+    getUsers(getUserGenderPreference()=== "Both" ? "Other":getUserGenderPreference()).then((res)=>{
       this.setState({ cards : [...res.data]});
     });
   }
@@ -130,7 +131,9 @@ class Profiles extends Component {
           >
             <DialogTitle id="max-width-dialog-title">
               {user.firstname +' ' + user.lastname }
-              <p className={'small'} >{user.gender +"\n "+user.age}</p>
+              <p className={'small'} >
+                { user.gender === "Other" ? "Unknown":user.gender }
+                { "\n "+user.age}</p>
             </DialogTitle>
 
             <DialogContent>
@@ -145,7 +148,8 @@ class Profiles extends Component {
 
             <DialogContent>
               <DialogContentText>
-                {"Hi, I am interested in " + user.genderPreference +"s"}
+                {"Hi, I am attracted to "}
+                {user.genderPreference === "Both" ? " Male and Female" : user.genderPreference}
               </DialogContentText>
               <p className={'lead'}>Bio</p>
               <DialogContentText>

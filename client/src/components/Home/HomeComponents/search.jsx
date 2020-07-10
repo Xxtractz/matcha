@@ -121,7 +121,7 @@ class Search extends Component {
           <div className="header text-center">
             {" "}
             <h3>Filter Search</h3>{" "}
-            <Button className="primary  " onClick={this.handleSearch}>
+            <Button className="primary  " variant={"outlined"} onClick={this.handleSearch}>
               Click here to Search/Filter
             </Button>
           </div>
