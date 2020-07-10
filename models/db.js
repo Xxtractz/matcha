@@ -212,6 +212,21 @@ matchaDb.getInterests = (userid) => {
     });
 }
 
+matchaDb.getNotifications = (receiverUsername, senderUsername) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `SELECT * from notifications  WHERE (receiverUsername = ? AND senderUsername = ?) || (receiverUsername = ? AND senderUsername = ?)`,
+            [receiverUsername, senderUsername, senderUsername, receiverUsername],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            }
+        );
+    });
+}
+
 matchaDb.removeInterests = (userid,interestsToDelete = []) => {
     return new Promise((resolve, reject) => {
         console.log('interestsToDelete => ', interestsToDelete)
