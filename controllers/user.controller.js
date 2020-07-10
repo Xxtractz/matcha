@@ -1,5 +1,3 @@
-
-
 const User = require("../models/user.model.js");
 const commonFunction = require("./commonFunctions");
 const boom = require("@hapi/boom");
@@ -284,6 +282,10 @@ exports.findOne = (req, res) => {
                 date: user.date,
                 age: user.age,
                 dob: user.dob,
+                image_1: user.image_1,
+                image_2: user.image_2,
+                image_3: user.image_3,
+                image_4: user.image_4,
                 interests: user.interests,
                 likes: user.likes,
                 dislikes: user.dislikes,
@@ -398,8 +400,6 @@ exports.verifyReg = (req, res) => {
 };
 
 exports.update = (req, res) => {
-    console.log("UpdateUrl");
-    // console.log(req);
     if (!req.body) {
         res.status(400).send({
             User: "Content can not be empty."
@@ -557,6 +557,32 @@ exports.delete = (req, res) => {
 
 exports.deleteAll = (req, res) => {
     User.removeAll((err, data) => {
+        if (err) {
+            res.status(500).send({
+                User: err.message || "Some error trying removing all users."
+            });
+        } else {
+            res.status(200).send({ User: "All users were deleted successfully." });
+        }
+    });
+};
+
+exports.install = (req, res) => {
+    User.installation((err, data) => {
+        console.log(err);
+        if (err) {
+            res.status(500).send({
+                User: err.message || "Some error trying removing all users."
+            });
+        } else {
+            res.status(200).send({ User: "All users were deleted successfully." });
+        }
+    });
+};
+
+exports.uninstall = (req, res) => {
+    User.unInstalling((err, data) => {
+        console.log(err);
         if (err) {
             res.status(500).send({
                 User: err.message || "Some error trying removing all users."

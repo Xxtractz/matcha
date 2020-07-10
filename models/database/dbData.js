@@ -1,135 +1,7 @@
-const mysql = require("mysql");
-const dbConfig = require("../config/db.config");
-
-const poolConnection = mysql.createPool({
-    connectionLimit: 1000,
-    host: dbConfig.HOST,
-    user: dbConfig.USER,
-    password: dbConfig.PASSWORD,
-    database: dbConfig.DB,
-    port: 3306,
-});
-
-let matchaDb = {};
-
-
-
-matchaDb.pupulate = ()=>{
-    const query =
-        `
-create table if not exists users
-(
-    userid           int auto_increment
-        primary key,
-    username         varchar(255)                 not null,
-    email            varchar(255)                 not null,
-    password         varchar(255)                 not null,
-    firstname        varchar(255)                 not null,
-    lastname         varchar(255)                 not null,
-    gender           varchar(255) default 'Other' null,
-    genderPreference varchar(255) default 'Both'  null,
-    bio              longtext                     null,
-    age              int                          null,
-    dob              varchar(255)                 null,
-    token            varchar(500)                 null,
-    status           varchar(255) default '0'     not null,
-    image_1          varchar(255)                 null,
-    image_2          varchar(255)                 null,
-    image_3          varchar(255)                 null,
-    image_4          varchar(255)                 null,
-    active           tinyint(1)   default 0       null,
-    lastseen         varchar(255)                 null,
-    profileImage     varchar(255)                 null,
-    date             varchar(255)                 null,
-    notify           tinyint(1)   default 1       null,
-    longitude        varchar(255)                 not null,
-    latitude         varchar(255)                 null,
-    constraint username
-        unique (username),
-    constraint users_email_uindex
-        unique (email)
-)
-    charset = utf8;
-
-create table if not exists auth
-(
-    authid       int(11) unsigned auto_increment
-        primary key,
-    userid       int          not null,
-    username     varchar(255) null,
-    Token        longtext     null,
-    RefreshToken longtext     null,
-    constraint auth_ibfk_1
-        foreign key (userid) references users (userid)
-)
-    charset = utf8;
-
-create index userid
-    on auth (userid);
-
-create table if not exists dislikes
-(
-    dislikeid  int(11) unsigned auto_increment
-        primary key,
-    userid     int not null,
-    dislikedid int not null,
-    constraint dislikes_ibfk_1
-        foreign key (userid) references users (userid)
-)
-    charset = utf8;
-
-create index userid
-    on dislikes (userid);
-
-create table if not exists images
-(
-    imageid int(11) unsigned auto_increment
-        primary key,
-    userid  int          not null,
-    image   varchar(255) null,
-    constraint images_ibfk_1
-        foreign key (userid) references users (userid)
-)
-    charset = utf8;
-
-create index userid
-    on images (userid);
-
-create table if not exists interests
-(
-    interestid int(11) unsigned auto_increment
-        primary key,
-    userid     int          not null,
-    interest   varchar(255) not null,
-    constraint interests_ibfk_1
-        foreign key (userid) references users (userid)
-)
-    charset = utf8;
-
-create index userid
-    on interests (userid);
-
-create table if not exists likes
-(
-    likeid         int(11) unsigned auto_increment
-        primary key,
-    userid         int not null,
-    senderuserid   int null,
-    recieveruserid int null,
-    notify         int null,
-    constraint likes_ibfk_1
-        foreign key (userid) references users (userid)
-)
-    charset = utf8;
-
-create index userid
-    on likes (userid);
-
-INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (14, 'musa', 'musa@mailinator.com', '$2b$10$.Zm6yO33Xm9.nlSoVJl63e38iI8aZej5eI.nwoLwGQZiEiwcyk1KK', 'Musa', 'Baloyi', 'Male', 'Female', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus scelerisque gravida lorem, nec sollicitudin lorem ultrices id. Quisque elementum nunc orci, et gravida mi tincidunt eget. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean vehicula tortor nisi, a tincidunt augue laoreet vel. Donec tristique, ante at consectetur dictum, nisi nisl pulvinar nisl, quis dignissim dolor lectus ut tellus. Etiam ac sollicitudin velit. Curabitur in massa egestas, elementum odio eget, ultrices tortor', 22, '20/01/1998', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im11c2EiLCJlbWFpbCI6Im11c2FAbWFpbGluYXRvci5jb20iLCJsYXN0bmFtZSI6IkJhbG95aSIsImZpcnN0bmFtZSI6Ik11c2EiLCJwYXNzd29yZCI6IiQyYiQxMCR6L2xFWGFyNW5yLklsZWRXODJXYmEuVnE2VTZweHZXUVVQamF6VWl2UHFYSXZsOFFrM0VpVyIsImFnZSI6IjIyIiwiZG9iIjoiMjAvMDEvMTk5OCIsImRhdGUiOiI2LzE3LzIwMjAsIDE2OjU0OjEwIiwic3RhdHVzIjoiMCIsImlhdCI6MTU5MjQwNTY1MH0.jHdQLcXsPn3mQbjYJZ11g9i_soEVxNPXizKeP5GXgfQ', '2', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568460/uploads/lzdgxci3vryhe5dgqxi8.jpg', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568471/uploads/sg0r2hhjkuoyujiur1yo.jpg', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568486/uploads/nrgqfjanqpo0pdp5zsie.jpg', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568495/uploads/te94vuwqeb357ixvepuc.jpg', 1, '7/10/2020, 18:21:22', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568451/uploads/qjxpsdjfn3wjypeyalhj.jpg', '6/17/2020, 16:54:10', 1, '-120.05612', '-85.35693', 1);
+const dbData = `INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (14, 'musa', 'musa@mailinator.com', '$2b$10$.Zm6yO33Xm9.nlSoVJl63e38iI8aZej5eI.nwoLwGQZiEiwcyk1KK', 'Musa', 'Baloyi', 'Male', 'Female', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus scelerisque gravida lorem, nec sollicitudin lorem ultrices id. Quisque elementum nunc orci, et gravida mi tincidunt eget. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean vehicula tortor nisi, a tincidunt augue laoreet vel. Donec tristique, ante at consectetur dictum, nisi nisl pulvinar nisl, quis dignissim dolor lectus ut tellus. Etiam ac sollicitudin velit. Curabitur in massa egestas, elementum odio eget, ultrices tortor', 22, '20/01/1998', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im11c2EiLCJlbWFpbCI6Im11c2FAbWFpbGluYXRvci5jb20iLCJsYXN0bmFtZSI6IkJhbG95aSIsImZpcnN0bmFtZSI6Ik11c2EiLCJwYXNzd29yZCI6IiQyYiQxMCR6L2xFWGFyNW5yLklsZWRXODJXYmEuVnE2VTZweHZXUVVQamF6VWl2UHFYSXZsOFFrM0VpVyIsImFnZSI6IjIyIiwiZG9iIjoiMjAvMDEvMTk5OCIsImRhdGUiOiI2LzE3LzIwMjAsIDE2OjU0OjEwIiwic3RhdHVzIjoiMCIsImlhdCI6MTU5MjQwNTY1MH0.jHdQLcXsPn3mQbjYJZ11g9i_soEVxNPXizKeP5GXgfQ', '2', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568460/uploads/lzdgxci3vryhe5dgqxi8.jpg', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568471/uploads/sg0r2hhjkuoyujiur1yo.jpg', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568486/uploads/nrgqfjanqpo0pdp5zsie.jpg', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568495/uploads/te94vuwqeb357ixvepuc.jpg', 1, '7/10/2020, 18:21:22', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1592568451/uploads/qjxpsdjfn3wjypeyalhj.jpg', '6/17/2020, 16:54:10', 1, '-120.05612', '-85.35693', 1);
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (30, 'musa12', 'musa12@mailinator.com', '$2b$10$SBwT/zEu1YpeFtDln32w4usv8Mjz1JqP15fN78mU4.270XfVnhMrW', 'Martin', 'Baloyi', 'Male', 'Female', 'Musa is crazy
-
 efficitur suscipit. Aenean ornare auctor enim, vel dignissim nibh molestie pharetra. Sed consequat, est sit amet porttitor posuere, sem tortor vulputate odio, id fermentum augue arcu tincidunt nulla. Donec rutrum ut diam ut feugiat.', 40, '01/02/1980', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im11c2ExIiwiZW1haWwiOiJtdXNhMUBtYWlsaW5hdG9yLmNvbSIsImxhc3RuYW1lIjoiQmFsb3lpIiwiZmlyc3RuYW1lIjoiTXVzYSIsInBhc3N3b3JkIjoiJDJiJDEwJGxNUzFrLzF5UUQ4MEhEckxVWm9QYk9lNmVsRDdnQ1BCeGcvVHhtRE8vNWZoaDE3NTVvSHNhIiwiYWdlIjoiNDAiLCJkb2IiOiIwMS8wMi8xOTgwIiwiZGF0ZSI6IjYvMTgvMjAyMCwgMTM6NDk6NDkiLCJzdGF0dXMiOiIwIiwiaWF0IjoxNTkyNDgwOTg5fQ.6QMN2ejxnQFaJ5o4sFC2kCHWfRqeH_l7wtUIDvhdItI', '2', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1593296529/uploads/tdyuwscvflk0wlewonwl.jpg', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1593296958/uploads/wuupgmj43seskv3i2m1c.jpg', '', '', 1, 'online', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1593293399/uploads/fzvlbsjjaygndmdtdyox.jpg', '6/18/2020, 13:49:49', 1, '-15.76009', '-43.52154', 1);
-INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (31, 'leo, in lobortis tellus justo sit amet', 'primis@infaucibusorci.com', 'eget, volutpat ornare, facilisis eget, ipsum. Donec sollicitudin adipiscing ligula. Aenean gravida', 'Frances', 'Mosley', 'Other', 'Both', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor', 50, '10/06/2020', null, '0', null, null, null, null, 1, '7/9/2020, 18:29:16', 'https://source.unsplash.com/random/720x1080-1/?human', null, 1, '-100.8475', '-46.19221', 1);
+    INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (31, 'leo, in lobortis tellus justo sit amet', 'primis@infaucibusorci.com', 'eget, volutpat ornare, facilisis eget, ipsum. Donec sollicitudin adipiscing ligula. Aenean gravida', 'Frances', 'Mosley', 'Other', 'Both', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor', 50, '10/06/2020', null, '0', null, null, null, null, 1, '7/9/2020, 18:29:16', 'https://source.unsplash.com/random/720x1080-1/?human', null, 1, '-100.8475', '-46.19221', 1);
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (32, 'dignissim lacus. Aliquam', 'Cras.lorem@nuncIn.co.uk', 'sed, facilisis vitae, orci. Phasellus dapibus quam quis diam. Pellentesque habitant morbi', 'Giacomo', 'Dyer', 'Other', 'Both', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque', 31, '20/04/2020', null, '0', null, null, null, null, 1, '7/9/2020, 18:29:16', 'https://source.unsplash.com/random/720x1080-2/?human', null, 1, '164.88134', '70.84854', 1);
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (33, 'penatibus et magnis dis parturient montes,', 'aliquet.odio@sedfacilisisvitae.com', 'Duis ac arcu. Nunc mauris. Morbi non sapien molestie orci', 'Allistair', 'Waller', 'Other', 'Both', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu', 59, '26/10/2019', null, '0', null, null, null, null, 1, '7/9/2020, 18:29:16', 'https://source.unsplash.com/random/720x1080-3/?human', null, 1, '52.32061', '-72.42351', 1);
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (34, 'cursus. Nunc mauris elit, dictum eu,', 'metus.eu.erat@non.org', 'sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum', 'Nolan', 'Spears', 'Other', 'Both', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Curabitur sed tortor. Integer aliquam adipiscing lacus. Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula risus. Nulla eget metus eu erat semper rutrum. Fusce dolor quam, elementum at, egestas a, scelerisque sed, sapien. Nunc pulvinar arcu et pede. Nunc sed orci lobortis augue scelerisque mollis. Phasellus libero mauris, aliquam eu, accumsan sed, facilisis vitae, orci. Phasellus dapibus quam quis diam. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce aliquet magna a neque. Nullam ut nisi a odio semper cursus. Integer mollis. Integer tincidunt aliquam arcu. Aliquam ultrices iaculis odio. Nam interdum enim non nisi. Aenean eget metus. In nec orci. Donec nibh. Quisque nonummy ipsum non arcu. Vivamus sit amet risus. Donec egestas. Aliquam nec enim. Nunc ut erat. Sed nunc est, mollis non, cursus non, egestas a, dui. Cras pellentesque. Sed dictum. Proin eget odio.', 22, '03/05/2020', null, '0', null, null, null, null, 1, 'online', 'https://source.unsplash.com/random/720x1080-4/?human', null, 1, '10.74437', '1.38038', 1);
@@ -434,23 +306,23 @@ INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, last
 
 The first thing people usually notice about me is my admirable personality, closly followed by my smashing eyebrows. You may find yourself awed by the callibre of my eyebrows and fingernails. I will be sure to bring myself well-oiled to our date, so that you can appreciate my body to its full.
 
-I work as a cleaner, helping victims. This allows me to exercise my skills: arresting bad guys and cutting hair. Dating me will be a little like dating royalty. I once saw Donald Trump getting off a bus, and the paparazzi have been after me ever since. We''d better keep your kit on out of doors!
+    I work as a cleaner, helping victims. This allows me to exercise my skills: arresting bad guys and cutting hair. Dating me will be a little like dating royalty. I once saw Donald Trump getting off a bus, and the paparazzi have been after me ever since. We''d better keep your kit on out of doors!
 
-My life goals include:
-Star in the next Star Wars film.
-get jiggy with you
-Become the best cleaner I can be
+    My life goals include:
+    Star in the next Star Wars film.
+    get jiggy with you
+    Become the best cleaner I can be
 Help all the victims in the world
 If you''re the right man for me, you''ll be sympathetic and clever. You won''t be afraid to stand up to me and will have a healthy respect for the environment.
 
-My ideal date would involve hiking in a hotel room in New York with a squat man by my side. While we''re there, I lick your short arms and imagine retelling the occasion to my mates.
+    My ideal date would involve hiking in a hotel room in New York with a squat man by my side. While we''re there, I lick your short arms and imagine retelling the occasion to my mates.
 
-I promise I''ll turn up to our date looking good and smelling amazing. You''ll have no personal hygene worries, and I hope I''ll be able to say the same about you.
+    I promise I''ll turn up to our date looking good and smelling amazing. You''ll have no personal hygene worries, and I hope I''ll be able to say the same about you.
 
-May the force be with you.
+    May the force be with you.
 
-Light me fire, babe', 22, '02/02/1998', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vcmdhbnRpbSIsImVtYWlsIjoibW9yZ2FudGltQG1haWxpbmF0b3IuY29tIiwibGFzdG5hbWUiOiJNb3JnYW4iLCJmaXJzdG5hbWUiOiJUaW0iLCJwYXNzd29yZCI6IiQyYiQxMCQvYXVSQnhTWWxOMFI1dVpGSkl2c0QuMUJta0VqakoycTFyekNZdTV2bnBDYjN3VXdrTmVtNiIsImFnZSI6IjIyIiwiZG9iIjoiMDIvMDIvMTk5OCIsImRhdGUiOiI3LzkvMjAyMCwgMTY6NTE6MjYiLCJzdGF0dXMiOiIwIiwiaWF0IjoxNTk0MzA2Mjg3fQ.m7W6oseqVV3VJXHpRyqb34P6RvwYm-9JGFJuyfjxdTU', '2', '', '', '', '', 1, '7/9/2020, 18:29:16', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1594311051/uploads/uwmuq8dw2ehdufzw44fc.jpg', '7/9/2020, 16:51:26', 1, '164.88134', '70.84854', 1);
-INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (433, '', '', '', '', '', 'Other', 'Both', null, null, null, null, '0', null, null, null, null, 0, 'online', 'https://source.unsplash.com/random/720x1080+114/?male', null, 1, '52.32061', '-72.42351', 1);
+    Light me fire, babe', 22, '02/02/1998', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1vcmdhbnRpbSIsImVtYWlsIjoibW9yZ2FudGltQG1haWxpbmF0b3IuY29tIiwibGFzdG5hbWUiOiJNb3JnYW4iLCJmaXJzdG5hbWUiOiJUaW0iLCJwYXNzd29yZCI6IiQyYiQxMCQvYXVSQnhTWWxOMFI1dVpGSkl2c0QuMUJta0VqakoycTFyekNZdTV2bnBDYjN3VXdrTmVtNiIsImFnZSI6IjIyIiwiZG9iIjoiMDIvMDIvMTk5OCIsImRhdGUiOiI3LzkvMjAyMCwgMTY6NTE6MjYiLCJzdGF0dXMiOiIwIiwiaWF0IjoxNTk0MzA2Mjg3fQ.m7W6oseqVV3VJXHpRyqb34P6RvwYm-9JGFJuyfjxdTU', '2', '', '', '', '', 1, '7/9/2020, 18:29:16', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1594311051/uploads/uwmuq8dw2ehdufzw44fc.jpg', '7/9/2020, 16:51:26', 1, '164.88134', '70.84854', 1);
+    INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (433, '', '', '', '', '', 'Other', 'Both', null, null, null, null, '0', null, null, null, null, 0, 'online', 'https://source.unsplash.com/random/720x1080+114/?male', null, 1, '52.32061', '-72.42351', 1);
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (533, 'Kyla', 'sollicitudin.orci@eudolor.org', 'nisi. Mauris nulla. Integer urna.', 'Adria', 'Perry', 'Female', 'Male', 'viverra. Donec tempus, lorem fringilla ornare placerat, orci lacus vestibulum lorem, sit amet ultricies sem magna nec quam. Curabitur vel lectus. Cum sociis natoque penatibus et magnis', 19, null, null, '0', null, null, null, null, 0, '7/9/2020, 18:29:16', 'https://source.unsplash.com/random/720x1080+14/?female', null, 1, '92.71315', '51.58489', 1);
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (534, 'Brady', 'Nam@dictum.org', 'Sed id risus quis diam luctus', 'Melyssa', 'Sexton', 'Female', 'Male', 'lectus pede et risus. Quisque libero lacus, varius et, euismod et, commodo at, libero. Morbi accumsan laoreet ipsum. Curabitur consequat, lectus sit amet luctus vulputate, nisi', 47, null, null, '0', null, null, null, null, 0, '7/9/2020, 18:29:16', 'https://source.unsplash.com/random/720x1080+12/?female', null, 1, '-153.20065', '70.77034', 1);
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (535, 'Wang', 'ultrices.mauris@etcommodoat.co.uk', 'accumsan interdum', 'Celeste', 'Roach', 'Female', 'Male', 'Ut nec urna et arcu imperdiet ullamcorper. Duis at lacus. Quisque purus sapien, gravida non, sollicitudin a, malesuada id, erat. Etiam vestibulum massa rutrum magna. Cras convallis convallis dolor. Quisque tincidunt pede ac urna. Ut tincidunt vehicula', 38, null, null, '0', null, null, null, null, 0, '7/9/2020, 18:29:16', 'https://source.unsplash.com/random/720x1080+12/?female', null, 1, '-80.09279', '77.42759', 1);
@@ -719,8 +591,8 @@ INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, last
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (832, 'Breanna', 'magna.nec@inmolestietortor.edu', 'Aliquam vulputate ullamcorper magna. Sed eu eros. Nam consequat dolor', 'Allen', 'Nielsen', 'Male', 'Female', 'ante. Nunc mauris sapien, cursus in, hendrerit consectetuer, cursus et, magna. Praesent interdum ligula eu enim. Etiam imperdiet dictum magna. Ut tincidunt orci quis lectus. Nullam suscipit, est ac facilisis facilisis, magna tellus faucibus leo, in lobortis tellus justo sit amet nulla. Donec non justo. Proin non massa non ante bibendum ullamcorper. Duis cursus, diam at pretium aliquet, metus urna convallis erat, eget tincidunt dui augue eu tellus. Phasellus elit pede, malesuada vel, venenatis vel, faucibus id, libero. Donec consectetuer mauris id sapien. Cras dolor dolor, tempus', 31, null, null, '0', null, null, null, null, 0, 'online', 'https://source.unsplash.com/random/720x1070+123/?male', null, 1, '-13.33279', '79.71832', 1);
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (833, 'johnson', 'johnsondubula@gmail.com', '$2b$10$XPxg2uPW9.wn0MFKlx5fxO0J8moi..pFeR9hvVuPR69deKrX53JQu', 'johnson', 'dubula', 'Male', 'Male', 'I rap, i code, and more', 21, '1/1/1999', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImpvaG5zb24iLCJlbWFpbCI6ImpvaG5zb25kdWJ1bGFAZ21haWwuY29tIiwibGFzdG5hbWUiOiJkdWJ1bGEiLCJmaXJzdG5hbWUiOiJqb2huc29uIiwicGFzc3dvcmQiOiIkMmIkMTAkWFB4ZzJ1UFc5LnduME1GS2x4NWZ4TzBKOG1vaS4ucEZlUjlodlZ1UFI2OWRlS3JYNTNKUXUiLCJhZ2UiOiIyMSIsImRvYiI6IjEvMS8xOTk5IiwiZGF0ZSI6IjIwMjAvMDcvMTAsIDE3OjM0OjM2Iiwic3RhdHVzIjoiMCIsImlhdCI6MTU5NDM5NTI3Nn0.aBhJttoUdoUvhaOURDKhSQa8FTMJHc7cEqTT-3dKvk8', '2', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1594395585/uploads/iywlsqcmzteyuxtxu0bi.jpg', '', '', '', 1, '2020/07/10, 17:46:42', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1594395465/uploads/bp2o8bvwkyrye657zq7e.jpg', '2020/07/10, 17:34:36', 0, '-13.33279', '79.71832', 1);
 INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (834, 'irvin', 'irvin@mailinator.com', '$2b$10$bXKOVqaoi0E3GXm70jkuV.DF13uWNz8BNqtj/KRPJEzl9xDmCSSuK', 'Irvin', 'Chavi', 'Male', 'Female', 'Ni randza too much ... don''t play me pleas', 22, '02/01/1998', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImlydmluIiwiZW1haWwiOiJpcnZpbkBtYWlsaW5hdG9yLmNvbSIsImxhc3RuYW1lIjoiQ2hhdmkiLCJmaXJzdG5hbWUiOiJJcnZpbiIsInBhc3N3b3JkIjoiJDJiJDEwJGJYS09WcWFvaTBFM0dYbTcwamt1Vi5ERjEzdVdOejhCTnF0ai9LUlBKRXpsOXhEbUNTU3VLIiwiYWdlIjoiMjIiLCJkb2IiOiIwMi8wMS8xOTk4IiwiZGF0ZSI6IjcvMTAvMjAyMCwgMTc6NTg6NDAiLCJzdGF0dXMiOiIwIiwiaWF0IjoxNTk0Mzk2NzIxfQ.yH1ErXc-Mv1VgyvPmkzk9R_aHI22dJNtUFQlv3puC24', '2', '', '', '', '', 1, '7/10/2020, 19:16:34', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1594400645/uploads/fj8urpi4tr1yd90loncl.jpg', '7/10/2020, 17:58:40', 1, '28.1122679', '-26.270759299999998', 2);
-INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (835, 'kelly', 'kelly@mailinator.com', '$2b$10$MF0p0yKkxRxWkdSE/22uXuu/sinYqWUpsGFyroPq4Roqpve4.M0mC', 'kelly', 'Sims', 'Female', 'Male', 'Blah Blah Blah Blah Blah BlahBlah Blah Blah', 35, '02/02/1985', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtlbGx5IiwiZW1haWwiOiJrZWxseUBtYWlsaW5hdG9yLmNvbSIsImxhc3RuYW1lIjoiU2ltcyIsImZpcnN0bmFtZSI6ImtlbGx5IiwicGFzc3dvcmQiOiIkMmIkMTAkTUYwcDB5S2t4UnhXa2RTRS8yMnVYdXUvc2luWXFXVXBzR0Z5cm9QcTRSb3FwdmU0Lk0wbUMiLCJhZ2UiOiIzNSIsImRvYiI6IjAyLzAyLzE5ODUiLCJkYXRlIjoiNy8xMC8yMDIwLCAxOToxNzoyNyIsInN0YXR1cyI6IjAiLCJpYXQiOjE1OTQ0MDE0NDd9.__FKq5PAf439UvRXUfX0vkGXikhm5DkAwGK09spmY-w', '2', '', '', '', '', 1, 'online', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1594403034/uploads/zmobxy29cqc0a0nm1cqb.jpg', '7/10/2020, 19:17:27', 1, '28.0012', '-26.0941', 1);    
-    
+INSERT INTO utQlqEWfeo.users (userid, username, email, password, firstname, lastname, gender, genderPreference, bio, age, dob, token, status, image_1, image_2, image_3, image_4, active, lastseen, profileImage, date, notify, longitude, latitude, popularity) VALUES (835, 'kelly', 'kelly@mailinator.com', '$2b$10$MF0p0yKkxRxWkdSE/22uXuu/sinYqWUpsGFyroPq4Roqpve4.M0mC', 'kelly', 'Sims', 'Female', 'Male', 'Blah Blah Blah Blah Blah BlahBlah Blah Blah', 35, '02/02/1985', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImtlbGx5IiwiZW1haWwiOiJrZWxseUBtYWlsaW5hdG9yLmNvbSIsImxhc3RuYW1lIjoiU2ltcyIsImZpcnN0bmFtZSI6ImtlbGx5IiwicGFzc3dvcmQiOiIkMmIkMTAkTUYwcDB5S2t4UnhXa2RTRS8yMnVYdXUvc2luWXFXVXBzR0Z5cm9QcTRSb3FwdmU0Lk0wbUMiLCJhZ2UiOiIzNSIsImRvYiI6IjAyLzAyLzE5ODUiLCJkYXRlIjoiNy8xMC8yMDIwLCAxOToxNzoyNyIsInN0YXR1cyI6IjAiLCJpYXQiOjE1OTQ0MDE0NDd9.__FKq5PAf439UvRXUfX0vkGXikhm5DkAwGK09spmY-w', '2', '', '', '', '', 1, 'online', 'https://res.cloudinary.com/dz1whmlhr/image/upload/v1594403034/uploads/zmobxy29cqc0a0nm1cqb.jpg', '7/10/2020, 19:17:27', 1, '28.0012', '-26.0941', 1);
+
 
 INSERT INTO utQlqEWfeo.interests (interestid, userid, interest) VALUES (99, 431, '1');
 INSERT INTO utQlqEWfeo.interests (interestid, userid, interest) VALUES (100, 431, '1');
@@ -1089,19 +961,5 @@ INSERT INTO utQlqEWfeo.interests (interestid, userid, interest) VALUES (603, 426
 INSERT INTO utQlqEWfeo.interests (interestid, userid, interest) VALUES (604, 427, 'Nissan');
 INSERT INTO utQlqEWfeo.interests (interestid, userid, interest) VALUES (605, 428, 'Daimler');
 INSERT INTO utQlqEWfeo.interests (interestid, userid, interest) VALUES (606, 429, 'Acura');
-    `;
-    return new Promise((resolve, reject) => {
-        poolConnection.query(
-            query,
-            '',
-            (err, results) => {
-                if (err) {
-                    return reject(err);
-                }
-                return resolve(results[0]);
-            }
-        );
-    });
-}
-
-module.exports = matchaDb;
+`;
+module.exports = dbData;

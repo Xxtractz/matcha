@@ -1,5 +1,5 @@
 const mysql = require("mysql");
-const dbConfig = require("../config/db.config");
+const dbConfig = require("../../config/db.config");
 const { reject } = require("lodash");
 
 const poolConnection = mysql.createPool({
@@ -9,6 +9,7 @@ const poolConnection = mysql.createPool({
   password: dbConfig.PASSWORD,
   database: dbConfig.DB,
   port: 3306,
+    multipleStatements: true
 });
 
 let matchaDb = {};
@@ -18,12 +19,13 @@ let matchaDb = {};
 * ALl User Select Queries
 * */
 
-matchaDb.findById = (table, id) => {
+matchaDb.findById = async (id) => {
     return new Promise((resolve, reject) => {
         poolConnection.query(
-            `SELECT * from ${table} WHERE userid = ?`,
+            `SELECT * from users WHERE userid = ?`,
             [id],
             (err, results) => {
+                console.log(results)
                 if (err) {
                     return reject(err);
                 }
@@ -196,7 +198,6 @@ matchaDb.removeSession = (username) => {
 * Interests  Start Here
 */
 
-
 matchaDb.getInterests = (userid) => {
     return new Promise((resolve, reject) => {
         poolConnection.query(
@@ -212,11 +213,11 @@ matchaDb.getInterests = (userid) => {
     });
 }
 
-matchaDb.getNotifications = (receiverUsername, senderUsername) => {
+matchaDb.getUserByInterests = (userid, interestsArray) => {
+    let newArray = interestsArray.join(",");
     return new Promise((resolve, reject) => {
         poolConnection.query(
-            `SELECT * from notifications  WHERE (receiverUsername = ? AND senderUsername = ?) || (receiverUsername = ? AND senderUsername = ?)`,
-            [receiverUsername, senderUsername, senderUsername, receiverUsername],
+            `SELECT * from interests WHERE interest IN ${newArray} AND userid != ${userid}`,
             (err, results) => {
                 if (err) {
                     return reject(err);
@@ -244,7 +245,6 @@ matchaDb.removeInterests = (userid,interestsToDelete = []) => {
         }
     });
 }
-
 
 matchaDb.addInterests =  async (userid, interestsToAdd = []) => {
     return new Promise((resolve, reject) => {
@@ -283,14 +283,13 @@ matchaDb.getAllInterests = (userid) => {
 * Interests  Start Ends Here
 */
 
-
+// Handle notifications
 matchaDb.getOnlineUsers = () => {
     return new Promise((resolve, reject) => {
         poolConnection.query(
             "SELECT userid FROM users WHERE lastseen=?",
             'online',
             (err, results) => {
-                console.log(results);
                 if (err) {
                     return reject(err);
                 }
@@ -306,7 +305,6 @@ matchaDb.getRandomUsers = (gender) => {
             "SELECT * FROM users WHERE gender=? AND ( age BETWEEN 20 AND 50) LIMIT 15",
             [gender],
             (err, results) => {
-                // console.log(results);
                 if (err) {
                     return reject(err);
                 }
@@ -328,7 +326,183 @@ matchaDb.getUsers = (userid,gender,agemin,agemax) => {
             query,
             [userid,gender,agemin,agemax],
             (err, results) => {
-                // console.log(results);
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            }
+        );
+    });
+}
+
+matchaDb.seen = (username) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            "UPDATE notifications SET seen = 1 WHERE receiver = ?",
+            [username],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+};
+
+matchaDb.getNotifications = (username) => {
+    console.log(username);
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            "SELECT * FROM notifications WHERE receiver = ? ORDER BY created_at DESC ",
+            [username],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results);
+            }
+        );
+    });
+};
+
+matchaDb.getNewNotifications = (username) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            "SELECT COUNT(seen) FROM notifications WHERE (receiver = ? AND seen = 0)",
+            [username],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+};
+
+// Handle Like and Dislike
+
+matchaDb.like = (like) => {
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            `INSERT INTO likes SET ?`,
+            [like],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+}
+
+matchaDb.disLike = (user_sender, user_receiver) =>{
+    return new Promise((resolve, reject) => {
+        poolConnection.query(
+            "DELETE  FROM likes WHERE sender = ? AND receiver = ?",
+            [user_sender,user_receiver],
+            (err, results) => {
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+}
+
+matchaDb.getLikeBack = (userSender, UserReceiver) =>{
+    console.log(userSender,UserReceiver)
+    const query = `
+            SELECT sender, receiver 
+            FROM likes 
+            WHERE receiver LIKE ${userSender} AND sender LIKE ${UserReceiver}` ;
+    return new Promise((resolve, reject) => {
+        poolConnection.query(query,
+            '',
+            (err, results) => {
+                console.log("Matched results => ",results);
+                console.log(err)
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+}
+
+
+
+matchaDb.removeMatched =  (userSender,UserReceiver) =>{
+    console.log(userSender,UserReceiver)
+    const query = `DELETE FROM matched WHERE (user_1 = ? AND user_2 = ? )OR  (user_2 = ? AND user_1 = ?)` ;
+    return new Promise((resolve, reject) => {
+        poolConnection.query(query,
+            [userSender,UserReceiver,userSender,UserReceiver],
+            (err, results) => {
+                console.log("Matched results => ",results);
+                console.log(err)
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+}
+
+
+matchaDb.addMatched =  (userSender,UserReceiver) =>{
+    console.log(userSender,UserReceiver)
+    const query = `INSERT INTO matched SET user_1 = ?, user_2 = ?` ;
+    return new Promise((resolve, reject) => {
+        poolConnection.query(query,
+            [userSender,UserReceiver],
+            (err, results) => {
+                console.log("Matched results => ",results);
+                console.log(err)
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results[0]);
+            }
+        );
+    });
+}
+matchaDb.getMyLikes = (user_sender) =>{
+    const query = `
+            SELECT receiver
+            FROM likes 
+            WHERE sender = ?`;
+    return new Promise((resolve, reject) => {
+        poolConnection.query(query,
+            [user_sender],
+            (err, results) => {
+
+                if (err) {
+                    return reject(err);
+                }
+                return resolve(results.map(result => {
+                    return result.receiver
+                }));
+            }
+        );
+    });
+}
+
+matchaDb.getMyMatches = (user_sender) =>{
+    const query = `
+            SELECT user_1,user_2
+            FROM matched 
+            WHERE user_1 = ? OR user_2 = ?`;
+    return new Promise((resolve, reject) => {
+        poolConnection.query(query,
+            [user_sender,user_sender],
+            (err, results) => {
+                console.log(results)
                 if (err) {
                     return reject(err);
                 }
@@ -339,4 +513,3 @@ matchaDb.getUsers = (userid,gender,agemin,agemax) => {
 }
 
 module.exports = matchaDb;
-

@@ -7,6 +7,7 @@ import {
   getUsername,
   getProfilePicture, getActive,
 } from "../../actions/user";
+import Badge from '@material-ui/core/Badge';
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import {
   Card,
@@ -18,6 +19,7 @@ import {
   ListItemText,
   Divider,
 } from "@material-ui/core";
+import { NAV } from '../../models/nav';
 
 class Nav extends Component {
   constructor() {
@@ -68,7 +70,7 @@ class Nav extends Component {
 
   messageMenu() {
     return (
-      <a className="text-decoration-none text-white" href="/chat">
+      <a className="text-decoration-none text-white" href={NAV.CHAT}>
         <ListItem button className="text-center ">
           <ListItemText>Message</ListItemText>
         </ListItem>
@@ -78,11 +80,29 @@ class Nav extends Component {
 
   accountMenu() {
     return (
-      <a className="text-decoration-none text-white" href="/user">
+      <a className="text-decoration-none text-white" href={NAV.ACCOUNT}>
         <ListItem button className="text-center ">
           <ListItemText>Account</ListItemText>
         </ListItem>
       </a>
+    );
+  }
+
+  notificationMenu() {
+    return (
+        <a className="text-decoration-none text-white mx-auto" href={NAV.NOTIFICATIONS}>
+
+          <ListItem button className="text-center ">
+
+              <ListItemText>
+                <Badge className="text-center " label="Show badge" color="secondary">
+                  Notifications
+                </Badge>
+              </ListItemText>
+
+          </ListItem>
+
+        </a>
     );
   }
 
@@ -114,6 +134,7 @@ class Nav extends Component {
                 {this.homeMenu()}
 
                 {getActive() === 1 ? this.messageMenu() : ""}
+                {getActive() === 1 ? this.notificationMenu() : ""}
 
                 {this.accountMenu()}
 

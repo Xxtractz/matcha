@@ -12,6 +12,10 @@ function handleStoreUser(user) {
   sessionStorage.setItem("user", user);
 }
 
+function handleStoreLikeUser(likedUsers){
+  sessionStorage.setItem("LikedUsers",likedUsers);
+}
+
 function hardLogout() {
   sessionStorage.clear();
   localStorage.clear();
@@ -21,6 +25,7 @@ function hardLogout() {
 //   return localStorage.getItem("User_Token");
 // };
 
+//User Details
 export const register = async (userData) => {
   const encryptedData = CryptoJS.AES.encrypt(
     JSON.stringify(userData),
@@ -162,6 +167,140 @@ export const update = async (id, body) => {
     });
 };
 
+// Like
+export const likeAndDislike = async (body) => {
+  return axios
+      .post(_Url.like , body)
+      .then((response) => {
+        if (response) {
+          return response;
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response;
+        } else {
+          return "Timeout";
+        }
+      });
+};
+
+export const getMyLikes = (id) => {
+  return axios
+      .get(_Url.like + "/" + id)
+      .then((response) => {
+        handleStoreLikeUser(response.data);
+        if (response) {
+          return response;
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response;
+        } else {
+          return "Timeout";
+        }
+      });
+};
+
+export const getMyMatches = (id) => {
+  return axios
+      .get(_Url.match + "/" + id)
+      .then((response) => {
+        handleStoreLikeUser(response.data);
+        if (response) {
+          return response;
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response;
+        } else {
+          return "Timeout";
+        }
+      });
+};
+
+export const getLikeBack = (id_sender,id_receiver) => {
+  return axios
+      .post(_Url.likeBack,{sender:id_sender,receiver:id_receiver})
+      .then((response) => {
+        handleStoreLikeUser(response.data);
+        if (response) {
+          return response;
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response;
+        } else {
+          return "Timeout";
+        }
+      });
+};
+
+export const getMatchedusers = async (id) => {
+    return axios.get(`${_Url.usersUrl}/${id}`).then((response) => {
+        return response;
+    });
+};
+
+
+
+// Notifications
+export const notification = async (body) => {
+  return axios
+      .post(_Url.notificationUrl , body)
+      .then((response) => {
+        if (response) {
+          return response;
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response;
+        } else {
+          return "Timeout";
+        }
+      });
+};
+
+export const getNotification = async (username) => {
+  return axios
+      .get(_Url.notificationUrl +'?username='+ username)
+      .then((response) => {
+        if (response) {
+          return response;
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response;
+        } else {
+          return "Timeout";
+        }
+      });
+};
+
+export const getNotificationCount = async (username) => {
+  return axios
+      .get(_Url.notificationUrl+'/'+username)
+      .then((response) => {
+        if (response) {
+          console.log(response);
+          return response;
+        }
+      })
+      .catch((error) => {
+        if (error.response) {
+          return error.response;
+        } else {
+          return "Timeout";
+        }
+      });
+};
+
+// User Profiles
 export const userData = async (id) => {
   return axios.get(`${_Url.usersUrl}/${id}`).then((response) => {
     handleStoreUser(JSON.stringify(response.data.User));
@@ -169,30 +308,46 @@ export const userData = async (id) => {
   });
 };
 
+export const getUser = async (id) => {
+  return axios.get(`${_Url.usersUrl}/${id}`).then((response) => {
+    return response;
+  });
+};
+
 export const getUsers = async (userid,gender,minAge, maxAge) => {
   return axios.post(`${_Url.usersUrl}/${userid}`,{userid:userid,gender:gender,minAge:minAge,maxAge:maxAge}).then((response) => {
+    localStorage.setItem('users', JSON.stringify( response.data));
+    return response;
+  });
+};
+
+// Setup
+export const getInterests = async (userid) => {
+  return axios.post(`${_Url.interestsUrl}/${userid}`,{userid:userid}).then((response) => {
+    localStorage.setItem('interests', JSON.stringify( response.data));
+    return response;
+  });
+};
+
+export const doInstallation = async () => {
+  return axios.post(`${_Url.installUrl}`).then((response) => {
     localStorage.setItem('users', JSON.stringify( response.data));
     console.log(response.data);
     return response;
   });
 };
 
-export const getInterests = async (userid) => {
-  return axios.post(`${_Url.interestsUrl}/${userid}`,{userid:userid}).then((response) => {
-    localStorage.setItem('interests', JSON.stringify( response.data));
+export const unInstall = async () => {
+  return axios.post(`${_Url.uninstallUrl}`).then((response) => {
+    localStorage.setItem('users', JSON.stringify( response.data));
     console.log(response.data);
     return response;
   });
 };
 
+// Likes
 
-export const loadImage = (image) => {
-  return axios.request(image).then((res) => {
-    console.log(res);
-    return res.request.responseURL;
-  })
-}
-
+//Images
 export const uploadImage = (image) => {
   const unsignedUploadPreset = "odj1pwzn";
   const cloudName = "dz1whmlhr";
