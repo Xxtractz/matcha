@@ -287,7 +287,12 @@ matchaDb.getRandomUsers = (gender) => {
 }
 
 matchaDb.getUsers = (userid,gender,agemin,agemax) => {
-    const query = `SELECT * FROM users WHERE userid != ? AND gender=?  AND ( age BETWEEN ? AND ?) LIMIT 1000`;
+    const query = `SELECT * FROM users 
+                    WHERE userid != ? 
+                    AND gender=?  
+                    AND ( age BETWEEN ? AND ?) 
+                    ORDER BY popularity 
+                    LIMIT 1000`;
     return new Promise((resolve, reject) => {
         poolConnection.query(
             query,
