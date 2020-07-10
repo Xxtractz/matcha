@@ -38,7 +38,7 @@ exports.create = async (req, res) => {
                 '<p> Login to see the message you getting hits.</p>'
             );
             console.log(data);
-            res.status(200).send({user: data});
+            res.status(200).send({Notify: data});
         }
     });
 
