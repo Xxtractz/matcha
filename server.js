@@ -12,6 +12,7 @@ const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const userRoutes = require('./routes/user.routes');
+const notifyRoutes = require('./routes/notify.routes');
 
 http.listen(4001);
 
@@ -110,6 +111,8 @@ app.use(express.static(path.join(__dirname, "client")));
 //adding routes
 app.use('/', userRoutes); 
 
+//adding routes
+app.use('/', notifyRoutes); 
 
 //require the fastify framework and instantiate it
 app.use(function(req, res, next) {
