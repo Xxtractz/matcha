@@ -15,8 +15,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import * as geolib from 'geolib';
 import sortByDistance from 'sort-by-distance';
 import Slider from "@material-ui/core/Slider";
-import Search from "./search";
-import Layout from "../../Layout/layout";
 
 class Profiles extends Component {
   constructor(props) {
@@ -125,7 +123,7 @@ class Profiles extends Component {
   }
 
   displayEmpty() {
-    return <div>Theres Nothing to display</div>;
+    return <div>There are no profile to display</div>;
   }
 
   displayImages(src){
@@ -140,6 +138,12 @@ class Profiles extends Component {
   }
 
   viewUser(user){
+    let interests = '';
+    this.state.interests.filter(interest => interest.userid === user.userid).map(filteredInterest =>{
+      console.log(filteredInterest);
+      interests = filteredInterest.interest.toString() + ',';
+    })
+    console.log(interests)
     return(
         <div>
           <Dialog
@@ -184,7 +188,7 @@ class Profiles extends Component {
             <DialogContent>
               <p className={'lead'}>Interests</p>
               <DialogContentText>
-                {user.interest ? user.interest.toString():''}
+                {interests ? interests:' No interests were added'}
               </DialogContentText>
             </DialogContent>
             <DialogActions>
