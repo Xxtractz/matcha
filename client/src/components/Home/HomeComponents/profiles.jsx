@@ -5,8 +5,15 @@ import FavoriteTwoToneIcon from "@material-ui/icons/FavoriteTwoTone";
 import InfoIcon from "@material-ui/icons/Info";
 import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 import { blue, red } from "@material-ui/core/colors";
-import {getActive, getUserGenderPreference, getUserId, getUserLatitude, getUserLongitude} from "../../../actions/user";
-import {getInterests, getUsers} from "../../../actions/api";
+import {
+  getActive,
+  getUserGenderPreference,
+  getUserId,
+  getUserLatitude,
+  getUserLongitude,
+  getUsername
+} from "../../../actions/user";
+import {getInterests, getUsers, refresh, update} from "../../../actions/api";
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -45,7 +52,6 @@ class Profiles extends Component {
       yName: 'latitude',
       xName: 'longitude'
     }
-
     getUsers(
         getUserId(),
         (getUserGenderPreference()=== "Both" ? "Other":getUserGenderPreference()),
@@ -58,13 +64,27 @@ class Profiles extends Component {
     });
   }
 
-  info = ()=>{
+  info = (userid,popularity)=>{
+    update(userid, {popularity : popularity + 1})
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     if(this.state.infoDialog){
       this.setState({ infoDialog : false});
     }else this.setState({ infoDialog : true});
   }
 
-  like = (user) => {
+  like = (user,userid,popularity) => {
+    update(userid, {popularity : popularity + 3})
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
       console.log(user + " Was Liked");
       this.remove();
   };
@@ -93,14 +113,14 @@ class Profiles extends Component {
             <IconButton
               aria-label="Like"
               onClick={() => {
-                this.like(user.firstname);
+                this.like(user.firstname,user.userid, user.popularity);
               }}
             >
               <FavoriteTwoToneIcon style={{ fontSize: 36, color: red[500] }} />
             </IconButton>
             <IconButton aria-label="info"
                         onClick={() => {
-                          this.info();
+                          this.info(user.userid, user.popularity);
                         }}>
               <InfoIcon style={{ fontSize: 36, color: blue[300] }} />
             </IconButton>
