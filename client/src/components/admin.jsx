@@ -139,7 +139,11 @@ class Admin extends Component {
     render() {
         return (
             <div>
+<<<<<<< HEAD
                 {sessionStorage.getItem('UID_') === "hagdgshdsghsgadh" ? this.Dashboard() : this.Login()}
+=======
+                {this.state.adminActive ? this.Dashboard() : this.Login()}
+>>>>>>> 7fbd2eb2b3ec101697957d14b7b144b23a96cfcd
             </div>
         );
     }
